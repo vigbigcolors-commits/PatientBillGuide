@@ -1,0 +1,55 @@
+---
+import LegalLayout from '../../../layouts/LegalLayout.astro';
+---
+
+<LegalLayout
+  title="Billing Flags & Confidence Levels"
+  description="How PatientBillGuide detects possible billing concerns and reports confidence."
+  crumbs={[
+    { label: 'Methodology', href: '/methodology/' },
+    { label: 'Billing Flags' },
+  ]}
+>
+  <p>
+    When bill review tools launch, each finding will include a <strong>confidence level</strong> and
+    plain-English explanation. We never label something as fraud without evidence — we surface
+    patterns worth asking about.
+  </p>
+
+  <h2>Flag types (planned)</h2>
+  <ul>
+    <li>
+      <strong>Duplicate charge</strong> — same procedure code, date, and similar amount appears
+      more than once
+    </li>
+    <li>
+      <strong>NCCI bundle concern</strong> — two procedure codes on the same date that CMS often
+      considers bundled under National Correct Coding Initiative edits
+    </li>
+    <li>
+      <strong>Price above benchmark</strong> — charged amount far above Medicare allowed for that
+      code and locality
+    </li>
+    <li>
+      <strong>Modifier review</strong> — modifier combinations that may need clarification from the
+      billing office
+    </li>
+  </ul>
+
+  <h2>Confidence levels</h2>
+  <ul>
+    <li><strong>High</strong> — strong pattern match on public rules (e.g. exact duplicate line)</li>
+    <li><strong>Medium</strong> — plausible concern; documentation or contract context may explain it</li>
+    <li><strong>Low</strong> — informational; common in some settings (e.g. above Medicare but within commercial range)</li>
+  </ul>
+
+  <h2>“Bill looks normal” is a valid result</h2>
+  <p>
+    Many bills pass automated checks. We will say so clearly when no flags are found — that is not a
+    guarantee of accuracy, but it means our public-data rules did not surface a common concern.
+  </p>
+
+  <p>
+    <a href="/methodology/limitations/">Read known limitations →</a>
+  </p>
+</LegalLayout>

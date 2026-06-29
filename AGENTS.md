@@ -1,20 +1,23 @@
-# Agent Instructions — BillTox
+# Agent Instructions — PatientBillGuide
 
 Instructions for Cursor / AI agents continuing this project.
 
 ## First steps every session
 
-1. Read [STATUS.md](STATUS.md) — current phase and unchecked tasks
-2. Read [docs/PHASES.md](docs/PHASES.md) — what belongs in current phase
-3. Read [docs/DECISIONS.md](docs/DECISIONS.md) — do not contradict locked decisions
-4. Work **only** the current phase unless user explicitly overrides
+1. Read [STATUS.md](STATUS.md) — current week and unchecked tasks
+2. Read [docs/PROJECT_CONTINUITY.md](docs/PROJECT_CONTINUITY.md) — if folder was renamed or new session
+3. Read [docs/ISSUES.md](docs/ISSUES.md) — open bugs and undecided items
+4. Read [docs/PHASES.md](docs/PHASES.md) — what belongs in current week
+5. Read [docs/DECISIONS.md](docs/DECISIONS.md) — do not contradict locked decisions
+6. Read [docs/MASTER_PLAN.md](docs/MASTER_PLAN.md) — strategy and tool clusters
+7. Work **only** the current week unless user explicitly overrides
 
 ## Project summary
 
-- **BillTox.com** — US medical bill transparency tools (standalone, not VeloTools)
-- English, both uninsured + insured audiences, AdSense monetization
-- Client-side processing, CMS public data, strong EEAT for YMYL
-- Build trust pages **before** working tools
+- **PatientBillGuide.com** — US healthcare consumer transparency hub (standalone, not VeloTools)
+- English, uninsured + insured + Medicare audiences
+- AdSense + soft affiliate later; client-side processing; CMS public data
+- **Accelerated build:** minimal trust → Fair Price week 2 → SEO in parallel
 
 ## Key constraints
 
@@ -23,41 +26,13 @@ Instructions for Cursor / AI agents continuing this project.
 - Always show confidence levels on billing flags
 - "Bill looks normal" is a valid and required outcome
 - Dispute letters = editable templates, not legal advice
-
-## Documentation map
-
-| File | Use when |
-|------|----------|
-| [docs/SITE_MAP.md](docs/SITE_MAP.md) | Adding a new page/route |
-| [docs/PAGE_TEMPLATES.md](docs/PAGE_TEMPLATES.md) | Writing page content |
-| [docs/EEAT_CHECKLIST.md](docs/EEAT_CHECKLIST.md) | Before publishing any page |
-| [docs/TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md) | Building parser, findings engine, data pipeline |
-| [docs/CONTENT_WORKFLOW.md](docs/CONTENT_WORKFLOW.md) | CPT/learn content production |
-| [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md) | Unresolved decisions |
-
-## After completing work
-
-1. Check off tasks in [STATUS.md](STATUS.md)
-2. Add row to Session log in STATUS.md
-3. Update OPEN_QUESTIONS.md if decisions were made
-4. Update DECISIONS.md for new locked decisions
+- No EV/solar content on this domain
 
 ## User prompt to continue
 
-> "Continue BillTox from STATUS.md Phase X"
+> "Continue PatientBillGuide from STATUS.md Week X"
 
-## Phase order (never skip)
-
-```
-Phase 0: EEAT shell + homepage
-Phase 1: Tool landing pages + learn pillars
-Phase 2: CPT encyclopedia Tier 1 + AdSense
-Phase 3: Data pipeline + Fair Price tool
-Phase 4: Bill Auditor + EOB + Dispute Letter
-Phase 5: Scale content
-```
-
-## Stack (planned)
+## Stack
 
 - Astro, static deploy on Cloudflare Pages
 - Vitest for engine tests

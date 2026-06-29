@@ -1,0 +1,229 @@
+---
+import { heroHighlights } from '../../data/hero-highlights';
+---
+
+<div class="hero-highlights" role="list" aria-label="Why PatientBillGuide">
+  {
+    heroHighlights.map((item) => {
+      const Tag = item.href ? 'a' : 'article';
+      const tagProps = item.href ? { href: item.href, class: 'hero-highlight hero-highlight--link' } : { class: 'hero-highlight' };
+
+      return (
+        <Tag {...tagProps} role="listitem">
+          <span class={`hero-highlight__icon hero-highlight__icon--${item.icon}`} aria-hidden="true">
+            {item.icon === 'shield' && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2l7 4v5c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                />
+                <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+              </svg>
+            )}
+            {item.icon === 'benchmark' && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 18l4-8 4 4 4-6 4 10"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            )}
+            {item.icon === 'flags' && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                />
+                <path d="M4 22v-7" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+              </svg>
+            )}
+            {item.icon === 'confidence' && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M12 20V10" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+                <path
+                  d="M18 20V4M6 20v-4"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                />
+              </svg>
+            )}
+            {item.icon === 'plain' && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 19.5A2.5 2.5 0 016.5 17H20"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                />
+                <path
+                  d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                />
+                <path d="M8 7h8M8 11h5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+              </svg>
+            )}
+            {item.icon === 'dispute' && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                />
+                <path
+                  d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            )}
+          </span>
+          <div class="hero-highlight__body">
+            <h2 class="hero-highlight__title">{item.title}</h2>
+            <p class="hero-highlight__text">{item.text}</p>
+          </div>
+          {item.href && (
+            <span class="hero-highlight__arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+          )}
+        </Tag>
+      );
+    })
+  }
+</div>
+
+<style>
+  .hero-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    margin-top: 1.25rem;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .hero-highlight {
+    display: flex;
+    gap: 0.875rem;
+    align-items: flex-start;
+    padding: 0.8125rem 1rem;
+    background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+    border: 1px solid #f3f4f6;
+    border-radius: 0.875rem;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+  }
+
+  .hero-highlight--link {
+    padding-right: 2.25rem;
+    cursor: pointer;
+  }
+
+  .hero-highlight:hover,
+  .hero-highlight--link:hover {
+    border-color: #d1fae5;
+    box-shadow: 0 4px 16px rgb(13 148 136 / 0.08);
+    transform: translateX(2px);
+  }
+
+  .hero-highlight__icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.625rem;
+  }
+
+  .hero-highlight__icon--shield {
+    background: #ecfdf5;
+    color: #0d9488;
+  }
+
+  .hero-highlight__icon--benchmark {
+    background: #fff1f2;
+    color: #e11d48;
+  }
+
+  .hero-highlight__icon--flags {
+    background: #fef3c7;
+    color: #d97706;
+  }
+
+  .hero-highlight__icon--confidence {
+    background: #f5f3ff;
+    color: #7c3aed;
+  }
+
+  .hero-highlight__icon--plain {
+    background: #eff6ff;
+    color: #2563eb;
+  }
+
+  .hero-highlight__icon--dispute {
+    background: #ecfdf5;
+    color: #059669;
+  }
+
+  .hero-highlight__body {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .hero-highlight__title {
+    margin: 0 0 0.2rem;
+    font-family: var(--font-heading);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.3;
+  }
+
+  .hero-highlight__text {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: #6b7280;
+  }
+
+  .hero-highlight__arrow {
+    position: absolute;
+    right: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    opacity: 0;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+
+  .hero-highlight--link:hover .hero-highlight__arrow {
+    opacity: 1;
+    transform: translateY(-50%) translateX(2px);
+    color: #0d9488;
+  }
+
+  @media (max-width: 960px) {
+    .hero-highlights {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+    }
+  }
+</style>

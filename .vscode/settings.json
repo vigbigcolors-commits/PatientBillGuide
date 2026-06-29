@@ -1,0 +1,15 @@
+{
+  "task.allowAutomaticTasks": "on",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.root": "/",
+  "liveServer.settings.ignoreFiles": [
+    "**/src/**",
+    "**/node_modules/**",
+    "**/.astro/**",
+    "**/docs/**",
+    "**/scripts/**",
+    "**/tests/**"
+  ],
+  "npm.enableScriptExplorer": true,
+  "npm.scriptExplorerAction": "run"
+}

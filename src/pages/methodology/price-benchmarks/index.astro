@@ -1,0 +1,38 @@
+---
+import LegalLayout from '../../../layouts/LegalLayout.astro';
+---
+
+<LegalLayout
+  title="Price Benchmarks"
+  description="How PatientBillGuide defines fair price ranges using Medicare allowed amounts."
+  crumbs={[
+    { label: 'Methodology', href: '/methodology/' },
+    { label: 'Price Benchmarks' },
+  ]}
+>
+  <h2>Medicare allowed amount</h2>
+  <p>
+    For a given CPT code and locality, we look up the CMS Medicare allowed amount — the
+    payment Medicare approves before patient cost-sharing. This is a <strong>public anchor</strong>,
+    not what every hospital charges.
+  </p>
+
+  <h2>Fair range heuristic</h2>
+  <p>
+    Commercial and self-pay prices vary widely. We display an educational range of approximately
+    <strong>1.5× to 2.5×</strong> the Medicare allowed amount as a rough “typical commercial
+    zone” reference, documented here for transparency.
+  </p>
+
+  <h2>How to interpret results</h2>
+  <ul>
+    <li><strong>Within range</strong> — may be unremarkable; still verify with your provider</li>
+    <li><strong>Above range</strong> — worth asking questions; not proof of overcharging</li>
+    <li><strong>Far above range</strong> — stronger signal to review line items and documentation</li>
+  </ul>
+
+  <p>
+    Local market, facility fees, emergency settings, and insurance contracts all affect real
+    prices. Our benchmarks are starting points for informed questions.
+  </p>
+</LegalLayout>

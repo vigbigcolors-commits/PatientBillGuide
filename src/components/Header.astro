@@ -1,0 +1,123 @@
+---
+import Logo from './Logo.astro';
+
+const currentPath = Astro.url.pathname;
+
+const links = [
+  { href: '/tools/', label: 'Tools', match: '/tools' },
+  { href: '/codes/', label: 'Codes', match: '/codes' },
+  { href: '/learn/', label: 'Learn', match: '/learn' },
+  { href: '/for/seniors-medicare/', label: 'Medicare', match: '/medicare' },
+  { href: '/about/', label: 'About', match: '/about' },
+];
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="/" class="site-header__brand">
+      <Logo />
+      <span class="site-header__name">
+        Patient<span class="site-header__name-accent">BillGuide</span>
+      </span>
+    </a>
+    <nav class="site-header__nav" aria-label="Main">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              'nav-link',
+              {
+                active:
+                  currentPath.startsWith(link.match) ||
+                  (link.match === '/medicare' && currentPath.startsWith('/for/seniors-medicare')),
+              },
+            ]}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+    <a href="/tools/fair-price/" class="btn btn--primary btn--sm site-header__cta">Check fair price</a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    min-height: 4.25rem;
+  }
+
+  .site-header__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-right: auto;
+  }
+
+  .site-header__brand:hover {
+    color: var(--color-primary);
+  }
+
+  .site-header__name-accent {
+    color: var(--color-accent);
+  }
+
+  .site-header__nav {
+    display: none;
+    gap: var(--space-lg);
+  }
+
+  .site-header__cta {
+    margin-left: auto;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: var(--color-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--color-primary);
+  }
+
+  @media (min-width: 768px) {
+    .site-header__nav {
+      display: flex;
+    }
+
+    .site-header__cta {
+      margin-left: 0;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .site-header__name {
+      font-size: 0.9rem;
+    }
+
+    .site-header__cta {
+      font-size: 0.85rem;
+      padding: 0.625rem 0.875rem;
+    }
+  }
+</style>

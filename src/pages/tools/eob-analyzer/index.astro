@@ -1,0 +1,190 @@
+---
+import ToolLayout from '../../../layouts/ToolLayout.astro';
+import ToolExamples from '../../../components/tools/ToolExamples.astro';
+import MethodologyFooter from '../../../components/MethodologyFooter.astro';
+import Disclaimer from '../../../components/Disclaimer.astro';
+import { site } from '../../../data/site';
+import { eobAnalyzerExamples } from '../../../data/tool-examples';
+import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+
+const faqs = [
+  {
+    question: 'What is an EOB?',
+    answer:
+      'An Explanation of Benefits (EOB) is a statement from your insurer after processing a claim. It is not a bill, but shows what was billed, allowed, paid, and what you may owe.',
+  },
+  {
+    question: 'Which insurers are supported?',
+    answer:
+      'We ship templates for UnitedHealthcare, Blue Cross Blue Shield, Aetna, and Cigna paste formats, plus a generic fallback for Medicare and other plans.',
+  },
+  {
+    question: 'What columns should I include when pasting?',
+    answer:
+      'Include date, CPT code, description, and dollar columns when possible. Our parser looks for dates, 5-digit codes, and amounts.',
+  },
+  {
+    question: 'Why do billed and allowed amounts differ?',
+    answer:
+      'Insurers negotiate or apply fee schedules. The allowed amount is what your plan recognizes — often much lower than the provider charged.',
+  },
+  {
+    question: 'Is this uploaded to your servers?',
+    answer: 'No. Parsing happens entirely in your browser.',
+  },
+  {
+    question: 'Can this fix claim denials?',
+    answer:
+      'No. We help you read the numbers. Denials often require appeals with your insurer using the reason codes on the EOB.',
+  },
+  {
+    question: 'EOB vs hospital bill — which do I pay?',
+    answer:
+      'Usually you pay the provider per the bill, using the EOB to verify amounts. If you already paid more than the EOB shows you owe, you may request a refund.',
+  },
+];
+
+const schemaGraph = [
+  webApplicationSchema({
+    name: 'EOB Analyzer',
+    description: 'Paste Explanation of Benefits text for plain-English column summaries in your browser.',
+    url: `${site.url}/tools/eob-analyzer/`,
+  }),
+  faqPageSchema(faqs),
+  breadcrumbSchema(
+    [{ name: 'Home', url: '/' }, { name: 'Tools', url: '/tools/' }, { name: 'EOB Analyzer' }],
+    site.url,
+  ),
+];
+---
+
+<ToolLayout
+  title="EOB Analyzer"
+  description="Paste your Explanation of Benefits to decode billed, allowed, plan paid, and patient responsibility columns."
+  crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Tools', href: '/tools/' },
+    { label: 'EOB Analyzer' },
+  ]}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
+
+  <Fragment slot="intro">
+    <p>
+      Paste text from your insurer's Explanation of Benefits. We auto-detect
+      <strong>UnitedHealthcare</strong>, <strong>Blue Cross Blue Shield</strong>,
+      <strong>Aetna</strong>, and <strong>Cigna</strong> layouts, then summarize what you may owe.
+    </p>
+  </Fragment>
+
+  <form class="calculator card" id="eob-analyzer-form">
+    <div class="field">
+      <label class="input-label" for="eob-insurer">Insurer template</label>
+      <select class="input-field" id="eob-insurer" name="eob-insurer">
+        <option value="auto">Auto-detect from pasted text</option>
+        <option value="uhc">UnitedHealthcare (UHC)</option>
+        <option value="bcbs">Blue Cross Blue Shield (BCBS)</option>
+        <option value="aetna">Aetna</option>
+        <option value="cigna">Cigna</option>
+        <option value="generic">Generic / other insurer</option>
+      </select>
+      <p class="input-hint">Use auto-detect first — override if columns map incorrectly.</p>
+    </div>
+    <div class="field">
+      <label class="input-label" for="eob-text">EOB text</label>
+      <textarea
+        class="input-field bill-textarea"
+        id="eob-text"
+        name="eob-text"
+        rows="10"
+        placeholder={`Example:\n01/15/2026 99213 Office visit $185.00 $108.42 $80.00 $28.42\n01/15/2026 80053 Metabolic panel $45.00 $13.22 $10.00 $3.22`}
+        required
+      ></textarea>
+    </div>
+    <button type="submit" class="btn btn--primary">Analyze EOB</button>
+  </form>
+
+  <div id="eob-error" class="form-error" hidden></div>
+  <div id="eob-results" hidden></div>
+
+  <ToolExamples variant="eob-analyzer" examples={eobAnalyzerExamples} />
+
+  <section class="tool-faq card">
+    <h2>FAQ</h2>
+    <dl class="faq">
+      {faqs.map((f) => (
+        <>
+          <dt>{f.question}</dt>
+          <dd>{f.answer}</dd>
+        </>
+      ))}
+    </dl>
+  </section>
+
+  <Disclaimer />
+
+  <div slot="sidebar">
+    <div class="sidebar-card card">
+      <h2>Learn more</h2>
+      <ul>
+        <li><a href="/learn/how-to-read-eob/">How to read an EOB</a></li>
+        <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
+        <li><a href="/for/insured/">Insured audience guide</a></li>
+      </ul>
+    </div>
+    <MethodologyFooter />
+  </div>
+</ToolLayout>
+
+<script>
+  import '../../../scripts/eob-analyzer.ts';
+</script>
+
+<style>
+  .bill-textarea {
+    min-height: 12rem;
+    resize: vertical;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
+  .form-error {
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-md);
+    color: #991b1b;
+  }
+
+  #eob-results {
+    margin-top: var(--space-lg);
+  }
+
+  .tool-faq {
+    margin-top: var(--space-xl);
+  }
+
+  .eob-insurer-badge {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    margin-bottom: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+  }
+
+  .eob-insurer-badge__label {
+    color: var(--color-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+  }
+</style>

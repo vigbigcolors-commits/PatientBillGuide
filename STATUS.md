@@ -1,104 +1,43 @@
-# BillTox — Progress Tracker
+# PatientBillGuide — Progress Tracker
 
 > Update this file after every work session. Agents should read this first.
 
 **Last updated:** 2026-06-29  
-**Current phase:** 0 — Foundation  
-**Phase status:** Not started
+**Current phase:** Week 8 — deploy ready  
+**Phase status:** 6 live tools · 56 tests · 53 pages · audit fixes applied  
+**Domain:** PatientBillGuide.com  
 
 ---
 
-## Phase 0 — Foundation (Week 1–2)
+## Week 8 — Deploy prep ✅ (code ready)
 
-*Trust shell before tools. No working JS engine yet.*
-
-- [ ] Choose & init Astro project scaffold
-- [ ] Design system (typography, colors, components)
-- [ ] Deploy staging on Cloudflare Pages
-- [ ] **Section B — EEAT pages** (all trust/legal pages)
-  - [ ] `/about/` + `/about/our-mission/` + `/about/team/`
-  - [ ] `/authors/` + at least 1 author bio
-  - [ ] `/methodology/` hub + all subpages
-  - [ ] `/editorial-policy/`
-  - [ ] `/corrections/`
-  - [ ] `/contact/`
-  - [ ] `/privacy/` `/terms/` `/disclaimer/` `/accessibility/`
-  - [ ] `/sitemap/` (HTML)
-- [ ] Homepage `/` (content-complete)
-- [ ] `/how-it-works/`
-- [ ] `/pricing/` (Free Forever)
-- [ ] `robots.txt`, `sitemap.xml`, `404`
-- [ ] Organization + WebSite schema on homepage
-- [ ] Submit to Google Search Console
-
-**Phase 0 exit criteria:** 18–20 indexed-ready pages live on staging.
+- [x] NCCI loading state + category badges in Bill Auditor
+- [x] Aetna + Cigna EOB templates fixed (10 EOB tests pass)
+- [x] Homepage hero + bridge animation
+- [x] Full audit: Linux CMS pipeline, stale pages, deploy docs
+- [ ] **Push repo to GitHub** (only 22 files tracked — must commit full codebase + data)
+- [ ] **Cloudflare Pages** connect + custom domain
+- [ ] **GSC** submit (after deploy)
+- [ ] Set up `contact@patientbillguide.com` mailbox
 
 ---
 
-## Phase 1 — Tools & Audience Landing Pages (Week 3)
+## Live tools (6)
 
-- [ ] `/tools/` directory
-- [ ] All 6 tool landing pages (content-complete; JS may be placeholder)
-- [ ] Audience pages: `/for/uninsured/`, `/for/insured/`, `/for/high-deductible/`
-- [ ] `/learn/` hub + 2 pillars (read bill + read EOB)
-
-**Phase 1 exit criteria:** ~30 pages total.
-
----
-
-## Phase 2 — CPT Encyclopedia Tier 1 (Week 4–6)
-
-- [ ] `/codes/` hub
-- [ ] 50 CPT pages (Tier 1 list in docs/CONTENT_WORKFLOW.md)
-- [ ] 5 compare pages (e.g. 99213 vs 99214)
-- [ ] 5 category pages
-- [ ] Apply for Google AdSense
-
-**Phase 2 exit criteria:** ~60 pages; AdSense application submitted.
-
----
-
-## Phase 3 — Data & First Live Tool (Week 7–10)
-
-- [ ] CMS data pipeline → JSON bundles
-- [ ] `/tools/fair-price/` — first working tool
-- [ ] CPT pages wired to live benchmark widget
-- [ ] Methodology pages updated with real data version numbers
-
----
-
-## Phase 4 — Core Tools (Week 11–16)
-
-- [ ] `/tools/bill-auditor/`
-- [ ] `/tools/eob-analyzer/`
-- [ ] `/tools/dispute-letter/`
-- [ ] `/tools/code-lookup/`
-- [ ] `/stories/` — 3 anonymized examples
-
----
-
-## Phase 5 — Scale (Month 4+)
-
-- [ ] CPT Tier 2 (150 codes)
-- [ ] State surprise billing guides (top 10 states)
-- [ ] Learn articles wave 2
-- [ ] CPT Tier 3 toward 500+
-
----
-
-## Open before Phase 0 starts
-
-See [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md):
-
-- [ ] Final brand name confirmed (BillTox?)
-- [ ] Author name(s) for `/authors/`
-- [ ] Tone: empathetic advocate vs clinical neutral
-- [ ] Tier 1 CPT list finalized (draft in CONTENT_WORKFLOW.md)
+| Tool | URL | Score |
+|------|-----|-------|
+| Fair Price | `/tools/fair-price/` | 8/10 |
+| Surprise Bill Checker | `/tools/surprise-bill-check/` | 7/10 |
+| Bill Auditor | `/tools/bill-auditor/` | 8/10 |
+| EOB Analyzer | `/tools/eob-analyzer/` | 7/10 |
+| Dispute Letter Builder | `/tools/dispute-letter/` | 7/10 |
+| Medicare Part B tab | `/tools/fair-price/?tab=medicare` | 8/10 |
 
 ---
 
 ## Session log
 
-| Date | Phase | Done |
-|------|-------|------|
-| 2026-06-29 | — | Project scaffold + full planning docs created |
+| Date | Done |
+|------|------|
+| 2026-06-29 | Full deploy audit + fixes (CMS Linux unzip, stale content, headers, contact email) |
+| 2026-06-29 | Week 7 dispute letters + Week 8 NCCI polish + hero redesign + EOB Aetna/Cigna fix |

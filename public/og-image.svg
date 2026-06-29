@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="PatientBillGuide">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#134e4a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="980" cy="120" r="180" fill="#14b8a6" opacity="0.15"/>
+  <circle cx="200" cy="520" r="220" fill="#14b8a6" opacity="0.1"/>
+  <text x="80" y="280" fill="#f8fafc" font-family="system-ui, sans-serif" font-size="64" font-weight="700">PatientBillGuide</text>
+  <text x="80" y="360" fill="#99f6e4" font-family="system-ui, sans-serif" font-size="32" font-weight="500">Honest healthcare numbers</text>
+  <text x="80" y="420" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="24">Medicare benchmarks � Bill review � EOB help</text>
+</svg>

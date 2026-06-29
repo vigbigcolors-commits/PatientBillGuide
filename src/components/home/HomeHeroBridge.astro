@@ -1,0 +1,808 @@
+---
+/**
+ * Hero bridge — unfair $ flies from bill → scales tip → orbs launch from logo → balance.
+ */
+---
+
+<div class="hero-bridge">
+  <div class="hero-bridge__frame" aria-hidden="true">
+    <svg class="hero-bridge__svg" viewBox="0 0 400 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bridge-flow-grad" x1="100%" y1="0%" x2="0%" y2="0%">
+          <stop offset="0%" stop-color="#5eead4" stop-opacity="1" />
+          <stop offset="50%" stop-color="#0d9488" stop-opacity="1" />
+          <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.4" />
+        </linearGradient>
+        <radialGradient id="bridge-orb-glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ccfbf1" />
+          <stop offset="100%" stop-color="#0d9488" />
+        </radialGradient>
+      </defs>
+
+      <!-- Orb path: logo → right pan -->
+      <path
+        id="bridge-orb-path"
+        d="M 333 26 C 295 8, 258 38, 246 74"
+        fill="none"
+        stroke="none"
+      />
+
+      <path
+        class="hero-bridge__track"
+        d="M 333 26 C 295 8, 258 38, 246 74"
+        stroke="#e2e8f0"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        fill="none"
+        pathLength="100"
+      />
+      <path
+        class="hero-bridge__flow"
+        d="M 333 26 C 295 8, 258 38, 246 74"
+        stroke="url(#bridge-flow-grad)"
+        stroke-width="2"
+        stroke-linecap="round"
+        fill="none"
+        pathLength="100"
+      />
+
+      <!-- Confusing bill -->
+      <g class="hero-bridge__bill" transform="translate(24, 12)">
+        <rect width="38" height="48" rx="6" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+        <line x1="7" y1="12" x2="31" y2="12" stroke="#fca5a5" stroke-width="1.5" stroke-linecap="round" />
+        <line x1="7" y1="20" x2="26" y2="20" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" />
+        <line x1="7" y1="28" x2="28" y2="28" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" />
+        <text x="19" y="42" text-anchor="middle" fill="#ef4444" font-size="11" font-weight="700">?</text>
+      </g>
+
+      <!-- Unfair price — $ flies from bill to left pan -->
+      <text class="hero-bridge__dollar hero-bridge__dollar--1" fill="#dc2626" font-size="11" font-weight="800">$</text>
+      <text class="hero-bridge__dollar hero-bridge__dollar--2" fill="#ef4444" font-size="10" font-weight="800">$</text>
+      <text class="hero-bridge__dollar hero-bridge__dollar--3" fill="#dc2626" font-size="9" font-weight="800">$</text>
+
+      <!-- Balance scale -->
+      <g class="hero-bridge__scale" transform="translate(200, 56)">
+        <line x1="0" y1="28" x2="0" y2="46" stroke="#0f766e" stroke-width="2.5" stroke-linecap="round" />
+        <line x1="-11" y1="46" x2="11" y2="46" stroke="#0f766e" stroke-width="2" stroke-linecap="round" />
+
+        <g class="hero-bridge__beam">
+          <line x1="-46" y1="0" x2="46" y2="0" stroke="#0d9488" stroke-width="3" stroke-linecap="round" />
+          <circle cx="0" cy="0" r="4" fill="#14b8a6" stroke="#fff" stroke-width="1.5" />
+
+          <!-- Left — fills as $ lands -->
+          <g transform="translate(-46, 0)">
+            <g class="hero-bridge__pan-level">
+              <line x1="0" y1="0" x2="0" y2="18" stroke="#14b8a6" stroke-width="1.5" stroke-linecap="round" />
+              <path d="M-16 18 H16 Q16 30 0 30 Q-16 30 -16 18 Z" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5" />
+              <text class="hero-bridge__money hero-bridge__money--1" x="-5" y="27" text-anchor="middle" fill="#dc2626" font-size="9" font-weight="800">$</text>
+              <text class="hero-bridge__money hero-bridge__money--2" x="4" y="26" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="800">$</text>
+              <text class="hero-bridge__money hero-bridge__money--3" x="0" y="24" text-anchor="middle" fill="#dc2626" font-size="8" font-weight="800">$</text>
+            </g>
+          </g>
+
+          <!-- Right — fills as orbs arrive -->
+          <g transform="translate(46, 0)">
+            <g class="hero-bridge__pan-level">
+              <line x1="0" y1="0" x2="0" y2="18" stroke="#14b8a6" stroke-width="1.5" stroke-linecap="round" />
+              <path d="M-16 18 H16 Q16 30 0 30 Q-16 30 -16 18 Z" fill="#ecfdf5" stroke="#0d9488" stroke-width="1.25" />
+              <circle class="hero-bridge__orb hero-bridge__orb--1" cx="-6" cy="24" r="3.5" fill="url(#bridge-orb-glow)" />
+              <circle class="hero-bridge__orb hero-bridge__orb--2" cx="5" cy="23" r="3" fill="#14b8a6" />
+              <circle class="hero-bridge__orb hero-bridge__orb--3" cx="0" cy="21" r="2.5" fill="#5eead4" />
+            </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- Orbs fly from logo to right pan -->
+      <circle class="hero-bridge__fly hero-bridge__fly--1" r="4" fill="url(#bridge-orb-glow)" />
+      <circle class="hero-bridge__fly hero-bridge__fly--2" r="3.5" fill="#14b8a6" />
+      <circle class="hero-bridge__fly hero-bridge__fly--3" r="3" fill="#5eead4" />
+
+      <!-- Logo — calm anchor, launches orbs, then grows -->
+      <g class="hero-bridge__logo-wrap" transform="translate(314, 4)">
+        <g class="hero-bridge__logo-scale">
+          <g class="hero-bridge__logo-inner">
+            <path
+              class="hero-bridge__logo-fill"
+              d="M16 2L4 8v8c0 7.2 5.1 13.9 12 15 6.9-1.1 12-7.8 12-15V8L16 2z"
+              fill="#0d9488"
+            />
+            <path
+              class="hero-bridge__logo-stroke"
+              d="M16 3.5L5.5 9v7c0 6.4 4.5 12.4 10.5 13.5 6-1.1 10.5-7.1 10.5-13.5V9L16 3.5z"
+              stroke="#0f766e"
+              stroke-width="1.5"
+              fill="none"
+            />
+            <path
+              class="hero-bridge__logo-check"
+              d="M13 16.5l2 2 4.5-4.5"
+              stroke="#0d9488"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              pathLength="100"
+            />
+          </g>
+        </g>
+        <!-- Launch pulse from logo center -->
+        <circle class="hero-bridge__logo-pulse" cx="16" cy="16" r="14" fill="#14b8a6" />
+      </g>
+    </svg>
+
+    <div class="hero-bridge__labels">
+      <span class="hero-bridge__label hero-bridge__label--1">Confusing bill</span>
+      <span class="hero-bridge__label hero-bridge__label--2">Fair benchmark</span>
+      <span class="hero-bridge__label hero-bridge__label--3">Balance restored</span>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  .hero-bridge {
+    width: 100%;
+    max-width: 26rem;
+    margin: 1.75rem 0 0;
+    overflow: hidden;
+  }
+
+  .hero-bridge__frame {
+    padding: 0.25rem 0 0;
+  }
+
+  .hero-bridge__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .hero-bridge__labels {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0 0.125rem;
+  }
+
+  .hero-bridge__label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #9ca3af;
+  }
+
+  .hero-bridge__label--1 {
+    color: #94a3b8;
+  }
+
+  .hero-bridge__label--2 {
+    flex: 1;
+    text-align: center;
+    color: #0f766e;
+  }
+
+  .hero-bridge__label--3 {
+    text-align: right;
+    color: #0d9488;
+  }
+
+  .hero-bridge__track {
+    opacity: 0;
+    animation: hb-track 10s ease-in-out infinite;
+  }
+
+  .hero-bridge__flow {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    opacity: 0;
+    animation: hb-flow 10s ease-in-out infinite;
+  }
+
+  /* Left heavy: beam tilts down on money side */
+  .hero-bridge__beam {
+    transform-origin: 0 0;
+    animation: hb-beam 10s cubic-bezier(0.45, 0.05, 0.25, 1) infinite;
+  }
+
+  .hero-bridge__pan-level {
+    transform-origin: 0 0;
+    animation: hb-pan-level 10s cubic-bezier(0.45, 0.05, 0.25, 1) infinite;
+  }
+
+  .hero-bridge__money {
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
+  .hero-bridge__money--1 {
+    animation: hb-money-land-1 10s ease-out infinite;
+  }
+
+  .hero-bridge__money--2 {
+    animation: hb-money-land-2 10s ease-out infinite;
+  }
+
+  .hero-bridge__money--3 {
+    animation: hb-money-land-3 10s ease-out infinite;
+  }
+
+  .hero-bridge__dollar {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .hero-bridge__dollar--1 {
+    animation: hb-dollar-fly-1 10s cubic-bezier(0.35, 0.05, 0.2, 1) infinite;
+  }
+
+  .hero-bridge__dollar--2 {
+    animation: hb-dollar-fly-2 10s cubic-bezier(0.35, 0.05, 0.2, 1) infinite;
+  }
+
+  .hero-bridge__dollar--3 {
+    animation: hb-dollar-fly-3 10s cubic-bezier(0.35, 0.05, 0.2, 1) infinite;
+  }
+
+  .hero-bridge__orb {
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
+  .hero-bridge__orb--1 {
+    animation: hb-orb-land-1 10s ease-out infinite;
+  }
+
+  .hero-bridge__orb--2 {
+    animation: hb-orb-land-2 10s ease-out infinite;
+  }
+
+  .hero-bridge__orb--3 {
+    animation: hb-orb-land-3 10s ease-out infinite;
+  }
+
+  .hero-bridge__fly {
+    opacity: 0;
+    visibility: hidden;
+    offset-path: path('M 333 26 C 295 8, 258 38, 246 74');
+    offset-rotate: 0deg;
+  }
+
+  .hero-bridge__fly--1 {
+    animation: hb-fly-path-1 10s cubic-bezier(0.33, 0.02, 0.2, 1) infinite;
+  }
+
+  .hero-bridge__fly--2 {
+    animation: hb-fly-path-2 10s cubic-bezier(0.33, 0.02, 0.2, 1) infinite;
+  }
+
+  .hero-bridge__fly--3 {
+    animation: hb-fly-path-3 10s cubic-bezier(0.33, 0.02, 0.2, 1) infinite;
+  }
+
+  .hero-bridge__logo-scale {
+    transform-origin: 16px 16px;
+    animation: hb-logo-scale 10s ease-in-out infinite;
+  }
+
+  .hero-bridge__logo-inner {
+    transform-origin: 16px 16px;
+  }
+
+  .hero-bridge__logo-fill {
+    opacity: 0.15;
+    animation: hb-logo-fill 10s ease-in-out infinite;
+  }
+
+  .hero-bridge__logo-stroke {
+    opacity: 1;
+    animation: hb-logo-stroke 10s ease-in-out infinite;
+  }
+
+  .hero-bridge__logo-check {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 0;
+    opacity: 0.35;
+    animation: hb-logo-check 10s ease-in-out infinite;
+  }
+
+  .hero-bridge__logo-pulse {
+    opacity: 0;
+    transform-origin: 16px 16px;
+    transform-box: fill-box;
+    animation: hb-logo-pulse 10s ease-out infinite;
+  }
+
+  .hero-bridge__bill {
+    animation: hb-bill 10s ease-in-out infinite;
+  }
+
+  /* ── Timeline (10s) ──
+     0–8%    calm — logo steady, scales level
+     6–22%   $ flies from bill → left pan
+     18–32%  left pan heavy, beam tilts
+     30–58%  orbs launch from logo → right pan
+     55–78%  scales balance
+     62–88%  logo grows + sharpens
+  */
+
+  @keyframes hb-beam {
+    0%,
+    8% {
+      transform: rotate(0deg);
+    }
+    22%,
+    32% {
+      transform: rotate(-24deg);
+    }
+    68% {
+      transform: rotate(2deg);
+    }
+    78%,
+    88% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+  @keyframes hb-pan-level {
+    0%,
+    8% {
+      transform: rotate(0deg);
+    }
+    22%,
+    32% {
+      transform: rotate(24deg);
+    }
+    68% {
+      transform: rotate(-2deg);
+    }
+    78%,
+    88% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+  @keyframes hb-dollar-fly-1 {
+    0%,
+    6% {
+      opacity: 0;
+      transform: translate(43px, 36px) scale(0.5);
+    }
+    10% {
+      opacity: 1;
+      transform: translate(43px, 36px) scale(1);
+    }
+    20% {
+      opacity: 0.9;
+      transform: translate(148px, 72px) scale(0.85);
+    }
+    24%,
+    100% {
+      opacity: 0;
+      transform: translate(152px, 76px) scale(0);
+    }
+  }
+
+  @keyframes hb-dollar-fly-2 {
+    0%,
+    10% {
+      opacity: 0;
+      transform: translate(48px, 40px) scale(0.5);
+    }
+    14% {
+      opacity: 1;
+      transform: translate(48px, 40px) scale(1);
+    }
+    24% {
+      opacity: 0.85;
+      transform: translate(154px, 74px) scale(0.8);
+    }
+    28%,
+    100% {
+      opacity: 0;
+      transform: translate(156px, 78px) scale(0);
+    }
+  }
+
+  @keyframes hb-dollar-fly-3 {
+    0%,
+    14% {
+      opacity: 0;
+      transform: translate(38px, 44px) scale(0.5);
+    }
+    18% {
+      opacity: 1;
+      transform: translate(38px, 44px) scale(1);
+    }
+    28% {
+      opacity: 0.8;
+      transform: translate(150px, 76px) scale(0.75);
+    }
+    32%,
+    100% {
+      opacity: 0;
+      transform: translate(154px, 80px) scale(0);
+    }
+  }
+
+  @keyframes hb-money-land-1 {
+    0%,
+    18% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    22%,
+    88% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+
+  @keyframes hb-money-land-2 {
+    0%,
+    22% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    26%,
+    88% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+
+  @keyframes hb-money-land-3 {
+    0%,
+    26% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    30%,
+    88% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+
+  @keyframes hb-track {
+    0%,
+    28% {
+      opacity: 0;
+    }
+    32%,
+    62% {
+      opacity: 0.65;
+    }
+    68%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes hb-flow {
+    0%,
+    30% {
+      stroke-dashoffset: 100;
+      opacity: 0;
+    }
+    34% {
+      opacity: 1;
+    }
+    58% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    65%,
+    100% {
+      stroke-dashoffset: 0;
+      opacity: 0;
+    }
+  }
+
+  @keyframes hb-fly-path-1 {
+    0%,
+    30% {
+      offset-distance: 0%;
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.3);
+    }
+    32% {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+    52% {
+      offset-distance: 100%;
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+    54%,
+    100% {
+      offset-distance: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0);
+    }
+  }
+
+  @keyframes hb-fly-path-2 {
+    0%,
+    36% {
+      offset-distance: 0%;
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.3);
+    }
+    38% {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+    56% {
+      offset-distance: 100%;
+      opacity: 1;
+      visibility: visible;
+    }
+    58%,
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  @keyframes hb-fly-path-3 {
+    0%,
+    42% {
+      offset-distance: 0%;
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.3);
+    }
+    44% {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+    60% {
+      offset-distance: 100%;
+      opacity: 1;
+      visibility: visible;
+    }
+    62%,
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  @keyframes hb-orb-land-1 {
+    0%,
+    50% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    54%,
+    88% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+
+  @keyframes hb-orb-land-2 {
+    0%,
+    54% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    58%,
+    88% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+
+  @keyframes hb-orb-land-3 {
+    0%,
+    58% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    62%,
+    88% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+
+  @keyframes hb-logo-scale {
+    0%,
+    30% {
+      transform: scale(1);
+    }
+    32% {
+      transform: scale(0.96);
+    }
+    38%,
+    58% {
+      transform: scale(1);
+    }
+    72%,
+    88% {
+      transform: scale(1.14);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes hb-logo-pulse {
+    0%,
+    30% {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    32% {
+      opacity: 0.35;
+      transform: scale(1);
+    }
+    40% {
+      opacity: 0;
+      transform: scale(1.6);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+  }
+
+  @keyframes hb-logo-fill {
+    0%,
+    58% {
+      opacity: 0.15;
+    }
+    72%,
+    88% {
+      opacity: 0.28;
+    }
+    100% {
+      opacity: 0.15;
+    }
+  }
+
+  @keyframes hb-logo-stroke {
+    0%,
+    58% {
+      opacity: 0.85;
+    }
+    72%,
+    88% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.85;
+    }
+  }
+
+  @keyframes hb-logo-check {
+    0%,
+    62% {
+      stroke-dashoffset: 100;
+      opacity: 0.2;
+    }
+    74%,
+    88% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    100% {
+      stroke-dashoffset: 100;
+      opacity: 0.2;
+    }
+  }
+
+  @keyframes hb-bill {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    8%,
+    22% {
+      opacity: 0.85;
+    }
+    75%,
+    88% {
+      opacity: 0.65;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .hero-bridge {
+      max-width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bridge__beam,
+    .hero-bridge__pan-level {
+      transform: rotate(0deg) !important;
+      animation: none !important;
+    }
+
+    .hero-bridge__dollar {
+      display: none;
+    }
+
+    .hero-bridge__fly {
+      display: none;
+    }
+
+    .hero-bridge__money--1,
+    .hero-bridge__money--2,
+    .hero-bridge__money--3,
+    .hero-bridge__orb--1,
+    .hero-bridge__orb--2,
+    .hero-bridge__orb--3 {
+      opacity: 1 !important;
+      transform: scale(1) !important;
+      animation: none !important;
+    }
+
+    .hero-bridge__logo-scale {
+      transform: scale(1) !important;
+      animation: none !important;
+    }
+
+    .hero-bridge__logo-check {
+      stroke-dashoffset: 0 !important;
+      opacity: 1 !important;
+    }
+
+    .hero-bridge__track,
+    .hero-bridge__flow {
+      opacity: 0.4 !important;
+      stroke-dashoffset: 0 !important;
+      animation: none !important;
+    }
+
+    .hero-bridge__logo-pulse {
+      display: none;
+    }
+  }
+</style>

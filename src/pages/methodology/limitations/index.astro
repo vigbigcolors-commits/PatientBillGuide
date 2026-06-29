@@ -1,0 +1,42 @@
+---
+import LegalLayout from '../../../layouts/LegalLayout.astro';
+---
+
+<LegalLayout
+  title="Limitations"
+  description="What PatientBillGuide tools cannot detect — important limitations for bill review."
+  crumbs={[
+    { label: 'Methodology', href: '/methodology/' },
+    { label: 'Limitations' },
+  ]}
+>
+  <h2>We cannot see your full medical record</h2>
+  <p>
+    Without diagnoses, operative notes, and insurer contracts, we cannot confirm medical
+    necessity or definitive upcoding. Flags are <strong>heuristic</strong>, not legal findings.
+  </p>
+
+  <h2>Benchmarks are not quotes</h2>
+  <p>
+    Medicare allowed amounts are public anchors. Your insurer’s negotiated rate or a hospital’s
+    cash price may legitimately differ. We do not have access to your plan’s fee schedule.
+  </p>
+
+  <h2>Parser limits</h2>
+  <p>
+    Pasted bills and EOBs vary by format. OCR for photos is not supported in v1. Unusual
+    layouts may parse incompletely — always compare to your original document.
+  </p>
+
+  <h2>Not legal or medical advice</h2>
+  <p>
+    Dispute letter templates are starting points. For complex disputes, balance billing law,
+    or large amounts, consider professional advice.
+  </p>
+
+  <h2>Confidence levels</h2>
+  <p>
+    Every flag includes a confidence indicator (high / medium / low). Low-confidence items
+    deserve scrutiny but not panic.
+  </p>
+</LegalLayout>

@@ -4,47 +4,43 @@ Items to resolve before or during build. Check off as decided.
 
 ---
 
-## Before Phase 0 starts
+## Before / during Week 1
 
 | # | Question | Status | Decision |
 |---|----------|--------|----------|
-| 1 | Final brand name — **BillTox** confirmed? | ⏳ Open | |
-| 2 | Author name(s) for `/authors/` pages | ⏳ Open | |
-| 3 | Tone: **empathetic advocate** vs clinical neutral | ⏳ Recommended: empathetic | |
-| 4 | Tier 1 CPT list — run SEO keyword validation? | ⏳ Open | Draft in CONTENT_WORKFLOW.md |
-| 5 | Attorney review of disclaimer before launch? | ⏳ Open | Recommended before AdSense |
+| 1 | Final brand name | ✅ Locked | **PatientBillGuide.com** |
+| 2 | Author for `/authors/vigen/` — display name format | ⏳ Open | See [AUTHOR_STRATEGY.md](AUTHOR_STRATEGY.md) |
+| 3 | Contact email | ⏳ Later | Before publish |
+| 4 | Logo / wordmark | ⏳ Open | Text wordmark OK for Week 1 |
+| 5 | Tier 1 CPT list — SEO keyword validation | ⏳ Open | Draft in CONTENT_WORKFLOW.md |
 
 ---
 
-## Before Phase 0 implementation
+## Before Week 2 (Fair Price)
 
 | # | Question | Status | Decision |
 |---|----------|--------|----------|
-| 6 | Astro version + package manager (npm/pnpm) | ⏳ Open | |
-| 7 | Design references / competitor sites to beat | ⏳ Open | |
-| 8 | Logo & favicon design | ⏳ Open | |
-| 9 | Contact email for `/contact/` page | ⏳ Open | |
-| 10 | Google Analytics / privacy-friendly analytics? | ⏳ Open | Plausible? CF Analytics? |
+| 6 | MPFS year to ship first (2025 vs 2026) | ⏳ Open | Recommend latest available CMS file |
+| 7 | Cloudflare account / Pages project name | ⏳ Open | User sets up |
+| 8 | Google Analytics / CF Analytics | ⏳ Open | CF Web Analytics free option |
 
 ---
 
-## Before Phase 3 (data pipeline)
+## Before AdSense (~Week 5)
 
 | # | Question | Status | Decision |
 |---|----------|--------|----------|
-| 11 | MPFS year to ship first (2025 vs 2026) | ⏳ Open | |
-| 12 | Price multiplier range (1.5–2.5x Medicare) — finalize | ⏳ Open | Document in methodology |
-| 13 | R2 bucket vs `public/data/` on Cloudflare Pages | ⏳ Open | |
+| 9 | Attorney review of disclaimer | ⏳ Open | Recommended |
+| 10 | Affiliate programs to test | ⏳ Open | Bill negotiation services first |
 
 ---
 
-## Before Phase 4 (tools)
+## Before Oct 2026 Medicare AEP
 
 | # | Question | Status | Decision |
 |---|----------|--------|----------|
-| 14 | PDF library: jsPDF vs browser print | ⏳ Open | |
-| 15 | Service Worker for offline data cache | ⏳ Open | Recommended yes |
-| 16 | EOB parser — which insurer formats to support first | ⏳ Open | |
+| 11 | Medicare affiliate / lead gen partner | ⏳ Open | Research month 4+ |
+| 12 | medicare-plan-finder scope | ⏳ Open | Educational v1 first |
 
 ---
 
@@ -52,21 +48,13 @@ Items to resolve before or during build. Check off as decided.
 
 | # | Question | Decision | Date |
 |---|----------|----------|------|
-| R1 | Separate from VeloTools? | **Yes — standalone project** | 2026-06-29 |
+| R1 | Separate from VeloTools? | **Yes** | 2026-06-29 |
 | R2 | UI language? | **English (US)** | 2026-06-29 |
-| R3 | Audience? | **Both self-pay and insured** | 2026-06-29 |
-| R4 | Monetization? | **AdSense only at start** | 2026-06-29 |
-| R5 | CPT descriptions? | **Original plain-English** | 2026-06-29 |
-| R6 | Build order? | **EEAT pages first, then tools** | 2026-06-29 |
-| R7 | Framework? | **Astro (planned)** | 2026-06-29 |
-| R8 | Hosting? | **Cloudflare Pages (planned)** | 2026-06-29 |
-
----
-
-## How to use this file
-
-When a question is decided:
-
-1. Move row to **Resolved** section
-2. Update [DECISIONS.md](DECISIONS.md) if it's a locked decision
-3. Update [STATUS.md](../STATUS.md) if it unblocks a phase task
+| R3 | Audience? | Uninsured + insured + Medicare | 2026-06-29 |
+| R4 | Monetization? | AdSense + affiliate later | 2026-06-29 |
+| R5 | One site vs multiple? | **One hub** (no EV/solar here) | 2026-06-29 |
+| R6 | Build order? | Minimal trust → Fair Price week 2 | 2026-06-29 |
+| R7 | Framework? | **Astro** | 2026-06-29 |
+| R8 | Hosting? | **Cloudflare Pages** | 2026-06-29 |
+| R9 | Brand? | **PatientBillGuide.com** | 2026-06-29 |
+| R10 | Tone? | Empathetic advocate | 2026-06-29 |

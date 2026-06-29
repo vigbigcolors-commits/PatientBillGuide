@@ -1,0 +1,310 @@
+---
+import { heroTools } from '../../data/hero-tools';
+---
+
+<div class="hero-tools" aria-label="Free billing tools">
+  <div class="hero-tools__grid">
+    {
+      heroTools.map((tool) => (
+        <a href={tool.href} class={`hero-tool hero-tool--${tool.accent}`}>
+          <span class="hero-tool__glow" aria-hidden="true" />
+          <span class="hero-tool__dots" aria-hidden="true" />
+          <span class="hero-tool__ring" aria-hidden="true" />
+
+          <span class="hero-tool__top">
+            <span class="hero-tool__cluster">{tool.cluster}</span>
+            {tool.live && <span class="hero-tool__live">Live</span>}
+          </span>
+
+          <span class={`hero-tool__icon hero-tool__icon--${tool.icon}`} aria-hidden="true">
+            {tool.icon === 'price' && (
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.75" />
+                <path d="M16 16l4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+                <path d="M8 11h6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+              </svg>
+            )}
+            {tool.icon === 'surprise' && (
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2l7 4v5c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                />
+                <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+              </svg>
+            )}
+            {tool.icon === 'audit' && (
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                />
+                <path d="M14 2v6h6M9 13h6M9 17h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+              </svg>
+            )}
+            {tool.icon === 'eob' && (
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                <rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.75" />
+                <path d="M9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+              </svg>
+            )}
+            {tool.icon === 'medicare' && (
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 18l4-8 4 4 4-6 4 10"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            )}
+          </span>
+
+          <span class="hero-tool__body">
+            <strong class="hero-tool__title">{tool.title}</strong>
+            <span class="hero-tool__tagline">{tool.tagline}</span>
+          </span>
+
+          {tool.stat && <span class="hero-tool__stat">{tool.stat}</span>}
+
+          <span class="hero-tool__arrow" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M5 12h14M13 6l6 6-6 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </span>
+        </a>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .hero-tools__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.875rem;
+  }
+
+  .hero-tool {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    padding: 1.125rem 1.125rem 1rem;
+    border-radius: 1.125rem;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    min-height: 9.5rem;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .hero-tool:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgb(0 0 0 / 0.12);
+  }
+
+  .hero-tool__glow {
+    position: absolute;
+    inset: -40% -20% auto auto;
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    opacity: 0.55;
+    pointer-events: none;
+    filter: blur(28px);
+  }
+
+  .hero-tool__dots {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    opacity: 0.18;
+    background-image: radial-gradient(circle, currentColor 1.5px, transparent 1.5px);
+    background-size: 8px 8px;
+    pointer-events: none;
+  }
+
+  .hero-tool__ring {
+    position: absolute;
+    top: -1.25rem;
+    left: -1.25rem;
+    width: 4rem;
+    height: 4rem;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    opacity: 0.12;
+    pointer-events: none;
+  }
+
+  .hero-tool__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-tool__cluster {
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  .hero-tool__live {
+    font-size: 0.625rem;
+    font-weight: 700;
+    padding: 0.125rem 0.5rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.55);
+    backdrop-filter: blur(4px);
+  }
+
+  .hero-tool__icon {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.875rem;
+    background: rgb(255 255 255 / 0.45);
+    backdrop-filter: blur(6px);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.6);
+  }
+
+  .hero-tool__body {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+  }
+
+  .hero-tool__title {
+    font-family: var(--font-heading);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .hero-tool__tagline {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    opacity: 0.88;
+  }
+
+  .hero-tool__stat {
+    position: relative;
+    z-index: 1;
+    align-self: flex-start;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.4);
+  }
+
+  .hero-tool__arrow {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1;
+    opacity: 0.5;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+
+  .hero-tool:hover .hero-tool__arrow {
+    opacity: 1;
+    transform: translateX(2px);
+  }
+
+  /* Teal — Fair Price */
+  .hero-tool--teal {
+    background: linear-gradient(145deg, #ecfdf5 0%, #ccfbf1 45%, #99f6e4 100%);
+    border-color: #5eead4;
+    color: #0f766e;
+  }
+  .hero-tool--teal .hero-tool__glow {
+    background: #14b8a6;
+  }
+  .hero-tool--teal .hero-tool__icon {
+    color: #0d9488;
+  }
+
+  /* Violet — Surprise Bill */
+  .hero-tool--violet {
+    background: linear-gradient(145deg, #f5f3ff 0%, #ede9fe 45%, #ddd6fe 100%);
+    border-color: #c4b5fd;
+    color: #5b21b6;
+  }
+  .hero-tool--violet .hero-tool__glow {
+    background: #8b5cf6;
+  }
+
+  /* Amber — Bill Auditor */
+  .hero-tool--amber {
+    background: linear-gradient(145deg, #fffbeb 0%, #fef3c7 45%, #fde68a 100%);
+    border-color: #fcd34d;
+    color: #b45309;
+  }
+  .hero-tool--amber .hero-tool__glow {
+    background: #f59e0b;
+  }
+
+  /* Blue — EOB */
+  .hero-tool--blue {
+    background: linear-gradient(145deg, #eff6ff 0%, #dbeafe 45%, #bfdbfe 100%);
+    border-color: #93c5fd;
+    color: #1d4ed8;
+  }
+  .hero-tool--blue .hero-tool__glow {
+    background: #3b82f6;
+  }
+
+  /* Rose — Medicare */
+  .hero-tool--rose {
+    background: linear-gradient(145deg, #fff1f2 0%, #ffe4e6 45%, #fecdd3 100%);
+    border-color: #fda4af;
+    color: #be123c;
+    grid-column: 1 / -1;
+  }
+  .hero-tool--rose .hero-tool__glow {
+    background: #f43f5e;
+  }
+
+  @media (min-width: 1100px) {
+    .hero-tools__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-tool--rose {
+      grid-column: auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-tools__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-tool--rose {
+      grid-column: auto;
+    }
+  }
+</style>

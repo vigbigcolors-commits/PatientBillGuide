@@ -1,0 +1,40 @@
+---
+import LegalLayout from '../../../layouts/LegalLayout.astro';
+---
+
+<LegalLayout
+  title="Our Mission"
+  description="Why PatientBillGuide exists — honest healthcare numbers for every patient."
+  crumbs={[
+    { label: 'About', href: '/about/' },
+    { label: 'Our Mission' },
+  ]}
+>
+  <p>
+    Medical bills in the United States are often confusing, stressful, and far higher than
+    patients expect. Insurance EOBs add another layer of jargon. Many people do not know
+    whether a charge is typical or worth questioning.
+  </p>
+
+  <h2>Our mission</h2>
+  <p>
+    To give every patient <strong>honest numbers and clear explanations</strong> — before,
+    during, and after they receive a bill — using public data and tools that respect privacy.
+  </p>
+
+  <h2>How we measure success</h2>
+  <ul>
+    <li>You understand what you were charged and why</li>
+    <li>You can compare a price to a documented fair benchmark</li>
+    <li>You know when a bill looks normal — not just when it looks wrong</li>
+    <li>You have sensible next steps, not fear-based hype</li>
+  </ul>
+
+  <h2>Principles</h2>
+  <ul>
+    <li><strong>Privacy first</strong> — processing in your browser</li>
+    <li><strong>Transparency</strong> — methodology and limitations published</li>
+    <li><strong>Empathetic tone</strong> — calm advocate, not alarmist</li>
+    <li><strong>Original content</strong> — plain-English CPT summaries we write ourselves</li>
+  </ul>
+</LegalLayout>

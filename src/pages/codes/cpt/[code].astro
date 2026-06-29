@@ -1,0 +1,242 @@
+---
+import CptLayout from '../../../layouts/CptLayout.astro';
+import MethodologyFooter from '../../../components/MethodologyFooter.astro';
+import Disclaimer from '../../../components/Disclaimer.astro';
+import { launchCptCodes, allCptPages } from '../../../data/cpt-codes';
+import { site } from '../../../data/site';
+import { faqPageSchema, medicalWebPageSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+
+export function getStaticPaths() {
+  return launchCptCodes.map((code) => ({ params: { code } }));
+}
+
+const { code } = Astro.params;
+const page = allCptPages[code!];
+
+if (!page) {
+  return Astro.redirect('/codes/');
+}
+
+const updated = '2026-06-29';
+const pageUrl = `/codes/cpt/${page.code}/`;
+const canonical = new URL(pageUrl, site.url).href;
+
+const schemaGraph = [
+  medicalWebPageSchema({
+    name: page.title,
+    description: page.metaDescription,
+    url: canonical,
+    dateModified: updated,
+    authorName: 'Vigen',
+    authorUrl: `${site.url}/authors/vigen/`,
+  }),
+  faqPageSchema(page.faq),
+  breadcrumbSchema(
+    [
+      { name: 'Home', url: '/' },
+      { name: 'CPT Codes', url: '/codes/' },
+      { name: page.code },
+    ],
+    site.url,
+  ),
+];
+---
+
+<CptLayout
+  title={page.title}
+  description={page.metaDescription}
+  code={page.code}
+  crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'CPT Codes', href: '/codes/' },
+    { label: page.code },
+  ]}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
+  <p slot="summary" class="cpt-summary">{page.summary}</p>
+
+  <section>
+    <h2>What is CPT {page.code}?</h2>
+    {page.whatIs.map((p) => <p>{p}</p>)}
+  </section>
+
+  <section>
+    <h2>When is this code used?</h2>
+    <ul>
+      {page.whenUsed.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>Typical costs</h2>
+    {page.typicalCosts.map((p) => <p>{p}</p>)}
+  </section>
+
+  <section>
+    <h2>Common billing issues</h2>
+    <ul>
+      {page.billingIssues.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>What to do if your charge seems high</h2>
+    <ul>
+      {page.whatToDo.map((item) => <li>{item}</li>)}
+    </ul>
+    <p>
+      <a class="btn btn--primary" href={`/tools/fair-price/?code=${page.code}`}>
+        Check price for CPT {page.code}
+      </a>
+      {' '}
+      <a class="btn btn--secondary" href={`/tools/bill-auditor/`}>
+        Audit your bill
+      </a>
+    </p>
+  </section>
+
+  <section>
+    <h2>Related codes</h2>
+    <ul>
+      {
+        page.relatedCodes.map((r) => (
+          <li>
+            {allCptPages[r.code] ? (
+              <a href={`/codes/cpt/${r.code}/`}>
+                <strong>{r.code}</strong> — {r.label}
+              </a>
+            ) : (
+              <span>
+                <strong>{r.code}</strong> — {r.label}
+              </span>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <h2>FAQ</h2>
+    <dl class="faq">
+      {
+        page.faq.map((item) => (
+          <>
+            <dt>{item.question}</dt>
+            <dd>{item.answer}</dd>
+          </>
+        ))
+      }
+    </dl>
+  </section>
+
+  <p class="cpt-byline">
+    Written by <a href="/authors/vigen/">Vigen</a> · Last updated {updated}
+  </p>
+
+  <Disclaimer />
+
+  <div slot="sidebar">
+    <div class="widget-card card">
+      <h2>Check your price</h2>
+      <p class="widget-card__hint">Medicare benchmark + fair range for CPT {page.code}</p>
+      <form class="mini-calculator" id="fair-price-form">
+        <input type="hidden" id="cpt" name="cpt" value={page.code} />
+        <div class="field">
+          <label class="input-label" for="zip">ZIP code</label>
+          <input
+            class="input-field"
+            id="zip"
+            name="zip"
+            type="text"
+            inputmode="numeric"
+            placeholder="e.g. 90210"
+            maxlength="5"
+            autocomplete="postal-code"
+          />
+        </div>
+        <div class="field">
+          <label class="input-label" for="price">Your charge (optional)</label>
+          <input
+            class="input-field"
+            id="price"
+            name="price"
+            type="text"
+            inputmode="decimal"
+            placeholder="$0.00"
+          />
+        </div>
+        <button type="submit" class="btn btn--primary btn--block">Check price</button>
+      </form>
+      <div id="fair-price-error" class="fair-price-error" hidden></div>
+      <div id="fair-price-results" hidden></div>
+    </div>
+
+    <div class="sidebar-links card">
+      <h2>More tools</h2>
+      <ul>
+        <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
+        <li><a href="/tools/">All tools</a></li>
+        <li><a href="/methodology/price-benchmarks/">Price benchmarks</a></li>
+      </ul>
+    </div>
+
+    <MethodologyFooter />
+  </div>
+</CptLayout>
+
+<script>
+  import '../../../scripts/fair-price.ts';
+</script>
+
+<style>
+  .cpt-byline {
+    margin-top: var(--space-2xl);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .widget-card h2,
+  .sidebar-links h2 {
+    font-size: 1rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .widget-card__hint {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin: 0 0 var(--space-md);
+  }
+
+  .mini-calculator .field {
+    margin-bottom: var(--space-md);
+  }
+
+  .btn--block {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sidebar-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .sidebar-links li + li {
+    margin-top: var(--space-sm);
+  }
+
+  .fair-price-error {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-md);
+    color: #991b1b;
+    font-size: 0.875rem;
+  }
+</style>

@@ -1,0 +1,1098 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Disclaimer from '../../components/Disclaimer.astro';
+import { site } from '../../data/site';
+import {
+  howItWorksMeta,
+  howItWorksTrust,
+  howItWorksPipeline,
+  howItWorksAudiences,
+  howItWorksTools,
+  howItWorksFaqs,
+} from '../../data/how-it-works-content';
+import {
+  articleSchema,
+  breadcrumbSchema,
+  faqPageSchema,
+  howToSchema,
+  medicalWebPageSchema,
+} from '../../lib/seo/schema';
+
+const pageUrl = '/how-it-works/';
+const canonical = new URL(pageUrl, site.url).href;
+
+const schemaGraph = [
+  medicalWebPageSchema({
+    name: howItWorksMeta.title,
+    description: howItWorksMeta.description,
+    url: canonical,
+    dateModified: howItWorksMeta.updated,
+    authorName: 'Vigen',
+    authorUrl: `${site.url}/authors/vigen/`,
+  }),
+  articleSchema({
+    headline: howItWorksMeta.title,
+    description: howItWorksMeta.description,
+    url: canonical,
+    dateModified: howItWorksMeta.updated,
+    authorName: 'Vigen',
+    authorUrl: `${site.url}/authors/vigen/`,
+  }),
+  howToSchema({
+    name: 'How to check a medical bill with PatientBillGuide',
+    description: howItWorksMeta.description,
+    url: canonical,
+    steps: howItWorksPipeline.map((s) => ({ name: s.title, text: s.text })),
+  }),
+  faqPageSchema(howItWorksFaqs),
+  breadcrumbSchema([{ name: 'Home', url: '/' }, { name: 'How It Works' }], site.url),
+];
+---
+
+<BaseLayout title={howItWorksMeta.title} description={howItWorksMeta.description} showTrustStrip>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
+
+  {/* ── Hero ── */}
+  <section class="hiw-hero" aria-labelledby="hiw-hero-heading">
+    <div class="hiw-hero__ambient" aria-hidden="true">
+      <span class="hiw-orb hiw-orb--1"></span>
+      <span class="hiw-orb hiw-orb--2"></span>
+    </div>
+    <div class="container hiw-hero__inner">
+      <Breadcrumbs items={[{ label: 'How It Works' }]} />
+      <p class="hiw-eyebrow">Transparent · Private · Free</p>
+      <h1 id="hiw-hero-heading">How PatientBillGuide works</h1>
+      <p class="hiw-hero__lead">
+        We turn confusing US medical bills and EOBs into plain-English numbers — using public
+        Medicare data, running entirely in your browser, with honest outcomes even when your bill
+        looks normal.
+      </p>
+      <div class="hiw-hero__actions">
+        <a href="/tools/fair-price/" class="btn btn--primary">Try Fair Price Calculator</a>
+        <a href="/tools/bill-auditor/" class="btn btn--secondary">Audit a bill</a>
+      </div>
+      <ul class="hiw-trust" role="list">
+        {
+          howItWorksTrust.map((t) => (
+            <li class="hiw-trust__item">
+              <strong>{t.label}</strong>
+              <span>{t.detail}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* ── Pipeline ── */}
+  <section class="hiw-pipeline" aria-labelledby="hiw-pipeline-heading">
+    <div class="container">
+      <header class="hiw-section-head">
+        <p class="hiw-eyebrow hiw-eyebrow--dark">The flow</p>
+        <h2 id="hiw-pipeline-heading">Four steps from confusion to clarity</h2>
+        <p class="hiw-section-lead">
+          Every tool follows the same privacy-first pattern — you stay in control of your data from
+          start to finish.
+        </p>
+      </header>
+      <ol class="hiw-pipeline__grid">
+        {
+          howItWorksPipeline.map((step, i) => (
+            <li class={`hiw-pipeline__step hiw-pipeline__step--${step.tone}`} style={`--i: ${i}`}>
+              <span class="hiw-pipeline__num" aria-hidden="true">{step.step}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* ── Audiences ── */}
+  <section class="hiw-audiences" aria-labelledby="hiw-audiences-heading">
+    <div class="container">
+      <header class="hiw-section-head hiw-section-head--center">
+        <p class="hiw-eyebrow hiw-eyebrow--dark">Who we help</p>
+        <h2 id="hiw-audiences-heading">Built for real billing situations</h2>
+      </header>
+      <div class="hiw-audiences__grid">
+        {
+          howItWorksAudiences.map((a) => (
+            <a href={a.href} class="hiw-audience-card">
+              <span class="hiw-audience-card__label">{a.label}</span>
+              <h3>{a.title}</h3>
+              <p>{a.text}</p>
+              <span class="hiw-audience-card__cta">{a.cta} →</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── Tools ── */}
+  <section class="hiw-tools" aria-labelledby="hiw-tools-heading">
+    <div class="container">
+      <header class="hiw-section-head">
+        <p class="hiw-eyebrow">Live tools</p>
+        <h2 id="hiw-tools-heading">What you can use today</h2>
+        <p class="hiw-section-lead hiw-section-lead--light">
+          Four free calculators and parsers — more coming in the ACT cluster (dispute letters,
+          negotiation scripts).
+        </p>
+      </header>
+      <ul class="hiw-tools__grid">
+        {
+          howItWorksTools.map((tool) => (
+            <li>
+              <a href={tool.href} class="hiw-tool-card">
+                <span class="hiw-tool-card__meta">
+                  <span class="hiw-tool-card__cluster">{tool.cluster}</span>
+                  <span class="hiw-tool-card__status">Live</span>
+                </span>
+                <h3>{tool.name}</h3>
+                <p class="hiw-tool-card__pain">{tool.pain}</p>
+                <p>{tool.text}</p>
+                <span class="hiw-tool-card__link">Open tool →</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="hiw-tools__hub">
+        <a href="/tools/">Browse all tools</a> ·
+        <a href="/methodology/">Read methodology</a>
+      </p>
+    </div>
+  </section>
+
+  {/* ── SEO article body ── */}
+  <article class="hiw-article" aria-labelledby="hiw-article-heading">
+    <div class="container hiw-article__layout">
+      <nav class="hiw-toc" aria-label="Table of contents">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#who-for">Who it is for</a></li>
+          <li><a href="#privacy">Privacy &amp; client-side processing</a></li>
+          <li><a href="#fair-price">Fair Price Calculator</a></li>
+          <li><a href="#bill-auditor">Bill Auditor</a></li>
+          <li><a href="#eob-analyzer">EOB Analyzer</a></li>
+          <li><a href="#medicare-lookup">Medicare lookup</a></li>
+          <li><a href="#data-sources">Data sources</a></li>
+          <li><a href="#confidence">Confidence levels</a></li>
+          <li><a href="#normal-outcome">When bills look normal</a></li>
+          <li><a href="#limitations">Limitations</a></li>
+          <li><a href="#workflow">Recommended workflow</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+        <p class="hiw-toc__byline">
+          By <a href="/authors/vigen/">Vigen</a><br />
+          Updated {howItWorksMeta.updated}
+        </p>
+      </nav>
+
+      <div class="prose hiw-prose">
+        <h2 id="overview">What PatientBillGuide does</h2>
+        <p>
+          <strong>PatientBillGuide</strong> is an independent US healthcare billing transparency
+          site. We help patients and caregivers understand medical prices, itemized hospital bills,
+          and insurance Explanation of Benefits (EOBs) using <strong>public government data</strong>
+          and <strong>browser-based tools</strong> — without requiring an account, subscription, or
+          upload of sensitive documents to our servers.
+        </p>
+        <p>
+          American medical billing is deliberately complex. Hospitals publish list prices that rarely
+          match what insurers pay. EOBs use terms like “allowed amount,” “contractual adjustment,”
+          and “patient responsibility” that sound similar but mean different things. Self-pay patients
+          may receive chargemaster rates several times higher than Medicare’s published allowed
+          amount for the same procedure code. Our goal is not to scare you — it is to give you
+          <strong>honest numbers and plain English</strong> so you can ask better questions before
+          you pay.
+        </p>
+        <p>
+          We are a guide, not a law firm, billing agency, or medical provider. Tools highlight
+          patterns worth reviewing and link to methodology pages that explain exactly how we
+          calculate benchmarks and assign confidence levels. When a bill looks typical, we say so —
+          that is a core product promise, not an afterthought.
+        </p>
+
+        <h2 id="who-for">Who PatientBillGuide is for</h2>
+        <p>
+          The site serves three overlapping audiences, each with different pain points but the same
+          need for transparent reference points.
+        </p>
+        <p>
+          <strong>Uninsured and self-pay patients</strong> often receive hospital bills with no
+          insurer to negotiate on their behalf. Without a network contract, listed charges may
+          reflect internal chargemaster prices rather than market rates. The
+          <a href="/tools/fair-price/">Fair Price Calculator</a> compares a CPT code in your ZIP to
+          Medicare’s allowed amount and a documented fair range — a starting point for
+          <a href="/learn/how-to-read-medical-bill/">reading your itemized bill</a> and requesting
+          financial assistance or self-pay discounts.
+        </p>
+        <p>
+          <strong>Insured patients</strong> receive EOBs that explain how a claim was processed, but
+          the document is rarely intuitive. Allowed amounts, plan payments, deductibles, and
+          coinsurance interact in ways that are easy to misread. The
+          <a href="/tools/eob-analyzer/">EOB Analyzer</a> parses pasted text into a table so you can
+          verify math before paying a separate provider bill. Our
+          <a href="/learn/how-to-read-eob/">EOB guide</a> walks through each column in detail.
+        </p>
+        <p>
+          <strong>Medicare beneficiaries and caregivers</strong> can use
+          <a href="/tools/medicare-lookup/">Medicare Allowed Lookup</a> to see CMS physician fee
+          schedule amounts by locality. Traditional Part B pays 80% of approved amounts after the
+          annual deductible; Medigap and Medicare Advantage change what you actually owe. Facility
+          fees for hospital outpatient services are billed separately from surgeon codes — a common
+          source of surprise even on Medicare. See our
+          <a href="/for/seniors-medicare/">Medicare audience page</a> for more context.
+        </p>
+
+        <h2 id="privacy">Privacy and client-side processing</h2>
+        <p>
+          Healthcare billing information is sensitive. PatientBillGuide tools are designed so that
+          <strong>your CPT codes, ZIP codes, and pasted bill text never leave your device</strong>
+          for server-side analysis. When you run a price check, the browser fetches public JSON data
+          files (Medicare fee schedule and ZIP-to-locality maps) from our CDN, then runs comparisons
+          locally in JavaScript.
+        </p>
+        <p>
+          This architecture means we do not operate a “upload your bill for AI review” pipeline that
+          stores protected health information. It also means tools work offline-capable once data
+          files are cached — and you can verify our privacy claims by inspecting network traffic in
+          your browser developer tools. Read our full
+          <a href="/privacy/">Privacy Policy</a> for analytics and hosting details.
+        </p>
+
+        <h2 id="fair-price">How the Fair Price Calculator works</h2>
+        <p>
+          The <a href="/tools/fair-price/">Fair Price Calculator</a> is our flagship CHECK tool. You
+          enter a five-digit <a href="/learn/cpt-codes-explained/">CPT procedure code</a>, a US ZIP
+          code, and optionally the dollar amount you were charged.
+        </p>
+        <p>
+          The tool loads the CMS Medicare Physician Fee Schedule (MPFS) for the selected code and
+          resolves a <strong>geographic locality</strong> from your ZIP using our public
+          ZIP-to-locality map. It returns:
+        </p>
+        <ul>
+          <li><strong>Medicare allowed amount</strong> — the published non-facility physician fee</li>
+          <li>
+            <strong>Fair range (1.5×–2.5×)</strong> — an educational benchmark for typical
+            commercial pricing relative to Medicare, documented on our
+            <a href="/methodology/price-benchmarks/">price benchmarks page</a>
+          </li>
+          <li>
+            <strong>Your charge comparison</strong> (if provided) — plain-English status such as
+            within range, above typical, or well above benchmark
+          </li>
+          <li><strong>Locality notice</strong> — whether your ZIP matched, fell back to national median, or was omitted</li>
+        </ul>
+        <p>
+          Important nuance: MPFS amounts cover <strong>physician professional fees</strong>, not
+          hospital facility charges, anesthesia units billed separately, or implant pass-through costs.
+          A screening mammogram (CPT 77067) may show a modest physician fee while a hospital bills
+          thousands in facility fees — both can appear on related statements. Always request a fully
+          itemized bill with CPT codes on every line.
+        </p>
+
+        <h2 id="bill-auditor">How the Bill Auditor works</h2>
+        <p>
+          The <a href="/tools/bill-auditor/">Bill Auditor</a> accepts pasted text from an itemized
+          bill — one charge per line works best. A parser extracts CPT codes and dollar amounts, then
+          runs two classes of checks against the same MPFS data used by Fair Price:
+        </p>
+        <ul>
+          <li>
+            <strong>Duplicate line detection</strong> — the same CPT code at the same dollar amount
+            appearing more than once on a single date may indicate a duplicate charge (high
+            confidence flag, but sometimes legitimate for multiple units)
+          </li>
+          <li>
+            <strong>Price vs. benchmark</strong> — charges above the documented fair range or well
+            above it trigger medium- or high-severity flags with confidence tied to locality match
+            quality
+          </li>
+        </ul>
+        <p>
+          Results include a summary headline — either <strong>“Bill looks normal”</strong> or
+          <strong>“Review recommended”</strong> — plus individual flags with explanations and the
+          original line text. We never label findings as fraud. See
+          <a href="/methodology/billing-flags/">how we flag bills</a> for the full ruleset.
+        </p>
+        <p>
+          The auditor is an MVP: it uses pattern matching on pasted text, not OCR of PDF scans, and
+          does not yet include NCCI unbundling edits or date-of-service validation. Expand coverage
+          by checking individual codes in Fair Price when the auditor flags a line.
+        </p>
+
+        <h2 id="eob-analyzer">How the EOB Analyzer works</h2>
+        <p>
+          An <strong>Explanation of Benefits (EOB)</strong> is not a bill — it is your insurer’s
+          statement of how a claim was processed. The
+          <a href="/tools/eob-analyzer/">EOB Analyzer</a> parses pasted EOB text line by line,
+          extracting service dates, CPT codes when present, and dollar columns such as billed amount,
+          allowed amount, plan paid, and patient responsibility.
+        </p>
+        <p>
+          Output includes a sortable-style table and an estimated total patient responsibility across
+          parsed lines. Notes call out common patterns — for example, a large gap between billed and
+          allowed amounts, which often reflects out-of-network or hospital pricing rather than an
+          error on your part.
+        </p>
+        <p>
+          EOB formats vary widely by insurer (UnitedHealthcare, Blue Cross, Aetna, Cigna, Medicare
+          Administrative Contractors, and others each layout columns differently). Paste the
+          service-line section with dates and dollar amounts for best results. Pair parsed output
+          with our <a href="/learn/how-to-read-eob/">EOB reading guide</a> and verify against any
+          separate provider bill before sending payment.
+        </p>
+
+        <h2 id="medicare-lookup">How Medicare Allowed Lookup works</h2>
+        <p>
+          <a href="/tools/medicare-lookup/">Medicare Allowed Lookup</a> is a focused view of the
+          same MPFS engine behind Fair Price. Enter CPT + ZIP to see the CMS allowed amount, matched
+          locality label, and data confidence indicator — without the commercial fair-range overlay.
+        </p>
+        <p>
+          Use it when you want the raw public anchor: what Medicare’s fee schedule says a physician
+          service pays in your area. Link from any
+          <a href="/codes/">CPT code page</a> for code-specific context written in original plain
+          English (we never copy AMA description text verbatim).
+        </p>
+
+        <h2 id="data-sources">Public data sources we use</h2>
+        <p>
+          Price tools rely on the <strong>CMS Medicare Physician Fee Schedule</strong>, published
+          annually with locality adjustments across the United States. Our pipeline documents which
+          vintage we ship (currently 2026 MPFS for launch) and how ZIP codes map to CMS locality
+          codes. Full sourcing is on
+          <a href="/methodology/data-sources/">methodology / data sources</a>.
+        </p>
+        <p>
+          Bill audit flags use the same allowed amounts plus deterministic rules — not machine-learning
+          guesses. Planned expansions include NCCI Procedure-to-Procedure edits for unbundling
+          detection and broader CPT coverage beyond our launch subset of 20 high-traffic codes.
+        </p>
+        <p>
+          We do not scrape hospital chargemasters or private insurer contract rates — those are
+          proprietary. Medicare rates are the most transparent nationwide price anchor available to
+          consumers, which is why we center the product on them while clearly stating limitations.
+        </p>
+
+        <h2 id="confidence">Confidence levels explained</h2>
+        <p>
+          Every benchmark result includes a <strong>confidence</strong> indicator — high, medium, or
+          low — based on whether your ZIP matched a known locality, whether the CPT code exists in our
+          dataset, and whether national fallback was used. Bill audit flags inherit this confidence
+          so you know when a price comparison is localized vs. approximate.
+        </p>
+        <p>
+          High confidence means your ZIP mapped to a CMS locality and the code was found in MPFS.
+          Medium often means national median fallback for an unknown ZIP. Low may indicate missing
+          code coverage or incomplete input. Confidence describes <em>data quality</em>, not legal
+          certainty about your bill.
+        </p>
+
+        <h2 id="normal-outcome">When your bill looks normal</h2>
+        <p>
+          A high hospital total is not automatically wrong. Emergency room visits bundle facility
+          fees, multiple physician groups, imaging, and labs — each with separate CPT lines. Out-of-network
+          providers at in-network hospitals (surprise billing scenarios) can produce EOBs that look
+          alarming but reflect real plan rules rather than clerical error.
+        </p>
+        <p>
+          When our Bill Auditor finds no duplicate patterns and no lines well above benchmark, we
+          explicitly report that the bill <strong>looks normal based on public Medicare data</strong>.
+          That is success — you gained clarity without a false alarm. If something still feels wrong,
+          call your billing department with specific CPT lines and dates, request itemization, and
+          keep EOBs until balances match.
+        </p>
+
+        <h2 id="limitations">What we cannot do</h2>
+        <p>
+          PatientBillGuide does not provide medical advice, legal advice, or guaranteed savings. We
+          cannot see your insurance contract, hospital cost-to-charge ratios, or whether a service
+          was medically necessary. Tools do not replace certified patient advocates, billing attorneys,
+          or state insurance department complaints when disputes escalate.
+        </p>
+        <p>
+          Known technical limits are documented on
+          <a href="/methodology/limitations/">methodology / limitations</a>: launch CPT subset,
+          physician-fee-only benchmarks, regex-based parsers, and no real-time eligibility checks.
+          We improve coverage over time — corrections welcome via
+          <a href="/corrections/">our corrections log</a>.
+        </p>
+
+        <h2 id="workflow">Recommended review workflow</h2>
+        <ol>
+          <li>Request a fully <strong>itemized bill</strong> with CPT/HCPCS codes on every line.</li>
+          <li>Locate matching <strong>EOBs</strong> for the same dates of service if you have insurance.</li>
+          <li>Run individual codes through <a href="/tools/fair-price/">Fair Price</a> with your ZIP.</li>
+          <li>Paste the full itemized text into the <a href="/tools/bill-auditor/">Bill Auditor</a>.</li>
+          <li>Paste EOB service lines into the <a href="/tools/eob-analyzer/">EOB Analyzer</a> and compare totals.</li>
+          <li>Read flagged lines on our <a href="/learn/">Learn hub</a> and <a href="/codes/">CPT pages</a>.</li>
+          <li>Contact billing with specific questions — use future dispute-letter tools as editable starting points only.</li>
+        </ol>
+        <p>
+          This workflow takes minutes, costs nothing, and keeps your documents on your device. For
+          methodology deep-dives, start at the <a href="/methodology/">methodology hub</a>.
+        </p>
+
+        <h2 id="faq">Frequently asked questions</h2>
+        <dl class="hiw-faq">
+          {
+            howItWorksFaqs.map((f) => (
+              <>
+                <dt>{f.question}</dt>
+                <dd>{f.answer}</dd>
+              </>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </article>
+
+  {/* ── CTA ── */}
+  <section class="hiw-cta" aria-label="Get started">
+    <div class="container hiw-cta__inner">
+      <h2>Ready to check your numbers?</h2>
+      <p>Free tools, no account, no upload — start with the calculator most patients use first.</p>
+      <div class="hiw-cta__actions">
+        <a href="/tools/fair-price/" class="btn btn--primary">Fair Price Calculator</a>
+        <a href="/tools/" class="btn btn--secondary hiw-cta__btn-light">All tools</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container container--narrow hiw-disclaimer">
+    <Disclaimer />
+  </div>
+</BaseLayout>
+
+<script>
+  const steps = document.querySelectorAll('.hiw-pipeline__step');
+  if (steps.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.15 },
+    );
+    steps.forEach((el) => obs.observe(el));
+  } else {
+    steps.forEach((el) => el.classList.add('is-visible'));
+  }
+</script>
+
+<style>
+  /* ── Shared ── */
+  .hiw-eyebrow {
+    margin: 0 0 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #5eead4;
+  }
+
+  .hiw-eyebrow--dark {
+    color: var(--color-accent);
+  }
+
+  .hiw-section-head {
+    margin-bottom: clamp(2rem, 4vw, 2.75rem);
+    max-width: 38rem;
+  }
+
+  .hiw-section-head--center {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .hiw-section-head h2 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.625rem, 3.5vw, 2.25rem);
+    letter-spacing: -0.025em;
+  }
+
+  .hiw-section-lead {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  .hiw-section-lead--light {
+    color: rgb(203 213 225 / 0.85);
+  }
+
+  /* ── Hero ── */
+  .hiw-hero {
+    position: relative;
+    padding: 2rem 0 4rem;
+    background: linear-gradient(165deg, #0b1220 0%, #0f172a 45%, #134e4a 100%);
+    color: #f8fafc;
+    overflow: hidden;
+  }
+
+  .hiw-hero :global(.breadcrumbs) {
+    margin-bottom: 2rem;
+  }
+
+  .hiw-hero :global(.breadcrumbs a),
+  .hiw-hero :global(.breadcrumbs span) {
+    color: rgb(203 213 225 / 0.75);
+  }
+
+  .hiw-hero :global(.breadcrumbs a:hover) {
+    color: #5eead4;
+  }
+
+  .hiw-hero__ambient {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hiw-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    animation: hiw-drift 20s ease-in-out infinite;
+  }
+
+  .hiw-orb--1 {
+    width: 24rem;
+    height: 24rem;
+    top: -6rem;
+    right: 10%;
+    background: rgb(13 148 136 / 0.4);
+  }
+
+  .hiw-orb--2 {
+    width: 18rem;
+    height: 18rem;
+    bottom: -4rem;
+    left: -4rem;
+    background: rgb(99 102 241 / 0.25);
+    animation-delay: -8s;
+  }
+
+  @keyframes hiw-drift {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(1.5rem, -1rem);
+    }
+  }
+
+  .hiw-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 44rem;
+  }
+
+  .hiw-hero h1 {
+    margin: 0 0 1.25rem;
+    font-family: var(--font-heading);
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+  }
+
+  .hiw-hero__lead {
+    margin: 0 0 2rem;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: rgb(203 213 225 / 0.92);
+  }
+
+  .hiw-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .hiw-hero .btn--secondary {
+    background: rgb(255 255 255 / 0.08);
+    border: 1px solid rgb(255 255 255 / 0.2);
+    color: #fff;
+  }
+
+  .hiw-hero .btn--secondary:hover {
+    background: rgb(255 255 255 / 0.14);
+    color: #fff;
+  }
+
+  .hiw-trust {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+  }
+
+  .hiw-trust__item {
+    padding: 1rem;
+    border-radius: 0.875rem;
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(8px);
+  }
+
+  .hiw-trust__item strong {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #5eead4;
+    margin-bottom: 0.25rem;
+  }
+
+  .hiw-trust__item span {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: rgb(203 213 225 / 0.8);
+  }
+
+  /* ── Pipeline ── */
+  .hiw-pipeline {
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+    background: var(--color-bg);
+  }
+
+  .hiw-pipeline__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    counter-reset: pipe;
+  }
+
+  .hiw-pipeline__step {
+    position: relative;
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.25s;
+    transition-delay: calc(var(--i) * 0.08s);
+  }
+
+  .hiw-pipeline__step.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hiw-pipeline__step:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .hiw-pipeline__step--teal .hiw-pipeline__num {
+    background: linear-gradient(135deg, #0d9488, #14b8a6);
+  }
+
+  .hiw-pipeline__step--blue .hiw-pipeline__num {
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+  }
+
+  .hiw-pipeline__step--violet .hiw-pipeline__num {
+    background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  }
+
+  .hiw-pipeline__step--amber .hiw-pipeline__num {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+  }
+
+  .hiw-pipeline__num {
+    display: inline-grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-bottom: 1rem;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    color: #fff;
+    border-radius: 0.625rem;
+    letter-spacing: 0.02em;
+  }
+
+  .hiw-pipeline__step h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .hiw-pipeline__step p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+
+  /* ── Audiences ── */
+  .hiw-audiences {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: linear-gradient(180deg, #f0fdfa 0%, var(--color-bg) 100%);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hiw-audiences__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .hiw-audience-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem;
+    border-radius: 1.25rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  }
+
+  .hiw-audience-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgb(13 148 136 / 0.12);
+    border-color: #99f6e4;
+  }
+
+  .hiw-audience-card__label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .hiw-audience-card h3 {
+    margin: 0 0 0.625rem;
+    font-size: 1.125rem;
+  }
+
+  .hiw-audience-card p {
+    flex: 1;
+    margin: 0 0 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  .hiw-audience-card__cta {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  /* ── Tools (dark band) ── */
+  .hiw-tools {
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+    background: #0f172a;
+    color: #f8fafc;
+  }
+
+  .hiw-tools .hiw-section-head h2 {
+    color: #fff;
+  }
+
+  .hiw-tools__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .hiw-tool-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    background: rgb(255 255 255 / 0.04);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.25s, border-color 0.25s, background 0.25s;
+  }
+
+  .hiw-tool-card:hover {
+    transform: translateY(-4px);
+    border-color: rgb(45 212 191 / 0.4);
+    background: rgb(255 255 255 / 0.07);
+  }
+
+  .hiw-tool-card__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .hiw-tool-card__cluster {
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: rgb(148 163 184 / 0.9);
+  }
+
+  .hiw-tool-card__status {
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    color: #6ee7b7;
+    background: rgb(16 185 129 / 0.15);
+    border: 1px solid rgb(16 185 129 / 0.3);
+  }
+
+  .hiw-tool-card h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1.125rem;
+    color: #fff;
+  }
+
+  .hiw-tool-card__pain {
+    margin: 0 0 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-style: italic;
+    color: #2dd4bf;
+  }
+
+  .hiw-tool-card p {
+    flex: 1;
+    margin: 0 0 1rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgb(203 213 225 / 0.85);
+  }
+
+  .hiw-tool-card__link {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #5eead4;
+  }
+
+  .hiw-tools__hub {
+    margin: 2rem 0 0;
+    text-align: center;
+    font-size: 0.9375rem;
+  }
+
+  .hiw-tools__hub a {
+    color: #5eead4;
+  }
+
+  /* ── Article ── */
+  .hiw-article {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: var(--color-bg);
+  }
+
+  .hiw-article__layout {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .hiw-toc {
+    position: sticky;
+    top: 1.5rem;
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-size: 0.8125rem;
+  }
+
+  .hiw-toc h2 {
+    margin: 0 0 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+  }
+
+  .hiw-toc ol {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  .hiw-toc li {
+    margin-bottom: 0.35rem;
+  }
+
+  .hiw-toc a {
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .hiw-toc a:hover {
+    color: var(--color-accent);
+  }
+
+  .hiw-toc__byline {
+    margin: 1.25rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .hiw-prose h2 {
+    scroll-margin-top: 1.5rem;
+  }
+
+  .hiw-faq dt {
+    font-weight: 600;
+    margin-top: var(--space-lg);
+    color: var(--color-primary);
+  }
+
+  .hiw-faq dt:first-of-type {
+    margin-top: 0;
+  }
+
+  .hiw-faq dd {
+    margin: 0.5rem 0 0;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  /* ── CTA ── */
+  .hiw-cta {
+    padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+    background: linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #134e4a 100%);
+    color: #fff;
+  }
+
+  .hiw-cta__inner {
+    text-align: center;
+    max-width: 36rem;
+    margin-inline: auto;
+  }
+
+  .hiw-cta h2 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: #fff;
+  }
+
+  .hiw-cta p {
+    margin: 0 0 1.75rem;
+    color: rgb(255 255 255 / 0.9);
+    line-height: 1.6;
+  }
+
+  .hiw-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.875rem;
+  }
+
+  .hiw-cta .btn--primary {
+    background: #fff;
+    color: #0f766e;
+  }
+
+  .hiw-cta .btn--primary:hover {
+    background: #f0fdfa;
+    color: #0f766e;
+  }
+
+  .hiw-cta__btn-light {
+    background: transparent;
+    border: 1px solid rgb(255 255 255 / 0.45);
+    color: #fff;
+  }
+
+  .hiw-cta__btn-light:hover {
+    background: rgb(255 255 255 / 0.1);
+    color: #fff;
+  }
+
+  .hiw-disclaimer {
+    padding: var(--space-2xl) 0 var(--space-3xl);
+  }
+
+  @media (max-width: 1024px) {
+    .hiw-pipeline__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hiw-trust {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hiw-article__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .hiw-toc {
+      position: static;
+    }
+
+    .hiw-audiences__grid,
+    .hiw-tools__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hiw-pipeline__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hiw-orb {
+      animation: none;
+    }
+
+    .hiw-pipeline__step {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

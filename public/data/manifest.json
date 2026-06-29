@@ -1,0 +1,18 @@
+{
+  "mpfs": {
+    "version": "2026",
+    "url": "/data/mpfs-2026.json",
+    "codeCount": 7740
+  },
+  "zipLocality": {
+    "version": "2026",
+    "url": "/data/zip-to-locality.json",
+    "zipCount": 42956
+  },
+  "ncci": {
+    "version": "2026Q3",
+    "url": "/data/ncci-ptp.json.gz",
+    "pairCount": 1728585
+  },
+  "updatedAt": "2026-06-29"
+}

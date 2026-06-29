@@ -1,0 +1,448 @@
+---
+import LegalLayout from '../../../layouts/LegalLayout.astro';
+import { site } from '../../../data/site';
+import { articleSchema, faqPageSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+
+const updated = '2026-06-29';
+const pageUrl = '/learn/how-to-read-eob/';
+const canonical = new URL(pageUrl, site.url).href;
+const title = 'How to Read an EOB (Explanation of Benefits)';
+const description =
+  'Plain-English guide to reading your insurance Explanation of Benefits — allowed amounts, patient responsibility, denial codes, and when to call your insurer.';
+
+const faqs = [
+  {
+    question: 'Is an EOB the same as a medical bill?',
+    answer:
+      'No. An EOB is a statement from your health insurer showing how a claim was processed. A bill is a request for payment from the provider. You may receive both for the same visit, and the amounts should eventually align.',
+  },
+  {
+    question: 'Why is the allowed amount lower than what the doctor billed?',
+    answer:
+      'For in-network care, your plan negotiates contracted rates with providers. The allowed amount is what the plan recognizes as payable. The difference between billed and allowed is often a contractual write-off, not something you owe.',
+  },
+  {
+    question: 'What are CARC and RARC codes on an EOB?',
+    answer:
+      'CARC (Claim Adjustment Reason Codes) explain why a line was adjusted or denied. RARC (Remittance Advice Remark Codes) add short notes. Together they help you understand whether a denial is about network status, prior authorization, bundling, or another reason you may be able to appeal.',
+  },
+  {
+    question: 'Should I pay the provider before I get my EOB?',
+    answer:
+      'Many people wait until both the EOB and provider bill arrive so they can compare patient responsibility. If you already paid and the EOB later shows a lower amount owed, you may be due a refund from the provider.',
+  },
+  {
+    question: 'What is the difference between an EOB and a Medicare Summary Notice?',
+    answer:
+      'Traditional Medicare sends a Medicare Summary Notice (MSN) instead of a commercial-style EOB. The MSN summarizes Part A and Part B claims processed by Medicare. Medicare Advantage plans send their own EOB-style statements from the private insurer.',
+  },
+  {
+    question: 'When should I call my insurance company about an EOB?',
+    answer:
+      'Call when a line is denied and you do not understand why, when patient responsibility seems wrong given your deductible status, when out-of-network charges surprise you, or when the EOB does not match the provider bill after a reasonable wait. Have the claim number ready.',
+  },
+  {
+    question: 'Can I use a tool to help read my EOB?',
+    answer:
+      'Yes. PatientBillGuide\'s free EOB Analyzer runs in your browser and helps organize pasted EOB text by line item. Pair it with our Fair Price Calculator to compare allowed amounts against Medicare benchmarks.',
+  },
+];
+
+const schemaGraph = [
+  articleSchema({
+    headline: title,
+    description,
+    url: canonical,
+    dateModified: updated,
+    authorName: 'Vigen',
+    authorUrl: `${site.url}/authors/vigen/`,
+  }),
+  faqPageSchema(faqs),
+  breadcrumbSchema(
+    [
+      { name: 'Home', url: '/' },
+      { name: 'Learn', url: '/learn/' },
+      { name: 'How to Read an EOB' },
+    ],
+    site.url,
+  ),
+];
+---
+
+<LegalLayout title={title} description={description} crumbs={[{ label: 'Learn', href: '/learn/' }, { label: 'How to Read an EOB' }]}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
+
+  <p class="article-byline">
+    Written by <a href="/authors/vigen/">Vigen</a> · Last updated {updated}
+  </p>
+
+  <nav class="article-toc" aria-label="Table of contents">
+    <h2>On this page</h2>
+    <ol>
+      <li><a href="#what-is-eob">What is an EOB?</a></li>
+      <li><a href="#eob-vs-bill">EOB vs. medical bill</a></li>
+      <li><a href="#key-columns">Key columns on your EOB</a></li>
+      <li><a href="#deductibles-oop">Deductibles and out-of-pocket max</a></li>
+      <li><a href="#denial-codes">Denial and adjustment codes (CARC/RARC)</a></li>
+      <li><a href="#network-status">In-network vs. out-of-network</a></li>
+      <li><a href="#hospital-bills">Coordinating with hospital bills</a></li>
+      <li><a href="#call-insurer">When to call your insurer</a></li>
+      <li><a href="#medicare-msn">Medicare and the MSN</a></li>
+      <li><a href="#workflow">Step-by-step workflow</a></li>
+      <li><a href="#tools">Tools that can help</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="what-is-eob">What is an EOB?</h2>
+  <p>
+    An <strong>Explanation of Benefits (EOB)</strong> is a statement your health insurance company sends
+    after it processes a medical claim. It summarizes what the provider billed, what your plan allowed,
+    what insurance paid, and what you may still owe. Despite the name, an EOB is <em>not</em> a bill — you
+    do not send payment to your insurer based on the EOB alone.
+  </p>
+  <p>
+    Think of the EOB as your insurer's receipt for the claim. It shows how your plan applied your
+    benefits: deductible, copayments, coinsurance, and any amounts the plan does not cover. Every insured
+    person with private coverage (employer plan, marketplace plan, or individual policy) receives EOBs
+    for most medical services, though the layout varies by company.
+  </p>
+  <p>
+    EOBs usually arrive by mail or through your insurer's online portal, often days or weeks after the
+    visit. That delay is normal. Claims move from the provider's billing office to a clearinghouse, then
+    to your insurer, where they are priced, checked against your benefits, and either paid or adjusted.
+    Understanding the EOB helps you confirm you were charged correctly before you pay a provider bill.
+  </p>
+
+  <h2 id="eob-vs-bill">EOB vs. medical bill</h2>
+  <p>
+    After a doctor visit, imaging test, or hospital stay, you may receive <strong>two different
+    documents</strong>: an EOB from your insurer and a bill from the hospital or physician group. They
+    describe the same care from different perspectives. The provider bill asks you to pay; the EOB
+    explains how insurance handled the underlying claim.
+  </p>
+  <p>
+    The <strong>patient responsibility</strong> on the EOB should match what the provider eventually
+    bills you, though timing rarely lines up perfectly. Providers often send a bill before insurance
+    finishes processing, which can show a higher "balance due" that later drops once the EOB is final. If
+    you receive a bill that does not match your EOB's patient responsibility after both are final, that
+    mismatch is worth a phone call — first to the provider's billing department, then to your insurer if
+    needed.
+  </p>
+  <p>
+    If you paid the provider upfront or paid more than the EOB later shows you owe, you may be entitled
+    to a refund. Keep EOBs, bills, and payment receipts together until the account is settled. For a
+    deeper look at hospital statements, see our guide on <a href="/learn/how-to-read-medical-bill/">how to
+    read a medical bill</a>.
+  </p>
+
+  <h2 id="key-columns">Key columns on your EOB</h2>
+  <p>
+    Layouts differ, but most EOBs repeat the same financial building blocks for each line of service.
+    Learning these columns makes every EOB easier to read.
+  </p>
+  <ul>
+    <li>
+      <strong>Date of service</strong> — when the visit, test, or procedure occurred. Match this to your
+      calendar and any after-visit summary.
+    </li>
+    <li>
+      <strong>Provider or facility name</strong> — who performed the service. Hospital stays may list
+      multiple providers (emergency physician, radiologist, pathologist) on separate lines.
+    </li>
+    <li>
+      <strong>Procedure or service code</strong> — often a five-digit <a href="/learn/cpt-codes-explained/">CPT
+      code</a> or HCPCS code describing what was done. This code drives how the claim is priced.
+    </li>
+    <li>
+      <strong>Billed amount</strong> — the charge the provider submitted. This is frequently higher than
+      what insurance recognizes.
+    </li>
+    <li>
+      <strong>Allowed amount</strong> — the price your plan accepts for that service after network
+      contracts or plan rules. For in-network care, the difference between billed and allowed is usually
+      not your responsibility.
+    </li>
+    <li>
+      <strong>Plan paid</strong> — what your insurer paid the provider (or what it will pay). This may be
+      zero if you have not met your deductible or if the service is not covered.
+    </li>
+    <li>
+      <strong>Patient responsibility</strong> — the portion assigned to you: deductible, copay,
+      coinsurance, or non-covered charges. This is the number to compare to your provider bill.
+    </li>
+    <li>
+      <strong>Remark or reason codes</strong> — short codes explaining adjustments. See the CARC/RARC
+      section below.
+    </li>
+  </ul>
+  <p>
+    Some EOBs also show <strong>claim number</strong>, <strong>group or member ID</strong>, and
+    year-to-date totals for deductible and out-of-pocket spending. Note the claim number — you will need
+    it when calling customer service.
+  </p>
+
+  <h2 id="deductibles-oop">Deductibles and out-of-pocket max</h2>
+  <p>
+    Your EOB applies each charge against your plan's cost-sharing rules. Three concepts appear on almost
+    every statement:
+  </p>
+  <ul>
+    <li>
+      <strong>Deductible</strong> — the amount you pay for covered services before insurance starts paying
+      its share (except for services your plan covers with a copay before the deductible is met). EOBs
+      often show "deductible remaining" for the plan year.
+    </li>
+    <li>
+      <strong>Copay</strong> — a flat fee for certain visits or prescriptions, defined in your plan
+      documents.
+    </li>
+    <li>
+      <strong>Coinsurance</strong> — a percentage of the allowed amount you pay after the deductible is
+      met (for example, you pay 20% and the plan pays 80%).
+    </li>
+  </ul>
+  <p>
+    The <strong>out-of-pocket maximum (OOP max)</strong> caps what you pay in deductibles, copays, and
+    coinsurance for covered in-network care in a plan year. After you hit the OOP max, your plan typically
+    pays 100% of allowed amounts for covered services. Premiums do not count toward the OOP max. Neither
+    do charges for out-of-network care or services your plan excludes.
+  </p>
+  <p>
+    When reading an EOB, check whether a line applied to your deductible or was subject to coinsurance.
+    If you believed you had already met your deductible but the EOB shows otherwise, compare the
+    year-to-date totals on recent EOBs or your insurer's online account. Errors in deductible tracking
+    do happen and can often be corrected with a call.
+  </p>
+
+  <h2 id="denial-codes">Denial and adjustment codes (CARC/RARC)</h2>
+  <p>
+    When a line is reduced or denied, the EOB usually includes standardized codes. The most common are
+    <strong>CARC</strong> (Claim Adjustment Reason Codes) and <strong>RARC</strong> (Remittance Advice
+    Remark Codes). Insurers and providers use these nationwide, so the same code on your Anthem EOB may
+    appear on a friend's UnitedHealthcare statement.
+  </p>
+  <p>
+    A <strong>CARC</strong> explains <em>why</em> money moved — for example, "contractual obligation"
+    (the provider agreed to accept less than billed), "deductible amount," or "not covered by plan." A
+    <strong>RARC</strong> adds a plain-language remark, such as a reminder that prior authorization was
+    required. You do not need to memorize every code. Instead, look up the code on your insurer's website
+    or ask customer service what it means for your specific claim.
+  </p>
+  <p>
+    Common adjustment reasons patients encounter include:
+  </p>
+  <ul>
+    <li>
+      <strong>Out-of-network</strong> — the provider does not have a contract with your plan, so allowed
+      amounts and patient responsibility may be much higher.
+    </li>
+    <li>
+      <strong>Prior authorization not obtained</strong> — some plans require approval before imaging,
+      surgery, or certain drugs.
+    </li>
+    <li>
+      <strong>Bundled or inclusive</strong> — a service was considered part of another procedure and not
+      paid separately.
+    </li>
+    <li>
+      <strong>Duplicate claim</strong> — the same service was billed twice.
+    </li>
+    <li>
+      <strong>Non-covered benefit</strong> — the service is excluded by your plan (cosmetic procedures,
+      for example).
+    </li>
+  </ul>
+  <p>
+    Many denials can be <strong>appealed</strong> if you have documentation — a letter of medical necessity
+    from your doctor, proof that authorization was requested, or evidence that the service was
+    emergency care. Appeals have deadlines, often 180 days from the EOB date. PatientBillGuide does not
+    provide legal advice, but understanding the code on your EOB is the first step toward a productive
+    conversation with your insurer.
+  </p>
+
+  <h2 id="network-status">In-network vs. out-of-network</h2>
+  <p>
+    Network status is one of the biggest drivers of what your EOB shows. <strong>In-network</strong>
+    providers have contracts with your plan. They agree to discounted rates, and your plan limits your
+    cost-sharing to copays, deductible, and coinsurance defined in your policy. The EOB's allowed amount
+    reflects that contracted rate.
+  </p>
+  <p>
+    <strong>Out-of-network</strong> providers do not have that contract (or the claim was processed as
+    out-of-network because of a paperwork issue). Your plan may pay a smaller portion — or nothing — and
+    the provider may bill you for the difference between billed and allowed, a practice called balance
+    billing in many states. Surprise bills from out-of-network clinicians at in-network hospitals have
+    received federal and state consumer protections in recent years, but rules vary. If your EOB flags
+    out-of-network charges for care you believed was in-network, ask both the provider and insurer to
+    explain.
+  </p>
+  <p>
+  To check whether a charge is reasonable even when out-of-network, compare the allowed amount to
+  <a href="/tools/fair-price/">Medicare benchmarks</a> for the same <a href="/codes/">CPT code</a> in
+  your area. Medicare rates are not what private insurers pay, but they provide a documented public
+  reference point when you are negotiating or appealing.
+  </p>
+
+  <h2 id="hospital-bills">Coordinating with hospital bills</h2>
+  <p>
+    Hospital care is especially confusing because you may receive <strong>many EOBs and bills</strong> for
+    one stay: the hospital facility fee, emergency physician, anesthesiologist, radiology, lab work, and
+    follow-up visits. Each entity bills separately. Your insurer sends a separate EOB (or EOB section) per
+    claim.
+  </p>
+  <p>
+    Work through hospital paperwork systematically:
+  </p>
+  <ol>
+    <li>
+      Gather every EOB and every provider bill for the same date range.
+    </li>
+    <li>
+      Sort by date of service and match CPT codes across documents.
+    </li>
+    <li>
+      Confirm each EOB line has a corresponding bill (or that the provider is still waiting to bill you).
+    </li>
+    <li>
+      Add up patient responsibility only once per service — do not pay the same line on both a
+      preliminary bill and a revised bill without checking.
+    </li>
+    <li>
+      Watch for <strong>facility fees</strong> vs. <strong>professional fees</strong> for the same
+      encounter. Our <a href="/learn/how-to-read-medical-bill/">medical bill guide</a> explains this
+      split in detail.
+    </li>
+  </ol>
+  <p>
+    Hospital bills sometimes arrive before insurance processing finishes. If a bill says "insurance
+    pending," wait for the EOB before paying the patient portion. If a bill demands immediate payment
+    while insurance is still processing, call the hospital billing office and ask them to hold the
+    account until the claim is final.
+  </p>
+
+  <h2 id="call-insurer">When to call your insurer</h2>
+  <p>
+    Not every EOB requires a phone call. If patient responsibility matches your expectations and aligns
+    with the provider bill, you can usually pay and file the paperwork. Call your insurer when:
+  </p>
+  <ul>
+    <li>A service you believed was covered is denied or marked non-covered.</li>
+    <li>Out-of-network charges appear for an in-network hospital or office visit.</li>
+    <li>Patient responsibility does not match your deductible or OOP max status.</li>
+    <li>The same claim was processed twice or totals look duplicated.</li>
+    <li>You need help interpreting a CARC/RARC code or starting an appeal.</li>
+    <li>The provider bill and final EOB still disagree after both sides have had time to process.</li>
+  </ul>
+  <p>
+    Before you call, have your <strong>member ID</strong>, <strong>claim number</strong>, date of
+    service, provider name, and CPT code ready. Take notes on the representative's name, date, and what
+    they promised. Many insurers can reprocess a claim if the provider submits corrected information.
+  </p>
+
+  <h2 id="medicare-msn">Medicare and the MSN</h2>
+  <p>
+    If you have <strong>Original Medicare</strong> (Part A and Part B), you will not receive a commercial
+    EOB. Instead, Medicare mails a <strong>Medicare Summary Notice (MSN)</strong> every three months
+    listing claims processed during that period. You can also view claims anytime at Medicare.gov. The MSN
+    shows what Medicare approved, what it paid, and the maximum you may owe providers.
+  </p>
+  <p>
+    <strong>Medicare Advantage</strong> (Part C) plans are run by private insurers. Those plans send
+    EOB-style statements that look like employer coverage. <strong>Medigap</strong> and retiree
+    supplemental plans send their own notices after Medicare pays. If you have several types of coverage,
+    you may need to cross-reference multiple documents for one procedure.
+  </p>
+  <p>
+    Key MSN columns parallel commercial EOBs: billed amount, Medicare-approved amount, amount Medicare
+    paid, and maximum you may be billed. Providers who accept Medicare assignment agree not to charge
+    more than the approved amount (except coinsurance and deductible). See our <a
+    href="/for/seniors-medicare/">Medicare audience guide</a> for more context.
+  </p>
+
+  <h2 id="workflow">Step-by-step workflow</h2>
+  <p>
+    Use this workflow each time you receive an EOB for care you want to verify:
+  </p>
+  <ol>
+    <li>
+      <strong>Confirm identity.</strong> Check member name, date of service, and provider. Report
+      unfamiliar claims immediately — they could be a billing error or identity issue.
+    </li>
+    <li>
+      <strong>Match the visit.</strong> Did you actually receive the service on that date? Typos in dates
+      or wrong-patient claims do occur.
+    </li>
+    <li>
+      <strong>Read each line's codes.</strong> Look up unfamiliar <a href="/codes/">CPT codes</a> in our
+      encyclopedia or glossary.
+    </li>
+    <li>
+      <strong>Compare billed vs. allowed.</strong> For in-network care, verify the large billed amount
+      was mostly written off and your share is based on the allowed amount.
+    </li>
+    <li>
+      <strong>Check deductible and OOP totals.</strong> Does this EOB fit your year-to-date progress?
+    </li>
+    <li>
+      <strong>Note denials and codes.</strong> Write down CARC/RARC codes and deadlines for appeals.
+    </li>
+    <li>
+      <strong>Wait for the provider bill</strong> (or pull it from the portal) and compare patient
+      responsibility.
+    </li>
+    <li>
+      <strong>Pay, appeal, or call</strong> — pay if amounts align; appeal or call if they do not.
+    </li>
+    <li>
+      <strong>File paperwork</strong> — keep the EOB with the paid bill for tax or HSA records.
+    </li>
+  </ol>
+  <p>
+    For a faster first pass, paste EOB text into our <a href="/tools/eob-analyzer/">EOB Analyzer</a>.
+    It runs locally in your browser and organizes line items so you can spot outliers before you call
+    anyone.
+  </p>
+
+  <h2 id="tools">Tools that can help</h2>
+  <p>
+    PatientBillGuide offers free, browser-based tools that complement this guide:
+  </p>
+  <ul>
+    <li>
+      <a href="/tools/eob-analyzer/"><strong>EOB Analyzer</strong></a> — paste EOB text to summarize
+      line items, codes, and amounts. Nothing is uploaded to our servers.
+    </li>
+    <li>
+      <a href="/tools/fair-price/"><strong>Fair Price Calculator</strong></a> — enter a CPT code and ZIP
+      code to see Medicare allowed amounts and a documented fair range for comparison.
+    </li>
+    <li>
+      <a href="/codes/"><strong>CPT code encyclopedia</strong></a> — plain-English guides to common
+      procedure codes with typical cost context.
+    </li>
+    <li>
+      <a href="/learn/how-to-read-medical-bill/"><strong>How to read a medical bill</strong></a> — for
+      when the hospital or clinic statement arrives.
+    </li>
+  </ul>
+  <p>
+    These tools support your review; they do not replace conversations with your insurer or provider when
+    something looks wrong. See our <a href="/methodology/limitations/">methodology limitations</a> for
+    what benchmarks can and cannot tell you.
+  </p>
+
+  <h2 id="faq">FAQ</h2>
+  <dl class="faq">
+    {
+      faqs.map((item) => (
+        <>
+          <dt>{item.question}</dt>
+          <dd>{item.answer}</dd>
+        </>
+      ))
+    }
+  </dl>
+</LegalLayout>

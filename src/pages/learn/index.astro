@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+---
+
+<BaseLayout
+  title="Learn — Medical Billing Guides"
+  description="Plain-English guides to medical bills, EOBs, CPT codes, and Medicare billing basics."
+>
+  <div class="learn-hub">
+    <div class="container">
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Learn' }]} />
+      <header class="learn-hub__header">
+        <h1>Learn</h1>
+        <p>
+          Short, practical guides — no jargon wall. Use these alongside our free tools to understand
+          what you were charged and what to ask your provider.
+        </p>
+      </header>
+
+      <div class="learn-grid">
+        <a href="/learn/how-to-read-eob/" class="learn-card card">
+          <span class="learn-card__tag">Insured</span>
+          <h2>How to read an EOB</h2>
+          <p>Decode Explanation of Benefits columns, patient responsibility, and denials.</p>
+          <span class="learn-card__cta">Read guide ›</span>
+        </a>
+        <a href="/learn/how-to-read-medical-bill/" class="learn-card card">
+          <span class="learn-card__tag">Everyone</span>
+          <h2>How to read a medical bill</h2>
+          <p>Itemized hospital bills, facility vs. professional fees, and self-pay basics.</p>
+          <span class="learn-card__cta">Read guide ›</span>
+        </a>
+        <a href="/learn/cpt-codes-explained/" class="learn-card card">
+          <span class="learn-card__tag">Basics</span>
+          <h2>What is a CPT code?</h2>
+          <p>Why procedure codes appear on every bill and how to look yours up.</p>
+          <span class="learn-card__cta">Read guide ›</span>
+        </a>
+        <a href="/codes/" class="learn-card card">
+          <span class="learn-card__tag">Reference</span>
+          <h2>CPT code encyclopedia</h2>
+          <p>Cost guides for common codes with Medicare benchmarks and fair price checks.</p>
+          <span class="learn-card__cta">Browse codes ›</span>
+        </a>
+        <a href="/for/uninsured/" class="learn-card card">
+          <span class="learn-card__tag">Self-pay</span>
+          <h2>Uninsured &amp; self-pay help</h2>
+          <p>Compare hospital charges to Medicare and negotiate with confidence.</p>
+          <span class="learn-card__cta">Get started ›</span>
+        </a>
+      </div>
+
+      <section class="learn-hub__tools">
+        <h2>Try a live tool</h2>
+        <p>Check a procedure code against Medicare data in your browser — free, no account.</p>
+        <a href="/tools/fair-price/" class="btn btn--primary">Fair Price Calculator</a>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .learn-hub {
+    padding: var(--space-xl) 0 var(--space-3xl);
+  }
+
+  .learn-hub__header {
+    max-width: 40rem;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .learn-hub__header p {
+    color: var(--color-muted);
+    font-size: 1.05rem;
+  }
+
+  .learn-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .learn-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .learn-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+  }
+
+  .learn-card__tag {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-accent);
+    margin-bottom: var(--space-sm);
+  }
+
+  .learn-card h2 {
+    font-size: 1.125rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .learn-card p {
+    flex: 1;
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+    margin: 0 0 var(--space-md);
+    line-height: 1.55;
+  }
+
+  .learn-card__cta {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-accent);
+  }
+
+  .learn-hub__tools {
+    padding: var(--space-xl);
+    background: var(--color-accent-bg);
+    border: 1px solid #99f6e4;
+    border-radius: var(--radius-xl);
+    max-width: 32rem;
+  }
+
+  .learn-hub__tools h2 {
+    font-size: 1.1rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .learn-hub__tools p {
+    color: var(--color-muted);
+    margin: 0 0 var(--space-md);
+  }
+
+  @media (max-width: 700px) {
+    .learn-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

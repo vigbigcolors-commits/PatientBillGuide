@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page Not Found" description="This page could not be found on PatientBillGuide.">
+  <section class="not-found">
+    <div class="container container--narrow">
+      <h1>Page not found</h1>
+      <p>We could not find that page. Try one of these instead:</p>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
+        <li><a href="/how-it-works/">How it works</a></li>
+        <li><a href="/learn/">Learn</a></li>
+        <li><a href="/codes/">CPT Codes</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding: var(--space-3xl) 0;
+  }
+</style>

@@ -1,0 +1,238 @@
+---
+import ToolLayout from '../../../layouts/ToolLayout.astro';
+import MethodologyFooter from '../../../components/MethodologyFooter.astro';
+import Disclaimer from '../../../components/Disclaimer.astro';
+import { site } from '../../../data/site';
+import { TEMPLATE_DESCRIPTIONS, TEMPLATE_LABELS } from '../../../lib/dispute/letters';
+import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+
+const faqs = [
+  {
+    question: 'Is this legal advice?',
+    answer:
+      'No. These are editable letter templates for informational purposes. For complex disputes, consider consulting a patient advocate or attorney in your state.',
+  },
+  {
+    question: 'Which template should I use?',
+    answer:
+      'Use the overcharge template when a line item is far above Medicare benchmarks. Use duplicate when the same CPT and date appears twice. Use surprise bill when an out-of-network provider billed you at an in-network facility or after emergency care.',
+  },
+  {
+    question: 'How should I send the letter?',
+    answer:
+      'Keep a copy. Sending via certified mail with return receipt is a common practice for billing disputes. You can also email if your provider accepts billing correspondence electronically.',
+  },
+  {
+    question: 'Will this guarantee a refund?',
+    answer:
+      'No. A clear, documented request improves your chances of a review, but providers and insurers make final determinations based on contracts, coding, and applicable law.',
+  },
+  {
+    question: 'Is my information uploaded?',
+    answer: 'No. The letter is generated entirely in your browser.',
+  },
+];
+
+const schemaGraph = [
+  webApplicationSchema({
+    name: 'Dispute Letter Builder',
+    description: 'Generate editable medical billing dispute letter templates in your browser.',
+    url: `${site.url}/tools/dispute-letter/`,
+  }),
+  faqPageSchema(faqs),
+  breadcrumbSchema(
+    [{ name: 'Home', url: '/' }, { name: 'Tools', url: '/tools/' }, { name: 'Dispute Letter Builder' }],
+    site.url,
+  ),
+];
+---
+
+<ToolLayout
+  title="Dispute Letter Builder"
+  description="Generate editable dispute letters for overcharges, duplicate charges, and surprise bills. Free, private, not legal advice."
+  crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Tools', href: '/tools/' },
+    { label: 'Dispute Letter Builder' },
+  ]}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
+
+  <Fragment slot="intro">
+    <p>
+      Choose a template, fill in your details, and copy an editable letter. Always review before
+      sending — this is <strong>not legal advice</strong>.
+    </p>
+  </Fragment>
+
+  <form class="calculator card" id="dispute-letter-form">
+    <div class="field">
+      <label class="input-label" for="template">Dispute type</label>
+      <select class="input-field" id="template" name="template">
+        {
+          Object.entries(TEMPLATE_LABELS).map(([value, label]) => (
+            <option value={value}>{label}</option>
+          ))
+        }
+      </select>
+      <p class="input-hint" id="template-description">{TEMPLATE_DESCRIPTIONS.overcharge}</p>
+    </div>
+
+    <div class="field-grid">
+      <div class="field">
+        <label class="input-label" for="patient-name">Your full name</label>
+        <input class="input-field" id="patient-name" name="patient-name" type="text" autocomplete="name" />
+      </div>
+      <div class="field">
+        <label class="input-label" for="account-number">Account / patient ID</label>
+        <input class="input-field" id="account-number" name="account-number" type="text" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="input-label" for="patient-address">Your street address</label>
+      <input class="input-field" id="patient-address" name="patient-address" type="text" autocomplete="street-address" />
+    </div>
+
+    <div class="field">
+      <label class="input-label" for="patient-city-state-zip">City, state, ZIP</label>
+      <input class="input-field" id="patient-city-state-zip" name="patient-city-state-zip" type="text" autocomplete="postal-address" />
+    </div>
+
+    <div class="field-grid">
+      <div class="field">
+        <label class="input-label" for="provider-name">Provider / billing department</label>
+        <input class="input-field" id="provider-name" name="provider-name" type="text" />
+      </div>
+      <div class="field">
+        <label class="input-label" for="service-date">Date of service</label>
+        <input class="input-field" id="service-date" name="service-date" type="text" placeholder="MM/DD/YYYY" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="input-label" for="provider-address">Provider billing address</label>
+      <input class="input-field" id="provider-address" name="provider-address" type="text" />
+    </div>
+
+    <div class="field">
+      <label class="input-label" for="line-items">Disputed line items</label>
+      <textarea class="input-field" id="line-items" name="line-items" rows="4" placeholder="99213 Office visit — billed $485.00"></textarea>
+    </div>
+
+    <div class="field-grid">
+      <div class="field">
+        <label class="input-label" for="amount-disputed">Amount in dispute ($)</label>
+        <input class="input-field" id="amount-disputed" name="amount-disputed" type="text" inputmode="decimal" />
+      </div>
+      <div class="field" id="benchmark-field">
+        <label class="input-label" for="benchmark-note">Medicare / fair price note (optional)</label>
+        <input class="input-field" id="benchmark-note" name="benchmark-note" type="text" placeholder="Medicare allowed ~$108 in ZIP 60601" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="input-label" for="additional-notes">Additional notes (optional)</label>
+      <textarea class="input-field" id="additional-notes" name="additional-notes" rows="3"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn--primary">Generate letter</button>
+  </form>
+
+  <div id="dispute-letter-results" hidden></div>
+
+  <section class="tool-faq card">
+    <h2>FAQ</h2>
+    <dl class="faq">
+      {faqs.map((f) => (
+        <>
+          <dt>{f.question}</dt>
+          <dd>{f.answer}</dd>
+        </>
+      ))}
+    </dl>
+  </section>
+
+  <Disclaimer />
+
+  <div slot="sidebar">
+    <div class="sidebar-card card">
+      <h2>Related tools</h2>
+      <ul>
+        <li><a href="/tools/bill-auditor/">Bill Auditor</a></li>
+        <li><a href="/tools/surprise-bill-check/">Surprise Bill Checker</a></li>
+        <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
+      </ul>
+    </div>
+    <MethodologyFooter />
+  </div>
+</ToolLayout>
+
+<script>
+  import '../../../scripts/dispute-letter.ts';
+</script>
+
+<style>
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  @media (max-width: 640px) {
+    .field-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  #dispute-letter-results {
+    margin-top: var(--space-lg);
+  }
+
+  .tool-faq {
+    margin-top: var(--space-xl);
+  }
+
+  :global(.dispute-letter-body) {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    min-height: 16rem;
+  }
+
+  :global(.dispute-results__header) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    margin-bottom: var(--space-md);
+  }
+
+  :global(.dispute-results__template) {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
+    background: #ecfdf5;
+    color: #0f766e;
+  }
+
+  :global(.dispute-results__actions) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: var(--space-md) 0;
+  }
+
+  :global(.dispute-disclaimer) {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    padding: var(--space-md);
+    background: #fffbeb;
+    border-radius: var(--radius-md);
+  }
+</style>

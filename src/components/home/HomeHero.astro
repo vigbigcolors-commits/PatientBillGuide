@@ -1,0 +1,215 @@
+---
+/**
+ * Homepage hero — headline left (top-aligned with tool cards), decorated cards right.
+ */
+import HomeHeroTools from './HomeHeroTools.astro';
+import HomeHeroBridge from './HomeHeroBridge.astro';
+import HomeHeroHighlights from './HomeHeroHighlights.astro';
+---
+
+<section class="home-hero">
+  <div class="container">
+    <p class="home-hero__trust">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M12 2l7 4v5c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z"
+          stroke="currentColor"
+          stroke-width="1.75"></path>
+      </svg>
+      Free · Private · No account needed
+    </p>
+
+    <div class="home-hero__layout">
+      <div class="home-hero__copy">
+        <h1 class="home-hero__title">
+          Understand your medical bill<br />
+          <span class="home-hero__title-accent">before you pay.</span>
+        </h1>
+
+        <p class="home-hero__lead">
+          We compare your charges against Medicare's published rates so you can see — in plain
+          English — whether a price is typical, worth questioning, or unusually high.
+        </p>
+
+        <div class="home-hero__actions">
+          <a href="/tools/fair-price/" class="btn btn--primary home-hero__btn-primary">
+            Check a fair price
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M5 12h14M13 6l6 6-6 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </svg>
+          </a>
+          <a href="/how-it-works/" class="btn btn--secondary home-hero__btn-secondary">
+            How it works
+          </a>
+        </div>
+
+        <HomeHeroBridge />
+        <HomeHeroHighlights />
+      </div>
+
+      <div class="home-hero__tools">
+        <HomeHeroTools />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .home-hero {
+    position: relative;
+    padding: 2.25rem 0 3.5rem;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  .home-hero::before {
+    content: '';
+    position: absolute;
+    top: -15%;
+    left: -5%;
+    width: min(45vw, 28rem);
+    height: min(45vw, 28rem);
+    background: radial-gradient(circle, rgb(13 148 136 / 0.08) 0%, transparent 68%);
+    pointer-events: none;
+  }
+
+  .home-hero::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    right: -5%;
+    width: min(50vw, 32rem);
+    height: min(50vw, 32rem);
+    background: radial-gradient(circle, rgb(139 92 246 / 0.07) 0%, transparent 68%);
+    pointer-events: none;
+  }
+
+  .home-hero .container {
+    position: relative;
+    z-index: 1;
+    padding-top: 1.625rem;
+  }
+
+  .home-hero__trust {
+    position: absolute;
+    top: 0;
+    left: var(--page-gutter, 1rem);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4375rem;
+    margin: 0;
+    padding: 0.3125rem 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #0f766e;
+    background: #ffffff;
+    border: 1px solid #99f6e4;
+    border-radius: 999px;
+    z-index: 2;
+  }
+
+  .home-hero__trust svg {
+    color: #0d9488;
+    flex-shrink: 0;
+  }
+
+  .home-hero__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+    gap: 2.5rem 3rem;
+    align-items: start;
+  }
+
+  .home-hero__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 38rem;
+    text-align: left;
+  }
+
+  .home-hero__tools {
+    position: relative;
+  }
+
+  .home-hero__title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: #111827;
+    margin: 0 0 1rem;
+  }
+
+  .home-hero__title-accent {
+    color: var(--color-accent);
+  }
+
+  .home-hero__lead {
+    font-size: 1.0625rem;
+    color: #4b5563;
+    margin: 0 0 1.5rem;
+    line-height: 1.65;
+    max-width: 34rem;
+  }
+
+  .home-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.875rem;
+    margin: 0;
+  }
+
+  .home-hero__btn-primary {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    box-shadow: 0 4px 14px rgb(13 148 136 / 0.32);
+  }
+
+  .home-hero__btn-primary:hover {
+    box-shadow: 0 6px 18px rgb(13 148 136 / 0.38);
+  }
+
+  .home-hero__btn-secondary {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    border-color: #e5e7eb;
+    color: #111827;
+  }
+
+  @media (min-width: 961px) {
+    .home-hero {
+      padding-top: 2rem;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .home-hero .container {
+      padding-top: 0;
+    }
+
+    .home-hero__trust {
+      position: static;
+      margin-bottom: 1rem;
+    }
+
+    .home-hero__layout {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding-top: 0;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .home-hero {
+      padding: 2rem 0 2.5rem;
+    }
+  }
+</style>

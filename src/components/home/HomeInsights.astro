@@ -1,0 +1,611 @@
+---
+import { homeInsights } from '../../data/home-content';
+
+const toneStyles: Record<
+  string,
+  { accent: string; glow: string; grad: string; iconBg: string }
+> = {
+  coral: {
+    accent: '#fb7185',
+    glow: 'rgb(251 113 133 / 0.35)',
+    grad: 'linear-gradient(135deg, rgb(251 113 133 / 0.22) 0%, rgb(249 115 22 / 0.08) 100%)',
+    iconBg: 'linear-gradient(145deg, #fb7185, #f97316)',
+  },
+  blue: {
+    accent: '#60a5fa',
+    glow: 'rgb(96 165 250 / 0.35)',
+    grad: 'linear-gradient(135deg, rgb(96 165 250 / 0.22) 0%, rgb(99 102 241 / 0.08) 100%)',
+    iconBg: 'linear-gradient(145deg, #60a5fa, #6366f1)',
+  },
+  pink: {
+    accent: '#f472b6',
+    glow: 'rgb(244 114 182 / 0.35)',
+    grad: 'linear-gradient(135deg, rgb(244 114 182 / 0.22) 0%, rgb(236 72 153 / 0.08) 100%)',
+    iconBg: 'linear-gradient(145deg, #f472b6, #ec4899)',
+  },
+  teal: {
+    accent: '#2dd4bf',
+    glow: 'rgb(45 212 191 / 0.35)',
+    grad: 'linear-gradient(135deg, rgb(45 212 191 / 0.22) 0%, rgb(13 148 136 / 0.08) 100%)',
+    iconBg: 'linear-gradient(145deg, #2dd4bf, #0d9488)',
+  },
+  amber: {
+    accent: '#fbbf24',
+    glow: 'rgb(251 191 36 / 0.35)',
+    grad: 'linear-gradient(135deg, rgb(251 191 36 / 0.22) 0%, rgb(245 158 11 / 0.08) 100%)',
+    iconBg: 'linear-gradient(145deg, #fbbf24, #d97706)',
+  },
+  green: {
+    accent: '#34d399',
+    glow: 'rgb(52 211 153 / 0.35)',
+    grad: 'linear-gradient(135deg, rgb(52 211 153 / 0.22) 0%, rgb(5 150 105 / 0.08) 100%)',
+    iconBg: 'linear-gradient(145deg, #34d399, #059669)',
+  },
+};
+
+const icons: Record<string, string> = {
+  scan: 'M4 5a2 2 0 012-2h4v2H6v4H4V5zm16 0v4h-2V5h-4V3h4a2 2 0 012 2zm0 14v-4h2v4h-4v2h4a2 2 0 002-2zm-16 0a2 2 0 01-2-2v-4h2v4h4v2H4zM9 9h6v6H9V9z',
+  shield:
+    'M12 2l7 4v5c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4zm-1 5v2.5l3 1.8 1-1.6-2-1.2V7h-2z',
+  heart:
+    'M12 21s-6.5-4.5-9-8.5C1.5 9.5 3.5 6 7 6c2 0 3.5 1.2 5 3 1.5-1.8 3-3 5-3 3.5 0 5.5 3.5 4 6.5-2.5 4-9 8.5-9 8.5z',
+  document:
+    'M6 2h7l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2zm7 1.5V8h4.5M8 12h8M8 16h5',
+  duplicate:
+    'M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-2M16 4h2a2 2 0 012 2v12a2 2 0 01-2 2h-8a2 2 0 01-2-2v-2M12 2h4v4h-4V2z',
+  chart: 'M4 19h16M7 16V9M12 16V5M17 16v-3',
+};
+---
+
+<section class="home-insights" aria-labelledby="home-insights-heading">
+  <div class="insights-ambient" aria-hidden="true">
+    <span class="insights-orb insights-orb--1"></span>
+    <span class="insights-orb insights-orb--2"></span>
+    <span class="insights-orb insights-orb--3"></span>
+    <span class="insights-grid-lines"></span>
+  </div>
+
+  <div class="container insights-inner">
+    <header class="insights-header">
+      <div class="insights-eeat" role="list" aria-label="Content standards">
+        <span class="insights-eeat__pill" role="listitem">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M9 12l2 2 4-4M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"
+              stroke="currentColor"
+              stroke-width="1.75"></path>
+          </svg>
+          CMS public data
+        </span>
+        <span class="insights-eeat__pill" role="listitem">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              stroke="currentColor"
+              stroke-width="1.75"></path>
+          </svg>
+          Plain English
+        </span>
+        <span class="insights-eeat__pill" role="listitem">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+              stroke="currentColor"
+              stroke-width="1.75"></path>
+          </svg>
+          Not legal advice
+        </span>
+      </div>
+
+      <div class="insights-header__main">
+        <div class="insights-header__copy">
+          <p class="insights-eyebrow">Insider knowledge</p>
+          <h2 id="home-insights-heading">Nuances that save money and stress</h2>
+          <p class="insights-lead">
+            Real patterns on itemized bills and EOBs — written for patients, grounded in public
+            Medicare data and billing rules.
+          </p>
+          <a href="/methodology/" class="insights-methodology">
+            How we source this
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M5 12h14M13 6l6 6-6 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"></path>
+            </svg>
+          </a>
+        </div>
+
+        <div class="insights-metrics" aria-label="Quick facts">
+          <div class="insights-metric insights-metric--teal">
+            <span class="insights-metric__val">3×</span>
+            <span class="insights-metric__lbl">typical markup vs Medicare</span>
+          </div>
+          <div class="insights-metric insights-metric--blue">
+            <span class="insights-metric__val">2</span>
+            <span class="insights-metric__lbl">documents — bill &amp; EOB</span>
+          </div>
+          <div class="insights-metric insights-metric--green">
+            <span class="insights-metric__val">$0</span>
+            <span class="insights-metric__lbl">uploaded to our servers</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <ul class="insights-cards">
+      {
+        homeInsights.map((item, i) => {
+          const style = toneStyles[item.tone] ?? toneStyles.teal;
+          const path = icons[item.icon] ?? icons.chart;
+          return (
+            <li class="insights-card-wrap" style={`--i: ${i}`}>
+              <a
+                href={item.href}
+                class="insights-card"
+                style={`--accent: ${style.accent}; --glow: ${style.glow}; --grad: ${style.grad}; --icon-bg: ${style.iconBg}`}>
+                <span class="insights-card__shine" aria-hidden="true"></span>
+                <span class="insights-card__top">
+                  <span class="insights-card__icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                      <path d={path} stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </span>
+                  <span class="insights-card__tag">{item.tag}</span>
+                </span>
+                <h3 class="insights-card__title">{item.title}</h3>
+                <p class="insights-card__text">{item.text}</p>
+                <span class="insights-card__foot">
+                  <span class="insights-card__proof">{item.proof}</span>
+                  <span class="insights-card__cta">
+                    Read more
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path
+                        d="M5 12h14M13 6l6 6-6 6"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"></path>
+                    </svg>
+                  </span>
+                </span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  const cards = document.querySelectorAll('.insights-card-wrap');
+  if (cards.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+    cards.forEach((el) => observer.observe(el));
+  } else {
+    cards.forEach((el) => el.classList.add('is-visible'));
+  }
+</script>
+
+<style>
+  .home-insights {
+    position: relative;
+    padding: clamp(3.5rem, 8vw, 5.5rem) 0;
+    background: #0b1220;
+    color: #f8fafc;
+    overflow: hidden;
+  }
+
+  .insights-ambient {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .insights-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.55;
+    animation: insights-float 18s ease-in-out infinite;
+  }
+
+  .insights-orb--1 {
+    width: 28rem;
+    height: 28rem;
+    top: -8rem;
+    left: -6rem;
+    background: rgb(13 148 136 / 0.35);
+  }
+
+  .insights-orb--2 {
+    width: 22rem;
+    height: 22rem;
+    top: 20%;
+    right: -4rem;
+    background: rgb(99 102 241 / 0.28);
+    animation-delay: -6s;
+  }
+
+  .insights-orb--3 {
+    width: 18rem;
+    height: 18rem;
+    bottom: -4rem;
+    left: 35%;
+    background: rgb(244 114 182 / 0.22);
+    animation-delay: -12s;
+  }
+
+  .insights-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 75%);
+  }
+
+  @keyframes insights-float {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(2rem, -1.5rem) scale(1.05);
+    }
+    66% {
+      transform: translate(-1.5rem, 1rem) scale(0.95);
+    }
+  }
+
+  .insights-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .insights-eeat {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .insights-eeat__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #99f6e4;
+    background: rgb(13 148 136 / 0.12);
+    border: 1px solid rgb(13 148 136 / 0.28);
+    border-radius: 999px;
+  }
+
+  .insights-header__main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: end;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .insights-eyebrow {
+    margin: 0 0 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #2dd4bf;
+  }
+
+  .insights-header h2 {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 4vw, 2.625rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+  }
+
+  .insights-lead {
+    margin: 0 0 1.25rem;
+    max-width: 34rem;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: rgb(203 213 225 / 0.9);
+  }
+
+  .insights-methodology {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #2dd4bf;
+    text-decoration: none;
+    transition: gap 0.2s, color 0.2s;
+  }
+
+  .insights-methodology:hover {
+    color: #5eead4;
+    gap: 0.55rem;
+  }
+
+  .insights-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .insights-metric {
+    display: flex;
+    align-items: baseline;
+    gap: 0.875rem;
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
+    border: 1px solid rgb(255 255 255 / 0.08);
+    background: rgb(255 255 255 / 0.04);
+    backdrop-filter: blur(12px);
+    transition: transform 0.25s, border-color 0.25s;
+  }
+
+  .insights-metric:hover {
+    transform: translateX(4px);
+    border-color: rgb(255 255 255 / 0.14);
+  }
+
+  .insights-metric--teal .insights-metric__val {
+    color: #2dd4bf;
+  }
+
+  .insights-metric--blue .insights-metric__val {
+    color: #60a5fa;
+  }
+
+  .insights-metric--green .insights-metric__val {
+    color: #34d399;
+  }
+
+  .insights-metric__val {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    min-width: 2.75rem;
+  }
+
+  .insights-metric__lbl {
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    color: rgb(148 163 184 / 0.95);
+  }
+
+  .insights-cards {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .insights-card-wrap {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--i) * 0.07s);
+  }
+
+  .insights-card-wrap.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .insights-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    background: var(--grad), rgb(15 23 42 / 0.65);
+    border: 1px solid rgb(255 255 255 / 0.08);
+    overflow: hidden;
+    transition:
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.3s,
+      box-shadow 0.3s;
+  }
+
+  .insights-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0.85;
+  }
+
+  .insights-card:hover {
+    transform: translateY(-6px);
+    border-color: rgb(255 255 255 / 0.18);
+    box-shadow:
+      0 20px 40px rgb(0 0 0 / 0.35),
+      0 0 0 1px var(--glow);
+  }
+
+  .insights-card__shine {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgb(255 255 255 / 0.06) 50%,
+      transparent 60%
+    );
+    transform: translateX(-120%);
+    transition: transform 0.65s ease;
+  }
+
+  .insights-card:hover .insights-card__shine {
+    transform: translateX(120%);
+  }
+
+  .insights-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1.125rem;
+  }
+
+  .insights-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.875rem;
+    background: var(--icon-bg);
+    color: #ffffff;
+    box-shadow: 0 8px 20px var(--glow);
+    transition: transform 0.3s;
+  }
+
+  .insights-card:hover .insights-card__icon {
+    transform: scale(1.08) rotate(-3deg);
+  }
+
+  .insights-card__tag {
+    padding: 0.3rem 0.65rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--accent);
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    border-radius: 999px;
+  }
+
+  .insights-card__title {
+    margin: 0 0 0.625rem;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: #ffffff;
+  }
+
+  .insights-card__text {
+    flex: 1;
+    margin: 0 0 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: rgb(203 213 225 / 0.85);
+  }
+
+  .insights-card__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(255 255 255 / 0.08);
+  }
+
+  .insights-card__proof {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: rgb(148 163 184 / 0.9);
+  }
+
+  .insights-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--accent);
+    transition: gap 0.2s;
+  }
+
+  .insights-card:hover .insights-card__cta {
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 1024px) {
+    .insights-cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .insights-header__main {
+      grid-template-columns: 1fr;
+    }
+
+    .insights-metrics {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .insights-metric {
+      flex: 1 1 calc(50% - 0.375rem);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .insights-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .insights-metric {
+      flex: 1 1 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .insights-orb {
+      animation: none;
+    }
+
+    .insights-card-wrap {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .insights-card:hover {
+      transform: none;
+    }
+
+    .insights-card__shine {
+      display: none;
+    }
+  }
+</style>

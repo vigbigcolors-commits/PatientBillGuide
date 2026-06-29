@@ -1,0 +1,103 @@
+---
+import { homeSteps } from '../../data/home-content';
+---
+
+<section class="home-steps" aria-labelledby="home-steps-heading">
+  <div class="container">
+    <header class="section-header">
+      <p class="section-eyebrow">How it works</p>
+      <h2 id="home-steps-heading">Three steps to clarity</h2>
+      <p class="section-lead">No account. No upload. Answers in seconds.</p>
+    </header>
+    <ol class="steps-list">
+      {
+        homeSteps.map((step) => (
+          <li class="step-card">
+            <span class="step-card__num" aria-hidden="true">{step.step}</span>
+            <div class="step-card__body">
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+              <a href={step.href}>{step.link} →</a>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .home-steps {
+    padding: var(--space-3xl) 0;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .section-header .section-lead {
+    color: var(--color-muted);
+    margin: 0;
+  }
+
+  .steps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    counter-reset: step;
+  }
+
+  .step-card {
+    display: flex;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+  }
+
+  .step-card__num {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: #fff;
+    background: linear-gradient(135deg, var(--color-accent), #14b8a6);
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgb(13 148 136 / 0.35);
+  }
+
+  .step-card__body h3 {
+    font-size: 1.0625rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .step-card__body p {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0 0 var(--space-md);
+  }
+
+  .step-card__body a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .step-card__body a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 900px) {
+    .steps-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

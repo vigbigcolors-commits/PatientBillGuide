@@ -1,0 +1,210 @@
+---
+import ToolLayout from '../../../layouts/ToolLayout.astro';
+import ToolExamples from '../../../components/tools/ToolExamples.astro';
+import MethodologyFooter from '../../../components/MethodologyFooter.astro';
+import Disclaimer from '../../../components/Disclaimer.astro';
+import { site } from '../../../data/site';
+import { billAuditorExamples } from '../../../data/tool-examples';
+import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+
+const faqs = [
+  {
+    question: 'What format should I paste?',
+    answer:
+      'One charge per line works best. Include the 5-digit CPT code and dollar amount, e.g. "99213 Office visit established patient $185.00".',
+  },
+  {
+    question: 'Does this upload my bill to your servers?',
+    answer: 'No. Parsing and analysis run entirely in your browser. We never receive your bill text.',
+  },
+  {
+    question: 'What does "bill looks normal" mean?',
+    answer:
+      'It means we found no duplicate line items or charges significantly above Medicare-based benchmarks in our public dataset. It is not a guarantee your bill is correct.',
+  },
+  {
+    question: 'What are confidence levels on flags?',
+    answer:
+      'High confidence usually means we matched your ZIP to a locality with strong CMS data. Low confidence means national estimates — still useful, but less precise.',
+  },
+  {
+    question: 'Can this detect all billing errors?',
+    answer:
+      'No. We check duplicates, price outliers, and CMS NCCI practitioner unbundling edits (quarterly PTP file). We do not have your medical records or insurance contract.',
+  },
+  {
+    question: 'Should I pay my bill before auditing?',
+    answer:
+      'For non-urgent bills, comparing charges and requesting an itemized bill before paying in full is often wise. This tool is educational, not legal advice.',
+  },
+  {
+    question: 'Why add my ZIP code?',
+    answer:
+      'ZIP localizes Medicare allowed amounts. Without it, we use national median rates and flag with lower confidence.',
+  },
+  {
+    question: 'What if my code is not recognized?',
+    answer:
+      'We benchmark 7,700+ Medicare Physician Fee Schedule codes from CMS RVU26B. Unknown codes are flagged as coverage gaps — price checks are skipped but lines are still counted.',
+  },
+];
+
+const schemaGraph = [
+  webApplicationSchema({
+    name: 'Itemized Bill Auditor',
+    description: 'Paste hospital bill text to flag duplicates and Medicare price outliers in your browser.',
+    url: `${site.url}/tools/bill-auditor/`,
+  }),
+  faqPageSchema(faqs),
+  breadcrumbSchema(
+    [{ name: 'Home', url: '/' }, { name: 'Tools', url: '/tools/' }, { name: 'Bill Auditor' }],
+    site.url,
+  ),
+];
+---
+
+<ToolLayout
+  title="Itemized Bill Auditor"
+  description="Paste your hospital bill to flag possible duplicates and charges above Medicare benchmarks. Free, private, browser-based."
+  crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Tools', href: '/tools/' },
+    { label: 'Bill Auditor' },
+  ]}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
+
+  <Fragment slot="intro">
+    <p>
+      Paste text from an itemized bill. We parse CPT codes and amounts, compare them to CMS Medicare
+      benchmarks, and flag possible duplicates or outlier charges — with confidence levels on every
+      flag.
+    </p>
+  </Fragment>
+
+  <form class="calculator card" id="bill-auditor-form">
+    <div class="field">
+      <label class="input-label" for="bill-text">Itemized bill text</label>
+      <textarea
+        class="input-field bill-textarea"
+        id="bill-text"
+        name="bill-text"
+        rows="10"
+        placeholder={`Example:\n99213 Office visit $185.00\n71046 Chest x-ray 2 views $340.00\n80053 Comprehensive metabolic panel $45.00`}
+        required
+      ></textarea>
+      <p class="input-hint">Copy from PDF or patient portal — one line per charge when possible</p>
+    </div>
+
+    <div class="field">
+      <label class="input-label" for="zip">ZIP code (optional)</label>
+      <input
+        class="input-field"
+        id="zip"
+        name="zip"
+        type="text"
+        inputmode="numeric"
+        placeholder="e.g. 90210"
+        maxlength="5"
+        autocomplete="postal-code"
+      />
+      <p class="input-hint">Localizes Medicare benchmarks to your area</p>
+    </div>
+
+    <button type="submit" class="btn btn--primary">Audit bill</button>
+  </form>
+
+  <div id="bill-auditor-error" class="form-error" hidden></div>
+  <div id="bill-auditor-results" hidden></div>
+
+  <ToolExamples variant="bill-auditor" examples={billAuditorExamples} />
+
+  <section class="tool-faq card">
+    <h2>FAQ</h2>
+    <dl class="faq">
+      {faqs.map((f) => (
+        <>
+          <dt>{f.question}</dt>
+          <dd>{f.answer}</dd>
+        </>
+      ))}
+    </dl>
+  </section>
+
+  <Disclaimer />
+
+  <div slot="sidebar">
+    <div class="sidebar-card card">
+      <h2>What we check</h2>
+      <ul>
+        <li>Duplicate CPT + amount on the same date</li>
+        <li>Charges above 2.5× Medicare (typical fair range)</li>
+        <li>Charges well above 3.75× Medicare (significant outlier)</li>
+        <li>CMS NCCI unbundling pairs (same-day column1 + column2)</li>
+        <li>Multiple units on one line (qty &gt; 1)</li>
+        <li>Same CPT with different amounts on one date</li>
+        <li>Codes not yet in our benchmark dataset</li>
+      </ul>
+    </div>
+    <div class="sidebar-card card">
+      <h2>What we cannot check</h2>
+      <ul>
+        <li>Medical necessity or correct coding level</li>
+        <li>Insurance network contracts</li>
+        <li>Hospital-only NCCI edits (we ship practitioner PTP quarterly file)</li>
+      </ul>
+      <p><a href="/methodology/limitations/">See limitations</a></p>
+    </div>
+    <MethodologyFooter />
+  </div>
+</ToolLayout>
+
+<script>
+  import '../../../scripts/bill-auditor.ts';
+</script>
+
+<style>
+  .bill-textarea {
+    min-height: 12rem;
+    resize: vertical;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
+  .form-error {
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-md);
+    color: #991b1b;
+    font-size: 0.875rem;
+  }
+
+  #bill-auditor-results {
+    margin-top: var(--space-lg);
+  }
+
+  .tool-faq {
+    margin-top: var(--space-xl);
+  }
+
+  .tool-faq h2 {
+    font-size: 1.125rem;
+    margin: 0 0 var(--space-md);
+  }
+
+  .sidebar-card h2 {
+    font-size: 1rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .sidebar-card ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+</style>

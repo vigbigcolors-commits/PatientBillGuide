@@ -1,0 +1,68 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  crumbs?: Crumb[];
+}
+
+const { title, description, crumbs = [] } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} showTrustStrip={true}>
+  <slot name="head" slot="head" />
+  <div class="tool-page">
+    <div class="container">
+      {crumbs.length > 0 && <Breadcrumbs items={crumbs} />}
+      <header class="tool-page__header">
+        <h1>{title}</h1>
+        <slot name="intro" />
+      </header>
+      <div class="tool-page__grid">
+        <div class="tool-page__main">
+          <slot />
+        </div>
+        <aside class="tool-page__aside">
+          <slot name="sidebar" />
+        </aside>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .tool-page {
+    padding: var(--space-xl) 0 var(--space-3xl);
+  }
+
+  .tool-page__header {
+    max-width: 40rem;
+    margin-bottom: var(--space-xl);
+  }
+
+  .tool-page__header :global(p) {
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    margin: var(--space-sm) 0 0;
+  }
+
+  .tool-page__grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .tool-page__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,172 @@
+---
+import { site } from '../data/site';
+import Logo from './Logo.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div class="site-footer__brand">
+        <a href="/" class="site-footer__logo-link">
+          <Logo />
+          <span>PatientBillGuide</span>
+        </a>
+        <p>{site.tagline}</p>
+        <p class="site-footer__note">All calculations run in your browser. We never see your data.</p>
+      </div>
+      <div>
+        <h2 class="site-footer__heading">Tools</h2>
+        <ul class="site-footer__links">
+          <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
+          <li><a href="/tools/surprise-bill-check/">Surprise Bill Checker</a></li>
+          <li><a href="/tools/bill-auditor/">Bill Auditor</a></li>
+          <li><a href="/tools/eob-analyzer/">EOB Analyzer</a></li>
+          <li><a href="/tools/dispute-letter/">Dispute Letter Builder</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__heading">Learn</h2>
+        <ul class="site-footer__links">
+          <li><a href="/learn/">Learn hub</a></li>
+          <li><a href="/learn/how-to-read-eob/">How to Read an EOB</a></li>
+          <li><a href="/learn/cpt-codes-explained/">What is a CPT Code?</a></li>
+          <li><a href="/codes/">CPT encyclopedia</a></li>
+          <li><a href="/for/uninsured/">Self-Pay Guide</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="site-footer__heading">Trust</h2>
+        <ul class="site-footer__links">
+          <li><a href="/methodology/">Our Methodology</a></li>
+          <li><a href="/methodology/data-sources/">Data Sources</a></li>
+          <li><a href="/privacy/">Privacy Policy</a></li>
+          <li><a href="/disclaimer/">Disclaimer</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer__bottom">
+      <p class="site-footer__legal">
+        PatientBillGuide provides informational estimates only and is not medical or legal advice.
+        Always consult your provider and insurer for billing disputes. Medicare benchmark data is
+        sourced from CMS public datasets.
+      </p>
+      <p class="site-footer__copy">© {year} PatientBillGuide · Free · Private</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-primary);
+    color: #94a3b8;
+    padding: var(--space-3xl) 0 var(--space-xl);
+    margin-top: auto;
+  }
+
+  .site-footer a {
+    color: #e2e8f0;
+    text-decoration: none;
+  }
+
+  .site-footer a:hover {
+    color: var(--color-accent-light);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .site-footer__logo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff !important;
+    margin-bottom: var(--space-md);
+  }
+
+  .site-footer__logo-link :global(.logo-icon) {
+    color: var(--color-accent-light);
+  }
+
+  .site-footer__brand p {
+    margin: 0 0 var(--space-sm);
+    font-size: 0.9rem;
+    max-width: 22rem;
+    line-height: 1.5;
+  }
+
+  .site-footer__note {
+    font-size: 0.8rem !important;
+    color: #64748b !important;
+  }
+
+  .site-footer__heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    margin: 0 0 var(--space-md);
+    font-weight: 600;
+  }
+
+  .site-footer__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+  }
+
+  .soon {
+    color: #64748b;
+    font-size: 0.8em;
+  }
+
+  .site-footer__bottom {
+    border-top: 1px solid #1e293b;
+    padding-top: var(--space-lg);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-md);
+    font-size: 0.8rem;
+  }
+
+  .site-footer__legal {
+    margin: 0;
+    max-width: 42rem;
+    line-height: 1.5;
+    color: #64748b;
+  }
+
+  .site-footer__copy {
+    margin: 0;
+    color: #64748b;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 900px) {
+    .site-footer__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .site-footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .site-footer__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

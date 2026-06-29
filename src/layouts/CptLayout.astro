@@ -1,0 +1,111 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  crumbs?: Crumb[];
+  code: string;
+}
+
+const { title, description, crumbs = [], code } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <slot name="head" slot="head" />
+  <article class="cpt-page">
+    <div class="container">
+      {crumbs.length > 0 && <Breadcrumbs items={crumbs} />}
+      <header class="cpt-page__header">
+        <p class="cpt-page__code">CPT {code}</p>
+        <h1>{title}</h1>
+        <slot name="summary" />
+      </header>
+      <div class="cpt-page__grid">
+        <div class="cpt-page__main">
+          <slot />
+        </div>
+        <aside class="cpt-page__aside">
+          <slot name="sidebar" />
+        </aside>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .cpt-page {
+    padding: var(--space-xl) 0 var(--space-3xl);
+  }
+
+  .cpt-page__code {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .cpt-page__header {
+    max-width: 42rem;
+    margin-bottom: var(--space-xl);
+  }
+
+  .cpt-page__header :global(.cpt-summary) {
+    font-size: 1.05rem;
+    color: var(--color-muted);
+    margin: var(--space-sm) 0 0;
+    line-height: 1.6;
+  }
+
+  .cpt-page__grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .cpt-page__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cpt-page__main :global(h2) {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    margin: var(--space-2xl) 0 var(--space-md);
+    color: var(--color-primary);
+  }
+
+  .cpt-page__main :global(h2:first-child) {
+    margin-top: 0;
+  }
+
+  .cpt-page__main :global(p),
+  .cpt-page__main :global(li) {
+    line-height: 1.7;
+  }
+
+  .cpt-page__main :global(ul) {
+    padding-left: 1.25rem;
+    margin: 0 0 var(--space-md);
+  }
+
+  .cpt-page__main :global(.faq dt) {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-top: var(--space-md);
+  }
+
+  .cpt-page__main :global(.faq dd) {
+    margin: var(--space-xs) 0 0;
+    color: var(--color-muted);
+  }
+</style>

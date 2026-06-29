@@ -1,0 +1,22 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+---
+
+<LegalLayout
+  title="Methodology"
+  description="How PatientBillGuide calculates fair price benchmarks and billing flags."
+  crumbs={[{ label: 'Methodology' }]}
+>
+  <p>
+    Our tools use <strong>documented, reproducible methods</strong> based on public US healthcare
+    data. We publish sources, formulas, and limitations so you can judge results yourself.
+  </p>
+
+  <h2>Core topics</h2>
+  <ul>
+    <li><a href="/methodology/data-sources/">Data sources</a> — CMS MPFS, NCCI, hospital files</li>
+    <li><a href="/methodology/price-benchmarks/">Price benchmarks</a> — Medicare allowed + fair range</li>
+    <li><a href="/methodology/billing-flags/">Billing flags</a> — duplicates, unbundling, confidence</li>
+    <li><a href="/methodology/limitations/">Limitations</a> — what we cannot detect</li>
+  </ul>
+</LegalLayout>

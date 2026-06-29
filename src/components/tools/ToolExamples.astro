@@ -1,0 +1,108 @@
+---
+import type { FairPriceExample, MedicareLookupExample, BillAuditorExample, EobAnalyzerExample } from '../../data/tool-examples';
+
+interface Props {
+  title?: string;
+  hint?: string;
+  examples: FairPriceExample[] | MedicareLookupExample[] | BillAuditorExample[] | EobAnalyzerExample[];
+  variant: 'fair-price' | 'medicare-lookup' | 'bill-auditor' | 'eob-analyzer';
+}
+
+const { title = 'Quick examples', hint = 'Click to load — then we run the check automatically.', examples, variant } = Astro.props;
+---
+
+<div class="tool-examples card" data-tool-examples={variant}>
+  <h2 class="tool-examples__title">{title}</h2>
+  <p class="tool-examples__hint">{hint}</p>
+  <ul class="tool-examples__list">
+    {
+      examples.map((ex) => (
+        <li>
+          <button
+            type="button"
+            class="example-btn"
+            data-example-id={ex.id}
+            aria-label={`Load example: ${ex.label}`}>
+            <span class="example-btn__main">
+              <span class="example-btn__label">{ex.label}</span>
+              {ex.subtitle && <span class="example-btn__subtitle">{ex.subtitle}</span>}
+            </span>
+            <span class="example-btn__arrow" aria-hidden="true">›</span>
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .tool-examples {
+    margin-top: var(--space-xl);
+  }
+
+  .tool-examples__title {
+    font-size: 1.125rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .tool-examples__hint {
+    margin: 0 0 var(--space-md);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .tool-examples__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .example-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-family: var(--font-sans);
+    text-align: left;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  }
+
+  .example-btn:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+  }
+
+  .example-btn__main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .example-btn__label {
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 0.9375rem;
+  }
+
+  .example-btn__subtitle {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  .example-btn__arrow {
+    color: var(--color-accent);
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+</style>

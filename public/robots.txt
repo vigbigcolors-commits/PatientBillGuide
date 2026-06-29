@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://patientbillguide.com/sitemap-index.xml

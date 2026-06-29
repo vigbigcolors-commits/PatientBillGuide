@@ -1,6 +1,6 @@
-# BillTox — Complete Site Map
+# PatientBillGuide.com — Complete Site Map
 
-Every URL planned for the site. Check off in `STATUS.md` as built.
+Every URL planned. Check off in `STATUS.md` as built.
 
 **URL rules:** lowercase, trailing slash, semantic paths, self-referencing canonical.
 
@@ -10,164 +10,183 @@ Every URL planned for the site. Check off in `STATUS.md` as built.
 
 | URL | Page | Priority |
 |-----|------|----------|
-| `/` | Home | P0 |
-| `/how-it-works/` | How It Works | P0 |
-| `/pricing/` | Free Forever (AdSense model, no paid upsell) | P0 |
+| `/` | Home — 3 doors: bill / fair price / Medicare | P0 |
+| `/how-it-works/` | How tools work, client-side, no PHI | P0 |
+| `/pricing/` | Free Forever (AdSense model) | P0 |
+| `/start/` | Wizard: uninsured / insured / Medicare / family | P1 |
 
 ---
 
-## B. EEAT Foundation (build BEFORE tools & AdSense)
+## B. EEAT Foundation
 
 | URL | Page | Priority |
 |-----|------|----------|
-| `/about/` | About BillTox | P0 |
-| `/about/our-mission/` | Why We Built This | P0 |
-| `/about/team/` | Team | P0 |
+| `/about/` | About PatientBillGuide | P0 |
+| `/about/our-mission/` | Why honest numbers matter | P0 |
+| `/about/team/` | Team (when 2+ people) | P3 |
 | `/authors/` | Authors index | P0 |
-| `/authors/[slug]/` | Author bio (e.g. `/authors/jane-doe/`) | P0 |
+| `/authors/vigen/` | Founder bio | P0 |
 | `/methodology/` | Methodology hub | P0 |
-| `/methodology/data-sources/` | CMS, NCCI, update cadence | P0 |
-| `/methodology/price-benchmarks/` | Medicare + range formula | P0 |
-| `/methodology/billing-flags/` | NCCI, duplicates, confidence levels | P0 |
+| `/methodology/data-sources/` | CMS, NCCI, hospital files | P0 |
+| `/methodology/price-benchmarks/` | Medicare + 1.5–2.5× range | P0 |
+| `/methodology/billing-flags/` | NCCI, duplicates, confidence | P1 |
 | `/methodology/limitations/` | What we cannot detect | P0 |
-| `/editorial-policy/` | How we write CPT summaries | P0 |
-| `/corrections/` | Corrections & updates log | P0 |
-| `/contact/` | Contact | P0 |
-| `/privacy/` | Privacy Policy (client-side, no PHI) | P0 |
+| `/editorial-policy/` | Original CPT copy rules | P1 |
+| `/corrections/` | Corrections log | P2 |
+| `/contact/` | Contact | P1 |
+| `/privacy/` | Privacy (client-side, no PHI) | P0 |
 | `/terms/` | Terms of Use | P0 |
 | `/disclaimer/` | Medical & legal disclaimer | P0 |
-| `/accessibility/` | Accessibility statement | P0 |
-| `/sitemap/` | HTML sitemap | P0 |
+| `/accessibility/` | Accessibility | P2 |
+| `/sitemap/` | HTML sitemap | P1 |
 
 ---
 
 ## C. Tools Hub
 
-| URL | Tool | Audience | Priority |
-|-----|------|----------|----------|
-| `/tools/` | Tools directory | Both | P1 |
-| `/tools/bill-auditor/` | Itemized Bill Auditor | Both | P1 landing, P4 live |
-| `/tools/fair-price/` | Fair Price Calculator | Both | P1 landing, P3 live |
-| `/tools/eob-analyzer/` | EOB Analyzer | Insured | P1 landing, P4 live |
-| `/tools/dispute-letter/` | Dispute Letter Builder | Both | P1 landing, P4 live |
-| `/tools/code-lookup/` | Quick CPT Lookup | Both | P1 landing, P4 live |
+### Directory
 
-Each tool page must link to relevant methodology subpage in footer.
+| URL | Page | Priority |
+|-----|------|----------|
+| `/tools/` | Tools index (CHECK / UNDERSTAND / ACT) | P0 |
+
+### C1. CHECK — fair numbers (build first)
+
+| URL | Tool | Live target |
+|-----|------|-------------|
+| `/tools/fair-price/` | Fair Price Calculator | Week 2 |
+| `/tools/medicare-lookup/` | Medicare Allowed Lookup | Week 3 |
+| `/tools/surprise-bill-check/` | Surprise Bill Risk Checker | Week 4 |
+| `/tools/hospital-compare/` | Hospital Price Compare | Month 3–4 |
+
+### C2. UNDERSTAND — parse documents
+
+| URL | Tool | Live target |
+|-----|------|-------------|
+| `/tools/bill-auditor/` | Itemized Bill Auditor | Month 2 |
+| `/tools/eob-analyzer/` | EOB Analyzer | Month 3 |
+| `/tools/code-lookup/` | Quick CPT Lookup | Month 2 |
+
+### C3. ACT — next steps
+
+| URL | Tool | Live target |
+|-----|------|-------------|
+| `/tools/dispute-letter/` | Dispute Letter Builder | Month 4 |
+| `/tools/negotiation-script/` | Self-Pay Negotiation Script | Month 4 |
+| `/tools/prior-auth-guide/` | Prior Auth Navigator | Month 5–6 |
+
+### C4. MEDICARE tools
+
+| URL | Tool | Live target |
+|-----|------|-------------|
+| `/tools/medicare-plan-finder/` | Medicare Plan Finder (educational) | Oct 2026 |
+
+Each tool page: methodology footer + limitations + disclaimer.
 
 ---
 
-## D. Audience Landing Pages
+## D. Medicare Section (same project)
+
+| URL | Page | Priority |
+|-----|------|----------|
+| `/medicare/` | Medicare hub | P1 |
+| `/medicare/billing-explained/` | Part A/B, excess charges | P1 |
+| `/medicare/plan-basics/` | Advantage vs Medigap vs Part D | P2 |
+| `/medicare/open-enrollment/` | AEP seasonal (Oct 15 – Dec 7) | Sep 2026 |
+
+---
+
+## E. Audience Landing Pages
 
 | URL | Target | Priority |
 |-----|--------|----------|
-| `/for/uninsured/` | Self-pay, no insurance | P1 |
-| `/for/high-deductible/` | HDHP, surprise bills | P1 |
-| `/for/insured/` | EOB vs hospital bill | P1 |
-| `/for/seniors-medicare/` | Medicare billing confusion | P2 |
+| `/for/uninsured/` | Self-pay | P0 |
+| `/for/insured/` | EOB confusion | P0 |
+| `/for/high-deductible/` | HDHP | P1 |
+| `/for/seniors-medicare/` | 65+ | P1 |
+| `/for/emergency/` | ER bill panic | P1 |
 | `/for/families/` | Pediatric, family plans | P2 |
 
 ---
 
-## E. Learn Hub
-
-### Hub & pillars
+## F. Learn Hub
 
 | URL | Topic | Priority |
 |-----|-------|----------|
-| `/learn/` | Learn hub index | P1 |
-| `/learn/how-to-read-medical-bill/` | Pillar (3000+ words) | P1 |
-| `/learn/how-to-read-eob/` | Pillar — insured | P1 |
-| `/learn/surprise-medical-bills/` | No Surprises Act | P2 |
-| `/learn/medical-billing-errors/` | Unbundling, duplicates | P2 |
-| `/learn/how-to-negotiate-hospital-bill/` | Self-pay playbook | P2 |
+| `/learn/` | Learn hub index | P0 |
+| `/learn/how-to-read-medical-bill/` | Pillar | P0 |
+| `/learn/how-to-read-eob/` | Pillar — insured | P0 |
+| `/learn/surprise-medical-bills/` | No Surprises Act | P1 |
+| `/learn/medical-billing-errors/` | Duplicates, unbundling | P1 |
+| `/learn/how-to-negotiate-hospital-bill/` | Self-pay playbook | P1 |
 | `/learn/how-to-dispute-insurance-claim/` | Insured playbook | P2 |
-| `/learn/cpt-codes-explained/` | Bridge to encyclopedia | P2 |
-| `/learn/medicare-allowed-amount/` | Benchmark education | P2 |
-
-### Supporting content (waves)
-
-| URL pattern | Examples | Priority |
-|-------------|----------|----------|
-| `/learn/guides/[slug]/` | Hospital bill vs physician bill | P2+ |
-| `/learn/glossary/[term]/` | EOB, deductible, copay, CPT | P2+ |
-| `/learn/state/[state]-surprise-billing/` | State-specific guides | P5 |
+| `/learn/cpt-codes-explained/` | Bridge to encyclopedia | P1 |
+| `/learn/medicare-allowed-amount/` | Benchmark education | P1 |
+| `/learn/guides/[slug]/` | Supporting guides | P2+ |
+| `/learn/glossary/[term]/` | deductible, copay, EOB… | P2 |
+| `/learn/state/[state]-surprise-billing/` | State guides | P5 |
 
 ---
 
-## F. CPT Encyclopedia
+## G. CPT Encyclopedia
 
 | URL | Scale | Priority |
 |-----|-------|----------|
-| `/codes/` | Encyclopedia hub + search | P2 |
-| `/codes/cpt/[code]/` | e.g. `/codes/cpt/99214/` | P2 Tier 1: 50 |
-| `/codes/hcpcs/[code]/` | e.g. `/codes/hcpcs/G0105/` | P3 |
-| `/codes/category/[slug]/` | Office visits, imaging, surgery | P2 |
-| `/codes/compare/[code]-vs-[code]/` | e.g. `99213-vs-99214` | P2 |
-
-### Launch tiers
+| `/codes/` | Hub + search | P1 |
+| `/codes/cpt/[code]/` | e.g. `/codes/cpt/99214/` | Tier 1: 50 |
+| `/codes/hcpcs/[code]/` | HCPCS codes | P3 |
+| `/codes/category/[slug]/` | Office visits, imaging… | P1 |
+| `/codes/compare/[a]-vs-[b]/` | e.g. 99213-vs-99214 | P1 |
 
 | Tier | Count | Timeline |
 |------|-------|----------|
-| Tier 1 | 50 codes | Phase 2 (week 4–6) |
-| Tier 2 | 150 codes | Phase 5 (month 4+) |
-| Tier 3 | 500+ codes | Ongoing |
+| Tier 1 | 50 | Weeks 2–4 |
+| Tier 2 | 150 | Months 4–6 |
+| Tier 3 | 500+ | Year 2 |
 
 ---
 
-## G. Stories (social proof)
+## H. Stories
 
 | URL | Purpose | Priority |
 |-----|---------|----------|
-| `/stories/` | User stories index | P4 |
-| `/stories/[slug]/` | Anonymized case study | P4 |
-
-Format: self-reported outcomes. No guaranteed savings claims.
+| `/stories/` | Index | P2 |
+| `/stories/[slug]/` | Anonymized case studies | P2 |
 
 ---
 
-## H. Technical / SEO files
+## I. Technical / SEO
 
 | Path | Purpose |
 |------|---------|
 | `/robots.txt` | Crawl rules |
 | `/sitemap.xml` | Sitemap index |
-| `/sitemap-pages.xml` | Core + trust pages |
-| `/sitemap-tools.xml` | Tool pages |
-| `/sitemap-learn.xml` | Learn content |
-| `/sitemap-codes-1.xml` | CPT pages (split if needed) |
-| `404.html` | Helpful recovery links |
-
----
-
-## Sitemap index structure
-
-```
-sitemap-index.xml
-├── sitemap-pages.xml      (A + B + D + G core)
-├── sitemap-tools.xml      (C)
-├── sitemap-learn.xml      (E)
-└── sitemap-codes-1.xml    (F — add sitemap-codes-2.xml at scale)
-```
+| `/sitemap-pages.xml` | Trust + audience |
+| `/sitemap-tools.xml` | Tools |
+| `/sitemap-learn.xml` | Learn |
+| `/sitemap-codes-*.xml` | CPT (split at scale) |
+| `/sitemap-medicare.xml` | Medicare section |
+| `404.html` | Recovery links |
 
 ---
 
 ## Internal linking rules
 
-1. Every CPT page → Bill Auditor CTA (pre-fill `?code=`)
-2. Every CPT page → Fair Price widget + methodology link
-3. Every tool page → limitations + methodology footer
-4. Every learn article → 1 mid-article + 1 end CTA to relevant tool
-5. Homepage → all three pillars (tools, learn, codes)
-6. Breadcrumbs on all pages below depth 1
+1. Every CPT page → Fair Price widget + Bill Auditor CTA (`?code=`)
+2. Every tool → methodology + limitations footer
+3. Every learn article → 1 mid + 1 end CTA to relevant tool
+4. Homepage → CHECK tools + learn + codes
+5. `/start/` wizard → audience pages → primary tool
+6. Breadcrumbs below depth 1
 
 ---
 
 ## Page count targets
 
-| Milestone | Total pages | Trigger |
-|-----------|-------------|---------|
-| Phase 0 complete | ~20 | GSC submit |
-| Phase 1 complete | ~30 | — |
-| Phase 2 complete | ~60 | AdSense application |
-| Phase 4 complete | ~80+ | Full tool suite |
-| Phase 5 | 200+ | Scale SEO |
+| Milestone | Total | Trigger |
+|-----------|-------|---------|
+| Week 1 | ~10 | Staging live |
+| Week 3 | ~35 | AdSense prep |
+| Week 6 | ~65+ | AdSense apply |
+| Month 6 | 75+ | Medicare hub |
+| Year 2 | 200+ | Scale |

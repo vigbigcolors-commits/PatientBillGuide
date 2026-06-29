@@ -1,0 +1,43 @@
+---
+import LegalLayout from '../../../layouts/LegalLayout.astro';
+---
+
+<LegalLayout
+  title="Medicare Billing Help for Seniors"
+  description="Understand Medicare allowed amounts, excess charges, and billing basics."
+  crumbs={[{ label: 'For Medicare Seniors' }]}
+>
+  <p>
+    Medicare billing has its own vocabulary — <strong>allowed amounts</strong>, participating
+    providers, assignment, and supplemental (Medigap) coverage. We help you read statements in plain
+    English.
+  </p>
+
+  <h2>Medicare allowed amount</h2>
+  <p>
+    This is what Medicare approves for a service before your Part B coinsurance (usually 20% after the
+    deductible). It is the same public data we use in our Fair Price Calculator.
+  </p>
+  <p>
+    <a href="/tools/fair-price/" class="btn btn--primary">Check Medicare benchmark</a>
+  </p>
+
+  <h2>Participating vs. non-participating providers</h2>
+  <p>
+    Most doctors accept Medicare assignment (they agree to Medicare’s allowed amount). Some do not —
+    they may charge up to the limiting charge (115% of the allowed amount in many cases). Always ask
+    if a provider accepts assignment before non-emergency care.
+  </p>
+
+  <h2>Look up procedure codes</h2>
+  <p>
+    Find CPT codes on your Medicare Summary Notice or provider bill, then read our{' '}
+    <a href="/codes/">code guides</a> or use the calculator with your ZIP code for locality-specific
+    rates.
+  </p>
+
+  <p>
+    <a href="/learn/how-to-read-eob/">How to read an EOB →</a> ·
+    <a href="/tools/fair-price/?tab=medicare">Medicare Part B estimate →</a>
+  </p>
+</LegalLayout>

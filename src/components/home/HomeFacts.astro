@@ -1,0 +1,136 @@
+---
+import { homeFacts } from '../../data/home-content';
+---
+
+<section class="home-facts" aria-labelledby="home-facts-heading">
+  <div class="container">
+    <header class="section-header section-header--center">
+      <p class="section-eyebrow">The billing landscape</p>
+      <h2 id="home-facts-heading">Facts most patients never hear</h2>
+      <p class="section-lead">
+        US medical billing is complex by design. These numbers explain why checking your bill
+        matters — and why we built free tools around public Medicare data.
+      </p>
+    </header>
+    <div class="home-facts__grid">
+      {
+        homeFacts.map((fact) => (
+          <article class={`fact-card fact-card--${fact.tone}`}>
+            <p class="fact-card__stat">{fact.stat}</p>
+            <h3 class="fact-card__label">{fact.label}</h3>
+            <p class="fact-card__detail">{fact.detail}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .home-facts {
+    padding: var(--space-3xl) 0;
+    background: linear-gradient(180deg, #f0fdfa 0%, var(--color-bg) 100%);
+  }
+
+  .section-header--center {
+    text-align: center;
+    max-width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    margin: 0 0 var(--space-sm);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+  }
+
+  .section-lead {
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .home-facts__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .fact-card {
+    padding: var(--space-xl);
+    border-radius: var(--radius-xl);
+    border: 1px solid transparent;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .fact-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .fact-card--teal {
+    background: linear-gradient(145deg, #f0fdfa, #ccfbf1);
+    border-color: #99f6e4;
+  }
+
+  .fact-card--amber {
+    background: linear-gradient(145deg, #fffbeb, #fef3c7);
+    border-color: #fde68a;
+  }
+
+  .fact-card--green {
+    background: linear-gradient(145deg, #ecfdf5, #d1fae5);
+    border-color: #a7f3d0;
+  }
+
+  .fact-card--slate {
+    background: linear-gradient(145deg, #f8fafc, #e2e8f0);
+    border-color: #cbd5e1;
+  }
+
+  .fact-card__stat {
+    font-family: var(--font-heading);
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1;
+    margin: 0 0 var(--space-sm);
+    color: var(--color-primary);
+  }
+
+  .fact-card--teal .fact-card__stat { color: #0f766e; }
+  .fact-card--amber .fact-card__stat { color: #b45309; }
+  .fact-card--green .fact-card__stat { color: #047857; }
+  .fact-card--slate .fact-card__stat { color: #334155; }
+
+  .fact-card__label {
+    font-size: 1rem;
+    margin: 0 0 var(--space-sm);
+    color: var(--color-primary);
+  }
+
+  .fact-card__detail {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+
+  @media (max-width: 1024px) {
+    .home-facts__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .home-facts__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

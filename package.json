@@ -1,0 +1,29 @@
+{
+  "name": "patientbillguide",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "start": "astro dev",
+    "dev": "astro dev",
+    "build": "node scripts/build-data/generate-launch-data.mjs --if-needed && astro build",
+    "build:fresh": "npm run data:generate && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "data:validate": "node scripts/build-data/build-mpfs-subset.mjs",
+    "data:fetch": "node scripts/build-data/fetch-cms.mjs",
+    "data:generate": "node scripts/build-data/generate-launch-data.mjs"
+  },
+  "dependencies": {
+    "astro": "^7.0.3"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "vitest": "^3.2.4"
+  }
+}

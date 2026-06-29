@@ -1,166 +1,158 @@
-# Phased Action Plan
+# Phased Action Plan — PatientBillGuide.com
 
-Work **in order**. Do not skip EEAT shell (Phase 0) or build tools before trust pages.
+**Accelerated schedule** (full-time build). See [MASTER_PLAN.md](MASTER_PLAN.md).
+
+Work in order within each week. Trust minimum first, then **Fair Price** ASAP.
 
 ---
 
-## Phase 0 — Foundation (Week 1–2)
+## Week 1 — Foundation
 
-**Goal:** Trust shell live on staging. No working audit engine.
+**Goal:** Astro live on staging, trust minimum, homepage.
 
 ### Tasks
 
-1. Initialize Astro project in repo root
-2. Design system: typography, color palette (clinical trust — navy/teal), spacing, components
-3. Shared layouts: `Base`, `Legal`, `Learn`, `Tool` (placeholder), `CPT` (placeholder)
-4. Shared components: `Breadcrumbs`, `Disclaimer`, `MethodologyFooter`, `FAQ`, `TrustStrip`, `LastUpdated`
-5. Build **all Section B pages** from [SITE_MAP.md](SITE_MAP.md)
-6. Homepage — content-complete (tools may say "Coming soon" with full educational copy)
-7. `/how-it-works/` + `/pricing/`
-8. `robots.txt`, `sitemap.xml`, custom `404`
-9. Schema: `Organization`, `WebSite` on homepage
-10. Deploy to Cloudflare Pages (staging)
-11. Google Search Console verification
+1. Initialize Astro (TypeScript, static output)
+2. Design system: navy/teal, components per [DESIGN_DIRECTION.md](DESIGN_DIRECTION.md)
+3. Layouts: `Base`, `Legal`, `Learn`, `Tool`
+4. Components: `Header`, `Footer`, `Breadcrumbs`, `Disclaimer`, `TrustStrip`, `MethodologyFooter`
+5. Trust pages (minimum): `/about/`, `/about/our-mission/`, `/methodology/` + 3 subpages, `/privacy/`, `/terms/`, `/disclaimer/`, `/authors/vigen/`
+6. Homepage content-complete (tools may say "Coming soon")
+7. `/how-it-works/`, `/pricing/`
+8. `robots.txt`, `sitemap.xml`, `404`
+9. Schema: Organization + WebSite on homepage
+10. Deploy Cloudflare Pages (staging)
 
 ### Exit criteria
 
-- 18–20 pages live
-- Every trust/legal page complete (not lorem ipsum)
-- Mobile-responsive, accessible baseline
+- ~10 pages live, mobile-responsive
 - Lighthouse 90+ performance target
 
-### Do NOT in Phase 0
-
-- CMS data pipeline
-- Working bill parser
-- AdSense tags (too early)
-
 ---
 
-## Phase 1 — Tools & Audience Pages (Week 3)
+## Week 2 — First live tool
 
-**Goal:** ~30 pages. Full SEO landing content for tools (JS can be static placeholder).
+**Goal:** Fair Price Calculator + data pipeline start.
 
 ### Tasks
 
-1. `/tools/` directory page
-2. All 6 tool landing pages — full copy per [PAGE_TEMPLATES.md](PAGE_TEMPLATES.md)
-3. Audience pages: `/for/uninsured/`, `/for/insured/`, `/for/high-deductible/`
-4. `/learn/` hub
-5. Pillar articles: `how-to-read-medical-bill`, `how-to-read-eob`
-6. Update sitemaps
-7. Internal linking pass
+1. CMS MPFS pipeline spec → `mpfs-YYYY.json.gz` (see [TECHNICAL_SPEC.md](TECHNICAL_SPEC.md))
+2. **Ship `/tools/fair-price/`** — CPT + ZIP → Medicare allowed + range
+3. `/tools/` directory page
+4. 5 Tier 1 CPT pages with embedded widget
+5. `/codes/` hub skeleton
 
 ### Exit criteria
 
-- ~30 indexed-ready pages
-- Each tool page has FAQ schema + methodology footer
-- Unique meta titles/descriptions on every new page
+- Fair Price works client-side with real MPFS data
+- Vitest for price lookup logic
 
 ---
 
-## Phase 2 — CPT Encyclopedia Tier 1 (Week 4–6)
+## Week 3 — SEO base + audience
 
-**Goal:** ~60 total pages. Apply for AdSense.
+**Goal:** ~35 pages, AdSense-ready volume approaching.
 
 ### Tasks
 
-1. Content collection setup: `src/content/cpt/`
-2. `/codes/` hub with client-side search (static filter OK)
-3. Publish **50 Tier 1 CPT pages** — see [CONTENT_WORKFLOW.md](CONTENT_WORKFLOW.md)
-4. 5 compare pages (99213 vs 99214, etc.)
-5. 5 category pages
-6. Author bylines on all CPT pages
-7. `FAQPage` + `BreadcrumbList` schema validation
-8. **Submit Google AdSense application**
+1. 15 more CPT pages (20 total)
+2. Learn pillars: `how-to-read-medical-bill`, `how-to-read-eob`
+3. `/for/uninsured/`, `/for/insured/`, `/for/high-deductible/`
+4. `/tools/medicare-lookup/`
+5. `/learn/`, `/editorial-policy/`, `/contact/`
+6. Internal linking pass
 
 ### Exit criteria
 
-- 50 CPT pages ≥ 800 words each, original copy
-- AdSense application submitted
-- No thin/template-only pages
+- ~35 indexed-ready pages
+- Unique meta on every page
 
 ---
 
-## Phase 3 — Data & First Live Tool (Week 7–10)
+## Week 4 — Viral push
 
-**Goal:** Real Medicare benchmarks. First interactive tool.
+**Goal:** Reddit launch + more tools.
 
 ### Tasks
 
-1. Build CMS data pipeline — see [TECHNICAL_SPEC.md](TECHNICAL_SPEC.md)
-2. Generate `mpfs-YYYY.json.gz`, `ncci-YYYYQn.json.gz`, `zip-locality.json.gz`
-3. Host data on Cloudflare CDN (immutable cache headers)
-4. Implement lazy-load by user ZIP/locality
-5. **Ship `/tools/fair-price/`** — fully working
-6. Embed benchmark widget on CPT pages
-7. Update methodology pages with real version numbers & dates
-8. Vitest tests for price lookup logic
+1. **Reddit launch** — Fair Price tool
+2. `/tools/surprise-bill-check/`
+3. `/tools/bill-auditor/` MVP (paste + flags)
+4. `/tools/code-lookup/`
+5. `/for/emergency/`, `/for/seniors-medicare/`
+6. 10 more CPT pages (30 total)
+7. Google Search Console submit
 
 ### Exit criteria
 
-- Fair Price tool works end-to-end in browser
-- CPT pages show live benchmarks for user's ZIP
-- Methodology reflects actual data release
+- 3+ interactive tools live
+- First external traffic spike possible
 
 ---
 
-## Phase 4 — Core Tools (Week 11–16)
+## Week 5–6 — AdSense + expansion
 
-**Goal:** Full product suite MVP.
+**Goal:** 65+ pages, AdSense application.
 
 ### Tasks
 
-1. Findings engine + parser (manual entry + paste text)
-2. **Bill Auditor** — duplicates, NCCI, price flags
-3. **EOB Analyzer** — insured workflow
-4. **Dispute Letter Builder** — PDF export, disclaimers
-5. **Code Lookup** — redirect/enhance to CPT pages
-6. `/stories/` — 3 anonymized examples
-7. Service Worker for data bundle caching (optional but recommended)
+1. 20 more CPT pages (50 Tier 1 total)
+2. 5 compare pages, 5 category pages
+3. `/tools/eob-analyzer/` basic
+4. `/tools/dispute-letter/`, `/tools/negotiation-script/`
+5. `/stories/` × 3 case studies
+6. **Submit Google AdSense**
+7. `/medicare/` hub + `billing-explained`
 
 ### Exit criteria
 
-- All 5 tools functional at MVP level
-- "Bill looks normal" green path works
-- Confidence levels shown on every flag
+- 50 CPT pages ≥ 800 words original copy
+- AdSense submitted
+- 6+ tools live or landing-complete
 
 ---
 
-## Phase 5 — Scale (Month 4+)
-
-**Goal:** Topical authority at scale.
+## Week 7–8 — Medicare + hospital compare
 
 ### Tasks
 
-1. CPT Tier 2 — 150 codes
-2. `/learn/state/[state]-surprise-billing/` — top 10 states
-3. Learn articles wave 2 (10–15 guides)
-4. `/for/seniors-medicare/`, `/for/families/`
-5. PDF bill upload (pdf.js text extract)
-6. CPT Tier 3 toward 500+
-7. OCR evaluation (photo bills) — only if metrics justify
+1. `/tools/hospital-compare/` v1
+2. `/medicare/plan-basics/`
+3. `/tools/prior-auth-guide/` v1
+4. Affiliate test (one guide, disclosed)
+5. TikTok/Shorts content plan
 
 ---
 
-## AdSense placement plan (after approval)
+## Month 3–6 — Scale
 
-- Below tool results area (not blocking input)
-- Mid-article in learn content (after paragraph 3–4)
-- **Avoid** ads on: disclaimer, methodology, privacy, terms
-- No popups, no deceptive ad labels
+- CPT Tier 2 toward 150
+- Hospital data pipeline
+- EOB parser insurers expansion
+- State surprise billing guides (top 10)
+- Prep `/medicare/open-enrollment/` for Sep 2026
 
 ---
 
-## Minimum pages before AdSense
+## Sep–Oct 2026 — Medicare AEP
 
-| Category | Count |
-|----------|-------|
-| Trust/legal (Section B) | 15 |
-| Home + how-it-works + pricing | 3 |
-| Tools directory + 2 tool pages (min) | 3 |
-| Learn pillars | 3 |
-| CPT Tier 1 | 10 |
-| **Total minimum** | **~25–35** |
+- `/tools/medicare-plan-finder/` full
+- `/medicare/open-enrollment/` hub
+- Affiliate / lead gen (Medicare only, disclosed)
 
-Phase 2 targets ~60 for stronger YMYL approval odds.
+---
+
+## Do NOT in Week 1
+
+- Full 20-page EEAT before any tool
+- AdSense tags
+- Lead gen widgets
+- EV/solar content (wrong site)
+
+---
+
+## AdSense placement (after approval)
+
+- Below tool results (not above fold)
+- Mid-article in learn (after 2nd H2)
+- Never on disclaimer/privacy pages

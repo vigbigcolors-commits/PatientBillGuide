@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { cptCodeList } from '../../data/cpt-codes';
+---
+
+<BaseLayout
+  title="CPT Codes — Cost & Billing Guides"
+  description="Plain-English guides to common CPT procedure codes with Medicare benchmarks and fair price ranges. Free, browser-based tools."
+>
+  <div class="codes-hub">
+    <div class="container">
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'CPT Codes' }]} />
+      <header class="codes-hub__header">
+        <h1>CPT procedure codes</h1>
+        <p>
+          Original plain-English guides to 20 frequently billed Tier-1 codes — with Medicare
+          benchmarks and embedded price checks. Expanding toward 50 codes.
+        </p>
+      </header>
+
+      <section class="codes-hub__tools card">
+        <h2>Quick price check</h2>
+        <p>Know your code? Jump straight to the calculator.</p>
+        <a class="btn btn--primary" href="/tools/fair-price/">Fair Price Calculator</a>
+      </section>
+
+      <section>
+        <h2>Featured CPT codes</h2>
+        <ul class="code-list">
+          {
+            cptCodeList.map((item) => (
+              <li class="code-list__item card">
+                <a href={`/codes/cpt/${item.code}/`} class="code-list__link">
+                  <span class="code-list__code">{item.code}</span>
+                  <span class="code-list__meta">
+                    <span class="code-list__category">{item.category}</span>
+                    <span class="code-list__label">{item.label}</span>
+                  </span>
+                  <span class="code-list__arrow" aria-hidden="true">›</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="codes-hub__coming">
+        <h2>Data coverage</h2>
+        <p>
+          Fair Price and Medicare Lookup support <strong>7,700+ Medicare fee schedule codes</strong> and{' '}
+          <strong>42,000+ US ZIP codes</strong> mapped to CMS localities, with national fallback when needed. See{' '}
+          <a href="/methodology/data-sources/">data sources</a>.
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .codes-hub {
+    padding: var(--space-xl) 0 var(--space-3xl);
+  }
+
+  .codes-hub__header {
+    max-width: 40rem;
+    margin-bottom: var(--space-xl);
+  }
+
+  .codes-hub__header p {
+    color: var(--color-muted);
+    font-size: 1.05rem;
+  }
+
+  .codes-hub__tools {
+    margin-bottom: var(--space-2xl);
+    max-width: 32rem;
+  }
+
+  .codes-hub__tools h2 {
+    font-size: 1.1rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .codes-hub__tools p {
+    color: var(--color-muted);
+    margin: 0 0 var(--space-md);
+  }
+
+  .code-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-md) 0 0;
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .code-list__link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .code-list__link:hover .code-list__code {
+    color: var(--color-accent-hover);
+  }
+
+  .code-list__code {
+    font-family: var(--font-mono);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    min-width: 4rem;
+  }
+
+  .code-list__meta {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .code-list__category {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+  }
+
+  .code-list__label {
+    font-size: 0.9rem;
+    color: var(--color-text);
+  }
+
+  .code-list__arrow {
+    color: var(--color-muted);
+    font-size: 1.25rem;
+  }
+
+  .codes-hub__coming {
+    margin-top: var(--space-2xl);
+    max-width: 40rem;
+    color: var(--color-muted);
+  }
+
+  .codes-hub__coming h2 {
+    font-size: 1.1rem;
+    color: var(--color-primary);
+  }
+</style>

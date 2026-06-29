@@ -1,4 +1,4 @@
-# BillTox — Master Project Plan
+# PatientBillGuide — Technical Project Plan
 
 Consolidated plan from product & technical planning sessions (Gemini discussion + Cursor refinement).
 
@@ -6,7 +6,9 @@ Consolidated plan from product & technical planning sessions (Gemini discussion 
 
 ## 1. Vision
 
-BillTox.com is a **medical bill transparency hub** for Americans. Users paste or enter bill/EOB data and instantly get:
+PatientBillGuide.com is a **healthcare consumer transparency hub** for Americans.
+
+> **Strategy & tool roadmap:** see [MASTER_PLAN.md](MASTER_PLAN.md) Users paste or enter bill/EOB data and instantly get:
 
 1. **Plain-English explanations** of each line item
 2. **Price benchmarks** vs Medicare allowed amounts in their region

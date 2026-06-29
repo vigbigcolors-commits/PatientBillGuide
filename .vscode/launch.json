@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "PatientBillGuide: Dev Server",
+      "request": "launch",
+      "type": "node-terminal",
+      "cwd": "${workspaceFolder}",
+      "command": "npm run dev"
+    },
+    {
+      "name": "PatientBillGuide: Preview (build + serve)",
+      "request": "launch",
+      "type": "node-terminal",
+      "cwd": "${workspaceFolder}",
+      "command": "npm run build; npm run preview"
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+---
+import { homeLearn, homePopularCodes } from '../../data/home-content';
+---
+
+<section class="home-learn" aria-labelledby="home-learn-heading">
+  <div class="container">
+    <div class="home-learn__grid">
+      <div class="home-learn__guides">
+        <header class="section-header">
+          <p class="section-eyebrow">Learn</p>
+          <h2 id="home-learn-heading">Free guides — written in plain English</h2>
+          <p class="section-lead">Deep dives for SEO and for you. Original content, not copied from billing manuals.</p>
+        </header>
+        <ul class="learn-list">
+          {
+            homeLearn.map((guide) => (
+              <li>
+                <a href={guide.href} class="learn-card">
+                  <div>
+                    <h3>{guide.title}</h3>
+                    <p>{guide.text}</p>
+                  </div>
+                  <span class="learn-card__meta">{guide.readTime}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <a href="/learn/" class="learn-all">All learn articles →</a>
+      </div>
+
+      <aside class="home-learn__codes">
+        <h3>Popular CPT codes</h3>
+        <p class="codes-intro">Jump to a code guide or open the calculator with one click.</p>
+        <ul class="code-chips">
+          {
+            homePopularCodes.map((c) => (
+              <li>
+                <a href={c.href} class="code-chip" title={c.label}>
+                  <span class="code-chip__code">{c.code}</span>
+                  <span class="code-chip__label">{c.label}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <a href="/tools/fair-price/" class="btn btn--primary btn--block">Check any CPT code</a>
+        <a href="/codes/" class="codes-all">Browse all 20 code guides →</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .home-learn {
+    padding: var(--space-3xl) 0;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .home-learn__grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .learn-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-lg);
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .learn-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .learn-card:hover {
+    border-color: #99f6e4;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .learn-card h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+    color: var(--color-primary);
+  }
+
+  .learn-card p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  .learn-card__meta {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    white-space: nowrap;
+  }
+
+  .learn-all {
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .home-learn__codes {
+    padding: var(--space-xl);
+    background: linear-gradient(165deg, #f0fdfa, #ecfdf5);
+    border: 1px solid #99f6e4;
+    border-radius: var(--radius-xl);
+    position: sticky;
+    top: 1rem;
+  }
+
+  .home-learn__codes h3 {
+    margin: 0 0 var(--space-sm);
+    font-size: 1.0625rem;
+  }
+
+  .codes-intro {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin: 0 0 var(--space-md);
+  }
+
+  .code-chips {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-lg);
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .code-chip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: 0.625rem 0.875rem;
+    background: #fff;
+    border: 1px solid #a7f3d0;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s;
+  }
+
+  .code-chip:hover {
+    border-color: var(--color-accent);
+  }
+
+  .code-chip__code {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-accent);
+    min-width: 3.25rem;
+  }
+
+  .code-chip__label {
+    font-size: 0.8125rem;
+    color: var(--color-text);
+  }
+
+  .btn--block {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: var(--space-md);
+  }
+
+  .codes-all {
+    display: block;
+    text-align: center;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  @media (max-width: 900px) {
+    .home-learn__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .home-learn__codes {
+      position: static;
+    }
+  }
+</style>

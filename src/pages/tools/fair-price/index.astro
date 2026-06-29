@@ -1,0 +1,411 @@
+---
+import ToolLayout from '../../../layouts/ToolLayout.astro';
+import ToolExamples from '../../../components/tools/ToolExamples.astro';
+import MethodologyFooter from '../../../components/MethodologyFooter.astro';
+import Disclaimer from '../../../components/Disclaimer.astro';
+import { site } from '../../../data/site';
+import { fairPriceExamples } from '../../../data/tool-examples';
+import { PART_B_DEDUCTIBLE_2026 } from '../../../lib/pricing/medicare-part-b';
+import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+
+const faqs = [
+  {
+    question: 'What is a fair price range?',
+    answer:
+      'We use 1.5× to 2.5× the Medicare allowed amount as an educational benchmark for typical commercial or self-pay charges — documented in our methodology, not a legal maximum.',
+  },
+  {
+    question: 'Does Medicare rate include hospital facility fees?',
+    answer:
+      'No. This tool uses non-facility physician fee schedule rates. Hospital outpatient and ER facility fees are separate line items.',
+  },
+  {
+    question: 'Why is my ZIP showing national median?',
+    answer:
+      'We map 42,000+ US ZIP codes to CMS Medicare localities. Unmapped or invalid ZIPs use the national median rate.',
+  },
+  {
+    question: 'Is my search private?',
+    answer: 'Yes. All calculations run in your browser. We do not receive your codes, ZIP, or prices.',
+  },
+  {
+    question: 'What CPT codes are supported?',
+    answer:
+      'We support 7,700+ Medicare fee schedule codes (office visits, ER, imaging, labs, surgery, and more) from the CMS April 2026 RVU file, localized to 42,000+ US ZIP codes.',
+  },
+  {
+    question: 'Can a charge above fair range be correct?',
+    answer:
+      'Yes. Out-of-network care, facility fees, and bundled hospital pricing can exceed 2.5× Medicare without being a billing error.',
+  },
+  {
+    question: 'What is the Medicare Part B tab?',
+    answer:
+      'Same CMS allowed amount as Fair Price, plus a typical 80/20 split after the Part B deductible. It is an educational estimate — not your EOB or legal advice.',
+  },
+  {
+    question: 'Is this medical or legal advice?',
+    answer: 'No. PatientBillGuide is an independent educational guide. See our disclaimer.',
+  },
+];
+
+const schemaGraph = [
+  webApplicationSchema({
+    name: 'Fair Price Calculator',
+    description: 'Compare medical charges to Medicare benchmarks and fair price ranges by CPT and ZIP.',
+    url: `${site.url}/tools/fair-price/`,
+  }),
+  faqPageSchema(faqs),
+  breadcrumbSchema(
+    [{ name: 'Home', url: '/' }, { name: 'Tools', url: '/tools/' }, { name: 'Fair Price Calculator' }],
+    site.url,
+  ),
+];
+---
+
+<ToolLayout
+  title="Fair Price Calculator"
+  description="Enter a CPT procedure code and ZIP to compare your price against Medicare benchmarks. Free, private, browser-based."
+  crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Tools', href: '/tools/' },
+    { label: 'Fair Price Calculator' },
+  ]}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
+  <Fragment slot="intro">
+    <p>
+      Enter a CPT procedure code and optionally your ZIP and the price you were charged. Compare against
+      Medicare benchmarks and a typical fair range — or switch to the <strong>Medicare Part B</strong> tab for
+      coinsurance estimates.
+    </p>
+    <div class="facility-inline-notice" role="note">
+      <strong>Physician fee only.</strong> Medicare allowed amounts here do not include hospital outpatient,
+      ER, or imaging <em>facility fees</em> — often billed on separate lines.
+      <a href="/learn/how-to-read-medical-bill/#facility-professional">Facility vs professional →</a>
+    </div>
+  </Fragment>
+
+  <div class="tool-tabs" role="tablist" aria-label="Calculator mode">
+    <button type="button" class="tool-tab tool-tab--active" role="tab" data-price-tab="fair" aria-selected="true">
+      Fair price check
+    </button>
+    <button type="button" class="tool-tab" role="tab" data-price-tab="medicare" aria-selected="false">
+      Medicare Part B estimate
+    </button>
+  </div>
+
+  <form class="calculator card" id="fair-price-form">
+    <div class="field">
+      <label class="input-label" for="cpt">
+        CPT procedure code <span class="required" aria-hidden="true">*</span>
+      </label>
+      <input
+        class="input-field"
+        id="cpt"
+        name="cpt"
+        type="text"
+        inputmode="numeric"
+        placeholder="e.g. 99213"
+        autocomplete="off"
+        required
+      />
+      <p class="input-hint">Found on your bill or EOB. Try 99213, 77067, 93000</p>
+    </div>
+
+    <div class="field">
+      <label class="input-label" for="zip">ZIP code</label>
+      <div class="input-with-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z" stroke="currentColor" stroke-width="1.5" />
+          <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+        <input
+          class="input-field"
+          id="zip"
+          name="zip"
+          type="text"
+          inputmode="numeric"
+          placeholder="e.g. 90210"
+          maxlength="5"
+          autocomplete="postal-code"
+        />
+      </div>
+      <p class="input-hint">Helps localize rates to your region</p>
+    </div>
+
+    <div class="field" data-field="price">
+      <label class="input-label" for="price">Price you were charged</label>
+      <input
+        class="input-field"
+        id="price"
+        name="price"
+        type="text"
+        inputmode="decimal"
+        placeholder="$0.00"
+        autocomplete="off"
+      />
+      <p class="input-hint">Optional — compare your bill to the fair range. Facility fees may be on other lines.</p>
+    </div>
+
+    <div class="field" data-field="deductible" hidden>
+      <label class="input-label" for="deductible-met">Part B deductible already met this year</label>
+      <input
+        class="input-field"
+        id="deductible-met"
+        name="deductible-met"
+        type="text"
+        inputmode="decimal"
+        placeholder="$0"
+        autocomplete="off"
+      />
+      <p class="input-hint">Optional — enter how much of the {PART_B_DEDUCTIBLE_2026} annual deductible you have already paid in 2026.</p>
+    </div>
+
+    <button type="submit" class="btn btn--primary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
+        <path d="M16 16l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+      <span id="fair-price-submit-label">Check price</span>
+    </button>
+    <p class="calculator__note" role="status">
+      Uses CMS Medicare Physician Fee Schedule data. All calculations run in your browser.
+    </p>
+  </form>
+
+  <div id="fair-price-error" class="fair-price-error" hidden></div>
+  <div id="fair-price-results" hidden></div>
+
+  <ToolExamples variant="fair-price" examples={fairPriceExamples} />
+
+  <section class="tool-faq card">
+    <h2>FAQ</h2>
+    <dl class="faq">
+      {faqs.map((f) => (
+        <>
+          <dt>{f.question}</dt>
+          <dd>{f.answer}</dd>
+        </>
+      ))}
+    </dl>
+  </section>
+
+  <Disclaimer />
+
+  <div slot="sidebar">
+    <div class="sidebar-card card">
+      <h2>What this means</h2>
+      <ul class="means-list">
+        <li>
+          <strong>Medicare allowed amount</strong> — what Medicare approves nationally as a
+          benchmark for this procedure.
+        </li>
+        <li>
+          <strong>Fair range (1.5×–2.5×)</strong> — typical self-pay or commercial charges above
+          Medicare, per our methodology.
+        </li>
+        <li>
+          <strong>Your price comparison</strong> — where your charge falls relative to that range.
+        </li>
+        <li>
+          <strong>Confidence level</strong> — how complete the public data is for this code and
+          area.
+        </li>
+      </ul>
+    </div>
+
+    <div class="privacy-card">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2l7 4v5c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+      <div>
+        <strong>Your privacy is protected</strong>
+        <p>
+          All calculations happen in your browser. We never see your CPT codes, ZIP, or bill amount.
+          Nothing is stored or transmitted.
+        </p>
+      </div>
+    </div>
+
+    <MethodologyFooter />
+  </div>
+</ToolLayout>
+
+<script>
+  import '../../../scripts/fair-price.ts';
+</script>
+
+<style>
+  .calculator .field {
+    margin-bottom: var(--space-lg);
+  }
+
+  .facility-inline-notice {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #0c4a6e;
+  }
+
+  .facility-inline-notice a {
+    font-weight: 600;
+  }
+
+  .tool-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
+  }
+
+  .tool-tab {
+    padding: 0.625rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-btn);
+    background: #fff;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    cursor: pointer;
+  }
+
+  .tool-tab--active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+  }
+
+  .part-b-estimate {
+    margin: var(--space-md) 0;
+    padding: var(--space-md);
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: var(--radius-md);
+    color: #065f46;
+  }
+
+  .part-b-estimate__headline {
+    margin: 0 0 0.375rem;
+    font-weight: 700;
+    font-size: 0.9375rem;
+  }
+
+  .part-b-estimate__detail {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .input-with-icon {
+    position: relative;
+  }
+
+  .input-with-icon svg {
+    position: absolute;
+    left: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-muted);
+    pointer-events: none;
+  }
+
+  .input-with-icon .input-field {
+    padding-left: 2.5rem;
+  }
+
+  .calculator button[type='submit'] {
+    margin-top: var(--space-sm);
+  }
+
+  .calculator__note {
+    margin: var(--space-md) 0 0;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  .sidebar-card h2 {
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .means-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-md);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .means-list li {
+    padding-left: 1rem;
+    border-left: 3px solid var(--color-accent);
+  }
+
+  .means-list strong {
+    display: block;
+    color: var(--color-primary);
+    font-size: 0.9rem;
+    margin-bottom: 0.125rem;
+  }
+
+  .privacy-card {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    padding: var(--space-lg);
+    background: var(--color-accent-bg);
+    border: 1px solid #99f6e4;
+    border-radius: var(--radius-xl);
+    font-size: 0.875rem;
+    color: #115e59;
+  }
+
+  .privacy-card svg {
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .privacy-card strong {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #0f766e;
+  }
+
+  .privacy-card p {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .fair-price-error {
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-md);
+    color: #991b1b;
+    font-size: 0.875rem;
+  }
+
+  #fair-price-results {
+    margin-top: var(--space-lg);
+  }
+
+  .tool-faq {
+    margin-top: var(--space-xl);
+  }
+
+  .tool-faq h2 {
+    font-size: 1.125rem;
+    margin: 0 0 var(--space-md);
+  }
+</style>

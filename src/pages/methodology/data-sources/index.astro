@@ -1,0 +1,39 @@
+---
+import LegalLayout from '../../../layouts/LegalLayout.astro';
+---
+
+<LegalLayout
+  title="Data Sources"
+  description="Public data sources used by PatientBillGuide — CMS MPFS, NCCI, and hospital price files."
+  crumbs={[
+    { label: 'Methodology', href: '/methodology/' },
+    { label: 'Data Sources' },
+  ]}
+>
+  <h2>CMS Medicare Physician Fee Schedule (MPFS)</h2>
+  <p>
+    Primary source for Medicare allowed amounts by CPT/HCPCS code and geographic locality.
+    Published by the Centers for Medicare &amp; Medicaid Services (CMS). Updated annually
+    (and sometimes quarterly for some files).
+  </p>
+
+  <h2>NCCI edits</h2>
+  <p>
+    National Correct Coding Initiative (NCCI) procedure-to-procedure edits help identify
+    code pairs that Medicare typically does not pay separately when billed together.
+    We use these as <em>possible</em> unbundling signals, not proof of error.
+  </p>
+
+  <h2>Hospital price transparency files</h2>
+  <p>
+    Hospitals publish machine-readable standard charges under federal transparency rules.
+    We plan to incorporate these for hospital price comparison tools (rolling out after
+    the Fair Price Calculator).
+  </p>
+
+  <h2>Update cadence</h2>
+  <p>
+    Data bundle versions and last-updated dates will be shown on each tool once live.
+    Methodology pages will be updated when we ship new data releases.
+  </p>
+</LegalLayout>

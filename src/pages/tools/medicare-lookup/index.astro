@@ -1,0 +1,29 @@
+---
+import ToolLayout from '../../../layouts/ToolLayout.astro';
+---
+<ToolLayout
+  title="Medicare Allowed Lookup"
+  description="Medicare lookup has moved to the Fair Price Calculator — same CMS data with a dedicated Part B estimate tab."
+  crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Tools', href: '/tools/' },
+    { label: 'Medicare Lookup' },
+  ]}
+>
+  <Fragment slot="head">
+    <meta http-equiv="refresh" content="0;url=/tools/fair-price/?tab=medicare" />
+    <link rel="canonical" href={`${import.meta.env.SITE ?? 'https://patientbillguide.com'}/tools/fair-price/`} />
+  </Fragment>
+  <p>
+    Medicare Allowed Lookup is now part of the
+    <a href="/tools/fair-price/?tab=medicare"><strong>Fair Price Calculator</strong></a> — use the
+    <strong>Medicare Part B estimate</strong> tab for CMS allowed amounts and typical coinsurance.
+  </p>
+  <p><a href="/tools/fair-price/?tab=medicare" class="btn btn--primary">Open Medicare Part B tab</a></p>
+</ToolLayout>
+
+<script>
+  if (typeof window !== 'undefined') {
+    window.location.replace('/tools/fair-price/?tab=medicare');
+  }
+</script>

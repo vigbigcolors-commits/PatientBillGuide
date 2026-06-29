@@ -1,0 +1,91 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  crumbs?: Crumb[];
+}
+
+const { title, description, crumbs = [] } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <slot name="head" slot="head" />
+  <article class="legal-page">
+    <div class="container container--narrow">
+      {crumbs.length > 0 && <Breadcrumbs items={crumbs} />}
+      <header class="legal-page__header">
+        <h1>{title}</h1>
+      </header>
+      <div class="prose legal-page__body">
+        <slot />
+      </div>
+      <Disclaimer />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding: var(--space-2xl) 0 var(--space-3xl);
+  }
+
+  .legal-page__header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .legal-page__body {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .legal-page__body :global(.article-toc) {
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .legal-page__body :global(.article-toc h2) {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .legal-page__body :global(.article-toc ol) {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.9375rem;
+  }
+
+  .legal-page__body :global(.article-toc li) {
+    margin-bottom: 0.35rem;
+  }
+
+  .legal-page__body :global(.article-byline) {
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    margin: 0 0 var(--space-xl);
+  }
+
+  .legal-page__body :global(.faq dt) {
+    font-weight: 600;
+    margin-top: var(--space-md);
+  }
+
+  .legal-page__body :global(.faq dd) {
+    margin: var(--space-xs) 0 0;
+    color: var(--color-muted);
+  }
+</style>

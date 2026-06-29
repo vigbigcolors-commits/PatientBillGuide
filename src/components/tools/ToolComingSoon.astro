@@ -1,0 +1,97 @@
+---
+import ToolLayout from '../../layouts/ToolLayout.astro';
+import MethodologyFooter from '../MethodologyFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  intro: string;
+  eta: string;
+  features: string[];
+}
+
+const { title, description, intro, eta, features } = Astro.props;
+---
+
+<ToolLayout
+  title={title}
+  description={description}
+  crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Tools', href: '/tools/' },
+    { label: title },
+  ]}
+>
+  <Fragment slot="intro">
+    <p>{intro}</p>
+  </Fragment>
+
+  <div class="soon card">
+    <p class="soon__badge">In development</p>
+    <h2 class="soon__heading">This tool is not live yet</h2>
+    <p class="soon__eta">Planned: {eta}</p>
+    <ul class="soon__features">
+      {features.map((f) => <li>{f}</li>)}
+    </ul>
+    <p class="soon__cta-text">You can use our live Fair Price Calculator today:</p>
+    <a href="/tools/fair-price/" class="btn btn--primary">Fair Price Calculator</a>
+  </div>
+
+  <div slot="sidebar">
+    <div class="sidebar-card card">
+      <h2>Available now</h2>
+      <ul>
+        <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
+        <li><a href="/codes/">CPT code guides</a></li>
+        <li><a href="/how-it-works/">How it works</a></li>
+      </ul>
+    </div>
+    <MethodologyFooter />
+  </div>
+</ToolLayout>
+
+<style>
+  .soon__badge {
+    display: inline-block;
+    margin: 0 0 var(--space-md);
+    padding: 0.25rem 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #92400e;
+    background: #fef3c7;
+    border-radius: var(--radius-sm);
+  }
+
+  .soon__heading {
+    font-size: 1.25rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .soon__eta {
+    color: var(--color-muted);
+    margin: 0 0 var(--space-lg);
+  }
+
+  .soon__features {
+    margin: 0 0 var(--space-xl);
+    padding-left: 1.25rem;
+    line-height: 1.7;
+  }
+
+  .soon__cta-text {
+    margin-bottom: var(--space-md);
+  }
+
+  .sidebar-card h2 {
+    font-size: 1rem;
+    margin: 0 0 var(--space-md);
+  }
+
+  .sidebar-card ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.9rem;
+  }
+</style>

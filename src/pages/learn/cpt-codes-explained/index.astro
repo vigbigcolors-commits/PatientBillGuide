@@ -1,0 +1,266 @@
+---
+import LegalLayout from '../../../layouts/LegalLayout.astro';
+import { site } from '../../../data/site';
+import { articleSchema, faqPageSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+
+const updated = '2026-06-29';
+const pageUrl = '/learn/cpt-codes-explained/';
+const canonical = new URL(pageUrl, site.url).href;
+const title = 'What Is a CPT Code?';
+const description =
+  'CPT procedure codes explained in plain English — where to find them on your bill and how to check fair prices against Medicare data.';
+
+const faqs = [
+  {
+    question: 'Who creates CPT codes?',
+    answer:
+      'The American Medical Association maintains the CPT code set. Hospitals, physicians, and insurers use these codes to describe procedures on claims and bills. PatientBillGuide writes its own plain-English summaries — not AMA-licensed descriptions.',
+  },
+  {
+    question: 'Are CPT codes the same as diagnosis codes?',
+    answer:
+      'No. CPT codes describe what procedure or service was performed. ICD diagnosis codes describe why — the medical condition. Bills and EOBs may show both, but price benchmarks focus on CPT/HCPCS procedure codes.',
+  },
+  {
+    question: 'Can one visit have multiple CPT codes?',
+    answer:
+      'Yes. A single office visit might include an evaluation code plus separate codes for lab work, injections, or procedures performed the same day. Hospital bills often list dozens of codes for one stay.',
+  },
+  {
+    question: 'What if my bill has a code I do not recognize?',
+    answer:
+      'Look up the five-digit number in our CPT encyclopedia or ask the provider\'s billing office to explain it. Once you know the code, use the Fair Price Calculator to see Medicare benchmark amounts for your area.',
+  },
+  {
+    question: 'Do Medicare and private insurers use the same CPT codes?',
+    answer:
+      'They use the same code set to describe services, but payment amounts differ. Medicare publishes fee schedule data; private insurers negotiate their own rates. The code is the shared vocabulary; the dollar amount depends on the payer.',
+  },
+  {
+    question: 'What is a HCPCS code?',
+    answer:
+      'HCPCS (Healthcare Common Procedure Coding System) includes CPT codes plus additional codes for supplies, equipment, ambulance services, and certain drugs. On patient bills, "CPT" and "HCPCS" columns often appear together.',
+  },
+];
+
+const schemaGraph = [
+  articleSchema({
+    headline: title,
+    description,
+    url: canonical,
+    dateModified: updated,
+    authorName: 'Vigen',
+    authorUrl: `${site.url}/authors/vigen/`,
+  }),
+  faqPageSchema(faqs),
+  breadcrumbSchema(
+    [
+      { name: 'Home', url: '/' },
+      { name: 'Learn', url: '/learn/' },
+      { name: 'CPT Codes Explained' },
+    ],
+    site.url,
+  ),
+];
+---
+
+<LegalLayout
+  title={title}
+  description={description}
+  crumbs={[{ label: 'Learn', href: '/learn/' }, { label: 'CPT Codes Explained' }]}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
+
+  <p class="article-byline">
+    Written by <a href="/authors/vigen/">Vigen</a> · Last updated {updated}
+  </p>
+
+  <p>
+    <strong>CPT codes</strong> (Current Procedural Terminology) are five-digit codes that describe medical
+    procedures and services — office visits, lab tests, imaging, surgery, and more. Almost every US
+    medical bill and insurance EOB lists them. Learning to spot CPT codes is one of the fastest ways to
+    turn a confusing statement into something you can research and question with confidence.
+  </p>
+
+  <h2>Why CPT codes exist</h2>
+  <p>
+    Healthcare billing involves thousands of distinct services. Insurers and providers need a shared
+    vocabulary so claims can be processed automatically. CPT codes fill that role: they tell the payer
+    exactly which service was performed so the correct fee schedule, coverage rule, and medical policy
+    can apply.
+  </p>
+  <p>
+    The code set is maintained by the American Medical Association. PatientBillGuide does not reproduce
+    AMA-copyrighted code descriptions. We write <strong>original plain-English summaries</strong> based
+    on public clinical context and CMS data. See <a href="/methodology/data-sources/">our data sources</a>
+    for details.
+  </p>
+
+  <h2>Where to find CPT codes on your documents</h2>
+  <ul>
+    <li>
+      <strong>Itemized hospital bill</strong> — look for columns labeled "CPT," "HCPCS," "procedure code,"
+      or "service code." Request itemization if you only see a total.
+    </li>
+    <li>
+      <strong>EOB (Explanation of Benefits)</strong> — often in a "service code" or "procedure" field next
+      to each claim line. See our <a href="/learn/how-to-read-eob/">EOB guide</a> for column help.
+    </li>
+    <li>
+      <strong>Clinic bill or after-visit summary</strong> — may list codes the office plans to bill, sometimes
+      before insurance processes the claim.
+    </li>
+    <li>
+      <strong>Online patient portal</strong> — downloadable statements often include codes not shown on
+      paper summaries.
+    </li>
+  </ul>
+  <p>
+    If codes are missing, call billing and ask for them. Without codes, it is difficult to compare your
+    charge to benchmarks or spot duplicate services.
+  </p>
+
+  <h2>Common examples</h2>
+  <p>These frequently appear on everyday medical paperwork:</p>
+  <ul>
+    <li><a href="/codes/cpt/99213/">99213</a> — established-patient office visit, moderate complexity</li>
+    <li><a href="/codes/cpt/93000/">93000</a> — electrocardiogram (EKG), complete</li>
+    <li><a href="/codes/cpt/71046/">71046</a> — chest X-ray, two views</li>
+    <li><a href="/codes/cpt/80053/">80053</a> — comprehensive metabolic panel (blood test)</li>
+    <li><a href="/codes/cpt/27447/">27447</a> — total knee replacement (major surgery example)</li>
+  </ul>
+  <p>
+    Browse the full launch set in our <a href="/codes/">CPT encyclopedia</a>. We add codes over time with
+    cost context and links to the Fair Price Calculator.
+  </p>
+
+  <h2>CPT vs. ICD diagnosis codes</h2>
+  <p>
+    CPT codes describe <em>what was done</em> — the procedure, test, or visit level. <strong>ICD codes</strong>
+    describe <em>why</em> — the diagnosis or symptom that justified the service. A claim sent to insurance
+    typically includes both: an office visit CPT code plus ICD codes for the conditions discussed.
+  </p>
+  <p>
+    Patient-facing bills sometimes hide ICD codes but almost always need CPT (or HCPCS) codes to calculate
+    payment. When you research prices, focus on the procedure code. When you verify medical necessity with
+    your insurer, diagnosis codes may appear on the EOB.
+  </p>
+
+  <h2>CPT vs. HCPCS and revenue codes</h2>
+  <p>
+    <strong>HCPCS</strong> (pronounced "hick-picks") is a broader coding system. It includes all CPT
+    codes plus alphanumeric codes for durable medical equipment, ambulance trips, certain injectable
+    drugs, and supplies. On a hospital bill you may also see <strong>revenue codes</strong> — four-digit
+    department identifiers used on facility claims (for example, pharmacy or radiology).
+  </p>
+  <p>
+    For price checks, the five-digit CPT code (or applicable HCPCS code) is what maps to Medicare fee
+    schedule data. Revenue codes help hospitals categorize charges but are less useful for patient
+    benchmark tools.
+  </p>
+
+  <h2>Modifiers and multiple codes on one visit</h2>
+  <p>
+    Some lines show a CPT code plus a <strong>modifier</strong> — a two-character add-on that refines the
+    service (bilateral procedure, reduced service, etc.). Modifiers affect payment but the base code still
+    tells you what type of service was billed.
+  </p>
+  <p>
+    A single visit commonly produces multiple CPT lines: an evaluation-and-management code for the visit
+    itself, plus separate codes for labs, imaging, or procedures performed the same day. That is normal.
+    What deserves a closer look is the <em>same</em> code repeated on the <em>same</em> date without a
+    clear reason, or codes that do not match the care you remember receiving.
+  </p>
+
+  <h2>How insurers use CPT codes</h2>
+  <p>
+    When a provider submits a claim, each CPT line is priced against a fee schedule or contract rate.
+    Coverage rules — prior authorization, frequency limits, bundled service policies — also key off codes.
+    That is why an EOB denial might reference a code you do not recognize: the insurer's policy for that
+    code may require extra documentation or exclude it from your plan.
+  </p>
+  <p>
+    Medicare publishes allowed amounts by code and geography. Private insurers negotiate their own rates,
+    usually as a percentage of Medicare or a custom fee schedule. The CPT code is the anchor; the dollar
+    amount varies by payer and network status.
+  </p>
+
+  <h2>Reading a CPT line on your bill</h2>
+  <p>
+    A typical bill line combines several fields. Learning to read them together saves time:
+  </p>
+  <ul>
+    <li><strong>Date of service</strong> — when the procedure occurred. Match it to your calendar.</li>
+    <li><strong>Description</strong> — plain-language label. Compare it to the code; they should describe the same service.</li>
+    <li><strong>CPT or HCPCS code</strong> — the five-digit (or alphanumeric) identifier for benchmarks.</li>
+    <li><strong>Units</strong> — quantity. Infusions, therapy sessions, and supplies often bill per unit.</li>
+    <li><strong>Charge</strong> — provider's listed price for that line.</li>
+  </ul>
+  <p>
+    If the description says "office visit" but the code points to a surgical procedure, ask billing to
+    clarify. Typos in coding are rare but fixable when caught early. For hospital stays, the same CPT
+    code may appear on both a facility bill and a physician bill with different dollar amounts — that
+  reflects the facility vs. professional split described in our <a href="/learn/how-to-read-medical-bill/">medical bill guide</a>.
+  </p>
+
+  <h2>When the same code pays differently</h2>
+  <p>
+    Two patients with the same CPT code on their bills may owe different amounts. <strong>Place of
+    service</strong> matters: an imaging code billed at a hospital outpatient department often costs more
+    than the same study at an independent imaging center. <strong>Network status</strong> changes allowed
+    amounts. <strong>Deductible progress</strong> determines whether you pay full cost-sharing or only a
+    copay. The code is only the starting point for price research.
+  </p>
+  <p>
+    That is why PatientBillGuide pairs code education with ZIP-based <a href="/methodology/price-benchmarks/">Medicare
+    benchmarks</a> rather than publishing a single national price per code. Use the Fair Price Calculator
+    for your geography, then compare to your bill or EOB line.
+  </p>
+
+  <h2>Check your code against Medicare data</h2>
+  <p>
+    Once you have a CPT code and your ZIP code, use our free <a href="/tools/fair-price/">Fair Price
+    Calculator</a> to see the Medicare allowed amount and a documented fair range. If you have an
+    itemized bill, paste lines into the <a href="/tools/bill-auditor/">Bill Auditor</a> for a structured
+    review. For reading the full statement, see <a href="/learn/how-to-read-medical-bill/">how to read a
+    medical bill</a>.
+  </p>
+  <p>
+    Benchmarks are educational references, not guarantees of what you should pay or what insurers will
+    approve. See <a href="/methodology/limitations/">limitations</a> for how to interpret results.
+  </p>
+
+  <h2>Evaluation and management (E/M) visit codes</h2>
+  <p>
+    Office and outpatient visit codes — often in the 99202–99215 range for new and established patients — are
+    among the most common CPT lines consumers see. The last digit reflects documentation complexity and
+    time, not necessarily how long you sat in the waiting room. A <a href="/codes/cpt/99213/">99213</a>
+    visit is a typical follow-up; higher numbers like 99214 or 99215 indicate more complex decision-making.
+  </p>
+  <p>
+    If your bill shows a high-level visit code for what felt like a brief appointment, you can ask billing
+    whether the code matches the physician's chart. This is a standard question, not an allegation of
+    misconduct. Insurers also review E/M coding during audits.
+  </p>
+
+  <h2>FAQ</h2>
+  <dl class="faq">
+    {
+      faqs.map((item) => (
+        <>
+          <dt>{item.question}</dt>
+          <dd>{item.answer}</dd>
+        </>
+      ))
+    }
+  </dl>
+
+  <p>
+    <em>
+      We write original summaries — not AMA-licensed CPT descriptions. See{' '}
+      <a href="/methodology/data-sources/">data sources</a>.
+    </em>
+  </p>
+</LegalLayout>

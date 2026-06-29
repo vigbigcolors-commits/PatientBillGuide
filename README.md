@@ -1,6 +1,6 @@
-# BillTox.com
+# PatientBillGuide.com
 
-**Medical bill transparency for Americans** — understand itemized hospital bills and insurance EOBs, compare charges to public Medicare benchmarks, and spot common billing red flags. All processing runs in the browser; no accounts required.
+**Honest healthcare numbers for Americans** — check fair prices against Medicare benchmarks, understand itemized bills and insurance EOBs, and spot common billing concerns. All processing runs in the browser; no accounts required.
 
 > **Separate project** — not related to VeloTools.
 
@@ -8,64 +8,71 @@
 
 | Item | Value |
 |------|-------|
-| **Phase** | 0 — Foundation (not started) |
-| **Next step** | See [docs/PHASES.md](docs/PHASES.md) → Phase 0, task 1 |
+| **Domain** | PatientBillGuide.com |
+| **Phase** | Week 8 — deploy ready (6 tools, 56 tests, 53 pages) |
+| **Deploy** | Cloudflare Pages — see [docs/DEPLOY.md](docs/DEPLOY.md) |
 | **Tracker** | [STATUS.md](STATUS.md) |
 
-## Locked decisions
+## Run the site locally (important)
 
-| Decision | Value |
-|----------|-------|
-| Domain / brand | BillTox.com |
-| Language | English (US market) |
-| Audience | Self-pay / uninsured **and** insured (EOB) |
-| Monetization (start) | Google AdSense only |
-| CPT descriptions | Original plain-English summaries (not AMA copy) |
-| Architecture | Client-side JS/WASM; static data via CDN (Cloudflare) |
-| Build order | **Page structure + EEAT shell first**, then tools & data engine |
+This is an **Astro** app. It must run through the Astro dev server — **not** VS Code / Cursor **“Go Live”**.
 
-## Documentation index
+| Method | What happens |
+|--------|----------------|
+| ❌ **Go Live** on project folder | Shows raw file list (`src/`, `public/`, …) — **wrong** |
+| ✅ **`npm run dev`** | Real site at http://localhost:4321 |
 
-| Document | Purpose |
-|----------|---------|
-| [STATUS.md](STATUS.md) | Live progress tracker — update as you work |
-| [docs/DECISIONS.md](docs/DECISIONS.md) | All agreed product & technical decisions |
-| [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md) | Master plan: vision, engine, nuance, risks |
-| [docs/SITE_MAP.md](docs/SITE_MAP.md) | Full URL map & page inventory |
-| [docs/PHASES.md](docs/PHASES.md) | Phased action plan (week by week) |
-| [docs/EEAT_CHECKLIST.md](docs/EEAT_CHECKLIST.md) | SEO & EEAT requirements per page type |
-| [docs/PAGE_TEMPLATES.md](docs/PAGE_TEMPLATES.md) | Content specs: Home, Tool, CPT, Learn, Methodology |
-| [docs/TECHNICAL_SPEC.md](docs/TECHNICAL_SPEC.md) | Data pipeline, findings engine, architecture |
-| [docs/CONTENT_WORKFLOW.md](docs/CONTENT_WORKFLOW.md) | Editorial process for CPT & learn content |
-| [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md) | Items still to decide before/during build |
+### Quick start (Windows)
 
-## How to continue (для команды)
+```powershell
+cd C:\Users\Vigen\Desktop\VELO\PatientBillGuide
+npm install
+npm run dev
+```
 
-1. Open this folder in Cursor: `C:\Users\Vigen\Desktop\VELO\billtox`
-2. Read [STATUS.md](STATUS.md) and [docs/PHASES.md](docs/PHASES.md)
-3. Work **in phase order** — do not skip EEAT shell (Phase 0)
-4. After each completed task, check the box in `STATUS.md`
-5. Tell the agent: *"Continue BillTox from STATUS.md Phase X"*
+Or double-click **`start-dev.ps1`**.
 
-## Planned stack (Phase 0+)
+Open **http://localhost:4321** — homepage, Fair Price Calculator, CPT pages all work.
 
-- **Framework:** Astro (static, fast SEO, content collections)
-- **Hosting:** Cloudflare Pages
-- **Data:** CMS MPFS + NCCI as `*.json.gz` on CDN
-- **Tests:** Vitest (findings engine & parser logic)
+### From Cursor / VS Code
 
-## Repo layout (target)
+1. **Terminal → Run Task → PatientBillGuide: Dev Server**, or  
+2. **Run and Debug → PatientBillGuide: Dev Server**, or  
+3. `npm start` / `npm run dev`
+
+### Production build (local test before deploy)
+
+```powershell
+npm run build
+npm run preview
+```
+
+Opens http://localhost:4321 with the built `dist/` output (same as Cloudflare will serve later).
+
+### Tests
+
+```powershell
+npm test
+```
+
+## What works now
+
+- Homepage, trust pages, methodology
+- **Fair Price Calculator** — `/tools/fair-price/` (CPT + ZIP → Medicare benchmark)
+- **CPT guides** — `/codes/` + 5 code pages
+- **Learn hub** — `/learn/` + EOB and CPT basics
+- Tool roadmap pages (bill auditor, EOB, Medicare lookup) — no 404s
+
+## Documentation
+
+See [docs/](docs/) — [MASTER_PLAN.md](docs/MASTER_PLAN.md), [PHASES.md](docs/PHASES.md).
+
+**Continue in Cursor:** `Continue PatientBillGuide from STATUS.md`
+
+## Project folder
 
 ```
-billtox/
-├── docs/              ← planning & specs (this conversation saved here)
-├── src/
-│   ├── pages/         ← routes mirror docs/SITE_MAP.md
-│   ├── layouts/
-│   ├── components/
-│   └── content/       ← cpt/, learn/, authors/
-├── public/
-└── STATUS.md          ← progress tracker
+C:\Users\Vigen\Desktop\VELO\PatientBillGuide
 ```
 
 ## License

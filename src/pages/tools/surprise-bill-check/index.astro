@@ -1,0 +1,301 @@
+---
+import ToolLayout from '../../../layouts/ToolLayout.astro';
+import MethodologyFooter from '../../../components/MethodologyFooter.astro';
+import Disclaimer from '../../../components/Disclaimer.astro';
+import { site } from '../../../data/site';
+import {
+  CARE_SETTING_LABELS,
+  INSURANCE_LABELS,
+  NETWORK_LABELS,
+} from '../../../lib/surprise-bill/check';
+import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+
+const faqs = [
+  {
+    question: 'What is a surprise medical bill?',
+    answer:
+      'A surprise bill often happens when you receive care at an in-network hospital but an out-of-network doctor, lab, or ambulance bills you for the difference between their charge and what insurance paid — sometimes called balance billing.',
+  },
+  {
+    question: 'What does the No Surprises Act cover?',
+    answer:
+      'For many people with job-based or individual insurance, federal rules limit balance billing for emergency care, air ambulance, and certain out-of-network providers at in-network facilities. Ground ambulance and elective out-of-network facilities are common exceptions.',
+  },
+  {
+    question: 'Does this tool guarantee I will not owe the bill?',
+    answer:
+      'No. This is an educational screening tool. Your plan, state law, and billing accuracy can change outcomes. Always verify with your insurer and provider.',
+  },
+  {
+    question: 'What if both the hospital and doctor were out-of-network?',
+    answer:
+      'For non-emergency care at an out-of-network facility, federal surprise-billing protections usually do not apply. Your plan\'s out-of-network benefits govern what you owe.',
+  },
+  {
+    question: 'I am uninsured — does the NSA help me?',
+    answer:
+      'The No Surprises Act primarily protects insured patients. Uninsured patients should focus on itemized bills, financial assistance, and Medicare benchmark comparisons.',
+  },
+  {
+    question: 'Is my data uploaded?',
+    answer: 'No. All logic runs in your browser. We never receive your answers.',
+  },
+];
+
+const schemaGraph = [
+  webApplicationSchema({
+    name: 'Surprise Bill Checker',
+    description: 'Screen out-of-network medical bills against federal No Surprises Act rules — educational, browser-based.',
+    url: `${site.url}/tools/surprise-bill-check/`,
+  }),
+  faqPageSchema(faqs),
+  breadcrumbSchema(
+    [{ name: 'Home', url: '/' }, { name: 'Tools', url: '/tools/' }, { name: 'Surprise Bill Checker' }],
+    site.url,
+  ),
+];
+---
+
+<ToolLayout
+  title="Surprise Bill Checker"
+  description="Check whether federal No Surprises Act protections may apply to an out-of-network medical bill. Free, private, educational."
+  crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Tools', href: '/tools/' },
+    { label: 'Surprise Bill Checker' },
+  ]}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
+
+  <Fragment slot="intro">
+    <p>
+      Answer a few questions about where you received care and your insurance. We screen your
+      scenario against <strong>federal No Surprises Act</strong> rules — with confidence levels and
+      plain-English next steps. This is not legal advice.
+    </p>
+  </Fragment>
+
+  <form class="calculator card" id="surprise-bill-form">
+    <fieldset class="field">
+      <legend class="input-label">Where did you receive care?</legend>
+      <div class="radio-grid">
+        {
+          Object.entries(CARE_SETTING_LABELS).map(([value, label]) => (
+            <label class="radio-card">
+              <input type="radio" name="care-setting" value={value} required={value === 'hospital_outpatient'} />
+              <span>{label}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <fieldset class="field" id="emergency-field">
+      <legend class="input-label">Was this an emergency?</legend>
+      <div class="radio-row">
+        <label class="radio-inline"><input type="radio" name="is-emergency" value="yes" /> Yes</label>
+        <label class="radio-inline"><input type="radio" name="is-emergency" value="no" checked /> No</label>
+      </div>
+      <p class="input-hint">Emergency protections apply even at out-of-network facilities.</p>
+    </fieldset>
+
+    <fieldset class="field">
+      <legend class="input-label">Hospital or facility network status</legend>
+      <div class="radio-row">
+        {
+          Object.entries(NETWORK_LABELS).map(([value, label]) => (
+            <label class="radio-inline">
+              <input type="radio" name="facility-network" value={value} required={value === 'in_network'} />
+              {label}
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <fieldset class="field">
+      <legend class="input-label">Provider who sent the bill (doctor, ambulance, lab)</legend>
+      <div class="radio-row">
+        {
+          Object.entries(NETWORK_LABELS).map(([value, label]) => (
+            <label class="radio-inline">
+              <input type="radio" name="provider-network" value={value} required={value === 'out_of_network'} />
+              {label}
+            </label>
+          ))
+        }
+      </div>
+      <p class="input-hint">Classic surprise bills: in-network hospital + out-of-network anesthesiologist or ER doctor.</p>
+    </fieldset>
+
+    <fieldset class="field">
+      <legend class="input-label">Your coverage</legend>
+      <div class="radio-grid">
+        {
+          Object.entries(INSURANCE_LABELS).map(([value, label]) => (
+            <label class="radio-card">
+              <input type="radio" name="insurance-type" value={value} required={value === 'private_insured'} />
+              <span>{label}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <button type="submit" class="btn btn--primary">Check surprise bill risk</button>
+  </form>
+
+  <div id="surprise-bill-error" class="form-error" hidden></div>
+  <div id="surprise-bill-results" hidden></div>
+
+  <section class="tool-faq card">
+    <h2>FAQ</h2>
+    <dl class="faq">
+      {faqs.map((f) => (
+        <>
+          <dt>{f.question}</dt>
+          <dd>{f.answer}</dd>
+        </>
+      ))}
+    </dl>
+  </section>
+
+  <Disclaimer />
+
+  <div slot="sidebar">
+    <div class="sidebar-card card">
+      <h2>Related tools</h2>
+      <ul>
+        <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
+        <li><a href="/tools/eob-analyzer/">EOB Analyzer</a></li>
+        <li><a href="/tools/bill-auditor/">Bill Auditor</a></li>
+      </ul>
+    </div>
+    <MethodologyFooter />
+  </div>
+</ToolLayout>
+
+<script>
+  import '../../../scripts/surprise-bill-check.ts';
+</script>
+
+<style>
+  .radio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: 0.625rem;
+    margin-top: 0.5rem;
+  }
+
+  .radio-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 0.875rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .radio-card:has(input:checked) {
+    border-color: #8b5cf6;
+    background: #f5f3ff;
+  }
+
+  .radio-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .radio-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    cursor: pointer;
+    font-size: 0.9375rem;
+  }
+
+  fieldset.field {
+    border: none;
+    padding: 0;
+    margin: 0 0 var(--space-lg);
+  }
+
+  fieldset.field legend.input-label {
+    float: left;
+    width: 100%;
+    margin-bottom: 0.25rem;
+  }
+
+  .form-error {
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-md);
+    color: #991b1b;
+  }
+
+  #surprise-bill-results {
+    margin-top: var(--space-lg);
+  }
+
+  .tool-faq {
+    margin-top: var(--space-xl);
+  }
+
+  .surprise-results__badge {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .surprise-results__risk {
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .surprise-results__nsa {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
+    background: #ede9fe;
+    color: #5b21b6;
+  }
+
+  :global(.surprise-risk--protected) {
+    border-left: 4px solid #059669;
+  }
+
+  :global(.surprise-risk--elevated) {
+    border-left: 4px solid #dc2626;
+  }
+
+  :global(.surprise-risk--unclear) {
+    border-left: 4px solid #d97706;
+  }
+
+  :global(.surprise-risk--normal) {
+    border-left: 4px solid #2563eb;
+  }
+
+  :global(.surprise-caveats) {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background: #fffbeb;
+    border-radius: var(--radius-md);
+    font-size: 0.9375rem;
+  }
+</style>

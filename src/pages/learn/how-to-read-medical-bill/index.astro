@@ -1,0 +1,458 @@
+---
+import LegalLayout from '../../../layouts/LegalLayout.astro';
+import { site } from '../../../data/site';
+import { articleSchema, faqPageSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+
+const updated = '2026-06-29';
+const pageUrl = '/learn/how-to-read-medical-bill/';
+const canonical = new URL(pageUrl, site.url).href;
+const title = 'How to Read a Medical Bill (Itemized Hospital Bill)';
+const description =
+  'Plain-English guide to reading itemized hospital and clinic bills — CPT codes, facility vs. professional fees, chargemaster prices, and self-pay negotiation basics.';
+
+const faqs = [
+  {
+    question: 'What is the difference between a hospital bill and an EOB?',
+    answer:
+      'A hospital or clinic bill is a request for payment from the provider. An EOB is your insurer\'s explanation of how a claim was processed. You need both to confirm what you actually owe.',
+  },
+  {
+    question: 'Why does my bill list so many separate charges?',
+    answer:
+      'Hospitals bill facility fees, supplies, and room charges. Physicians who treated you (emergency doctors, radiologists, anesthesiologists) often bill separately under their own tax IDs. Each line may have its own CPT code.',
+  },
+  {
+    question: 'What is a chargemaster?',
+    answer:
+      'A chargemaster is the hospital\'s internal list of standard charges for every service and supply. Listed prices are often much higher than what insurers pay. Self-pay patients may be quoted chargemaster rates unless they negotiate or qualify for financial assistance.',
+  },
+  {
+    question: 'What are facility fees vs. professional fees?',
+    answer:
+      'Facility fees cover the hospital\'s overhead — equipment, nursing, space — for a service. Professional fees pay the clinician who performed or interpreted the service. A single MRI may produce both types of charges on separate bills.',
+  },
+  {
+    question: 'Can I negotiate a medical bill if I am uninsured?',
+    answer:
+      'Yes. Many hospitals offer financial assistance, prompt-pay discounts, or cash rates lower than chargemaster prices. Ask for an itemized bill, compare charges to Medicare benchmarks, and request a written self-pay quote before paying.',
+  },
+  {
+    question: 'Where do CPT codes appear on a bill?',
+    answer:
+      'Look for columns labeled CPT, HCPCS, procedure code, or revenue code. Each billable service usually has a five-digit CPT code (or a HCPCS code for supplies and certain drugs). See our CPT guide for help decoding them.',
+  },
+  {
+    question: 'What tool can help me review line items?',
+    answer:
+      'PatientBillGuide\'s Bill Auditor lets you paste itemized charges in your browser. It flags common patterns and compares amounts to Medicare data. Pair it with the Fair Price Calculator for individual codes.',
+  },
+];
+
+const schemaGraph = [
+  articleSchema({
+    headline: title,
+    description,
+    url: canonical,
+    dateModified: updated,
+    authorName: 'Vigen',
+    authorUrl: `${site.url}/authors/vigen/`,
+  }),
+  faqPageSchema(faqs),
+  breadcrumbSchema(
+    [
+      { name: 'Home', url: '/' },
+      { name: 'Learn', url: '/learn/' },
+      { name: 'How to Read a Medical Bill' },
+    ],
+    site.url,
+  ),
+];
+---
+
+<LegalLayout
+  title={title}
+  description={description}
+  crumbs={[{ label: 'Learn', href: '/learn/' }, { label: 'How to Read a Medical Bill' }]}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
+
+  <p class="article-byline">
+    Written by <a href="/authors/vigen/">Vigen</a> · Last updated {updated}
+  </p>
+
+  <nav class="article-toc" aria-label="Table of contents">
+    <h2>On this page</h2>
+    <ol>
+      <li><a href="#what-is-bill">What is an itemized medical bill?</a></li>
+      <li><a href="#bill-vs-eob">Bill vs. EOB</a></li>
+      <li><a href="#key-sections">Key sections on your bill</a></li>
+      <li><a href="#cpt-codes">CPT and revenue codes</a></li>
+      <li><a href="#facility-professional">Facility vs. professional fees</a></li>
+      <li><a href="#chargemaster">Chargemaster and list prices</a></li>
+      <li><a href="#common-lines">Common line items explained</a></li>
+      <li><a href="#insurance-on-bill">How insurance appears on your bill</a></li>
+      <li><a href="#errors">Common billing errors to watch for</a></li>
+      <li><a href="#self-pay">Self-pay and negotiation basics</a></li>
+      <li><a href="#workflow">Step-by-step review workflow</a></li>
+      <li><a href="#tools">Tools that can help</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="what-is-bill">What is an itemized medical bill?</h2>
+  <p>
+    A <strong>medical bill</strong> is a statement from a hospital, clinic, or physician group asking you
+    to pay for healthcare services. An <strong>itemized bill</strong> lists individual charges rather than
+    a single lump sum — each line typically shows a date, description, procedure code, quantity, and dollar
+    amount. Itemization is essential for verifying that you were charged only for care you received.
+  </p>
+  <p>
+    Bills arrive by mail, email, or patient portal. They may be labeled "statement," "account summary,"
+    or "invoice." Unlike an <a href="/learn/how-to-read-eob/">Explanation of Benefits (EOB)</a>, a bill
+    is a payment request. You send money to the provider (or pay through their portal), not to your
+    insurer, when you pay your share of medical costs.
+  </p>
+  <p>
+    If you have insurance, the bill's <strong>patient balance</strong> should reflect what your plan
+    assigned to you after processing the claim. If you are uninsured or choosing not to use insurance
+    (self-pay), the bill may show full charges from the hospital's internal price list — often much higher
+    than insured or Medicare rates. Either way, reading line by line is the foundation of billing
+    literacy.
+  </p>
+
+  <h2 id="bill-vs-eob">Bill vs. EOB</h2>
+  <p>
+    Insured patients should read <strong>both</strong> documents for the same care. The EOB explains how
+    your insurer applied your benefits. The bill shows what the provider wants you to pay. The patient
+    responsibility on a final EOB should match the amount due on the provider's bill, minus any payments
+    you already made at the front desk.
+  </p>
+  <p>
+    Timing creates confusion. Providers often generate a bill before insurance finishes, showing the full
+    charge or an estimated balance. After the EOB arrives, the provider should send a revised bill or
+    update your portal balance. Pay the patient portion only when you understand how the insurer processed
+    the claim — unless waiting risks collections and you have confirmed with billing that insurance is
+    still pending.
+  </p>
+  <p>
+    Uninsured patients will not receive an EOB. Instead, compare the bill's charges to public benchmarks
+    using our <a href="/tools/fair-price/">Fair Price Calculator</a> and ask the hospital's financial
+    counseling office about assistance programs before paying chargemaster prices.
+  </p>
+
+  <h2 id="key-sections">Key sections on your bill</h2>
+  <p>
+    Formats vary, but most itemized bills include:
+  </p>
+  <ul>
+    <li>
+      <strong>Account and guarantor information</strong> — your name, account number, and billing address.
+      Verify the account is yours.
+    </li>
+    <li>
+      <strong>Service dates</strong> — admission and discharge dates for hospital stays, or visit dates
+      for outpatient care.
+    </li>
+    <li>
+      <strong>Line-item detail</strong> — each charge with description, code, quantity, and amount.
+    </li>
+    <li>
+      <strong>Insurance payments and adjustments</strong> — if insurance already paid, these appear as
+      credits reducing the balance.
+    </li>
+    <li>
+      <strong>Patient payments</strong> — copays collected at check-in should appear here.
+    </li>
+    <li>
+      <strong>Balance due</strong> — what the provider says you owe now. Check due date and whether the
+      account is marked "insurance pending."
+    </li>
+  </ul>
+  <p>
+    Request a fully itemized bill if you only received a summary. Federal rules and many state laws give
+    patients the right to detailed charges. "Summary billing" hides the CPT codes you need to compare
+    prices or spot duplicates.
+  </p>
+
+  <h2 id="cpt-codes">CPT and revenue codes</h2>
+  <p>
+    Most billable services on your statement map to a <strong>CPT code</strong> (Current Procedural
+    Terminology) — a five-digit identifier for physician and outpatient services. Hospitals also use
+    <strong>revenue codes</strong> (four digits) to categorize departments on facility claims, and
+    <strong>HCPCS codes</strong> for supplies, drugs, and equipment.
+  </p>
+  <p>
+    Finding codes on your bill:
+  </p>
+  <ul>
+    <li>Look for columns labeled CPT, HCPCS, procedure, or service code.</li>
+    <li>Office visit bills often list one primary code (for example, <a href="/codes/cpt/99213/">99213</a> for a moderate office visit).</li>
+    <li>Hospital bills may list dozens of codes for labs, imaging, medications, and room charges.</li>
+    <li>If codes are missing, call billing and ask them to add CPT codes to the itemization.</li>
+  </ul>
+  <p>
+    Once you have a code, look it up in our <a href="/codes/">CPT encyclopedia</a> or read <a
+    href="/learn/cpt-codes-explained/">what CPT codes are</a> for a primer. Codes describe
+    <em>what</em> was done; separate ICD diagnosis codes describe <em>why</em>, and may appear on
+    insurance forms even if not on your patient-facing bill.
+  </p>
+
+  <h2 id="facility-professional">Facility vs. professional fees</h2>
+  <p>
+    One of the most confusing aspects of hospital billing is the split between <strong>facility</strong>
+    and <strong>professional</strong> charges.
+  </p>
+  <p>
+    <strong>Facility fees</strong> cover the hospital's costs to provide the service: the building,
+    equipment, nursing staff, and supplies. If you had an MRI at a hospital outpatient department, the
+    hospital bills a facility fee for using the scanner and suite.
+  </p>
+  <p>
+    <strong>Professional fees</strong> pay the clinician who performed or interpreted the service: the
+    radiologist who reads the MRI, the emergency physician who evaluated you, or the surgeon who performed
+    a procedure. These clinicians often bill under a separate practice name and tax ID. You may receive
+    three or more bills for one emergency visit: hospital facility, emergency physician group, and lab
+    vendor.
+  </p>
+  <p>
+    Each bill may have its own EOB if you are insured. Add patient responsibility across all of them when
+    calculating your total cost for an episode of care. Our <a href="/tools/bill-auditor/">Bill Auditor</a>
+    helps organize pasted lines from multiple statements in one place.
+  </p>
+
+  <h2 id="chargemaster">Chargemaster and list prices</h2>
+  <p>
+    Hospitals maintain an internal price list called a <strong>chargemaster</strong> (or charge master) —
+    thousands of list prices for every procedure, pill, and supply. These list prices appear on bills and
+    in federally required machine-readable price files, but they rarely reflect what insured plans
+    actually pay.
+  </p>
+  <p>
+    Insurers negotiate discounts off chargemaster rates. Medicare pays according to fixed fee schedules.
+    Uninsured patients, however, are often billed at or near list price unless they negotiate, qualify
+    for financial assistance, or receive a hospital's self-pay discount policy in writing.
+  </p>
+  <p>
+    Knowing a charge came from the chargemaster is not an accusation of wrongdoing — it is how hospital
+    billing systems are built. It <em>does</em> mean you have room to ask questions: whether a lower cash
+    rate exists, whether charity care applies, and how the charge compares to Medicare's public benchmark
+    for the same CPT code in your region. PatientBillGuide uses CMS data for those comparisons; see <a
+    href="/methodology/price-benchmarks/">how we define fair price ranges</a>.
+  </p>
+
+  <h2 id="common-lines">Common line items explained</h2>
+  <p>
+    Beyond procedure codes, hospital bills include recurring charge types:
+  </p>
+  <ul>
+    <li>
+      <strong>Room and board</strong> — daily hospital room charge, often varying by acuity (ICU vs.
+      standard room).
+    </li>
+    <li>
+      <strong>Emergency department</strong> — facility fee for the ED visit level, plus separate
+      professional and test charges.
+    </li>
+    <li>
+      <strong>Pharmacy</strong> — medications administered during the stay. Compare unit prices if the
+      same drug appears multiple times.
+    </li>
+    <li>
+      <strong>Laboratory</strong> — blood draws and panels (for example, <a href="/codes/cpt/80053/">80053</a>
+      metabolic panel). Panels bundle individual tests; question duplicate panels on the same date.
+    </li>
+    <li>
+      <strong>Imaging</strong> — radiology technical and professional components. A <a href="/codes/cpt/71046/">chest X-ray</a>
+      and a CT scan may each appear as separate lines with distinct CPT codes.
+    </li>
+    <li>
+      <strong>Supplies</strong> — gloves, kits, implants. High supply charges on outpatient procedures
+      are a common review point.
+    </li>
+  </ul>
+  <p>
+    Look for <strong>duplicate dates and codes</strong>, services on dates you were not present, and
+    charges that do not match your memory of the visit. Errors happen in coding and data entry. Polite,
+    specific questions to billing — "Can you explain line 14, CPT 99285, on March 3?" — often resolve
+    mistakes without escalation.
+  </p>
+
+  <h2 id="insurance-on-bill">How insurance appears on your bill</h2>
+  <p>
+    When you have coverage, an itemized bill usually shows several dollar columns per line: <strong>charges</strong>,
+    <strong>insurance payments</strong>, <strong>contractual adjustments</strong>, and <strong>patient
+    balance</strong>. The charge column is what the provider billed. Adjustments reflect discounts your
+    insurer negotiated or amounts written off. Insurance payments are what the plan already sent the
+    provider. What remains is your share.
+  </p>
+  <p>
+    If every line still shows the full charge with no insurance credit, the claim may not have processed
+    yet. Look for notes like "claim pending," "awaiting insurance," or "forwarded to payer." Paying the
+    full chargemaster balance before insurance pays can mean overpaying and chasing refunds later. Call
+    billing to confirm status if the bill demands immediate payment while insurance is in progress.
+  </p>
+  <p>
+    <strong>Coinsurance and deductible</strong> lines on the bill should align with your <a
+    href="/learn/how-to-read-eob/">EOB</a>. If the bill shows a copay you already paid at check-in but
+    does not credit it, send a copy of your receipt. Front-desk payments sometimes post to the wrong
+    account or lag behind the statement print date.
+  </p>
+  <p>
+    For out-of-network care, the bill may include a column for <strong>balance billing</strong> or
+    "amount above allowed." State and federal rules on surprise billing vary by situation. If those
+    columns appear for care at an in-network hospital, ask both the provider and your plan whether the
+    No Surprises Act or state law limits what you owe.
+  </p>
+
+  <h2 id="errors">Common billing errors to watch for</h2>
+  <p>
+    Most bills are technically correct — but certain patterns recur often enough that they are worth a
+    quick scan. You are looking for data mistakes, not assuming wrongdoing.
+  </p>
+  <ul>
+    <li>
+      <strong>Wrong patient or subscriber</strong> — charges belonging to a spouse or dependent mixed into
+      your account.
+    </li>
+    <li>
+      <strong>Duplicate services</strong> — the same CPT code twice on one date without a clear clinical
+      reason.
+    </li>
+    <li>
+      <strong>Upcoding</strong> — a visit level or procedure code that sounds more intensive than the care
+      you received (for example, a high-complexity office code for a brief follow-up). Ask billing to
+      compare the code to the doctor's documentation.
+    </li>
+    <li>
+      <strong>Unbundling concerns</strong> — related services billed separately when policy expects one
+      combined code. This is subtle; insurer edits on your EOB often catch it first.
+    </li>
+    <li>
+      <strong>Incorrect quantity</strong> — two units of a drug or supply when you received one.
+    </li>
+    <li>
+      <strong>Stale balances</strong> — old charges you already paid still showing because a payment was
+      not applied.
+    </li>
+  </ul>
+  <p>
+    Document what you find, stay factual, and ask for a corrected statement or claim resubmission. Our
+    <a href="/methodology/billing-flags/">billing flags methodology</a> explains how we label similar
+    patterns in automated tools — always with confidence levels, never as accusations.
+  </p>
+
+  <h2 id="self-pay">Self-pay and negotiation basics</h2>
+  <p>
+    If you are uninsured or paying out of pocket by choice, treat the bill as a starting point for
+    conversation, not a final demand. Practical steps:
+  </p>
+  <ol>
+    <li>
+      <strong>Get itemization with CPT codes</strong> — you cannot compare prices without codes.
+    </li>
+    <li>
+      <strong>Ask about financial assistance</strong> — nonprofit hospitals often have charity care policies
+      based on income. Request an application before paying.
+    </li>
+    <li>
+      <strong>Request a self-pay or prompt-pay discount</strong> — many facilities offer 20–40% off list
+      price for upfront payment. Get the offer in writing.
+    </li>
+    <li>
+      <strong>Compare to Medicare benchmarks</strong> — use the <a href="/tools/fair-price/">Fair Price
+      Calculator</a> for each major CPT code. Medicare rates are not a legal cap on what hospitals charge,
+      but they are a documented public reference for negotiation.
+    </li>
+    <li>
+      <strong>Propose a payment plan</strong> — if you cannot pay in full, ask for interest-free monthly
+      installments. Avoid high-interest medical credit cards until you have explored hospital plans.
+    </li>
+    <li>
+      <strong>Keep records</strong> — save every bill version, email, and name you speak with.
+    </li>
+  </ol>
+  <p>
+    PatientBillGuide educates and provides tools; we do not guarantee savings or act as a billing advocate.
+    For complex hospital balances, nonprofit patient advocates and state insurance departments may offer
+    additional resources.
+  </p>
+
+  <h2 id="workflow">Step-by-step review workflow</h2>
+  <p>
+    Whether insured or self-pay, walk through this checklist when a bill arrives:
+  </p>
+  <ol>
+    <li>
+      <strong>Verify the account</strong> — correct patient, dates, and provider.
+    </li>
+    <li>
+      <strong>Request full itemization</strong> if you only have a total.
+    </li>
+    <li>
+      <strong>Match to your EOB</strong> (if insured) — compare patient responsibility line by line.
+    </li>
+    <li>
+      <strong>Look up CPT codes</strong> — use our <a href="/codes/">code pages</a> for plain-English
+      context.
+    </li>
+    <li>
+      <strong>Flag duplicates and outliers</strong> — same code twice on one date, unfamiliar services, or
+      charges far above benchmarks.
+    </li>
+    <li>
+      <strong>Run the Bill Auditor</strong> — paste lines into our <a href="/tools/bill-auditor/">free
+      tool</a> for a structured first pass.
+    </li>
+    <li>
+      <strong>Call billing with specific questions</strong> — reference line numbers and codes.
+    </li>
+    <li>
+      <strong>Pay or negotiate</strong> — once you agree on the balance, pay or set up a plan.
+    </li>
+    <li>
+      <strong>File documents</strong> — store final bills, EOBs, and receipts for HSA, FSA, or tax
+      records.
+    </li>
+  </ol>
+  <p>
+    A bill that passes this review with no surprises is a valid outcome. Not every statement contains an
+    error — the goal is informed confidence, not automatic dispute.
+  </p>
+
+  <h2 id="tools">Tools that can help</h2>
+  <ul>
+    <li>
+      <a href="/tools/bill-auditor/"><strong>Bill Auditor</strong></a> — paste itemized charges; analysis
+      runs in your browser. Flags common patterns and compares to Medicare data where available.
+    </li>
+    <li>
+      <a href="/tools/fair-price/"><strong>Fair Price Calculator</strong></a> — check any CPT code against
+      CMS fee schedule data for your ZIP code.
+    </li>
+    <li>
+      <a href="/tools/eob-analyzer/"><strong>EOB Analyzer</strong></a> — pair with this guide if you are
+      insured and reconciling EOBs to bills.
+    </li>
+    <li>
+      <a href="/learn/how-to-read-eob/"><strong>How to read an EOB</strong></a> — insurer statement
+      walkthrough for insured patients.
+    </li>
+    <li>
+      <a href="/for/uninsured/"><strong>Uninsured help hub</strong></a> — audience-specific next steps.
+    </li>
+  </ul>
+
+  <h2 id="faq">FAQ</h2>
+  <dl class="faq">
+    {
+      faqs.map((item) => (
+        <>
+          <dt>{item.question}</dt>
+          <dd>{item.answer}</dd>
+        </>
+      ))
+    }
+  </dl>
+</LegalLayout>

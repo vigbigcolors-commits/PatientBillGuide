@@ -1,0 +1,242 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeHero from '../components/home/HomeHero.astro';
+import HomeFacts from '../components/home/HomeFacts.astro';
+import HomeHowItWorks from '../components/home/HomeHowItWorks.astro';
+import HomeInsights from '../components/home/HomeInsights.astro';
+import HomeTips from '../components/home/HomeTips.astro';
+import HomeLearn from '../components/home/HomeLearn.astro';
+import HomeFaq from '../components/home/HomeFaq.astro';
+import { site } from '../data/site';
+import { homeFaqs } from '../data/home-content';
+import { faqPageSchema } from '../lib/seo/schema';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${site.url}/#organization`,
+      name: site.name,
+      url: site.url,
+      description: site.description,
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${site.url}/#website`,
+      url: site.url,
+      name: site.name,
+      description: site.description,
+      publisher: { '@id': `${site.url}/#organization` },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: `${site.url}/tools/fair-price/?code={search_term_string}`,
+        'query-input': 'required name=search_term_string',
+      },
+    },
+    faqPageSchema(homeFaqs),
+  ],
+};
+
+const doors = [
+  {
+    href: '/for/uninsured/',
+    label: 'Self-pay · Uninsured',
+    title: 'I got a hospital bill',
+    text: 'You paid out of pocket or received a large charge after a procedure. See what Medicare would allow for the same service.',
+    cta: 'Check hospital prices',
+    icon: 'bill',
+  },
+  {
+    href: '/for/insured/',
+    label: 'Insured',
+    title: 'My EOB is confusing',
+    text: "Your insurer sent an Explanation of Benefits with columns you don't understand. We decode it in plain language.",
+    cta: 'Understand my EOB',
+    icon: 'eob',
+  },
+  {
+    href: '/for/seniors-medicare/',
+    label: 'Medicare',
+    title: 'I have a Medicare question',
+    text: "You're on Medicare or helping a parent. We explain what Medicare covers, what it allows, and when a bill looks off.",
+    cta: 'Check Medicare rates',
+    icon: 'medicare',
+  },
+];
+---
+
+<BaseLayout title={site.name} description={site.description} showTrustStrip={true}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </Fragment>
+
+  <HomeHero />
+
+  <HomeFacts />
+
+  <section class="doors">
+    <div class="container">
+      <header class="section-header">
+        <p class="section-eyebrow">Start here</p>
+        <h2>Where do you need help?</h2>
+        <p>Most billing questions fall into one of these three situations.</p>
+      </header>
+      <div class="doors__grid">
+        {
+          doors.map((door) => (
+            <a href={door.href} class="door-card">
+              <span class={`door-card__icon door-card__icon--${door.icon}`} aria-hidden="true">
+                {door.icon === 'bill' && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M14 2v6h6M9 13h6M9 17h4" stroke="currentColor" stroke-width="1.5" />
+                  </svg>
+                )}
+                {door.icon === 'eob' && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" />
+                    <path d="M9.5 9.5h.01M14.5 9.5h.01M9 15a3 3 0 006 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                  </svg>
+                )}
+                {door.icon === 'medicare' && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 18l4-8 4 4 4-6 4 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                )}
+              </span>
+              <span class="door-card__label">{door.label}</span>
+              <h3>{door.title}</h3>
+              <p>{door.text}</p>
+              <span class="door-card__cta">{door.cta} ›</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <HomeHowItWorks />
+
+  <HomeInsights />
+  <HomeTips />
+  <HomeLearn />
+  <HomeFaq />
+</BaseLayout>
+
+<style>
+  .section-eyebrow {
+    display: inline-block;
+    margin: 0 0 var(--space-sm);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+  }
+
+  .section-header {
+    margin-bottom: var(--space-xl);
+    text-align: left;
+  }
+
+  .section-header--center {
+    text-align: center;
+    max-width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-header h2 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .section-header p {
+    color: var(--color-muted);
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .doors {
+    padding: var(--space-3xl) 0;
+    background: var(--color-bg);
+  }
+
+  .doors__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .door-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-xl);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  }
+
+  .door-card:hover {
+    border-color: #99f6e4;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .door-card__icon {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+  }
+
+  .door-card__icon--bill,
+  .door-card__icon--medicare {
+    background: #ecfdf5;
+    color: var(--color-accent);
+  }
+
+  .door-card__icon--eob {
+    background: #eff6ff;
+    color: #2563eb;
+  }
+
+  .door-card__label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+    margin-bottom: var(--space-sm);
+  }
+
+  .door-card h3 {
+    margin: 0 0 var(--space-sm);
+    font-size: 1.125rem;
+  }
+
+  .door-card p {
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+    flex: 1;
+    margin: 0 0 var(--space-lg);
+    line-height: 1.55;
+  }
+
+  .door-card__cta {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 900px) {
+    .doors__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

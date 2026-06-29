@@ -1,0 +1,32 @@
+---
+import { site } from '../data/site';
+---
+
+<aside class="disclaimer" role="note">
+  <p>
+    <strong>Important:</strong> {site.name} provides educational tools and general information only.
+    We are not doctors, lawyers, or insurance brokers. Nothing here is medical advice, legal advice,
+    or a guarantee of savings. Always verify with your provider and insurer.
+    <a href="/disclaimer/">Full disclaimer</a>
+  </p>
+</aside>
+
+<style>
+  .disclaimer {
+    padding: var(--space-lg);
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    color: #78350f;
+  }
+
+  .disclaimer p {
+    margin: 0;
+  }
+
+  .disclaimer a {
+    color: #92400e;
+    font-weight: 600;
+  }
+</style>

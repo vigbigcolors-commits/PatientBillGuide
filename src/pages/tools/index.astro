@@ -1,0 +1,30 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+---
+
+<LegalLayout
+  title="Tools"
+  description="Free PatientBillGuide tools — fair price checks, bill auditor, EOB analyzer, surprise bill checker, and more."
+  crumbs={[{ label: 'Tools' }]}
+>
+  <h2>CHECK — fair numbers</h2>
+  <ul>
+    <li><a href="/tools/fair-price/"><strong>Fair Price Calculator</strong></a> — live</li>
+    <li><a href="/tools/fair-price/?tab=medicare"><strong>Medicare Part B estimate</strong></a> — tab on Fair Price</li>
+    <li><a href="/tools/surprise-bill-check/"><strong>Surprise Bill Checker</strong></a> — live</li>
+    <li>Hospital Price Compare — planned</li>
+  </ul>
+
+  <h2>UNDERSTAND — your documents</h2>
+  <ul>
+    <li><a href="/tools/bill-auditor/"><strong>Itemized Bill Auditor</strong></a> — live</li>
+    <li><a href="/tools/eob-analyzer/"><strong>EOB Analyzer</strong></a> — UHC, BCBS, Aetna, Cigna</li>
+    <li>Quick Code Lookup — planned (use <a href="/codes/">CPT encyclopedia</a> for now)</li>
+  </ul>
+
+  <h2>ACT — next steps</h2>
+  <ul>
+    <li><a href="/tools/dispute-letter/"><strong>Dispute Letter Builder</strong></a> — live</li>
+    <li>Self-Pay Negotiation Script — coming soon</li>
+  </ul>
+</LegalLayout>

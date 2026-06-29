@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PatientBillGuide — start dev server</title>
+    <style>
+      :root {
+        --primary: #0f172a;
+        --accent: #0d9488;
+        --muted: #64748b;
+        --bg: #fafaf9;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        background: var(--bg);
+        color: #334155;
+        padding: 1.5rem;
+      }
+      .card {
+        max-width: 32rem;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 4px 12px rgb(15 23 42 / 0.08);
+      }
+      h1 {
+        font-size: 1.35rem;
+        color: var(--primary);
+        margin: 0 0 0.5rem;
+      }
+      .ru {
+        color: var(--muted);
+        font-size: 0.95rem;
+        margin: 0 0 1.25rem;
+        line-height: 1.55;
+      }
+      p {
+        line-height: 1.6;
+        margin: 0 0 1rem;
+      }
+      code,
+      pre {
+        font-family: ui-monospace, 'Cascadia Code', monospace;
+        font-size: 0.85rem;
+      }
+      pre {
+        background: #f1f5f9;
+        border-radius: 0.5rem;
+        padding: 0.875rem 1rem;
+        overflow-x: auto;
+        margin: 0 0 1.25rem;
+      }
+      .btn {
+        display: inline-block;
+        background: var(--accent);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.5rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .btn:hover {
+        background: #0f766e;
+      }
+      .status {
+        margin-top: 1rem;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+      }
+      .status--wait {
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        color: #92400e;
+      }
+      .status--ok {
+        background: #ecfdf5;
+        border: 1px solid #a7f3d0;
+        color: #065f46;
+      }
+      ul {
+        margin: 0 0 1rem;
+        padding-left: 1.25rem;
+      }
+      li {
+        margin-bottom: 0.35rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>PatientBillGuide — source folder</h1>
+      <p class="ru">
+        Это <strong>исходники</strong> Astro-проекта, не готовый сайт. «Go Live» открывает папку как
+        файлы — поэтому вы видите список папок. Здесь нет рабочего <code>index.html</code> сайта в
+        корне: он создаётся сервером из <code>src/pages/</code>.
+      </p>
+
+      <p><strong>Real-time preview (client-side tools work here):</strong></p>
+      <ol>
+        <li>Run <code>npm run dev</code> or double-click <code>start-dev.ps1</code></li>
+        <li>Open <a id="dev-link" href="http://localhost:4321/">http://localhost:4321</a></li>
+        <li>Edit files — browser refreshes automatically</li>
+      </ol>
+
+      <pre>cd PatientBillGuide
+npm run dev</pre>
+
+      <a class="btn" href="http://localhost:4321/">Open site (port 4321)</a>
+      <a class="btn" href="http://localhost:4321/tools/fair-price/" style="background: #0f172a"
+        >Fair Price tool</a
+      >
+
+      <div id="status" class="status status--wait">
+        Checking if dev server is running on port 4321…
+      </div>
+    </div>
+
+    <script>
+      const DEV_URL = 'http://localhost:4321/';
+      const status = document.getElementById('status');
+
+      async function checkDevServer() {
+        try {
+          const res = await fetch(DEV_URL, { method: 'GET', mode: 'cors' });
+          if (res.ok) {
+            status.className = 'status status--ok';
+            status.textContent = 'Dev server is running — redirecting to the real site…';
+            window.location.replace(DEV_URL);
+            return true;
+          }
+        } catch {
+          /* dev server not up yet */
+        }
+        status.className = 'status status--wait';
+        status.innerHTML =
+          'Dev server is <strong>not running</strong>. Start it with <code>npm run dev</code> or <code>start-dev.ps1</code>, then open port <strong>4321</strong> (not Go Live).';
+        return false;
+      }
+
+      checkDevServer();
+      setInterval(checkDevServer, 3000);
+    </script>
+  </body>
+</html>

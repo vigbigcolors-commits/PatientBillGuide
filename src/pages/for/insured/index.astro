@@ -1,0 +1,51 @@
+---
+import LegalLayout from '../../../layouts/LegalLayout.astro';
+---
+
+<LegalLayout
+  title="Help for Insured Patients — EOB & Bills"
+  description="Decode insurance EOBs and understand what you owe after coverage."
+  crumbs={[{ label: 'For Insured' }]}
+>
+  <p>
+    Your <strong>Explanation of Benefits (EOB)</strong> is not a bill — but it drives what you pay.
+    Understanding allowed amounts, network status, and patient responsibility helps you catch errors
+    before you pay.
+  </p>
+
+  <h2>Start with your EOB</h2>
+  <p>
+    Match each line to a date of service and CPT code. Check whether the claim was in-network,
+    applied to your deductible, or denied. Our guide walks through each column:
+  </p>
+  <p>
+    <a href="/learn/how-to-read-eob/" class="btn btn--primary">How to read an EOB</a>
+  </p>
+
+  <h2>Compare charges to benchmarks</h2>
+  <p>
+    Even with insurance, list prices can be confusing. Medicare allowed amounts are a useful public
+    reference when you are surprised by a copay or out-of-network balance bill.
+  </p>
+  <p>
+    <a href="/tools/fair-price/">Fair Price Calculator →</a>
+  </p>
+
+  <h2>EOB Analyzer — live</h2>
+  <p>
+    Paste EOB text from UnitedHealthcare, BCBS, Aetna, Cigna, or a generic format. Get plain-English
+    summaries in your browser — nothing uploaded.
+  </p>
+  <p>
+    <a href="/tools/eob-analyzer/" class="btn btn--primary">Open EOB Analyzer</a>
+  </p>
+
+  <h2>Dispute letters</h2>
+  <p>
+    When you need to push back, use our editable templates for overcharges, duplicates, or surprise
+    bills — not legal advice, but a solid starting point.
+  </p>
+  <p>
+    <a href="/tools/dispute-letter/">Dispute Letter Builder →</a>
+  </p>
+</LegalLayout>

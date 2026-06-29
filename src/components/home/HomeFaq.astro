@@ -1,0 +1,58 @@
+---
+import { homeFaqs } from '../../data/home-content';
+---
+
+<section class="home-faq" aria-labelledby="home-faq-heading">
+  <div class="container container--narrow">
+    <header class="section-header section-header--center">
+      <p class="section-eyebrow">FAQ</p>
+      <h2 id="home-faq-heading">Common questions</h2>
+    </header>
+    <dl class="faq-list">
+      {
+        homeFaqs.map((item) => (
+          <>
+            <dt>{item.question}</dt>
+            <dd>{item.answer}</dd>
+          </>
+        ))
+      }
+    </dl>
+    <p class="home-faq__more">
+      More on <a href="/disclaimer/">disclaimers</a>, <a href="/methodology/limitations/">limitations</a>,
+      and <a href="/contact/">contact</a>.
+    </p>
+  </div>
+</section>
+
+<style>
+  .home-faq {
+    padding: var(--space-3xl) 0;
+    background: var(--color-bg);
+  }
+
+  .faq-list dt {
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-top: var(--space-lg);
+    font-size: 1.025rem;
+  }
+
+  .faq-list dt:first-of-type {
+    margin-top: 0;
+  }
+
+  .faq-list dd {
+    margin: var(--space-sm) 0 0;
+    color: var(--color-muted);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+
+  .home-faq__more {
+    margin-top: var(--space-2xl);
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+  }
+</style>
