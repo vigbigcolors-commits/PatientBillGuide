@@ -41,6 +41,11 @@
   --page-gutter: clamp(1rem, 3vw, 2rem);
 }
 
+/* Tool loading bars use display:flex; must not override native [hidden]. */
+[hidden] {
+  display: none !important;
+}
+
 *,
 *::before,
 *::after {

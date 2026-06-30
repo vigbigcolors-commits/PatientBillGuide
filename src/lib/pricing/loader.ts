@@ -7,6 +7,12 @@ let cache: {
   zipMap: ZipLocalityMap;
 } | null = null;
 
+let loadPromise: Promise<{
+  manifest: DataManifest;
+  mpfs: MpfsDataset;
+  zipMap: ZipLocalityMap;
+}> | null = null;
+
 let cptIndexCache: CptIndex | null = null;
 let cptIndexPromise: Promise<CptIndex> | null = null;
 
@@ -16,15 +22,24 @@ export async function loadPricingData(base = '/data'): Promise<{
   zipMap: ZipLocalityMap;
 }> {
   if (cache) return cache;
+  if (loadPromise) return loadPromise;
 
-  const manifest = await fetchJson<DataManifest>(`${base}/manifest.json`);
-  const [mpfs, zipMap] = await Promise.all([
-    fetchJson<MpfsDataset>(manifest.mpfs.url),
-    fetchJson<ZipLocalityMap>(manifest.zipLocality.url),
-  ]);
+  loadPromise = (async () => {
+    const manifest = await fetchJson<DataManifest>(`${base}/manifest.json`);
+    const [mpfs, zipMap] = await Promise.all([
+      fetchJson<MpfsDataset>(manifest.mpfs.url),
+      fetchJson<ZipLocalityMap>(manifest.zipLocality.url),
+    ]);
+    cache = { manifest, mpfs, zipMap };
+    return cache;
+  })();
 
-  cache = { manifest, mpfs, zipMap };
-  return cache;
+  try {
+    return await loadPromise;
+  } catch (err) {
+    loadPromise = null;
+    throw err;
+  }
 }
 
 /** Lightweight CPT list for autocomplete — separate from full MPFS payload. */
@@ -60,6 +75,7 @@ export function prefetchPricingData(base = '/data'): void {
 
 export function clearPricingCache(): void {
   cache = null;
+  loadPromise = null;
   cptIndexCache = null;
   cptIndexPromise = null;
 }

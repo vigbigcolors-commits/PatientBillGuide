@@ -127,14 +127,6 @@ export function initHospitalCompare(root: ParentNode = document) {
   bindCptTypeahead(root);
   bindToolExamples(root, 'hospital-compare', 'hospital-compare-form');
 
-  const params = new URLSearchParams(window.location.search);
-  const scenario = params.get('scenario');
-  if (scenario) {
-    root.querySelector<HTMLButtonElement>(`[data-example-id="${scenario}"]`)?.click();
-  }
-  const presetCode = params.get('code');
-  if (presetCode) cpt.value = presetCode;
-
   let dataPromise: ReturnType<typeof loadPricingData> | null = null;
   let dataLoaded = false;
   const getData = () => {
@@ -204,6 +196,14 @@ export function initHospitalCompare(root: ParentNode = document) {
       if (loading) loading.hidden = true;
     }
   });
+
+  const params = new URLSearchParams(window.location.search);
+  const presetCode = params.get('code');
+  if (presetCode) cpt.value = presetCode;
+  const scenario = params.get('scenario');
+  if (scenario) {
+    root.querySelector<HTMLButtonElement>(`[data-example-id="${scenario}"]`)?.click();
+  }
 }
 
 if (typeof document !== 'undefined') {

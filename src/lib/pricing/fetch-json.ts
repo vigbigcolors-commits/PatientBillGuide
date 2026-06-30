@@ -17,8 +17,19 @@ export async function parseResponseJson<T>(res: Response): Promise<T> {
 }
 
 /** Fetch JSON from plain or gzip-compressed URLs (client-side). */
-export async function fetchJson<T>(url: string): Promise<T> {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Failed to load ${url}`);
-  return parseResponseJson<T>(res);
+export async function fetchJson<T>(url: string, timeoutMs = 60_000): Promise<T> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) throw new Error(`Failed to load ${url}`);
+    return await parseResponseJson<T>(res);
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortError') {
+      throw new Error(`Timed out loading ${url}`);
+    }
+    throw err;
+  } finally {
+    clearTimeout(timer);
+  }
 }
