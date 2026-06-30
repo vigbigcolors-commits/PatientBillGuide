@@ -2,21 +2,26 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://patientbillguide.com',
   trailingSlash: 'always',
   compressHTML: true,
+
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/404'),
     }),
   ],
+
   server: {
     port: 4321,
     strictPort: false,
     open: '/',
   },
+
   vite: {
     server: {
       watch: {
@@ -26,4 +31,6 @@ export default defineConfig({
       },
     },
   },
+
+  adapter: cloudflare(),
 });
