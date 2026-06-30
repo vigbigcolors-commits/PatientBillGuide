@@ -755,9 +755,10 @@
     }
   }
 
+  /* Mobile: hide animated SVG — Safari SVG/CSS animation is unreliable; avoids frozen frame. */
   @media (max-width: 960px) {
     .hero-bridge {
-      max-width: 100%;
+      display: none;
     }
   }
 
