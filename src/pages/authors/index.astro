@@ -1,14 +1,114 @@
 ---
-import LegalLayout from '../../layouts/LegalLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { author } from '../../data/author';
 ---
 
-<LegalLayout
-  title="Authors"
-  description="PatientBillGuide authors and editorial team."
-  crumbs={[{ label: 'Authors' }]}
+<BaseLayout
+  title="Authors — PatientBillGuide"
+  description="Authors and editorial credits for PatientBillGuide guides and tools."
 >
-  <p>PatientBillGuide content is written and reviewed by our editorial team.</p>
-  <ul>
-    <li><a href="/authors/vigen/"><strong>Vigen</strong></a> — Founder, primary author</li>
-  </ul>
-</LegalLayout>
+  <div class="authors-page">
+    <div class="container container--narrow">
+      <Breadcrumbs items={[{ label: 'Authors' }]} />
+      <header class="authors-page__header">
+        <h1>Authors</h1>
+        <p>PatientBillGuide content is written and maintained by an independent researcher and developer.</p>
+      </header>
+
+      <ul class="authors-list" role="list">
+        <li>
+          <a href={author.path} class="authors-card authors-card--teal">
+            <span class="authors-card__role">{author.role}</span>
+            <strong class="authors-card__name">{author.name}</strong>
+            <span class="authors-card__title">{author.title}</span>
+            <p>{author.bioShort}</p>
+            <span class="authors-card__cta">Author profile →</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .authors-page {
+    padding: var(--space-xl) 0 var(--space-3xl);
+  }
+
+  .authors-page__header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .authors-page__header p {
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .authors-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .authors-card {
+    display: block;
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid transparent;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .authors-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .authors-card--teal {
+    background: linear-gradient(155deg, #f0fdfa, #ccfbf1);
+    border-color: #5eead4;
+    color: #0f766e;
+  }
+
+  .authors-card__role {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.85;
+  }
+
+  .authors-card__name {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.375rem;
+    margin-bottom: 0.2rem;
+    color: inherit;
+  }
+
+  .authors-card__title {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    opacity: 0.9;
+  }
+
+  .authors-card p {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    opacity: 0.92;
+  }
+
+  .authors-card__cta {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: inherit;
+  }
+</style>

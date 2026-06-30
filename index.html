@@ -110,42 +110,65 @@
       <p><strong>Real-time preview (client-side tools work here):</strong></p>
       <ol>
         <li>Run <code>npm run dev</code> or double-click <code>start-dev.ps1</code></li>
-        <li>Open <a id="dev-link" href="http://localhost:4321/">http://localhost:4321</a></li>
+        <li>Open <a id="dev-link" href="http://localhost:4321/">http://localhost:4321</a> (or 4322 if 4321 is busy)</li>
         <li>Edit files — browser refreshes automatically</li>
       </ol>
 
       <pre>cd PatientBillGuide
 npm run dev</pre>
 
-      <a class="btn" href="http://localhost:4321/">Open site (port 4321)</a>
-      <a class="btn" href="http://localhost:4321/tools/fair-price/" style="background: #0f172a"
+      <a class="btn" id="open-site-btn" href="http://localhost:4321/">Open site</a>
+      <a class="btn" id="fair-price-btn" href="http://localhost:4321/tools/fair-price/" style="background: #0f172a"
         >Fair Price tool</a
       >
 
       <div id="status" class="status status--wait">
-        Checking if dev server is running on port 4321…
+        Checking if dev server is running…
       </div>
     </div>
 
     <script>
-      const DEV_URL = 'http://localhost:4321/';
+      const DEV_PORTS = [4321, 4322];
       const status = document.getElementById('status');
+      const devLink = document.getElementById('dev-link');
+      const openSiteBtn = document.getElementById('open-site-btn');
+      const fairPriceBtn = document.getElementById('fair-price-btn');
+      let activePort = null;
+
+      function setLinks(port) {
+        const base = `http://localhost:${port}/`;
+        if (devLink) devLink.href = base;
+        if (openSiteBtn) {
+          openSiteBtn.href = base;
+          openSiteBtn.textContent = `Open site (port ${port})`;
+        }
+        if (fairPriceBtn) fairPriceBtn.href = `${base}tools/fair-price/`;
+      }
+
+      async function probePort(port) {
+        try {
+          const res = await fetch(`http://localhost:${port}/`, { method: 'GET', mode: 'cors' });
+          return res.ok ? port : null;
+        } catch {
+          return null;
+        }
+      }
 
       async function checkDevServer() {
-        try {
-          const res = await fetch(DEV_URL, { method: 'GET', mode: 'cors' });
-          if (res.ok) {
+        for (const port of DEV_PORTS) {
+          const ok = await probePort(port);
+          if (ok) {
+            activePort = ok;
+            setLinks(ok);
             status.className = 'status status--ok';
-            status.textContent = 'Dev server is running — redirecting to the real site…';
-            window.location.replace(DEV_URL);
+            status.textContent = `Dev server is running on port ${ok} — redirecting…`;
+            window.location.replace(`http://localhost:${ok}/`);
             return true;
           }
-        } catch {
-          /* dev server not up yet */
         }
         status.className = 'status status--wait';
         status.innerHTML =
-          'Dev server is <strong>not running</strong>. Start it with <code>npm run dev</code> or <code>start-dev.ps1</code>, then open port <strong>4321</strong> (not Go Live).';
+          'Dev server is <strong>not running</strong>. Start it with <code>npm run dev</code> or <code>start-dev.ps1</code>, then open port <strong>4321</strong> or <strong>4322</strong> (not Go Live).';
         return false;
       }
 

@@ -3,6 +3,8 @@ import {
   medicareLookupExamples,
   billAuditorExamples,
   eobAnalyzerExamples,
+  surpriseBillExamples,
+  hospitalCompareExamples,
 } from '../data/tool-examples';
 
 const EXAMPLES_BY_TOOL = {
@@ -10,6 +12,8 @@ const EXAMPLES_BY_TOOL = {
   'medicare-lookup': medicareLookupExamples,
   'bill-auditor': billAuditorExamples,
   'eob-analyzer': eobAnalyzerExamples,
+  'surprise-bill': surpriseBillExamples,
+  'hospital-compare': hospitalCompareExamples,
 } as const;
 
 export type ToolExampleVariant = keyof typeof EXAMPLES_BY_TOOL;
@@ -37,8 +41,10 @@ export function bindToolExamples(root: ParentNode, variant: ToolExampleVariant, 
         const ex = example as (typeof medicareLookupExamples)[number];
         const cpt = root.querySelector<HTMLInputElement>('#cpt');
         const zip = root.querySelector<HTMLInputElement>('#zip');
+        const deductibleMet = root.querySelector<HTMLInputElement>('#deductible-met');
         if (cpt) cpt.value = ex.cpt;
         if (zip) zip.value = ex.zip ?? '';
+        if (deductibleMet) deductibleMet.value = ex.deductibleMet ?? '';
       } else if (variant === 'bill-auditor') {
         const ex = example as (typeof billAuditorExamples)[number];
         const text = root.querySelector<HTMLTextAreaElement>('#bill-text');
@@ -51,6 +57,31 @@ export function bindToolExamples(root: ParentNode, variant: ToolExampleVariant, 
         const insurer = root.querySelector<HTMLSelectElement>('#eob-insurer');
         if (text) text.value = ex.text;
         if (insurer && ex.insurer) insurer.value = ex.insurer;
+      } else if (variant === 'hospital-compare') {
+        const ex = example as (typeof hospitalCompareExamples)[number];
+        const cpt = root.querySelector<HTMLInputElement>('#cpt');
+        const zip = root.querySelector<HTMLInputElement>('#hc-zip');
+        const charge = root.querySelector<HTMLInputElement>('#hc-charge');
+        if (cpt) cpt.value = ex.cpt;
+        if (zip) zip.value = ex.zip ?? '';
+        if (charge) charge.value = ex.charge;
+        const setting = form.querySelector<HTMLInputElement>(`input[name="care-setting"][value="${ex.careSetting}"]`);
+        if (setting) setting.checked = true;
+      } else if (variant === 'surprise-bill') {
+        const ex = example as (typeof surpriseBillExamples)[number];
+        const setRadio = (name: string, value: string) => {
+          const input = form.querySelector<HTMLInputElement>(`input[name="${name}"][value="${value}"]`);
+          if (input) input.checked = true;
+        };
+        setRadio('care-setting', ex.careSetting);
+        setRadio('is-emergency', ex.isEmergency ? 'yes' : 'no');
+        setRadio('facility-network', ex.facilityNetwork);
+        setRadio('provider-network', ex.providerNetwork);
+        setRadio('insurance-type', ex.insuranceType);
+        if (ex.providerRole) setRadio('provider-role', ex.providerRole);
+        if (ex.consentStatus) setRadio('consent-status', ex.consentStatus);
+        if (ex.billSource) setRadio('bill-source', ex.billSource);
+        form.dispatchEvent(new Event('change', { bubbles: true }));
       }
 
       form.scrollIntoView({ behavior: 'smooth', block: 'start' });

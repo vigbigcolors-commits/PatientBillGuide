@@ -20,12 +20,14 @@ export interface CptPageData {
 }
 
 import { extraCptPages } from './cpt-extra';
+import { cptBatch2 } from './cpt-batch-2';
 
 export const launchCptCodes = [
-  '99213', '99214', '99203', '99284', '99285',
-  '93000', '71046', '70450', '72148',
-  '80053', '85025', '84443', '36415',
-  '77067', '76700', '27447', '29881', '45378', '66984', '97110',
+  '99213', '99214', '99215', '99203', '99204', '99283', '99284', '99285',
+  '93000', '93306', '71046', '70450', '72148', '70553',
+  '80053', '85025', '84443', '36415', '87880',
+  '77067', '76700', '27447', '29881', '45378', '47562', '66984',
+  '97110', '90834', '99396', '96372',
 ] as const;
 
 export type LaunchCptCode = (typeof launchCptCodes)[number];
@@ -395,7 +397,11 @@ export function getCptPage(code: string): CptPageData | undefined {
   return extraCptPages[code];
 }
 
-export const allCptPages: Record<string, CptPageData> = { ...cptPages, ...extraCptPages };
+export const allCptPages: Record<string, CptPageData> = {
+  ...cptPages,
+  ...extraCptPages,
+  ...cptBatch2,
+};
 
 export const cptCodeList = launchCptCodes.map((code) => {
   const page = allCptPages[code];

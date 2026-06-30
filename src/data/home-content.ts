@@ -171,35 +171,115 @@ export const homePopularCodes = [
   { code: '45378', label: 'Colonoscopy', href: '/codes/cpt/45378/' },
 ];
 
-export const homeFaqs = [
+export type HomeFaqCategory = 'price' | 'privacy' | 'bill' | 'trust';
+
+export interface HomeFaqItem {
+  id: string;
+  category: HomeFaqCategory;
+  question: string;
+  answer: string;
+  /** Shorter label for the question picker */
+  picker: string;
+  link?: { href: string; label: string };
+}
+
+export const homeFaqCategories: { id: HomeFaqCategory | 'all'; label: string }[] = [
+  { id: 'all', label: 'All' },
+  { id: 'price', label: 'Fair price' },
+  { id: 'privacy', label: 'Privacy' },
+  { id: 'bill', label: 'Bills & EOBs' },
+  { id: 'trust', label: 'Trust & limits' },
+];
+
+export const homeFaqs: HomeFaqItem[] = [
   {
+    id: 'free',
+    category: 'trust',
+    picker: 'Is it really free?',
     question: 'Is PatientBillGuide free?',
     answer:
-      'Yes. All calculators and guides are free. We use public CMS Medicare data and run everything in your browser — no account required.',
+      'Yes — every calculator, parser, and guide on this site is free. No account, subscription, or credit card. We use public CMS Medicare data and run tools in your browser. The site may show ads in the future; the tools and methodology pages stay public either way.',
+    link: { href: '/tools/', label: 'Browse all tools' },
   },
   {
+    id: 'privacy',
+    category: 'privacy',
+    picker: 'Do you see my bill?',
+    question: 'Do you upload or store my medical bill?',
+    answer:
+      'No. When you paste a bill or EOB, processing happens locally in your browser with JavaScript. CPT codes, ZIP codes, and pasted text are not sent to our servers for analysis. You can verify this in your browser’s network tab — there is no “upload for review” pipeline.',
+    link: { href: '/privacy/', label: 'Privacy policy' },
+  },
+  {
+    id: 'fair-price',
+    category: 'price',
+    picker: 'What is a fair price?',
+    question: 'What counts as a fair price for a procedure?',
+    answer:
+      'We start with Medicare’s published allowed amount for your CPT code and ZIP — the most transparent public anchor in US healthcare. We then show an educational range of about 1.5× to 2.5× Medicare as a typical commercial zone. That is a benchmark for questions, not a legal cap or what your insurer must pay.',
+    link: { href: '/methodology/price-benchmarks/', label: 'How we calculate fair range' },
+  },
+  {
+    id: 'medicare-higher',
+    category: 'price',
+    picker: 'Why above Medicare?',
+    question: 'Why is my bill higher than the Medicare rate?',
+    answer:
+      'Medicare rates are a reference point, not what hospitals charge everyone. Commercial insurers negotiate their own prices. Self-pay patients may see chargemaster rates several times Medicare. Facility fees, emergency settings, implants, and out-of-network providers can push totals much higher — especially at hospital-owned sites.',
+    link: { href: '/tools/fair-price/', label: 'Check your code + ZIP' },
+  },
+  {
+    id: 'fraud',
+    category: 'trust',
+    picker: 'Is this fraud?',
     question: 'Can you tell me if my hospital committed fraud?',
     answer:
-      'No. We flag possible billing concerns based on public benchmarks and patterns — with confidence levels. We never claim fraud or guaranteed savings. Always ask the billing office for an explanation.',
+      'No — and we will not say that. We surface possible billing concerns (duplicate lines, price vs benchmark, NCCI patterns) with confidence levels. That means “worth asking about,” not “illegal” or “guaranteed savings.” Always start with your billing office or insurer for an explanation.',
+    link: { href: '/methodology/billing-flags/', label: 'How we flag bills' },
   },
   {
-    question: 'What is a fair price for a medical procedure?',
-    answer:
-      'We use Medicare’s allowed amount as a public anchor, then show a typical commercial range of 1.5× to 2.5× that figure. Real prices vary by facility, network, and urgency. See our methodology for the full formula.',
-  },
-  {
-    question: 'Why is my bill higher than the Medicare rate if I have private insurance?',
-    answer:
-      'Medicare rates are a benchmark, not what commercial plans pay. Hospital chargemasters, facility fees, and out-of-network providers can push patient-facing totals much higher — especially in emergency settings.',
-  },
-  {
-    question: 'Do you store my bill or personal information?',
-    answer:
-      'No. CPT lookups, pasted bills, and EOB text are processed locally in your browser. We do not upload PHI to our servers.',
-  },
-  {
+    id: 'normal',
+    category: 'bill',
+    picker: 'Bill looks normal?',
     question: 'What if your tool says my bill looks normal?',
     answer:
-      'That is a valid outcome. Many bills are within typical ranges. Our tools help you understand numbers — they do not replace talking to your billing department or insurer when something still feels wrong.',
+      'That is a valid outcome — not a failure. Many itemized bills pass our public-data checks. A high total can still be legitimate when facility fees, multiple physician groups, or plan rules apply. If something still feels wrong, call billing with specific CPT lines and dates.',
+    link: { href: '/tools/bill-auditor/', label: 'Run Bill Auditor' },
+  },
+  {
+    id: 'cpt',
+    category: 'bill',
+    picker: 'Find my CPT code',
+    question: 'Where do I find the CPT code on my bill?',
+    answer:
+      'Look for a 5-digit number on each line of an itemized bill or EOB — often labeled CPT, HCPCS, or “procedure code.” Examples: 99213 (office visit), 71046 (chest X-ray), 80053 (metabolic panel). Request a fully itemized bill if you only see a lump sum.',
+    link: { href: '/learn/cpt-codes-explained/', label: 'CPT codes explained' },
+  },
+  {
+    id: 'eob',
+    category: 'bill',
+    picker: 'EOB vs bill?',
+    question: 'What is the difference between an EOB and a hospital bill?',
+    answer:
+      'An Explanation of Benefits (EOB) is from your insurer — it shows how a claim was processed (allowed amount, plan paid, your share). It is usually not a bill. The hospital or doctor sends a separate statement for what you owe. Compare dates and CPT codes on both before paying.',
+    link: { href: '/tools/eob-analyzer/', label: 'Decode your EOB' },
+  },
+  {
+    id: 'advice',
+    category: 'trust',
+    picker: 'Legal or medical advice?',
+    question: 'Is PatientBillGuide legal or medical advice?',
+    answer:
+      'Neither. We are an independent educational guide — not a law firm, medical practice, insurance broker, or billing negotiation service. Dispute letter templates are editable starting points, not attorney-reviewed documents. For disputes that escalate, consider certified patient advocates or your state insurance department.',
+    link: { href: '/disclaimer/', label: 'Full disclaimer' },
+  },
+  {
+    id: 'start',
+    category: 'price',
+    picker: 'Where to start?',
+    question: 'I just got a bill — what should I do first?',
+    answer:
+      'Request a fully itemized bill with CPT codes on every line. Note your ZIP and the main procedure codes. Run each code through Fair Price, paste the full text into Bill Auditor, and match any EOB for the same dates. Takes a few minutes, costs nothing, and keeps your documents on your device.',
+    link: { href: '/how-it-works/', label: 'Step-by-step workflow' },
   },
 ];

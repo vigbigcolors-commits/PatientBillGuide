@@ -22,14 +22,14 @@
       <!-- Orb path: logo → right pan -->
       <path
         id="bridge-orb-path"
-        d="M 333 26 C 295 8, 258 38, 246 74"
+        d="M 354 36 C 302 10, 262 44, 246 74"
         fill="none"
         stroke="none"
       />
 
       <path
         class="hero-bridge__track"
-        d="M 333 26 C 295 8, 258 38, 246 74"
+        d="M 354 36 C 302 10, 262 44, 246 74"
         stroke="#e2e8f0"
         stroke-width="1.5"
         stroke-linecap="round"
@@ -38,7 +38,7 @@
       />
       <path
         class="hero-bridge__flow"
-        d="M 333 26 C 295 8, 258 38, 246 74"
+        d="M 354 36 C 302 10, 262 44, 246 74"
         stroke="url(#bridge-flow-grad)"
         stroke-width="2"
         stroke-linecap="round"
@@ -98,35 +98,36 @@
       <circle class="hero-bridge__fly hero-bridge__fly--2" r="3.5" fill="#14b8a6" />
       <circle class="hero-bridge__fly hero-bridge__fly--3" r="3" fill="#5eead4" />
 
-      <!-- Logo — calm anchor, launches orbs, then grows -->
-      <g class="hero-bridge__logo-wrap" transform="translate(314, 4)">
-        <g class="hero-bridge__logo-scale">
-          <g class="hero-bridge__logo-inner">
-            <path
-              class="hero-bridge__logo-fill"
-              d="M16 2L4 8v8c0 7.2 5.1 13.9 12 15 6.9-1.1 12-7.8 12-15V8L16 2z"
-              fill="#0d9488"
-            />
-            <path
-              class="hero-bridge__logo-stroke"
-              d="M16 3.5L5.5 9v7c0 6.4 4.5 12.4 10.5 13.5 6-1.1 10.5-7.1 10.5-13.5V9L16 3.5z"
-              stroke="#0f766e"
-              stroke-width="1.5"
-              fill="none"
-            />
-            <path
-              class="hero-bridge__logo-check"
-              d="M13 16.5l2 2 4.5-4.5"
-              stroke="#0d9488"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              pathLength="100"
-            />
+      <!-- Logo — 38×48 slot (matches bill), uniform scale, original proportions -->
+      <g class="hero-bridge__logo-wrap" transform="translate(338, 12)">
+        <g transform="translate(0.42, 0) translate(16, 0)">
+          <g class="hero-bridge__logo-scale">
+            <g class="hero-bridge__logo-inner" transform="translate(-16, -2)">
+              <path
+                class="hero-bridge__logo-fill"
+                d="M16 2L4 8v8c0 7.2 5.1 13.9 12 15 6.9-1.1 12-7.8 12-15V8L16 2z"
+                fill="#0d9488"
+              />
+              <path
+                class="hero-bridge__logo-stroke"
+                d="M16 3.5L5.5 9v7c0 6.4 4.5 12.4 10.5 13.5 6-1.1 10.5-7.1 10.5-13.5V9L16 3.5z"
+                stroke="#0f766e"
+                stroke-width="1.5"
+                fill="none"
+              />
+              <path
+                class="hero-bridge__logo-check"
+                d="M13 16.5l2 2 4.5-4.5"
+                stroke="#0d9488"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                pathLength="100"
+              />
+            </g>
           </g>
+          <circle class="hero-bridge__logo-pulse" cx="0" cy="24" r="14" fill="#14b8a6" />
         </g>
-        <!-- Launch pulse from logo center -->
-        <circle class="hero-bridge__logo-pulse" cx="16" cy="16" r="14" fill="#14b8a6" />
       </g>
     </svg>
 
@@ -269,7 +270,7 @@
   .hero-bridge__fly {
     opacity: 0;
     visibility: hidden;
-    offset-path: path('M 333 26 C 295 8, 258 38, 246 74');
+    offset-path: path('M 354 36 C 302 10, 262 44, 246 74');
     offset-rotate: 0deg;
   }
 
@@ -285,35 +286,37 @@
     animation: hb-fly-path-3 10s cubic-bezier(0.33, 0.02, 0.2, 1) infinite;
   }
 
+  /* Uniform scale: shield 31px tall → 48px slot (48/31), width ~37px centered in 38px */
   .hero-bridge__logo-scale {
-    transform-origin: 16px 16px;
+    transform: scale(1.548387);
+    transform-origin: 0 0;
     animation: hb-logo-scale 10s ease-in-out infinite;
   }
 
   .hero-bridge__logo-inner {
-    transform-origin: 16px 16px;
+    transform-origin: 0 0;
   }
 
   .hero-bridge__logo-fill {
-    opacity: 0.15;
+    opacity: 0.18;
     animation: hb-logo-fill 10s ease-in-out infinite;
   }
 
   .hero-bridge__logo-stroke {
-    opacity: 1;
+    opacity: 0.9;
     animation: hb-logo-stroke 10s ease-in-out infinite;
   }
 
   .hero-bridge__logo-check {
     stroke-dasharray: 100;
     stroke-dashoffset: 0;
-    opacity: 0.35;
+    opacity: 0.4;
     animation: hb-logo-check 10s ease-in-out infinite;
   }
 
   .hero-bridge__logo-pulse {
     opacity: 0;
-    transform-origin: 16px 16px;
+    transform-origin: center;
     transform-box: fill-box;
     animation: hb-logo-pulse 10s ease-out infinite;
   }
@@ -653,22 +656,22 @@
 
   @keyframes hb-logo-scale {
     0%,
-    30% {
-      transform: scale(1);
+    28% {
+      transform: scale(1.548387);
     }
     32% {
-      transform: scale(0.96);
+      transform: scale(1.52);
     }
     38%,
     58% {
-      transform: scale(1);
+      transform: scale(1.548387);
     }
     72%,
     88% {
-      transform: scale(1.14);
+      transform: scale(1.58);
     }
     100% {
-      transform: scale(1);
+      transform: scale(1.548387);
     }
   }
 
@@ -695,28 +698,28 @@
   @keyframes hb-logo-fill {
     0%,
     58% {
-      opacity: 0.15;
+      opacity: 0.18;
     }
     72%,
     88% {
-      opacity: 0.28;
+      opacity: 0.32;
     }
     100% {
-      opacity: 0.15;
+      opacity: 0.18;
     }
   }
 
   @keyframes hb-logo-stroke {
     0%,
     58% {
-      opacity: 0.85;
+      opacity: 0.9;
     }
     72%,
     88% {
       opacity: 1;
     }
     100% {
-      opacity: 0.85;
+      opacity: 0.9;
     }
   }
 
@@ -785,7 +788,7 @@
     }
 
     .hero-bridge__logo-scale {
-      transform: scale(1) !important;
+      transform: scale(1.548387) !important;
       animation: none !important;
     }
 

@@ -1,0 +1,120 @@
+---
+export type ToolIconName =
+  | 'price'
+  | 'medicare'
+  | 'surprise'
+  | 'hospital'
+  | 'audit'
+  | 'eob'
+  | 'search'
+  | 'letter'
+  | 'phone';
+
+interface Props {
+  icon: ToolIconName;
+  size?: number;
+}
+
+const { icon, size = 24 } = Astro.props;
+---
+
+<span class="tool-icon" aria-hidden="true">
+  {
+    icon === 'price' && (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.75" />
+        <path d="M16 16l4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+        <path d="M8 11h6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+      </svg>
+    )
+  }
+  {
+    icon === 'medicare' && (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <path
+          d="M4 18l4-8 4 4 4-6 4 10"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    )
+  }
+  {
+    icon === 'surprise' && (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 2l7 4v5c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z"
+          stroke="currentColor"
+          stroke-width="1.75"
+        />
+        <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+      </svg>
+    )
+  }
+  {
+    icon === 'hospital' && (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <path d="M3 21h18M5 21V7l7-4 7 4v14" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" />
+        <path d="M12 10v6M9 13h6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+      </svg>
+    )
+  }
+  {
+    icon === 'audit' && (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <path
+          d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"
+          stroke="currentColor"
+          stroke-width="1.75"
+        />
+        <path d="M14 2v6h6M9 13h6M9 17h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+      </svg>
+    )
+  }
+  {
+    icon === 'eob' && (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.75" />
+        <path d="M9 8h6M9 12h6M9 16h4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+      </svg>
+    )
+  }
+  {
+    icon === 'search' && (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="1.75" />
+        <path d="M15 15l5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+        <path d="M8 10h4M10 8v4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+      </svg>
+    )
+  }
+  {
+    icon === 'letter' && (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <rect x="4" y="5" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.75" />
+        <path d="M4 8l8 5 8-5" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" />
+      </svg>
+    )
+  }
+  {
+    icon === 'phone' && (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <path
+          d="M6.5 4.5h3l1.5 4-2 1.5a11 11 0 005 5l1.5-2 4 1.5v3a1.5 1.5 0 01-1.5 1.5C9.8 18.5 5.5 14.2 5.5 6a1.5 1.5 0 011.5-1.5z"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linejoin="round"
+        />
+      </svg>
+    )
+  }
+</span>
+
+<style>
+  .tool-icon {
+    display: inline-flex;
+    line-height: 0;
+  }
+</style>

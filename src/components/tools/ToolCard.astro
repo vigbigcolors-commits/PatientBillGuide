@@ -1,0 +1,520 @@
+---
+import ToolIcon from './ToolIcon.astro';
+import type { DirectoryTool } from '../../data/tools-directory';
+
+interface Props {
+  tool: DirectoryTool;
+  featured?: boolean;
+}
+
+const { tool, featured = false } = Astro.props;
+const isLive = tool.status === 'live' && tool.href;
+const bullets = tool.status === 'live' ? tool.bullets : (tool.roadmap ?? tool.bullets);
+const bulletLabel = tool.status === 'live' ? 'You get' : 'On the roadmap';
+---
+
+{
+  isLive ? (
+    <a
+      href={tool.href}
+      class:list={['tc', `tc--${tool.accent}`, featured && 'tc--featured']}
+    >
+      {/* Decor — behind content, no blur */}
+      <div class="tc__decor" aria-hidden="true">
+        <span class="tc__corner" />
+        <span class="tc__ring" />
+        <span class="tc__dots" />
+      </div>
+
+      <div class="tc__content">
+        <header class="tc__head">
+          <span class="tc__cluster">{tool.cluster}</span>
+          <span class="tc__status tc__status--live">Live</span>
+        </header>
+
+        <div class="tc__hero">
+          <span class="tc__icon">
+            <ToolIcon icon={tool.icon} size={featured ? 24 : 22} />
+          </span>
+          <blockquote class="tc__pain">{tool.pain}</blockquote>
+        </div>
+
+        <div class="tc__body">
+          <h3 class="tc__title">{tool.title}</h3>
+          <p class="tc__tagline">{tool.tagline}</p>
+          <p class="tc__desc">{tool.description}</p>
+
+          <div class="tc__bullets-wrap">
+            <span class="tc__bullets-label">{bulletLabel}</span>
+            <ul class="tc__bullets">
+              {bullets.slice(0, 3).map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <footer class="tc__foot">
+          {tool.stat && <span class="tc__stat">{tool.stat}</span>}
+          <span class="tc__cta">
+            Open tool
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </span>
+        </footer>
+      </div>
+    </a>
+  ) : (
+    <article class:list={['tc', 'tc--roadmap', `tc--${tool.accent}`]}>
+      <div class="tc__decor" aria-hidden="true">
+        <span class="tc__pattern" />
+      </div>
+
+      <div class="tc__content">
+        <header class="tc__head">
+          <span class="tc__cluster">{tool.cluster}</span>
+          <span
+            class:list={[
+              'tc__status',
+              tool.status === 'soon' ? 'tc__status--soon' : 'tc__status--planned',
+            ]}
+          >
+            {tool.status === 'soon' ? 'Coming soon' : 'Planned'}
+          </span>
+        </header>
+
+        <div class="tc__hero">
+          <span class="tc__icon tc__icon--muted">
+            <ToolIcon icon={tool.icon} size={22} />
+          </span>
+          <blockquote class="tc__pain tc__pain--muted">{tool.pain}</blockquote>
+        </div>
+
+        <div class="tc__body">
+          <h3 class="tc__title">{tool.title}</h3>
+          <p class="tc__tagline tc__tagline--muted">{tool.tagline}</p>
+          <p class="tc__desc tc__desc--muted">{tool.description}</p>
+
+          <div class="tc__bullets-wrap tc__bullets-wrap--roadmap">
+            <span class="tc__bullets-label">{bulletLabel}</span>
+            <ul class="tc__bullets tc__bullets--roadmap">
+              {bullets.slice(0, 3).map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <footer class="tc__foot tc__foot--roadmap">
+          {tool.eta && <span class="tc__eta">{tool.eta}</span>}
+          {tool.interim && (
+            <p class="tc__interim">
+              Meanwhile:
+              <a href={tool.interim.href}>{tool.interim.label}</a>
+            </p>
+          )}
+        </footer>
+      </div>
+    </article>
+  )
+}
+
+<style>
+  .tc {
+    position: relative;
+    display: block;
+    border-radius: 1.125rem;
+    border: 1px solid transparent;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 1px 3px rgb(15 23 42 / 0.05);
+    transition:
+      transform 0.22s ease,
+      box-shadow 0.22s ease;
+  }
+
+  a.tc:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgb(15 23 42 / 0.09);
+  }
+
+  a.tc:hover .tc__cta svg {
+    transform: translateX(3px);
+  }
+
+  a.tc:hover .tc__icon {
+    transform: scale(1.04);
+  }
+
+  /* Decor layer — never overlaps readable text */
+  .tc__decor {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .tc__corner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5rem;
+    height: 5rem;
+    opacity: 0.35;
+    background: linear-gradient(225deg, rgb(255 255 255 / 0.9) 0%, transparent 65%);
+    border-bottom-left-radius: 100%;
+  }
+
+  .tc__ring {
+    position: absolute;
+    top: -1.25rem;
+    left: -1.25rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+
+  .tc__dots {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    opacity: 0.12;
+    background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+    background-size: 7px 7px;
+  }
+
+  .tc__pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.035;
+    background-image: linear-gradient(135deg, #64748b 1px, transparent 1px);
+    background-size: 10px 10px;
+  }
+
+  .tc__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 1.125rem 1.125rem 1rem;
+  }
+
+  .tc--featured .tc__content {
+    padding: 1.25rem 1.25rem 1.0625rem;
+  }
+
+  /* Palettes — flat gradient, crisp text */
+  .tc--teal {
+    background: linear-gradient(160deg, #f0fdfa 0%, #ecfdf5 55%, #d1faf5 100%);
+    border-color: #a7f3d0;
+    color: #0f766e;
+  }
+
+  .tc--amber {
+    background: linear-gradient(160deg, #fffbeb 0%, #fef9c3 55%, #fde68a 100%);
+    border-color: #fcd34d;
+    color: #92400e;
+  }
+
+  .tc--blue {
+    background: linear-gradient(160deg, #eff6ff 0%, #dbeafe 55%, #bfdbfe 100%);
+    border-color: #93c5fd;
+    color: #1e40af;
+  }
+
+  .tc--violet {
+    background: linear-gradient(160deg, #f5f3ff 0%, #ede9fe 55%, #ddd6fe 100%);
+    border-color: #c4b5fd;
+    color: #5b21b6;
+  }
+
+  .tc--rose {
+    background: linear-gradient(160deg, #fff1f2 0%, #ffe4e6 55%, #fecdd3 100%);
+    border-color: #fda4af;
+    color: #9f1239;
+  }
+
+  .tc--indigo {
+    background: linear-gradient(160deg, #eef2ff 0%, #e0e7ff 55%, #c7d2fe 100%);
+    border-color: #a5b4fc;
+    color: #3730a3;
+  }
+
+  .tc--roadmap {
+    background: #fafafa;
+    border: 1px dashed #d6d3d1;
+    color: #44403c;
+  }
+
+  .tc__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .tc__cluster {
+    font-size: 0.5625rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: inherit;
+    opacity: 0.7;
+  }
+
+  .tc__status {
+    font-size: 0.5625rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+  }
+
+  .tc__status--live {
+    background: #fff;
+    color: inherit;
+    border: 1px solid rgb(0 0 0 / 0.06);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+  }
+
+  .tc__status--planned {
+    background: #eef2ff;
+    color: #4338ca;
+  }
+
+  .tc__status--soon {
+    background: #fef3c7;
+    color: #b45309;
+  }
+
+  .tc__hero {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .tc__icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.75rem;
+    background: #fff;
+    color: inherit;
+    border: 1px solid rgb(0 0 0 / 0.06);
+    box-shadow: 0 2px 6px rgb(0 0 0 / 0.05);
+    transition: transform 0.2s ease;
+  }
+
+  .tc--featured .tc__icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .tc__icon--muted {
+    background: #fff;
+    color: #64748b;
+  }
+
+  .tc__pain {
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.35;
+    color: inherit;
+    flex: 1;
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 0.06);
+    border-left: 3px solid currentColor;
+    border-radius: 0 0.375rem 0.375rem 0;
+  }
+
+  .tc--featured .tc__pain {
+    font-size: 1rem;
+  }
+
+  .tc__pain--muted {
+    color: #57534e;
+    border-left-color: #a8a29e;
+  }
+
+  .tc__body {
+    flex: 1;
+  }
+
+  .tc__title {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-heading);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: inherit;
+  }
+
+  .tc--featured .tc__title {
+    font-size: 1.125rem;
+  }
+
+  .tc__tagline {
+    margin: 0 0 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: inherit;
+  }
+
+  .tc__tagline--muted {
+    color: #57534e;
+  }
+
+  .tc__desc {
+    margin: 0 0 0.75rem;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: inherit;
+    opacity: 0.92;
+  }
+
+  .tc__desc--muted {
+    color: #57534e;
+    opacity: 1;
+  }
+
+  .tc__bullets-wrap {
+    padding: 0.625rem 0.75rem;
+    border-radius: 0.625rem;
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 0.06);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.03);
+  }
+
+  .tc__bullets-wrap--roadmap {
+    background: #fff;
+    border-color: #e7e5e4;
+  }
+
+  .tc__bullets-label {
+    display: block;
+    margin-bottom: 0.375rem;
+    font-size: 0.5625rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: inherit;
+    opacity: 0.6;
+  }
+
+  .tc__bullets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .tc__bullets li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 0.75rem;
+    line-height: 1.45;
+    font-weight: 500;
+    color: inherit;
+  }
+
+  .tc__bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.65;
+  }
+
+  .tc__bullets--roadmap li {
+    color: #57534e;
+  }
+
+  .tc__bullets--roadmap li::before {
+    border-radius: 1px;
+    width: 0.4rem;
+    height: 0.125rem;
+    background: #a8a29e;
+    opacity: 1;
+  }
+
+  .tc__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 0.875rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgb(0 0 0 / 0.07);
+  }
+
+  .tc__foot--roadmap {
+    flex-direction: column;
+    align-items: flex-start;
+    border-top-color: #e7e5e4;
+  }
+
+  .tc__stat,
+  .tc__eta {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 0.06);
+    color: inherit;
+  }
+
+  .tc__eta {
+    background: #f5f5f4;
+    color: #57534e;
+  }
+
+  .tc__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: inherit;
+  }
+
+  .tc__cta svg {
+    transition: transform 0.2s ease;
+  }
+
+  .tc__interim {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #57534e;
+  }
+
+  .tc__interim a {
+    font-weight: 600;
+    margin-left: 0.25rem;
+    color: #0d9488;
+  }
+</style>

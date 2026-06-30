@@ -5,35 +5,274 @@ import LegalLayout from '../../../layouts/LegalLayout.astro';
 <LegalLayout
   title="Data Sources"
   description="Public data sources used by PatientBillGuide — CMS MPFS, NCCI, and hospital price files."
+  pageClass="page-data-sources"
+  hideTitle
   crumbs={[
     { label: 'Methodology', href: '/methodology/' },
     { label: 'Data Sources' },
   ]}
 >
-  <h2>CMS Medicare Physician Fee Schedule (MPFS)</h2>
-  <p>
-    Primary source for Medicare allowed amounts by CPT/HCPCS code and geographic locality.
-    Published by the Centers for Medicare &amp; Medicaid Services (CMS). Updated annually
-    (and sometimes quarterly for some files).
-  </p>
+  <section class="guide-hero guide-hero--data" slot="hero" aria-labelledby="data-hero-title">
+    <div class="guide-hero__bg" aria-hidden="true">
+      <span class="guide-hero__orb guide-hero__orb--1"></span>
+      <span class="guide-hero__orb guide-hero__orb--2"></span>
+      <span class="guide-hero__grid"></span>
+    </div>
+    <div class="container guide-hero__inner">
+      <p class="guide-hero__eyebrow">Methodology · Public data</p>
+      <h1 id="data-hero-title" class="guide-hero__title">Data Sources</h1>
+      <p class="guide-hero__lead">
+        Every benchmark on PatientBillGuide traces back to government-published files — not secret insurer
+        databases or crowdsourced guesses.
+      </p>
+      <div class="data-pipeline" aria-label="Data flow from CMS to your browser">
+        <div class="data-pipeline__node">
+          <span class="data-pipeline__badge">CMS</span>
+          <span>MPFS · NCCI</span>
+        </div>
+        <span class="data-pipeline__arrow" aria-hidden="true">→</span>
+        <div class="data-pipeline__node">
+          <span class="data-pipeline__badge">Build</span>
+          <span>gzip JSON bundle</span>
+        </div>
+        <span class="data-pipeline__arrow" aria-hidden="true">→</span>
+        <div class="data-pipeline__node">
+          <span class="data-pipeline__badge">CDN</span>
+          <span>static /data/</span>
+        </div>
+        <span class="data-pipeline__arrow" aria-hidden="true">→</span>
+        <div class="data-pipeline__node data-pipeline__node--you">
+          <span class="data-pipeline__badge">You</span>
+          <span>browser lookup</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <h2>NCCI edits</h2>
-  <p>
-    National Correct Coding Initiative (NCCI) procedure-to-procedure edits help identify
-    code pairs that Medicare typically does not pay separately when billed together.
-    We use these as <em>possible</em> unbundling signals, not proof of error.
-  </p>
+  <div class="data-source-cards">
+    <article class="data-source-cards__card data-source-cards__card--mpfs">
+      <h2>CMS Medicare Physician Fee Schedule (MPFS)</h2>
+      <p class="data-source-cards__role">Primary price anchor</p>
+      <p>
+        Primary source for Medicare allowed amounts by CPT/HCPCS code and geographic locality. Published by
+        the Centers for Medicare &amp; Medicaid Services (CMS). Updated annually (and sometimes quarterly
+        for some files).
+      </p>
+      <p>
+        Used by: <a href="/tools/fair-price/">Fair Price Calculator</a>,
+        <a href="/tools/bill-auditor/">Bill Auditor</a>,
+        <a href="/tools/hospital-compare/">Hospital Price Compare</a>,
+        <a href="/codes/">CPT encyclopedia</a> cost context.
+      </p>
+    </article>
 
-  <h2>Hospital price transparency files</h2>
-  <p>
-    Hospitals publish machine-readable standard charges under federal transparency rules.
-    We plan to incorporate these for hospital price comparison tools (rolling out after
-    the Fair Price Calculator).
-  </p>
+    <article class="data-source-cards__card data-source-cards__card--ncci">
+      <h2>NCCI edits</h2>
+      <p class="data-source-cards__role">Coding integrity signals</p>
+      <p>
+        National Correct Coding Initiative (NCCI) procedure-to-procedure edits help identify code pairs that
+        Medicare typically does not pay separately when billed together. We use these as <em>possible</em>
+        unbundling signals — not proof of error. See
+        <a href="/methodology/billing-flags/">billing flags methodology</a>.
+      </p>
+      <p>Used by: <a href="/tools/bill-auditor/">Bill Auditor</a>.</p>
+    </article>
+
+    <article class="data-source-cards__card data-source-cards__card--hospital">
+      <h2>Hospital price transparency &amp; care-setting estimates</h2>
+      <p class="data-source-cards__role">Facility vs office context</p>
+      <p>
+        Hospitals publish machine-readable standard charges under federal transparency rules. Our
+        <a href="/tools/hospital-compare/">Hospital Price Compare</a> tool combines MPFS physician fees with
+        documented facility multipliers by care setting (office, ASC, hospital outpatient, ER) — so you can
+        see why the same CPT code costs more at a hospital department than an independent clinic.
+      </p>
+      <p>
+        Direct ingestion of every hospital chargemaster file is on the roadmap; current facility estimates
+        use published CMS context and curated setting benchmarks. See
+        <a href="/methodology/limitations/">limitations</a>.
+      </p>
+    </article>
+
+    <article class="data-source-cards__card data-source-cards__card--zip">
+      <h2>ZIP-to-locality mapping</h2>
+      <p class="data-source-cards__role">Geographic accuracy</p>
+      <p>
+        Medicare pays different amounts in different localities. We map your ZIP code to the correct MPFS
+        locality using CMS geographic crosswalk files so benchmarks reflect your area — not a national
+        average.
+      </p>
+    </article>
+  </div>
+
+  <h2>What we do not use</h2>
+  <ul>
+    <li>Proprietary insurer negotiated rate databases</li>
+    <li>AMA-licensed CPT code descriptions (we write original plain-English summaries)</li>
+    <li>User-submitted bill data to train models — tools run client-side</li>
+  </ul>
 
   <h2>Update cadence</h2>
   <p>
-    Data bundle versions and last-updated dates will be shown on each tool once live.
-    Methodology pages will be updated when we ship new data releases.
+    Data bundle versions and last-updated dates are shown in each tool's interface and in
+    <code>/data/manifest.json</code> on the live site. Methodology pages are updated when we ship new CMS
+    releases — typically following the annual MPFS final rule.
   </p>
+  <p>
+    Related: <a href="/methodology/price-benchmarks/">Price benchmarks</a> ·
+    <a href="/methodology/limitations/">Limitations</a> ·
+    <a href="/privacy/">Privacy policy</a>
+  </p>
+
+  <section class="guide-cta guide-cta--data" aria-label="Explore methodology">
+    <h2>See how we use this data</h2>
+    <div class="guide-cta__grid">
+      <a href="/methodology/price-benchmarks/" class="guide-cta__card">
+        <strong>Price benchmarks</strong>
+        <span>Fair range math explained</span>
+      </a>
+      <a href="/methodology/billing-flags/" class="guide-cta__card">
+        <strong>Billing flags</strong>
+        <span>Confidence levels &amp; NCCI</span>
+      </a>
+      <a href="/tools/fair-price/" class="guide-cta__card">
+        <strong>Fair Price Calculator</strong>
+        <span>Live MPFS lookup</span>
+      </a>
+    </div>
+  </section>
 </LegalLayout>
+
+<style is:global>
+  .page-data-sources .legal-page__body {
+    --guide-accent: #059669;
+    --guide-accent-bg: #ecfdf5;
+    --guide-accent-border: #6ee7b7;
+  }
+
+  .guide-hero--data {
+    --hero-accent: #10b981;
+    --hero-accent-light: #34d399;
+    --hero-bg: linear-gradient(165deg, #022c22 0%, #065f46 42%, #047857 100%);
+  }
+
+  .data-pipeline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 0.25rem;
+    margin-top: var(--space-xl);
+    padding: var(--space-lg);
+    background: rgb(0 0 0 / 0.25);
+    border: 1px solid rgb(52 211 153 / 0.3);
+    border-radius: var(--radius-xl);
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .data-pipeline__node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: rgb(255 255 255 / 0.85);
+    text-align: center;
+  }
+
+  .data-pipeline__badge {
+    padding: 0.25rem 0.6rem;
+    background: rgb(16 185 129 / 0.25);
+    border: 1px solid rgb(52 211 153 / 0.5);
+    border-radius: 999px;
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6ee7b7;
+  }
+
+  .data-pipeline__node--you .data-pipeline__badge {
+    background: rgb(255 255 255 / 0.15);
+    border-color: rgb(255 255 255 / 0.4);
+    color: #fff;
+  }
+
+  .data-pipeline__arrow {
+    color: rgb(255 255 255 / 0.45);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .data-source-cards {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .data-source-cards__card {
+    padding: var(--space-xl);
+    border-radius: var(--radius-xl);
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 0.04);
+    border-left-width: 4px;
+  }
+
+  .data-source-cards__card--mpfs { border-left-color: #059669; }
+  .data-source-cards__card--ncci { border-left-color: #0d9488; }
+  .data-source-cards__card--hospital { border-left-color: #6366f1; }
+  .data-source-cards__card--zip { border-left-color: #0891b2; }
+
+  .data-source-cards__card h2 {
+    margin: 0 0 0.25rem;
+    font-size: 1.125rem;
+  }
+
+  .data-source-cards__role {
+    margin: 0 0 var(--space-md);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #059669;
+  }
+
+  .data-source-cards__card--ncci .data-source-cards__role { color: #0d9488; }
+  .data-source-cards__card--hospital .data-source-cards__role { color: #6366f1; }
+  .data-source-cards__card--zip .data-source-cards__role { color: #0891b2; }
+
+  .data-source-cards__card p:last-child {
+    margin-bottom: 0;
+  }
+
+  .guide-cta--data {
+    margin-top: var(--space-2xl);
+    padding: var(--space-xl);
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border: 1px solid #6ee7b7;
+    border-radius: var(--radius-xl);
+  }
+
+  .guide-cta--data h2 {
+    font-size: 1.125rem;
+    margin: 0 0 var(--space-md);
+    color: #047857;
+  }
+
+  .page-data-sources .guide-cta__card {
+    border-color: #a7f3d0;
+  }
+
+  .page-data-sources .guide-cta__card:hover {
+    box-shadow: 0 8px 20px rgb(5 150 105 / 0.15);
+  }
+
+  .page-data-sources .guide-cta__card strong {
+    color: #047857;
+  }
+</style>

@@ -1,9 +1,11 @@
 ---
 import CptLayout from '../../../layouts/CptLayout.astro';
+import AuthorByline from '../../../components/AuthorByline.astro';
 import MethodologyFooter from '../../../components/MethodologyFooter.astro';
 import Disclaimer from '../../../components/Disclaimer.astro';
 import { launchCptCodes, allCptPages } from '../../../data/cpt-codes';
 import { site } from '../../../data/site';
+import { author, getAuthorUrl } from '../../../data/author';
 import { faqPageSchema, medicalWebPageSchema, breadcrumbSchema } from '../../../lib/seo/schema';
 
 export function getStaticPaths() {
@@ -27,8 +29,9 @@ const schemaGraph = [
     description: page.metaDescription,
     url: canonical,
     dateModified: updated,
-    authorName: 'Vigen',
-    authorUrl: `${site.url}/authors/vigen/`,
+    authorName: author.name,
+    authorUrl: getAuthorUrl(site.url),
+    authorJobTitle: author.jobTitle,
   }),
   faqPageSchema(page.faq),
   breadcrumbSchema(
@@ -132,9 +135,7 @@ const schemaGraph = [
     </dl>
   </section>
 
-  <p class="cpt-byline">
-    Written by <a href="/authors/vigen/">Vigen</a> · Last updated {updated}
-  </p>
+  <AuthorByline variant="written" updated={updated} class="cpt-byline" />
 
   <Disclaimer />
 

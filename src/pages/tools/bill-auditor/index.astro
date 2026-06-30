@@ -5,13 +5,14 @@ import MethodologyFooter from '../../../components/MethodologyFooter.astro';
 import Disclaimer from '../../../components/Disclaimer.astro';
 import { site } from '../../../data/site';
 import { billAuditorExamples } from '../../../data/tool-examples';
+import { AUDIT_CHECK_LANES } from '../../../lib/billing/audit';
 import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
 
 const faqs = [
   {
     question: 'What format should I paste?',
     answer:
-      'One charge per line works best. Include the 5-digit CPT code and dollar amount, e.g. "99213 Office visit established patient $185.00".',
+      'One charge per line works best. Include the 5-digit CPT code and dollar amount, e.g. "99213 Office visit established patient $185.00". Dates and quantities help duplicate detection.',
   },
   {
     question: 'Does this upload my bill to your servers?',
@@ -20,17 +21,22 @@ const faqs = [
   {
     question: 'What does "bill looks normal" mean?',
     answer:
-      'It means we found no duplicate line items or charges significantly above Medicare-based benchmarks in our public dataset. It is not a guarantee your bill is correct.',
+      'We found no duplicate line items, NCCI unbundling pairs, or charges significantly above Medicare-based benchmarks. It is not a guarantee your bill is correct — only that no obvious public-data red flags appeared.',
   },
   {
     question: 'What are confidence levels on flags?',
     answer:
-      'High confidence usually means we matched your ZIP to a locality with strong CMS data. Low confidence means national estimates — still useful, but less precise.',
+      'High confidence usually means we matched your ZIP to a Medicare locality with strong CMS data. Low confidence means national median estimates — still useful, but less precise.',
+  },
+  {
+    question: 'What is NCCI unbundling?',
+    answer:
+      'CMS National Correct Coding Initiative (NCCI) lists procedure-to-procedure edits — when two codes should not both be billed on the same day. We load practitioner PTP chunks for codes on your bill.',
   },
   {
     question: 'Can this detect all billing errors?',
     answer:
-      'No. We check duplicates, price outliers, and CMS NCCI practitioner unbundling edits (quarterly PTP file). We do not have your medical records or insurance contract.',
+      'No. We check duplicates, price outliers, and CMS NCCI practitioner unbundling edits. We do not have your medical records, insurance contract, or hospital-only NCCI edits.',
   },
   {
     question: 'Should I pay my bill before auditing?',
@@ -52,7 +58,8 @@ const faqs = [
 const schemaGraph = [
   webApplicationSchema({
     name: 'Itemized Bill Auditor',
-    description: 'Paste hospital bill text to flag duplicates and Medicare price outliers in your browser.',
+    description:
+      'Paste hospital bill text to flag duplicates, Medicare price outliers, and NCCI unbundling — with confidence levels and next steps.',
     url: `${site.url}/tools/bill-auditor/`,
   }),
   faqPageSchema(faqs),
@@ -65,7 +72,7 @@ const schemaGraph = [
 
 <ToolLayout
   title="Itemized Bill Auditor"
-  description="Paste your hospital bill to flag possible duplicates and charges above Medicare benchmarks. Free, private, browser-based."
+  description="Paste your itemized bill to flag duplicates, Medicare price outliers, and NCCI unbundling. Confidence on every flag — free, private, browser-based."
   crumbs={[
     { label: 'Home', href: '/' },
     { label: 'Tools', href: '/tools/' },
@@ -78,13 +85,30 @@ const schemaGraph = [
 
   <Fragment slot="intro">
     <p>
-      Paste text from an itemized bill. We parse CPT codes and amounts, compare them to CMS Medicare
-      benchmarks, and flag possible duplicates or outlier charges — with confidence levels on every
-      flag.
+      Paste text from an itemized bill. We parse CPT codes and amounts, compare them to <strong>CMS Medicare
+      benchmarks</strong>, scan for <strong>duplicates</strong>, and check <strong>NCCI unbundling</strong>
+      pairs — with confidence levels, a parsed-line preview, and suggested next steps.
     </p>
+    <div class="audit-inline-notice" role="note">
+      <strong>Physician-line focus.</strong> Hospital facility fees, room charges, and supplies may use
+      revenue codes without CPT — paste professional fee lines when possible.
+      <a href="/learn/how-to-read-medical-bill/#facility-professional">Facility vs professional →</a>
+    </div>
   </Fragment>
 
-  <form class="calculator card" id="bill-auditor-form">
+  <section class="audit-lanes card" aria-label="What the Bill Auditor checks">
+    <h2 class="audit-lanes__title">Audit pipeline</h2>
+    <ul class="audit-lanes__grid">
+      {AUDIT_CHECK_LANES.map((lane) => (
+        <li class={`audit-lane audit-lane--${lane.level}`}>
+          <span class="audit-lane__title">{lane.title}</span>
+          <span class="audit-lane__detail">{lane.detail}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <form class="calculator card tool-form tool-form--amber" id="bill-auditor-form">
     <div class="field">
       <label class="input-label" for="bill-text">Itemized bill text</label>
       <textarea
@@ -92,34 +116,47 @@ const schemaGraph = [
         id="bill-text"
         name="bill-text"
         rows="10"
-        placeholder={`Example:\n99213 Office visit $185.00\n71046 Chest x-ray 2 views $340.00\n80053 Comprehensive metabolic panel $45.00`}
+        placeholder={`Example:\n01/15/2026 99213 Office visit established patient $185.00\n01/15/2026 71046 Chest x-ray 2 views $340.00\n01/15/2026 80053 Comprehensive metabolic panel $45.00`}
         required
       ></textarea>
+      <p id="bill-line-preview" class="bill-line-preview" hidden role="status"></p>
       <p class="input-hint">Copy from PDF or patient portal — one line per charge when possible</p>
     </div>
 
     <div class="field">
       <label class="input-label" for="zip">ZIP code (optional)</label>
-      <input
-        class="input-field"
-        id="zip"
-        name="zip"
-        type="text"
-        inputmode="numeric"
-        placeholder="e.g. 90210"
-        maxlength="5"
-        autocomplete="postal-code"
-      />
-      <p class="input-hint">Localizes Medicare benchmarks to your area</p>
+      <div class="input-with-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z" stroke="currentColor" stroke-width="1.5" />
+          <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+        <input
+          class="input-field"
+          id="zip"
+          name="zip"
+          type="text"
+          inputmode="numeric"
+          placeholder="e.g. 90210"
+          maxlength="5"
+          autocomplete="postal-code"
+        />
+      </div>
+      <p class="input-hint">Localizes Medicare benchmarks — higher confidence when ZIP matches your area</p>
     </div>
 
-    <button type="submit" class="btn btn--primary">Audit bill</button>
+    <button type="submit" class="btn btn--primary btn--block">Audit bill</button>
+    <p class="calculator__note" role="status">All parsing and analysis run in your browser. Nothing is uploaded.</p>
   </form>
 
   <div id="bill-auditor-error" class="form-error" hidden></div>
   <div id="bill-auditor-results" hidden></div>
 
-  <ToolExamples variant="bill-auditor" examples={billAuditorExamples} />
+  <ToolExamples
+    variant="bill-auditor"
+    title="Sample bills to audit"
+    hint="Click to load — we run the audit automatically."
+    examples={billAuditorExamples}
+  />
 
   <section class="tool-faq card">
     <h2>FAQ</h2>
@@ -135,30 +172,47 @@ const schemaGraph = [
 
   <Disclaimer />
 
-  <div slot="sidebar">
+  <Fragment slot="sidebar">
     <div class="sidebar-card card">
-      <h2>What we check</h2>
-      <ul>
-        <li>Duplicate CPT + amount on the same date</li>
-        <li>Charges above 2.5× Medicare (typical fair range)</li>
-        <li>Charges well above 3.75× Medicare (significant outlier)</li>
-        <li>CMS NCCI unbundling pairs (same-day column1 + column2)</li>
-        <li>Multiple units on one line (qty &gt; 1)</li>
-        <li>Same CPT with different amounts on one date</li>
-        <li>Codes not yet in our benchmark dataset</li>
+      <h2>Flag categories</h2>
+      <ul class="means-list">
+        <li>
+          <strong>Pricing</strong> — above 2.5× Medicare (fair range) or 3.75× (well above).
+        </li>
+        <li>
+          <strong>Duplicate</strong> — same CPT + amount on the same service date.
+        </li>
+        <li>
+          <strong>NCCI unbundling</strong> — CMS practitioner PTP edits on same-day code pairs.
+        </li>
+        <li>
+          <strong>Data / quantity</strong> — conflicting amounts, zero charges, multiple units.
+        </li>
       </ul>
     </div>
-    <div class="sidebar-card card">
-      <h2>What we cannot check</h2>
-      <ul>
-        <li>Medical necessity or correct coding level</li>
-        <li>Insurance network contracts</li>
-        <li>Hospital-only NCCI edits (we ship practitioner PTP quarterly file)</li>
-      </ul>
-      <p><a href="/methodology/limitations/">See limitations</a></p>
+
+    <div class="privacy-card">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2l7 4v5c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+      <div>
+        <strong>Your bill stays private</strong>
+        <p>Paste-only analysis in your browser. We never store or transmit your itemized bill text.</p>
+      </div>
     </div>
+
+    <div class="sidebar-card card">
+      <h2>After the audit</h2>
+      <ul>
+        <li><a href="/tools/dispute-letter/">Dispute Letter Builder</a></li>
+        <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
+        <li><a href="/tools/eob-analyzer/">EOB Analyzer</a></li>
+        <li><a href="/methodology/billing-flags/">Billing flags methodology</a></li>
+      </ul>
+    </div>
+
     <MethodologyFooter />
-  </div>
+  </Fragment>
 </ToolLayout>
 
 <script>
@@ -166,11 +220,114 @@ const schemaGraph = [
 </script>
 
 <style>
+  .audit-inline-notice {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #92400e;
+  }
+
+  .audit-inline-notice a {
+    font-weight: 600;
+  }
+
+  .audit-lanes {
+    margin-bottom: var(--space-xl);
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
+    border-color: #fcd34d;
+  }
+
+  .audit-lanes__title {
+    font-size: 1rem;
+    margin: 0 0 var(--space-md);
+    color: #b45309;
+  }
+
+  .audit-lanes__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .audit-lane {
+    padding: 0.75rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    font-size: 0.8125rem;
+  }
+
+  .audit-lane--strong {
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+  }
+
+  .audit-lane--weak {
+    background: #fff;
+    border-color: #fde68a;
+  }
+
+  .audit-lane__title {
+    display: block;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .audit-lane__detail {
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
   .bill-textarea {
     min-height: 12rem;
     resize: vertical;
     font-family: var(--font-mono);
     font-size: 0.875rem;
+  }
+
+  .bill-line-preview {
+    margin: var(--space-sm) 0 0;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #b45309;
+    background: #fffbeb;
+    border-radius: var(--radius-sm);
+    border: 1px solid #fde68a;
+  }
+
+  .input-with-icon {
+    position: relative;
+  }
+
+  .input-with-icon svg {
+    position: absolute;
+    left: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-muted);
+    pointer-events: none;
+  }
+
+  .input-with-icon .input-field {
+    padding-left: 2.5rem;
+  }
+
+  .btn--block {
+    width: 100%;
+    margin-top: var(--space-sm);
+  }
+
+  .calculator__note {
+    margin: var(--space-md) 0 0;
+    font-size: 0.8125rem;
   }
 
   .form-error {
@@ -191,20 +348,332 @@ const schemaGraph = [
     margin-top: var(--space-xl);
   }
 
-  .tool-faq h2 {
-    font-size: 1.125rem;
-    margin: 0 0 var(--space-md);
+  .means-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-md);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .means-list li {
+    padding-left: 1rem;
+    border-left: 3px solid #f59e0b;
+  }
+
+  .means-list strong {
+    display: block;
+    color: var(--color-primary);
+    margin-bottom: 0.125rem;
+  }
+
+  .privacy-card {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    padding: var(--space-lg);
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: var(--radius-xl);
+    font-size: 0.875rem;
+    color: #92400e;
+  }
+
+  .privacy-card svg {
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .privacy-card strong {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .privacy-card p {
+    margin: 0;
+    line-height: 1.5;
   }
 
   .sidebar-card h2 {
     font-size: 1rem;
-    margin: 0 0 var(--space-sm);
+    margin-bottom: var(--space-md);
   }
 
   .sidebar-card ul {
     margin: 0;
-    padding-left: 1.25rem;
+    padding-left: 1.125rem;
     font-size: 0.875rem;
+    line-height: 1.65;
+  }
+</style>
+
+<style is:global>
+  #bill-auditor-results .audit-results {
+    animation: audit-fade-in 0.25s ease-out;
+  }
+
+  @keyframes audit-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.35rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .audit-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xl);
+    text-align: center;
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+  }
+
+  .audit-loading__spinner {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid #fde68a;
+    border-top-color: #d97706;
+    border-radius: 50%;
+    animation: audit-spin 0.7s linear infinite;
+  }
+
+  @keyframes audit-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .audit-summary__headline:focus {
+    outline: none;
+  }
+
+  .audit-summary__headline:focus-visible {
+    outline: 2px solid #f59e0b;
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+
+  .audit-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    margin: 0 0 var(--space-lg);
+    padding: 0;
+  }
+
+  @media (max-width: 600px) {
+    .audit-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .audit-stats > div {
+    padding: var(--space-md);
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .audit-stats dt {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .audit-stats dd {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--color-primary);
+  }
+
+  .audit-lines {
+    margin-bottom: var(--space-lg);
+    font-size: 0.875rem;
+  }
+
+  .audit-lines summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-primary);
+    padding: var(--space-sm) 0;
+  }
+
+  .audit-lines__table-wrap {
+    overflow-x: auto;
+    margin-top: var(--space-sm);
+  }
+
+  .audit-lines__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+  }
+
+  .audit-lines__table th,
+  .audit-lines__table td {
+    padding: 0.5rem 0.625rem;
+    border-bottom: 1px solid var(--color-border);
+    text-align: left;
+  }
+
+  .audit-lines__table th {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+  }
+
+  .audit-lines__more {
+    margin: var(--space-sm) 0 0;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  .audit-path {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .audit-path h3,
+  .audit-next-steps h3,
+  .audit-flag-group__title {
+    font-size: 0.9375rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .audit-path__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .audit-path__list li {
+    display: flex;
+    gap: 0.625rem;
+    align-items: flex-start;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .audit-path__num {
+    flex-shrink: 0;
+    width: 1.375rem;
+    height: 1.375rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #fef3c7;
+    color: #b45309;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .audit-flag-group {
+    margin-bottom: var(--space-lg);
+  }
+
+  .audit-flag-group__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 0.375rem;
+    margin-left: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 999px;
+    background: #fef3c7;
+    color: #b45309;
+  }
+
+  .audit-no-flags {
+    margin: 0 0 var(--space-lg);
+    padding: var(--space-md);
+    background: #ecfdf5;
+    border-radius: var(--radius-md);
+    font-size: 0.9375rem;
+    color: #065f46;
+  }
+
+  .audit-next-steps {
+    margin-bottom: var(--space-lg);
+    font-size: 0.9375rem;
+  }
+
+  .audit-next-steps ul {
+    margin: 0;
+    padding-left: 1.125rem;
     line-height: 1.6;
+  }
+
+  .audit-dispute-cta {
+    margin: var(--space-lg) 0;
+    padding: var(--space-lg);
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: var(--radius-md);
+  }
+
+  .audit-dispute-cta p {
+    margin: 0 0 var(--space-md);
+    font-size: 0.9375rem;
+    color: #92400e;
+  }
+
+  .audit-dispute-cta__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .audit-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .audit-tool-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius-btn);
+    border: 1px solid var(--color-border);
+    background: #fff;
+    text-decoration: none;
+    color: var(--color-primary);
+  }
+
+  .audit-tool-link--primary {
+    background: #f59e0b;
+    border-color: #f59e0b;
+    color: #fff;
+  }
+
+  .audit-flag__headline .confidence {
+    margin-left: 0.375rem;
+    vertical-align: middle;
   }
 </style>

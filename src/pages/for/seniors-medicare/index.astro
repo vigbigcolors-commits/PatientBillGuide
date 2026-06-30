@@ -1,43 +1,1227 @@
 ---
-import LegalLayout from '../../../layouts/LegalLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import Disclaimer from '../../../components/Disclaimer.astro';
+import { site } from '../../../data/site';
+import { author, getAuthorUrl } from '../../../data/author';
+import {
+  medicareMeta,
+  medicareTrust,
+  medicareFlow,
+  medicarePainPoints,
+  medicareSteps,
+  medicareConcepts,
+  medicareParts,
+  medicareTools,
+  medicareFaqs,
+} from '../../../data/seniors-medicare-content';
+import {
+  articleSchema,
+  breadcrumbSchema,
+  faqPageSchema,
+  medicalWebPageSchema,
+} from '../../../lib/seo/schema';
+
+const pageUrl = '/for/seniors-medicare/';
+const canonical = new URL(pageUrl, site.url).href;
+const authorUrl = getAuthorUrl(site.url);
+
+const schemaGraph = [
+  medicalWebPageSchema({
+    name: medicareMeta.title,
+    description: medicareMeta.description,
+    url: canonical,
+    dateModified: medicareMeta.updated,
+    authorName: author.name,
+    authorUrl,
+    authorJobTitle: author.jobTitle,
+  }),
+  articleSchema({
+    headline: medicareMeta.title,
+    description: medicareMeta.description,
+    url: canonical,
+    dateModified: medicareMeta.updated,
+    authorName: author.name,
+    authorUrl,
+    authorJobTitle: author.jobTitle,
+  }),
+  faqPageSchema(medicareFaqs),
+  breadcrumbSchema(
+    [{ name: 'Home', url: '/' }, { name: 'For Seniors & Medicare' }],
+    site.url,
+  ),
+];
 ---
 
-<LegalLayout
-  title="Medicare Billing Help for Seniors"
-  description="Understand Medicare allowed amounts, excess charges, and billing basics."
-  crumbs={[{ label: 'For Medicare Seniors' }]}
->
-  <p>
-    Medicare billing has its own vocabulary — <strong>allowed amounts</strong>, participating
-    providers, assignment, and supplemental (Medigap) coverage. We help you read statements in plain
-    English.
-  </p>
+<BaseLayout title={medicareMeta.title} description={medicareMeta.description} showTrustStrip>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
 
-  <h2>Medicare allowed amount</h2>
-  <p>
-    This is what Medicare approves for a service before your Part B coinsurance (usually 20% after the
-    deductible). It is the same public data we use in our Fair Price Calculator.
-  </p>
-  <p>
-    <a href="/tools/fair-price/" class="btn btn--primary">Check Medicare benchmark</a>
-  </p>
+  {/* Hero */}
+  <section class="mc-hero" aria-labelledby="mc-hero-heading">
+    <div class="mc-hero__bg" aria-hidden="true">
+      <span class="mc-blob mc-blob--1" />
+      <span class="mc-blob mc-blob--2" />
+      <span class="mc-grid" />
+    </div>
+    <div class="container mc-hero__inner">
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Learn', href: '/learn/' },
+          { label: 'Medicare' },
+        ]}
+      />
+      <div class="mc-hero__layout">
+        <div class="mc-hero__copy">
+          <p class="mc-kicker">Seniors · Caregivers · Medicare</p>
+          <h1 id="mc-hero-heading">Medicare billing — in plain English</h1>
+          <p class="mc-hero__lead">
+            MSNs, Part B coinsurance, facility fees, and participating doctors — Medicare paperwork
+            has its own vocabulary. We help you <strong>read statements</strong>,{' '}
+            <strong>check CMS public rates</strong>, and call billing with specific facts.
+          </p>
+          <div class="mc-hero__actions">
+            <a href="/tools/fair-price/?tab=medicare" class="btn btn--primary">Medicare lookup</a>
+            <a href="#mc-flow" class="btn btn--secondary">How it works</a>
+          </div>
+        </div>
 
-  <h2>Participating vs. non-participating providers</h2>
-  <p>
-    Most doctors accept Medicare assignment (they agree to Medicare’s allowed amount). Some do not —
-    they may charge up to the limiting charge (115% of the allowed amount in many cases). Always ask
-    if a provider accepts assignment before non-emergency care.
-  </p>
+        <div class="mc-hero__flow" aria-label="Medicare workflow">
+          <p class="mc-hero__flow-label">Your 3-step path</p>
+          {
+            medicareFlow.map((step, i) => (
+              <>
+                <a href={step.href} class={`mc-flow-step mc-flow-step--${step.accent}`}>
+                  <span class="mc-flow-step__num">{step.step}</span>
+                  <span class="mc-flow-step__emoji" aria-hidden="true">{step.emoji}</span>
+                  <span class="mc-flow-step__label">{step.label}</span>
+                  <strong class="mc-flow-step__title">{step.title}</strong>
+                  <span class="mc-flow-step__text">{step.text}</span>
+                </a>
+                {i < medicareFlow.length - 1 && (
+                  <span class="mc-flow-arrow" aria-hidden="true">↓</span>
+                )}
+              </>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <h2>Look up procedure codes</h2>
-  <p>
-    Find CPT codes on your Medicare Summary Notice or provider bill, then read our{' '}
-    <a href="/codes/">code guides</a> or use the calculator with your ZIP code for locality-specific
-    rates.
-  </p>
+  {/* Trust */}
+  <section class="mc-trust" aria-label="Medicare page highlights">
+    <div class="container mc-trust__grid">
+      {
+        medicareTrust.map((t) => (
+          <div class={`mc-trust-chip mc-trust-chip--${t.accent}`}>
+            <strong>{t.label}</strong>
+            <span>{t.detail}</span>
+          </div>
+        ))
+      }
+    </div>
+  </section>
 
-  <p>
-    <a href="/learn/how-to-read-eob/">How to read an EOB →</a> ·
-    <a href="/tools/fair-price/?tab=medicare">Medicare Part B estimate →</a>
-  </p>
-</LegalLayout>
+  {/* Pipeline */}
+  <section class="mc-pipeline" id="mc-flow" aria-labelledby="mc-pipeline-heading">
+    <div class="container">
+      <header class="mc-pipeline__head">
+        <h2 id="mc-pipeline-heading">READ → CHECK → ASK</h2>
+        <p>Most Medicare confusion clears up once you know which document you hold and what CMS published for your code.</p>
+      </header>
+      <ol class="mc-pipeline__track">
+        {
+          medicareFlow.map((step) => (
+            <li class={`mc-pipeline__step mc-pipeline__step--${step.accent}`}>
+              <span class="mc-pipeline__badge">{step.label}</span>
+              <span class="mc-pipeline__emoji" aria-hidden="true">{step.emoji}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+              <a href={step.href} class="mc-pipeline__link">Go →</a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* Pain points */}
+  <section class="mc-pain" id="mc-paperwork" aria-labelledby="mc-pain-heading">
+    <div class="container">
+      <header class="mc-section-head mc-section-head--center">
+        <p class="mc-kicker mc-kicker--dark">Common questions</p>
+        <h2 id="mc-pain-heading">What seniors and caregivers ask us</h2>
+        <p class="mc-section-lead">Six situations we built tools and guides around — tap any card for the next step.</p>
+      </header>
+      <ol class="mc-pain__grid">
+        {
+          medicarePainPoints.map((p, i) => (
+            <li class={`mc-pain-card mc-pain-card--${p.tone}`}>
+              <span class="mc-pain-card__rank">{String(i + 1).padStart(2, '0')}</span>
+              <p class="mc-pain-card__q">"{p.question}"</p>
+              <h3>{p.title}</h3>
+              <p class="mc-pain-card__text">{p.text}</p>
+              <a href={p.href} class="mc-pain-card__link">{p.linkLabel} →</a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* Steps */}
+  <section class="mc-steps" id="mc-steps" aria-labelledby="mc-steps-heading">
+    <div class="container">
+      <header class="mc-section-head">
+        <p class="mc-kicker mc-kicker--dark">Playbook</p>
+        <h2 id="mc-steps-heading">Four steps when you have a Medicare balance</h2>
+      </header>
+      <ol class="mc-steps__track">
+        {
+          medicareSteps.map((s) => (
+            <li class={`mc-step mc-step--${s.accent}`}>
+              <span class="mc-step__num">{s.num}</span>
+              <div class="mc-step__body">
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+                {
+                  s.toolHref && (
+                    <a href={s.toolHref} class="mc-step__tool">
+                      <span>Tool</span>
+                      {s.toolLabel} →
+                    </a>
+                  )
+                }
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* Concepts */}
+  <section class="mc-concepts" id="mc-concepts" aria-labelledby="mc-concepts-heading">
+    <div class="container">
+      <header class="mc-section-head mc-section-head--center">
+        <p class="mc-kicker mc-kicker--light">Vocabulary</p>
+        <h2 id="mc-concepts-heading">Five terms worth knowing</h2>
+        <p class="mc-section-lead mc-section-lead--light">Medicare billing jargon — translated without a coding manual.</p>
+      </header>
+      <ul class="mc-concepts__grid">
+        {
+          medicareConcepts.map((c) => (
+            <li class={`mc-concept mc-concept--${c.tone}`}>
+              <h3>{c.term}</h3>
+              <p>{c.def}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* Parts A/B/C */}
+  <section class="mc-parts" id="mc-parts" aria-labelledby="mc-parts-heading">
+    <div class="container">
+      <header class="mc-section-head mc-section-head--center">
+        <p class="mc-kicker mc-kicker--dark">Coverage map</p>
+        <h2 id="mc-parts-heading">Which part of Medicare is this?</h2>
+        <p class="mc-section-lead">Different parts → different paperwork. Know where to look before you call.</p>
+      </header>
+      <div class="mc-parts__grid">
+        {
+          medicareParts.map((p) => (
+            <article class={`mc-part mc-part--${p.accent}`}>
+              <span class="mc-part__badge">{p.part}</span>
+              <h3>{p.label}</h3>
+              <p class="mc-part__examples">{p.examples}</p>
+              <p class="mc-part__paperwork">
+                <strong>Paperwork:</strong> {p.paperwork}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* Tools */}
+  <section class="mc-tools" aria-labelledby="mc-tools-heading">
+    <div class="container">
+      <header class="mc-section-head">
+        <p class="mc-kicker mc-kicker--dark">Free tools</p>
+        <h2 id="mc-tools-heading">Check numbers before you call Medicare or billing</h2>
+      </header>
+      <ul class="mc-tools__grid">
+        {
+          medicareTools.map((t) => (
+            <li>
+              <a href={t.href} class={`mc-tool-card mc-tool-card--${t.accent}`}>
+                <h3>{t.title}</h3>
+                <p>{t.text}</p>
+                <span class="mc-tool-card__cta">Open →</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* FAQ */}
+  <section class="mc-faq" aria-labelledby="mc-faq-heading">
+    <div class="container">
+      <header class="mc-faq__header">
+        <div>
+          <p class="mc-kicker mc-kicker--dark">FAQ</p>
+          <h2 id="mc-faq-heading">Medicare billing questions</h2>
+        </div>
+        <span class="mc-faq__count">{medicareFaqs.length} answers</span>
+      </header>
+      <div class="mc-faq__panel">
+        <ul class="mc-faq__list" role="list">
+          {
+            medicareFaqs.map((f, i) => (
+              <li>
+                <button
+                  type="button"
+                  class:list={['mc-faq__q', i === 0 && 'is-active']}
+                  aria-expanded={i === 0 ? 'true' : 'false'}
+                  data-mc-faq={i}
+                >
+                  {f.question}
+                </button>
+                <div class:list={['mc-faq__a', i === 0 && 'is-open']} hidden={i !== 0}>
+                  <p>{f.answer}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+        <aside class="mc-faq__aside">
+          <h3>Free help beyond this site</h3>
+          <p>
+            <strong>SHIP counselors</strong> offer unbiased Medicare help in every state — at no cost.
+            Call <strong>1-800-MEDICARE</strong> for official Medicare questions.
+          </p>
+          <p>
+            <a href="/methodology/">Our methodology →</a><br />
+            <a href="/learn/">Learn hub →</a><br />
+            <a href="/contact/">Contact us</a>
+          </p>
+          <p class="mc-faq__byline">
+            By <a href={author.path}>{author.name}</a> · Updated {medicareMeta.updated}
+          </p>
+        </aside>
+      </div>
+      <div class="visually-hidden" aria-hidden="true">
+        {medicareFaqs.map((f) => <p><strong>{f.question}</strong> {f.answer}</p>)}
+      </div>
+    </div>
+  </section>
+
+  {/* CTA */}
+  <section class="mc-cta" aria-label="Get started">
+    <div class="container mc-cta__box">
+      <div class="mc-cta__copy">
+        <h2>One code, one ZIP — Medicare allowed amount</h2>
+        <p>Most caregivers start here before calling billing or comparing an MSN line.</p>
+      </div>
+      <div class="mc-cta__actions">
+        <a href="/tools/fair-price/?tab=medicare" class="btn btn--primary">Medicare tab in Fair Price</a>
+        <a href="/tools/medicare-lookup/" class="btn btn--secondary">Medicare Lookup</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container container--narrow mc-disclaimer">
+    <Disclaimer />
+  </div>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll('.mc-faq__q').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.mc-faq__q').forEach((b) => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-expanded', 'false');
+      });
+      document.querySelectorAll('.mc-faq__a').forEach((a) => {
+        a.classList.remove('is-open');
+        a.setAttribute('hidden', '');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-expanded', 'true');
+      const panel = btn.nextElementSibling;
+      if (panel?.classList.contains('mc-faq__a')) {
+        panel.classList.add('is-open');
+        panel.removeAttribute('hidden');
+      }
+    });
+  });
+</script>
+
+<style>
+  .mc-kicker {
+    margin: 0 0 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #059669;
+  }
+
+  .mc-kicker--dark { color: var(--color-accent); }
+  .mc-kicker--light { color: #6ee7b7; }
+
+  .mc-section-head {
+    margin-bottom: clamp(2rem, 4vw, 2.75rem);
+    max-width: 42rem;
+  }
+
+  .mc-section-head--center {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .mc-section-head h2 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.625rem, 3.5vw, 2.25rem);
+    letter-spacing: -0.025em;
+  }
+
+  .mc-section-lead {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  .mc-section-lead--light {
+    color: rgb(203 213 225 / 0.85);
+  }
+
+  /* Hero — green/teal theme */
+  .mc-hero {
+    position: relative;
+    padding: 2rem 0 2.5rem;
+    background: linear-gradient(180deg, #fafaf9 0%, #ecfdf5 55%, #f0fdfa 100%);
+    border-bottom: 1px solid #d1fae5;
+    overflow: hidden;
+  }
+
+  .mc-hero__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .mc-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+  }
+
+  .mc-blob--1 {
+    width: 20rem;
+    height: 20rem;
+    top: -5rem;
+    right: 5%;
+    background: rgb(16 185 129 / 0.22);
+  }
+
+  .mc-blob--2 {
+    width: 14rem;
+    height: 14rem;
+    bottom: 0;
+    left: -2rem;
+    background: rgb(13 148 136 / 0.18);
+  }
+
+  .mc-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: linear-gradient(#047857 1px, transparent 1px),
+      linear-gradient(90deg, #047857 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .mc-hero__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .mc-hero__layout {
+    display: grid;
+    grid-template-columns: 1fr 0.95fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: center;
+  }
+
+  .mc-hero h1 {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4.5vw, 2.875rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
+  }
+
+  .mc-hero__lead {
+    margin: 0 0 1.75rem;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+  }
+
+  .mc-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+  }
+
+  .mc-hero__flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    padding: 1.25rem;
+    border-radius: 1.25rem;
+    background: #fff;
+    border: 1px solid #a7f3d0;
+    box-shadow: 0 8px 32px rgb(5 150 105 / 0.1);
+  }
+
+  .mc-hero__flow-label {
+    margin: 0 0 0.25rem;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #059669;
+  }
+
+  .mc-flow-step {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 0.2rem 0.625rem;
+    padding: 0.75rem 0.875rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid transparent;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .mc-flow-step:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgb(15 23 42 / 0.08);
+  }
+
+  .mc-flow-step--green {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border-color: #86efac;
+    color: #166534;
+  }
+
+  .mc-flow-step--teal {
+    background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
+    border-color: #5eead4;
+    color: #0f766e;
+  }
+
+  .mc-flow-step--blue {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-color: #93c5fd;
+    color: #1e40af;
+  }
+
+  .mc-flow-step__num {
+    grid-row: 1 / 3;
+    display: grid;
+    place-items: center;
+    width: 1.625rem;
+    height: 1.625rem;
+    border-radius: 50%;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 0.08);
+  }
+
+  .mc-flow-step__emoji { font-size: 1rem; line-height: 1; }
+
+  .mc-flow-step__label {
+    font-size: 0.5625rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    opacity: 0.75;
+  }
+
+  .mc-flow-step__title {
+    grid-column: 2 / 4;
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+
+  .mc-flow-step__text {
+    grid-column: 2 / 4;
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    opacity: 0.88;
+  }
+
+  .mc-flow-arrow {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #059669;
+    opacity: 0.4;
+    line-height: 1;
+  }
+
+  /* Trust */
+  .mc-trust {
+    padding: 1rem 0;
+    background: #fff;
+    border-bottom: 1px solid #e7e5e4;
+  }
+
+  .mc-trust__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.625rem;
+  }
+
+  .mc-trust-chip {
+    padding: 0.75rem 1rem;
+    border-radius: 0.875rem;
+    border: 1px solid transparent;
+  }
+
+  .mc-trust-chip strong {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+
+  .mc-trust-chip span {
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    opacity: 0.88;
+  }
+
+  .mc-trust-chip--teal { background: #f0fdfa; border-color: #99f6e4; color: #0f766e; }
+  .mc-trust-chip--green { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
+  .mc-trust-chip--blue { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+  .mc-trust-chip--amber { background: #fffbeb; border-color: #fde68a; color: #92400e; }
+
+  /* Pipeline */
+  .mc-pipeline {
+    padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+    background: linear-gradient(155deg, #064e3b 0%, #0f172a 100%);
+    color: #f8fafc;
+  }
+
+  .mc-pipeline__head {
+    text-align: center;
+    max-width: 38rem;
+    margin: 0 auto 2rem;
+  }
+
+  .mc-pipeline__head h2 {
+    margin: 0 0 0.625rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.375rem, 3vw, 1.875rem);
+    color: #fff;
+    letter-spacing: 0.02em;
+  }
+
+  .mc-pipeline__head p {
+    margin: 0;
+    color: rgb(167 243 208 / 0.85);
+    line-height: 1.6;
+  }
+
+  .mc-pipeline__track {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .mc-pipeline__step {
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.12);
+    text-align: center;
+  }
+
+  .mc-pipeline__step--green { border-top: 3px solid #4ade80; }
+  .mc-pipeline__step--teal { border-top: 3px solid #2dd4bf; }
+  .mc-pipeline__step--blue { border-top: 3px solid #60a5fa; }
+
+  .mc-pipeline__badge {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.1);
+    color: #6ee7b7;
+  }
+
+  .mc-pipeline__emoji {
+    display: block;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .mc-pipeline__step h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: #fff;
+  }
+
+  .mc-pipeline__step p {
+    margin: 0 0 1rem;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: rgb(203 213 225 / 0.85);
+  }
+
+  .mc-pipeline__link {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #6ee7b7;
+    text-decoration: none;
+  }
+
+  /* Pain cards */
+  .mc-pain {
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+    background: var(--color-bg);
+  }
+
+  .mc-pain__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .mc-pain-card {
+    position: relative;
+    padding: 1.375rem;
+    border-radius: 1.125rem;
+    border: 1px solid transparent;
+    box-shadow: 0 2px 10px rgb(15 23 42 / 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .mc-pain-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgb(15 23 42 / 0.09);
+  }
+
+  .mc-pain-card--teal { background: linear-gradient(155deg, #f0fdfa, #ccfbf1); border-color: #5eead4; color: #0f766e; }
+  .mc-pain-card--green { background: linear-gradient(155deg, #f0fdf4, #bbf7d0); border-color: #86efac; color: #166534; }
+  .mc-pain-card--blue { background: linear-gradient(155deg, #eff6ff, #bfdbfe); border-color: #93c5fd; color: #1e40af; }
+  .mc-pain-card--amber { background: linear-gradient(155deg, #fffbeb, #fde68a); border-color: #fcd34d; color: #92400e; }
+  .mc-pain-card--violet { background: linear-gradient(155deg, #f5f3ff, #ddd6fe); border-color: #c4b5fd; color: #5b21b6; }
+  .mc-pain-card--rose { background: linear-gradient(155deg, #fff1f2, #fecdd3); border-color: #fda4af; color: #9f1239; }
+
+  .mc-pain-card__rank {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    opacity: 0.35;
+  }
+
+  .mc-pain-card__q {
+    margin: 0 0 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-style: italic;
+    opacity: 0.9;
+  }
+
+  .mc-pain-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    line-height: 1.3;
+    color: inherit;
+  }
+
+  .mc-pain-card__text {
+    margin: 0 0 0.875rem;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    opacity: 0.9;
+  }
+
+  .mc-pain-card__link {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Steps — horizontal timeline */
+  .mc-steps {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: #fff;
+    border-top: 1px solid #e7e5e4;
+    border-bottom: 1px solid #e7e5e4;
+  }
+
+  .mc-steps__track {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.875rem;
+  }
+
+  .mc-step {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+    border-radius: 1.125rem;
+    border: 1px solid transparent;
+    min-height: 100%;
+  }
+
+  .mc-step--green { background: linear-gradient(160deg, #f0fdf4, #dcfce7); border-color: #86efac; color: #166534; }
+  .mc-step--teal { background: linear-gradient(160deg, #f0fdfa, #99f6e4); border-color: #5eead4; color: #115e59; }
+  .mc-step--blue { background: linear-gradient(160deg, #eff6ff, #bfdbfe); border-color: #93c5fd; color: #1e3a8a; }
+  .mc-step--amber { background: linear-gradient(160deg, #fffbeb, #fde68a); border-color: #fcd34d; color: #78350f; }
+
+  .mc-step__num {
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    font-size: 0.875rem;
+    font-weight: 800;
+    background: #fff;
+    border: 2px solid currentColor;
+    margin-bottom: 0.75rem;
+  }
+
+  .mc-step__body h3 {
+    margin: 0 0 0.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.3;
+    color: inherit;
+  }
+
+  .mc-step__body p {
+    margin: 0;
+    flex: 1;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    opacity: 0.9;
+  }
+
+  .mc-step__tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-top: 0.75rem;
+    padding: 0.4rem 0.625rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 0.08);
+    color: inherit;
+  }
+
+  .mc-step__tool span {
+    font-size: 0.5625rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+    background: rgb(0 0 0 / 0.06);
+  }
+
+  /* Concepts — dark */
+  .mc-concepts {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: linear-gradient(155deg, #134e4a 0%, #0f172a 100%);
+    color: #f8fafc;
+  }
+
+  .mc-concepts .mc-section-head h2 { color: #fff; }
+
+  .mc-concepts__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+  }
+
+  .mc-concept {
+    padding: 1.125rem;
+    border-radius: 1rem;
+    border: 1px solid rgb(255 255 255 / 0.12);
+    background: rgb(255 255 255 / 0.05);
+  }
+
+  .mc-concept--teal { border-top: 3px solid #2dd4bf; }
+  .mc-concept--green { border-top: 3px solid #4ade80; }
+  .mc-concept--rose { border-top: 3px solid #fb7185; }
+  .mc-concept--blue { border-top: 3px solid #60a5fa; }
+  .mc-concept--amber { border-top: 3px solid #fbbf24; }
+
+  .mc-concept h3 {
+    margin: 0 0 0.5rem;
+    font-size: 0.875rem;
+    color: #6ee7b7;
+  }
+
+  .mc-concept p {
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.55;
+    color: rgb(203 213 225 / 0.88);
+  }
+
+  /* Parts */
+  .mc-parts {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: linear-gradient(180deg, #fafaf9, #ecfdf5);
+  }
+
+  .mc-parts__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .mc-part {
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    border: 1px solid transparent;
+    box-shadow: 0 4px 16px rgb(15 23 42 / 0.06);
+  }
+
+  .mc-part--blue { background: linear-gradient(160deg, #eff6ff, #dbeafe); border-color: #93c5fd; color: #1e3a8a; }
+  .mc-part--teal { background: linear-gradient(160deg, #f0fdfa, #99f6e4); border-color: #5eead4; color: #115e59; }
+  .mc-part--violet { background: linear-gradient(160deg, #f5f3ff, #ddd6fe); border-color: #c4b5fd; color: #5b21b6; }
+
+  .mc-part__badge {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 0.08);
+  }
+
+  .mc-part h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.125rem;
+    color: inherit;
+  }
+
+  .mc-part__examples {
+    margin: 0 0 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    opacity: 0.9;
+  }
+
+  .mc-part__paperwork {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    padding: 0.625rem 0.75rem;
+    border-radius: 0.625rem;
+    background: rgb(255 255 255 / 0.65);
+    border: 1px solid rgb(0 0 0 / 0.06);
+  }
+
+  /* Tools */
+  .mc-tools {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: #fff;
+  }
+
+  .mc-tools__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.875rem;
+  }
+
+  .mc-tool-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.25rem;
+    border-radius: 1.125rem;
+    border: 1px solid transparent;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .mc-tool-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgb(15 23 42 / 0.1);
+  }
+
+  .mc-tool-card--teal { background: linear-gradient(155deg, #f0fdfa, #ccfbf1); border-color: #5eead4; color: #0f766e; }
+  .mc-tool-card--green { background: linear-gradient(155deg, #f0fdf4, #bbf7d0); border-color: #86efac; color: #166534; }
+  .mc-tool-card--amber { background: linear-gradient(155deg, #fffbeb, #fde68a); border-color: #fcd34d; color: #92400e; }
+  .mc-tool-card--violet { background: linear-gradient(155deg, #f5f3ff, #ddd6fe); border-color: #c4b5fd; color: #5b21b6; }
+
+  .mc-tool-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 0.9375rem;
+    line-height: 1.3;
+    color: inherit;
+  }
+
+  .mc-tool-card p {
+    margin: 0 0 1rem;
+    flex: 1;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    opacity: 0.9;
+  }
+
+  .mc-tool-card__cta {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: inherit;
+  }
+
+  /* FAQ */
+  .mc-faq {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: linear-gradient(180deg, #ecfdf5 0%, #fff 100%);
+    border-top: 1px solid #d1fae5;
+  }
+
+  .mc-faq__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .mc-faq__header h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .mc-faq__count {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid #86efac;
+    color: #166534;
+  }
+
+  .mc-faq__panel {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  .mc-faq__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mc-faq__q {
+    width: 100%;
+    text-align: left;
+    padding: 1rem 1.125rem;
+    border-radius: 0.875rem;
+    border: 1px solid #d1fae5;
+    background: #fff;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  }
+
+  .mc-faq__q:hover { border-color: #5eead4; }
+
+  .mc-faq__q.is-active {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border-color: #059669;
+    color: #065f46;
+    box-shadow: 0 4px 12px rgb(5 150 105 / 0.12);
+  }
+
+  .mc-faq__a {
+    padding: 0 1.125rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  .mc-faq__aside {
+    padding: 1.375rem;
+    border-radius: 1.25rem;
+    background: linear-gradient(155deg, #1e3a8a, #1e40af);
+    color: #eff6ff;
+  }
+
+  .mc-faq__aside h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    color: #93c5fd;
+  }
+
+  .mc-faq__aside p {
+    margin: 0 0 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgb(219 234 254 / 0.95);
+  }
+
+  .mc-faq__aside a {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .mc-faq__byline {
+    margin-top: 1rem !important;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(255 255 255 / 0.15);
+    font-size: 0.75rem;
+    color: rgb(191 219 254 / 0.8) !important;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* CTA */
+  .mc-cta {
+    padding: clamp(2rem, 4vw, 3rem) 0;
+    background: var(--color-bg);
+  }
+
+  .mc-cta__box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2.5rem);
+    border-radius: 1.5rem;
+    background: linear-gradient(135deg, #059669 0%, #047857 50%, #065f46 100%);
+    color: #fff;
+    box-shadow: 0 12px 40px rgb(5 150 105 / 0.28);
+  }
+
+  .mc-cta__copy h2 {
+    margin: 0 0 0.375rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    color: #fff;
+  }
+
+  .mc-cta__copy p {
+    margin: 0;
+    color: rgb(167 243 208 / 0.95);
+    line-height: 1.55;
+  }
+
+  .mc-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .mc-cta .btn--primary {
+    background: #fff;
+    color: #047857;
+  }
+
+  .mc-cta .btn--secondary {
+    background: transparent;
+    border: 1px solid rgb(255 255 255 / 0.45);
+    color: #fff;
+  }
+
+  .mc-disclaimer {
+    padding: var(--space-2xl) 0 var(--space-3xl);
+  }
+
+  @media (max-width: 1100px) {
+    .mc-hero__layout { grid-template-columns: 1fr; }
+    .mc-trust__grid { grid-template-columns: repeat(2, 1fr); }
+    .mc-pipeline__track { grid-template-columns: 1fr; }
+    .mc-pain__grid { grid-template-columns: repeat(2, 1fr); }
+    .mc-steps__track { grid-template-columns: repeat(2, 1fr); }
+    .mc-concepts__grid { grid-template-columns: repeat(2, 1fr); }
+    .mc-tools__grid { grid-template-columns: repeat(2, 1fr); }
+    .mc-faq__panel { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .mc-trust__grid,
+    .mc-pain__grid,
+    .mc-steps__track,
+    .mc-concepts__grid,
+    .mc-parts__grid,
+    .mc-tools__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

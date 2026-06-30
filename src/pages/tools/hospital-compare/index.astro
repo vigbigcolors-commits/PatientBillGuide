@@ -1,0 +1,756 @@
+---
+import ToolLayout from '../../../layouts/ToolLayout.astro';
+import ToolExamples from '../../../components/tools/ToolExamples.astro';
+import MethodologyFooter from '../../../components/MethodologyFooter.astro';
+import Disclaimer from '../../../components/Disclaimer.astro';
+import { site } from '../../../data/site';
+import { hospitalCompareExamples } from '../../../data/tool-examples';
+import {
+  CARE_SETTING_LABELS,
+  HOSPITAL_GLOSSARY,
+  HOSPITAL_PIPELINE_LANES,
+} from '../../../lib/hospital-compare/benchmarks';
+import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+
+const faqs = [
+  {
+    question: 'Why is my hospital bill so much higher than Medicare?',
+    answer:
+      'Hospitals publish chargemaster rates far above Medicare. Your bill often combines a physician professional fee, a facility or technical fee, supplies, and ER surcharges — while Medicare MPFS shows only the physician portion.',
+  },
+  {
+    question: 'What care setting should I pick?',
+    answer:
+      'Choose where the service happened: physician office, ambulatory surgery center (ASC), hospital outpatient department (HOPD), or emergency department. Facility estimates change significantly by setting.',
+  },
+  {
+    question: 'Is this my hospital\'s exact price?',
+    answer:
+      'No. We compare your charge to CMS physician fees plus educational facility ranges from transparency patterns — not your hospital\'s machine-readable file or a guaranteed market price.',
+  },
+  {
+    question: 'Does this include my insurance discount?',
+    answer:
+      'No. Enter the amount on your bill or self-pay quote. Insured allowed amounts come from your plan contract, not Medicare MPFS alone.',
+  },
+  {
+    question: 'Can I use this for a single CPT on a multi-line bill?',
+    answer:
+      'Yes — compare one procedure at a time. For full bills with many lines, use Bill Auditor after you paste the itemized text.',
+  },
+  {
+    question: 'What if my charge is "extreme"?',
+    answer:
+      'Request itemization, ask about financial assistance and cash discounts, and compare ASC or independent imaging when appropriate. Our dispute letter builder can help you write billing.',
+  },
+  {
+    question: 'Is data uploaded?',
+    answer: 'No. Benchmarks load from public CMS files in your browser. Your charge is not sent to our servers.',
+  },
+  {
+    question: 'How is the facility range calculated?',
+    answer:
+      'We combine CMS MPFS physician fees with curated hospital transparency benchmarks or setting-specific multipliers for ER, outpatient, ASC, and office care.',
+  },
+];
+
+const schemaGraph = [
+  webApplicationSchema({
+    name: 'Hospital Price Compare',
+    description:
+      'Compare hospital charges to CMS physician fees plus estimated facility components — ER, outpatient, ASC, and office settings.',
+    url: `${site.url}/tools/hospital-compare/`,
+  }),
+  faqPageSchema(faqs),
+  breadcrumbSchema(
+    [{ name: 'Home', url: '/' }, { name: 'Tools', url: '/tools/' }, { name: 'Hospital Price Compare' }],
+    site.url,
+  ),
+];
+---
+
+<ToolLayout
+  title="Hospital Price Compare"
+  description="Compare your hospital charge to CMS physician fees plus estimated facility fees — ER, outpatient, ASC, and office settings. Free, private, browser-based."
+  crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'Tools', href: '/tools/' },
+    { label: 'Hospital Price Compare' },
+  ]}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
+
+  <Fragment slot="intro">
+    <p>
+      Enter a CPT code, where you received care, and the hospital charge on your bill or quote. We
+      compare it side-by-side to <strong>CMS Medicare physician fees</strong> plus an
+      <strong>estimated facility range</strong> for ER, hospital outpatient, ASC, or office settings.
+    </p>
+    <div class="hospital-inline-notice" role="note">
+      <strong>Physician + facility.</strong> Medicare MPFS alone explains only the doctor fee — hospital
+      bills add facility, technical, and supply charges. This tool shows both parts.
+      <a href="/learn/how-to-read-medical-bill/#facility-professional">Facility vs professional →</a>
+    </div>
+  </Fragment>
+
+  <section class="hospital-lanes card" aria-label="How hospital price compare works">
+    <h2 class="hospital-lanes__title">Comparison pipeline</h2>
+    <ul class="hospital-lanes__grid">
+      {HOSPITAL_PIPELINE_LANES.map((lane) => (
+        <li class={`hospital-lane hospital-lane--${lane.level}`}>
+          <span class="hospital-lane__title">{lane.title}</span>
+          <span class="hospital-lane__detail">{lane.detail}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="hospital-glossary card" aria-label="Hospital billing glossary">
+    <h2 class="hospital-glossary__title">Term guide</h2>
+    <dl class="hospital-glossary__grid">
+      {HOSPITAL_GLOSSARY.map((item) => (
+        <div>
+          <dt>{item.term}</dt>
+          <dd>{item.meaning}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <form class="calculator card tool-form tool-form--indigo" id="hospital-compare-form">
+    <div class="field">
+      <label class="input-label" for="cpt">
+        CPT procedure code <span class="required" aria-hidden="true">*</span>
+      </label>
+      <div class="cpt-combobox">
+        <input
+          class="input-field"
+          id="cpt"
+          name="cpt"
+          type="text"
+          inputmode="numeric"
+          placeholder="e.g. 77067"
+          autocomplete="off"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded="false"
+          aria-controls="cpt-suggestions"
+          required
+        />
+        <ul id="cpt-suggestions" class="cpt-suggestions" role="listbox" hidden></ul>
+      </div>
+      <p class="input-hint">From your hospital bill or estimate — type for suggestions</p>
+    </div>
+
+    <fieldset class="field">
+      <legend class="input-label">Where did you receive care?</legend>
+      <div class="radio-grid">
+        {
+          Object.entries(CARE_SETTING_LABELS).map(([value, label]) => (
+            <label class="radio-card">
+              <input
+                type="radio"
+                name="care-setting"
+                value={value}
+                required={value === 'hospital_outpatient'}
+                checked={value === 'hospital_outpatient'}
+              />
+              <span>{label}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <div class="field">
+      <label class="input-label" for="hc-zip">ZIP code</label>
+      <input
+        class="input-field"
+        id="hc-zip"
+        name="hc-zip"
+        type="text"
+        inputmode="numeric"
+        placeholder="e.g. 90210"
+        maxlength="5"
+        autocomplete="postal-code"
+      />
+      <p class="input-hint">Localizes the Medicare physician fee to your area</p>
+    </div>
+
+    <div class="field">
+      <label class="input-label" for="hc-charge">
+        Hospital charge <span class="required" aria-hidden="true">*</span>
+      </label>
+      <input
+        class="input-field"
+        id="hc-charge"
+        name="hc-charge"
+        type="text"
+        inputmode="decimal"
+        placeholder="$0.00"
+        autocomplete="off"
+        required
+      />
+      <p class="input-hint">Total on your bill or self-pay quote for this procedure</p>
+    </div>
+
+    <button type="submit" class="btn btn--primary btn--block">Compare hospital price</button>
+    <p class="calculator__note" role="status">Uses CMS MPFS + educational facility benchmarks. All in your browser.</p>
+  </form>
+
+  <div id="hospital-compare-loading" class="hospital-loading" hidden role="status" aria-live="polite">
+    <span class="hospital-loading__spinner" aria-hidden="true"></span>
+    <span>Loading CMS benchmark data…</span>
+  </div>
+
+  <div id="hospital-compare-error" class="form-error" hidden></div>
+  <div id="hospital-compare-results" hidden></div>
+
+  <ToolExamples
+    variant="hospital-compare"
+    title="Hospital charge examples"
+    hint="Click to load — we compare automatically."
+    examples={hospitalCompareExamples}
+  />
+
+  <section class="tool-faq card">
+    <h2>FAQ</h2>
+    <dl class="faq">
+      {faqs.map((f) => (
+        <>
+          <dt>{f.question}</dt>
+          <dd>{f.answer}</dd>
+        </>
+      ))}
+    </dl>
+  </section>
+
+  <Disclaimer />
+
+  <Fragment slot="sidebar">
+    <div class="sidebar-card card">
+      <h2>What you get</h2>
+      <ul class="means-list means-list--hospital">
+        <li>
+          <strong>Medicare physician fee</strong> — CMS MPFS allowed for your CPT and ZIP.
+        </li>
+        <li>
+          <strong>Facility estimate</strong> — typical technical/facility range for your care setting.
+        </li>
+        <li>
+          <strong>Your charge verdict</strong> — typical, high, or extreme vs combined benchmark.
+        </li>
+        <li>
+          <strong>Next steps</strong> — itemized bill, Bill Auditor, financial assistance.
+        </li>
+      </ul>
+    </div>
+
+    <div class="privacy-card privacy-card--hospital">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2l7 4v5c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+      <div>
+        <strong>Private by design</strong>
+        <p>Your charge and CPT code never leave your device.</p>
+      </div>
+    </div>
+
+    <div class="sidebar-card card">
+      <h2>Related tools</h2>
+      <ul>
+        <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
+        <li><a href="/tools/bill-auditor/">Bill Auditor</a></li>
+        <li><a href="/tools/surprise-bill-check/">Surprise Bill Checker</a></li>
+        <li><a href="/for/uninsured/">Self-pay guide</a></li>
+      </ul>
+    </div>
+
+    <MethodologyFooter />
+  </Fragment>
+</ToolLayout>
+
+<script>
+  import '../../../scripts/hospital-compare.ts';
+</script>
+
+<style>
+  .hospital-inline-notice {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background: #eef2ff;
+    border: 1px solid #a5b4fc;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #3730a3;
+  }
+
+  .hospital-lanes {
+    margin-bottom: var(--space-lg);
+    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 50%, #c7d2fe 100%);
+    border-color: #a5b4fc;
+  }
+
+  .hospital-lanes__title {
+    font-size: 1rem;
+    margin: 0 0 var(--space-md);
+    color: #4338ca;
+  }
+
+  .hospital-lanes__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .hospital-lane {
+    padding: 0.75rem;
+    border-radius: var(--radius-md);
+    font-size: 0.8125rem;
+  }
+
+  .hospital-lane--strong {
+    background: #fff;
+    border: 1px solid #a5b4fc;
+  }
+
+  .hospital-lane--weak {
+    background: #f5f7ff;
+    border: 1px solid #c7d2fe;
+  }
+
+  .hospital-lane__title {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: var(--color-primary);
+  }
+
+  .hospital-lane__detail {
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  .hospital-glossary {
+    margin-bottom: var(--space-xl);
+    background: #f8fafc;
+  }
+
+  .hospital-glossary__title {
+    font-size: 1rem;
+    margin: 0 0 var(--space-md);
+  }
+
+  .hospital-glossary__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--space-md);
+    margin: 0;
+  }
+
+  .hospital-glossary__grid dt {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #4338ca;
+    margin-bottom: 0.25rem;
+  }
+
+  .hospital-glossary__grid dd {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.45;
+  }
+
+  .calculator .field {
+    margin-bottom: var(--space-lg);
+  }
+
+  .calculator .cpt-combobox {
+    position: relative;
+  }
+
+  .cpt-suggestions {
+    position: absolute;
+    z-index: 20;
+    top: calc(100% + 0.25rem);
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0.25rem 0;
+    list-style: none;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 24px rgb(15 23 42 / 0.12);
+    max-height: 14rem;
+    overflow-y: auto;
+  }
+
+  .cpt-suggestion {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+
+  .cpt-suggestion:hover,
+  .cpt-suggestion[aria-selected='true'] {
+    background: #eef2ff;
+  }
+
+  .btn--block {
+    width: 100%;
+  }
+
+  .hospital-loading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    background: #eef2ff;
+    border: 1px solid #a5b4fc;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    color: #3730a3;
+  }
+
+  .hospital-loading__spinner {
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 2px solid #a5b4fc;
+    border-top-color: #4f46e5;
+    border-radius: 50%;
+    animation: hospital-spin 0.7s linear infinite;
+  }
+
+  @keyframes hospital-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .form-error {
+    margin-top: var(--space-lg);
+    padding: var(--space-md);
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-md);
+    color: #991b1b;
+    font-size: 0.875rem;
+  }
+
+  #hospital-compare-results {
+    margin-top: var(--space-lg);
+  }
+
+  .means-list--hospital li {
+    border-left-color: #6366f1;
+  }
+
+  .privacy-card--hospital {
+    background: #eef2ff;
+    border-color: #a5b4fc;
+    color: #3730a3;
+  }
+
+  .tool-faq {
+    margin-top: var(--space-xl);
+  }
+</style>
+
+<style is:global>
+  #hospital-compare-results .hospital-results {
+    animation: hospital-fade-in 0.25s ease-out;
+  }
+
+  @keyframes hospital-fade-in {
+    from { opacity: 0; transform: translateY(0.35rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hospital-results__header {
+    margin-bottom: var(--space-md);
+  }
+
+  .hospital-results__code {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #4f46e5;
+  }
+
+  .hospital-results__title {
+    font-size: 1.25rem;
+    margin: 0.25rem 0;
+  }
+
+  .hospital-results__setting {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .hospital-verdict {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border-left: 4px solid transparent;
+  }
+
+  .hospital-verdict--ok {
+    background: #ecfdf5;
+    border-left-color: #10b981;
+  }
+
+  .hospital-verdict--watch {
+    background: #fffbeb;
+    border-left-color: #f59e0b;
+  }
+
+  .hospital-verdict--alert {
+    background: #fef2f2;
+    border-left-color: #ef4444;
+  }
+
+  .hospital-verdict__headline {
+    margin: 0 0 0.375rem;
+    font-weight: 700;
+  }
+
+  .hospital-verdict__detail {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-muted);
+  }
+
+  .hospital-charge-highlight {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+    padding: var(--space-lg);
+    background: #eef2ff;
+    border: 1px solid #a5b4fc;
+    border-radius: var(--radius-md);
+  }
+
+  .hospital-charge-highlight__label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+  }
+
+  .hospital-charge-highlight__amount {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: #4338ca;
+    margin: 0.25rem 0;
+  }
+
+  .hospital-charge-highlight__ratio {
+    font-size: 0.8125rem;
+    color: #6366f1;
+    font-weight: 600;
+  }
+
+  .hospital-split {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .hospital-split__title {
+    margin: 0 0 0.625rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .hospital-split__bar {
+    display: flex;
+    height: 0.625rem;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #e2e8f0;
+  }
+
+  .hospital-split__seg--physician { background: #4f46e5; }
+  .hospital-split__seg--facility { background: #818cf8; }
+
+  .hospital-split__legend {
+    list-style: none;
+    padding: 0;
+    margin: 0.625rem 0 0;
+    display: grid;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+  }
+
+  .hospital-split__legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hospital-split__dot {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 999px;
+  }
+
+  .hospital-split__dot--physician { background: #4f46e5; }
+  .hospital-split__dot--facility { background: #818cf8; }
+
+  .hospital-split__you {
+    margin-top: 0.75rem;
+    height: 3px;
+    background: #ef4444;
+    border-radius: 999px;
+    min-width: 2rem;
+    position: relative;
+  }
+
+  .hospital-split__you span {
+    position: absolute;
+    top: 0.5rem;
+    left: 0;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #b91c1c;
+    white-space: nowrap;
+  }
+
+  .hospital-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    margin: 0 0 var(--space-lg);
+  }
+
+  @media (max-width: 600px) {
+    .hospital-stats { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .hospital-stats > div {
+    padding: var(--space-md);
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .hospital-stats dt {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .hospital-stats dd {
+    margin: 0;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  .hospital-insights__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .hospital-insight {
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border-left: 4px solid transparent;
+  }
+
+  .hospital-insight--alert { background: #fef2f2; border-left-color: #ef4444; }
+  .hospital-insight--watch { background: #fffbeb; border-left-color: #f59e0b; }
+  .hospital-insight--info { background: #eef2ff; border-left-color: #4f46e5; }
+
+  .hospital-benchmark-note {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    margin-bottom: var(--space-lg);
+  }
+
+  .hospital-path,
+  .hospital-next-steps {
+    margin-bottom: var(--space-lg);
+    font-size: 0.9375rem;
+  }
+
+  .hospital-path__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .hospital-path__list li {
+    display: flex;
+    gap: 0.625rem;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .hospital-path__num {
+    flex-shrink: 0;
+    width: 1.375rem;
+    height: 1.375rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #e0e7ff;
+    color: #4338ca;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .hospital-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    margin-bottom: var(--space-md);
+  }
+
+  .hospital-tool-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius-btn);
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    color: var(--color-primary);
+  }
+
+  .hospital-tool-link--primary {
+    background: #4f46e5;
+    border-color: #4f46e5;
+    color: #fff;
+  }
+
+  .hospital-results__note {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+</style>

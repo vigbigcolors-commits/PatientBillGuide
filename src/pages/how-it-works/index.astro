@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import Disclaimer from '../../components/Disclaimer.astro';
 import { site } from '../../data/site';
+import { author, getAuthorUrl } from '../../data/author';
 import {
   howItWorksMeta,
   howItWorksTrust,
@@ -22,22 +23,26 @@ import {
 const pageUrl = '/how-it-works/';
 const canonical = new URL(pageUrl, site.url).href;
 
+const authorUrl = getAuthorUrl(site.url);
+
 const schemaGraph = [
   medicalWebPageSchema({
     name: howItWorksMeta.title,
     description: howItWorksMeta.description,
     url: canonical,
     dateModified: howItWorksMeta.updated,
-    authorName: 'Vigen',
-    authorUrl: `${site.url}/authors/vigen/`,
+    authorName: author.name,
+    authorUrl,
+    authorJobTitle: author.jobTitle,
   }),
   articleSchema({
     headline: howItWorksMeta.title,
     description: howItWorksMeta.description,
     url: canonical,
     dateModified: howItWorksMeta.updated,
-    authorName: 'Vigen',
-    authorUrl: `${site.url}/authors/vigen/`,
+    authorName: author.name,
+    authorUrl,
+    authorJobTitle: author.jobTitle,
   }),
   howToSchema({
     name: 'How to check a medical bill with PatientBillGuide',
@@ -191,7 +196,7 @@ const schemaGraph = [
           <li><a href="#faq">FAQ</a></li>
         </ol>
         <p class="hiw-toc__byline">
-          By <a href="/authors/vigen/">Vigen</a><br />
+          By <a href={author.path}>{author.name}</a><br />
           Updated {howItWorksMeta.updated}
         </p>
       </nav>

@@ -1,34 +1,974 @@
 ---
-import LegalLayout from '../../layouts/LegalLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Disclaimer from '../../components/Disclaimer.astro';
+import { site } from '../../data/site';
+import { author, getAuthorUrl } from '../../data/author';
+import {
+  aboutMeta,
+  aboutTrust,
+  aboutProblems,
+  aboutPrinciples,
+  aboutWeAre,
+  aboutWeAreNot,
+  aboutFaqs,
+} from '../../data/about-content';
+import {
+  aboutPageSchema,
+  articleSchema,
+  breadcrumbSchema,
+  faqPageSchema,
+  medicalWebPageSchema,
+  organizationSchema,
+} from '../../lib/seo/schema';
+
+const pageUrl = '/about/';
+const canonical = new URL(pageUrl, site.url).href;
+const authorUrl = getAuthorUrl(site.url);
+
+const schemaGraph = [
+  organizationSchema({
+    name: site.name,
+    url: site.url,
+    description: site.description,
+    founderName: author.name,
+    founderUrl: authorUrl,
+    founderJobTitle: author.jobTitle,
+  }),
+  aboutPageSchema({
+    name: aboutMeta.title,
+    description: aboutMeta.description,
+    url: canonical,
+  }),
+  medicalWebPageSchema({
+    name: aboutMeta.title,
+    description: aboutMeta.description,
+    url: canonical,
+    dateModified: aboutMeta.updated,
+    authorName: author.name,
+    authorUrl,
+    authorJobTitle: author.jobTitle,
+  }),
+  articleSchema({
+    headline: aboutMeta.title,
+    description: aboutMeta.description,
+    url: canonical,
+    dateModified: aboutMeta.updated,
+    authorName: author.name,
+    authorUrl,
+    authorJobTitle: author.jobTitle,
+  }),
+  faqPageSchema(aboutFaqs),
+  breadcrumbSchema([{ name: 'Home', url: '/' }, { name: 'About' }], site.url),
+];
 ---
 
-<LegalLayout
-  title="About"
-  description="About PatientBillGuide — an independent guide to fair medical prices and confusing bills."
-  crumbs={[{ label: 'About' }]}
->
-  <p>
-    <strong>PatientBillGuide</strong> is an independent educational site that helps Americans
-    understand medical bills, insurance EOBs, and whether prices look fair compared to public
-    Medicare benchmarks.
-  </p>
+<BaseLayout title={aboutMeta.title} description={aboutMeta.description} showTrustStrip>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
 
-  <h2>What we are</h2>
-  <ul>
-    <li>A <strong>guide</strong> and set of free browser-based tools</li>
-    <li>Focused on plain English, public data, and honest outcomes</li>
-    <li>Built for both uninsured patients and insured people decoding EOBs</li>
-  </ul>
+  {/* ── Hero ── */}
+  <section class="ab-hero" aria-labelledby="ab-hero-heading">
+    <div class="ab-hero__ambient" aria-hidden="true">
+      <span class="ab-orb ab-orb--1"></span>
+      <span class="ab-orb ab-orb--2"></span>
+    </div>
+    <div class="container ab-hero__inner">
+      <Breadcrumbs items={[{ label: 'About' }]} />
+      <p class="ab-eyebrow">Independent · Private · Honest</p>
+      <h1 id="ab-hero-heading">About PatientBillGuide</h1>
+      <p class="ab-hero__tagline">{site.tagline}</p>
+      <p class="ab-hero__lead">
+        We help Americans understand medical bills, insurance EOBs, and whether prices look
+        fair — using <strong>public Medicare data</strong>, <strong>browser-only tools</strong>,
+        and plain English. No upload. No account. No fear-based hype.
+      </p>
+      <div class="ab-hero__actions">
+        <a href="/tools/fair-price/" class="btn btn--primary">Try Fair Price Calculator</a>
+        <a href="/methodology/" class="btn btn--secondary">Read methodology</a>
+      </div>
+      <ul class="ab-trust" role="list">
+        {
+          aboutTrust.map((t) => (
+            <li class="ab-trust__item">
+              <strong>{t.label}</strong>
+              <span>{t.detail}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
 
-  <h2>What we are not</h2>
-  <ul>
-    <li>Not a law firm, medical practice, or insurance broker</li>
-    <li>Not a bill negotiation service (we may link to resources)</li>
-    <li>Not a source of guaranteed savings or fraud accusations</li>
-  </ul>
+  {/* ── Problems ── */}
+  <section class="ab-problems" aria-labelledby="ab-problems-heading">
+    <div class="container">
+      <header class="ab-section-head ab-section-head--center">
+        <p class="ab-eyebrow ab-eyebrow--dark">What we solve</p>
+        <h2 id="ab-problems-heading">Real questions patients ask — in order of urgency</h2>
+        <p class="ab-section-lead">
+          US medical billing is built to confuse. PatientBillGuide exists because these problems
+          show up on kitchen tables every week — not in policy white papers.
+        </p>
+      </header>
+      <ol class="ab-problems__grid">
+        {
+          aboutProblems.map((p) => (
+            <li class={`ab-problem-card ab-problem-card--${p.tone}`}>
+              <span class="ab-problem-card__rank" aria-label={`Priority ${p.rank}`}>
+                {String(p.rank).padStart(2, '0')}
+              </span>
+              <p class="ab-problem-card__question">“{p.question}”</p>
+              <h3>{p.title}</h3>
+              <p class="ab-problem-card__text">{p.text}</p>
+              <a href={p.href} class="ab-problem-card__solution">
+                → {p.solution}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
 
-  <p>
-    <a href="/about/our-mission/">Our mission →</a> ·
-    <a href="/authors/vigen/">About the author →</a>
-  </p>
-</LegalLayout>
+  {/* ── Principles ── */}
+  <section class="ab-principles" aria-labelledby="ab-principles-heading">
+    <div class="container">
+      <header class="ab-section-head">
+        <p class="ab-eyebrow ab-eyebrow--dark">How we work</p>
+        <h2 id="ab-principles-heading">Principles we will not compromise</h2>
+      </header>
+      <ul class="ab-principles__grid">
+        {
+          aboutPrinciples.map((p) => (
+            <li class="ab-principle">
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* ── We are / We are not ── */}
+  <section class="ab-identity" aria-labelledby="ab-identity-heading">
+    <div class="container ab-identity__grid">
+      <header class="ab-identity__intro">
+        <p class="ab-eyebrow">Full transparency</p>
+        <h2 id="ab-identity-heading">Who we are — and who we are not</h2>
+        <p>
+          YMYL healthcare content demands honesty upfront. PatientBillGuide is a
+          <strong> guide and toolset</strong>, not a replacement for professionals who know your
+          contract and chart.
+        </p>
+      </header>
+      <div class="ab-identity__col ab-identity__col--yes">
+        <h3>What we are</h3>
+        <ul>
+          {aboutWeAre.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <div class="ab-identity__col ab-identity__col--no">
+        <h3>What we are not</h3>
+        <ul>
+          {aboutWeAreNot.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Author EEAT ── */}
+  <section class="ab-author" aria-labelledby="ab-author-heading">
+    <div class="container ab-author__inner">
+      <div class="ab-author__text">
+        <p class="ab-eyebrow ab-eyebrow--light">People behind the site</p>
+        <h2 id="ab-author-heading">Built by {author.name} — independent researcher &amp; developer</h2>
+        <p>
+          <strong>PatientBillGuide</strong> was founded by <a href={author.path}>{author.name}</a>, an
+          independent researcher and developer — separate from any hospital, insurer, or legal practice.
+          The focus is practical: turn CMS public files into tools a stressed patient can use in five
+          minutes, with methodology and limitations published alongside every result.
+        </p>
+        <p>
+          Editorial standards favor clarity over clickbait. CPT summaries are written in original
+          plain English (we never copy AMA description text). When evidence is limited, we say so.
+          Corrections are logged publicly at <a href="/corrections/">/corrections/</a>.
+        </p>
+        <p class="ab-author__links">
+          <a href={author.path}>About the author →</a>
+          ·
+          <a href="/about/our-mission/">Our mission →</a>
+          ·
+          <a href="/contact/">Contact</a>
+        </p>
+      </div>
+      <aside class="ab-author__card" aria-label="Editorial standards">
+        <h3>E-E-A-T commitments</h3>
+        <dl>
+          <dt>Experience</dt>
+          <dd>Tools built around real bill and EOB paste workflows patients already use</dd>
+          <dt>Expertise</dt>
+          <dd>Documented use of CMS MPFS, NCCI, and billing pattern rules — with Vitest coverage</dd>
+          <dt>Authoritativeness</dt>
+          <dd>Methodology hub, data sources, and limitations published — not hidden behind signup</dd>
+          <dt>Trustworthiness</dt>
+          <dd>Client-side privacy, honest “normal bill” outcomes, no fraud accusations by default</dd>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  {/* ── Long-form article ── */}
+  <article class="ab-article" aria-labelledby="ab-article-heading">
+    <div class="container ab-article__layout">
+      <nav class="ab-toc" aria-label="Table of contents">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#story">Why we exist</a></li>
+          <li><a href="#hub">One hub, three clusters</a></li>
+          <li><a href="#privacy">Privacy promise</a></li>
+          <li><a href="#audiences">Who we serve</a></li>
+          <li><a href="#truth">The full truth about limits</a></li>
+          <li><a href="#success">How we measure success</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+        <p class="ab-toc__byline">
+          By <a href={author.path}>{author.name}</a><br />
+          Updated {aboutMeta.updated}
+        </p>
+      </nav>
+
+      <div class="prose ab-prose">
+        <h2 id="story">Why PatientBillGuide exists</h2>
+        <p>
+          Medical bills in the United States arrive after care is already done — when you are tired,
+          recovering, or juggling work and family. The document mixes clinical codes, facility fees,
+          and insurance adjustments that were never explained in plain language at the point of
+          service. If you are uninsured, you may see chargemaster-style list prices with no insurer
+          to negotiate on your behalf. If you are insured, the Explanation of Benefits (EOB) uses
+          columns like “allowed amount” and “patient responsibility” that sound interchangeable but
+          are not.
+        </p>
+        <p>
+          PatientBillGuide is our answer to a simple frustration: <em>there should be a calm, free
+          place to check public numbers before you pay</em>. Not a scare site. Not a black-box “AI
+          bill review” that stores your PDF. Not a law firm funnel. An independent guide that shows
+          its math, respects privacy, and tells you when a bill looks normal — not only when it
+          looks wrong.
+        </p>
+
+        <h2 id="hub">One hub: CHECK → UNDERSTAND → ACT</h2>
+        <p>
+          Instead of scattering tools across the internet, we organize around three clusters that
+          match how patients actually move through a billing problem:
+        </p>
+        <ul>
+          <li>
+            <strong>CHECK</strong> — <a href="/tools/fair-price/">Fair Price Calculator</a>,
+            <a href="/tools/surprise-bill-check/">Surprise Bill Checker</a>, Medicare lookup — get
+            reference numbers before you pay
+          </li>
+          <li>
+            <strong>UNDERSTAND</strong> — <a href="/tools/bill-auditor/">Bill Auditor</a>,
+            <a href="/tools/eob-analyzer/">EOB Analyzer</a> — decode itemized lines and insurer
+            statements
+          </li>
+          <li>
+            <strong>ACT</strong> — <a href="/tools/dispute-letter/">Dispute Letter Builder</a> —
+            editable starting templates (not legal advice) when you need to write billing or insurer
+            offices
+          </li>
+        </ul>
+        <p>
+          Supporting content lives in <a href="/learn/">Learn</a>, our
+          <a href="/codes/">CPT code encyclopedia</a>, audience pages for
+          <a href="/for/uninsured/">uninsured</a>, <a href="/for/insured/">insured</a>, and
+          <a href="/for/seniors-medicare/">Medicare</a> patients, plus
+          <a href="/how-it-works/">How It Works</a> for a step-by-step walkthrough.
+        </p>
+
+        <h2 id="privacy">Our privacy promise is architectural</h2>
+        <p>
+          Healthcare billing information is sensitive — names, dates of service, procedure codes,
+          and account numbers appear on every statement. PatientBillGuide tools are designed so
+          <strong>your pasted bill or EOB text never leaves your device</strong> for server-side
+          analysis. When you run Fair Price or Bill Auditor, the browser fetches public JSON data
+          (Medicare fee schedule, NCCI edit chunks, ZIP-to-locality maps) from our CDN and runs
+          comparisons locally in JavaScript.
+        </p>
+        <p>
+          You do not need to trust a privacy policy alone. Open your browser developer tools, watch
+          network traffic while pasting a bill, and confirm: we are not operating an upload pipeline
+          that stores protected health information. Read the full
+          <a href="/privacy/">Privacy Policy</a> for analytics and hosting details.
+        </p>
+
+        <h2 id="audiences">Built for overlapping real-world situations</h2>
+        <p>
+          <strong>Uninsured and self-pay patients</strong> use Fair Price to compare a CPT code in
+          their ZIP to Medicare’s allowed amount and our documented fair range (approximately 1.5×–2.5×
+          Medicare). That is a starting point for financial assistance requests and itemized bill
+          reviews — not a guarantee any hospital will match Medicare.
+        </p>
+        <p>
+          <strong>Privately insured patients</strong> pair the EOB Analyzer with our
+          <a href="/learn/how-to-read-eob/">EOB reading guide</a> to verify allowed amounts, plan
+          payments, and patient responsibility before paying a separate provider bill.
+        </p>
+        <p>
+          <strong>Medicare beneficiaries and caregivers</strong> use the Medicare tab in Fair Price
+          and <a href="/for/seniors-medicare/">dedicated guidance</a> to understand professional vs.
+          facility fees — a common source of surprise even on Medicare.
+        </p>
+
+        <h2 id="truth">The full truth about what we cannot do</h2>
+        <p>
+          Independence requires saying no. PatientBillGuide does <strong>not</strong> provide medical
+          advice, legal advice, or guaranteed savings. We cannot see your insurance contract,
+          hospital cost-to-charge ratios, whether a service was medically necessary, or whether a
+          provider participates in your network. We do not label findings as fraud — we surface
+          <strong>possible billing concerns</strong> with confidence levels tied to public rules and
+          data match quality.
+        </p>
+        <p>
+          Our price benchmarks center on <strong>physician professional fees</strong> from CMS MPFS —
+          not hospital facility charges, implant pass-through costs, or anesthesia billed in units.
+          Bill Auditor uses pattern matching on pasted text, not OCR of scanned PDFs. NCCI unbundling
+          signals are educational, not proof of error. Every limitation is documented on our
+          <a href="/methodology/limitations/">methodology / limitations</a> page and in tool
+          disclaimers.
+        </p>
+        <p>
+          When automated checks find nothing unusual, we report that your bill
+          <strong>looks normal based on public Medicare data</strong>. That is success — you gained
+          clarity without a false alarm. If something still feels wrong, call billing with specific
+          CPT lines and dates, request full itemization, and escalate to certified patient advocates
+          or state insurance departments when disputes grow.
+        </p>
+
+        <h2 id="success">How we measure success</h2>
+        <ul>
+          <li>You understand what you were charged and why — in plain English</li>
+          <li>You can compare a price to a documented, reproducible benchmark</li>
+          <li>You know when a bill looks normal — not just when it looks alarming</li>
+          <li>You have sensible next steps: questions for billing, not fear-based headlines</li>
+          <li>You never had to upload sensitive documents to a stranger’s server to get there</li>
+        </ul>
+        <p>
+          For the technical deep dive — formulas, CMS files, flag rules, and test coverage — visit
+          our <a href="/methodology/">methodology hub</a>.
+        </p>
+
+        <h2 id="faq">Frequently asked questions</h2>
+        <dl class="ab-faq">
+          {
+            aboutFaqs.map((f) => (
+              <>
+                <dt>{f.question}</dt>
+                <dd>{f.answer}</dd>
+              </>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </article>
+
+  {/* ── CTA ── */}
+  <section class="ab-cta" aria-label="Get started">
+    <div class="container ab-cta__inner">
+      <h2>Clarity before you pay</h2>
+      <p>Free tools, no account, no upload — start with the check most patients run first.</p>
+      <div class="ab-cta__actions">
+        <a href="/tools/fair-price/" class="btn btn--primary">Fair Price Calculator</a>
+        <a href="/tools/" class="btn btn--secondary ab-cta__btn-light">All tools</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container container--narrow ab-disclaimer">
+    <Disclaimer />
+  </div>
+</BaseLayout>
+
+<style>
+  .ab-eyebrow {
+    margin: 0 0 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #5eead4;
+  }
+
+  .ab-eyebrow--dark {
+    color: var(--color-accent);
+  }
+
+  .ab-eyebrow--light {
+    color: #99f6e4;
+  }
+
+  .ab-section-head {
+    margin-bottom: clamp(2rem, 4vw, 2.75rem);
+    max-width: 40rem;
+  }
+
+  .ab-section-head--center {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .ab-section-head h2 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.625rem, 3.5vw, 2.25rem);
+    letter-spacing: -0.025em;
+  }
+
+  .ab-section-lead {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  /* Hero */
+  .ab-hero {
+    position: relative;
+    padding: 2rem 0 4rem;
+    background: linear-gradient(155deg, #0c1222 0%, #0f172a 40%, #115e59 100%);
+    color: #f8fafc;
+    overflow: hidden;
+  }
+
+  .ab-hero :global(.breadcrumbs) {
+    margin-bottom: 2rem;
+  }
+
+  .ab-hero :global(.breadcrumbs a),
+  .ab-hero :global(.breadcrumbs span) {
+    color: rgb(203 213 225 / 0.75);
+  }
+
+  .ab-hero :global(.breadcrumbs a:hover) {
+    color: #5eead4;
+  }
+
+  .ab-hero__ambient {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .ab-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+  }
+
+  .ab-orb--1 {
+    width: 22rem;
+    height: 22rem;
+    top: -5rem;
+    right: 5%;
+    background: rgb(13 148 136 / 0.35);
+  }
+
+  .ab-orb--2 {
+    width: 16rem;
+    height: 16rem;
+    bottom: -3rem;
+    left: -2rem;
+    background: rgb(251 191 36 / 0.12);
+  }
+
+  .ab-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 46rem;
+  }
+
+  .ab-hero h1 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+
+  .ab-hero__tagline {
+    margin: 0 0 1rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: #5eead4;
+    font-style: italic;
+  }
+
+  .ab-hero__lead {
+    margin: 0 0 2rem;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: rgb(203 213 225 / 0.92);
+  }
+
+  .ab-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .ab-hero .btn--secondary {
+    background: rgb(255 255 255 / 0.08);
+    border: 1px solid rgb(255 255 255 / 0.2);
+    color: #fff;
+  }
+
+  .ab-hero .btn--secondary:hover {
+    background: rgb(255 255 255 / 0.14);
+    color: #fff;
+  }
+
+  .ab-trust {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+  }
+
+  .ab-trust__item {
+    padding: 1rem;
+    border-radius: 0.875rem;
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.1);
+  }
+
+  .ab-trust__item strong {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #5eead4;
+    margin-bottom: 0.25rem;
+  }
+
+  .ab-trust__item span {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: rgb(203 213 225 / 0.8);
+  }
+
+  /* Problems grid */
+  .ab-problems {
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+    background: var(--color-bg);
+  }
+
+  .ab-problems__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .ab-problem-card {
+    position: relative;
+    padding: 1.5rem 1.5rem 1.5rem 1.75rem;
+    border-radius: 1.25rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-left-width: 4px;
+    transition: box-shadow 0.25s, transform 0.25s;
+  }
+
+  .ab-problem-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .ab-problem-card--teal { border-left-color: #0d9488; }
+  .ab-problem-card--blue { border-left-color: #3b82f6; }
+  .ab-problem-card--violet { border-left-color: #8b5cf6; }
+  .ab-problem-card--amber { border-left-color: #d97706; }
+  .ab-problem-card--rose { border-left-color: #e11d48; }
+  .ab-problem-card--slate { border-left-color: #64748b; }
+
+  .ab-problem-card__rank {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-muted);
+    opacity: 0.5;
+  }
+
+  .ab-problem-card__question {
+    margin: 0 0 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--color-accent);
+  }
+
+  .ab-problem-card h3 {
+    margin: 0 0 0.625rem;
+    font-size: 1.0625rem;
+    line-height: 1.35;
+  }
+
+  .ab-problem-card__text {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  .ab-problem-card__solution {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-accent);
+  }
+
+  /* Principles */
+  .ab-principles {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: linear-gradient(180deg, #f0fdfa 0%, var(--color-bg) 100%);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .ab-principles__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .ab-principle {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+  }
+
+  .ab-principle h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    color: var(--color-primary);
+  }
+
+  .ab-principle p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  /* Identity */
+  .ab-identity {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: #fff;
+  }
+
+  .ab-identity__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .ab-identity__intro h2 {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .ab-identity__intro p {
+    margin: 0;
+    line-height: 1.7;
+    color: var(--color-muted);
+  }
+
+  .ab-identity__col {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--color-border);
+  }
+
+  .ab-identity__col--yes {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+  }
+
+  .ab-identity__col--no {
+    background: #fff7ed;
+    border-color: #fed7aa;
+  }
+
+  .ab-identity__col h3 {
+    margin: 0 0 1rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .ab-identity__col ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--color-text);
+  }
+
+  .ab-identity__col li + li {
+    margin-top: 0.5rem;
+  }
+
+  /* Author */
+  .ab-author {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: #0f172a;
+    color: #f8fafc;
+  }
+
+  .ab-author__inner {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .ab-author__text h2 {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: #fff;
+  }
+
+  .ab-author__text p {
+    margin: 0 0 1rem;
+    line-height: 1.7;
+    color: rgb(203 213 225 / 0.9);
+  }
+
+  .ab-author__text a {
+    color: #5eead4;
+  }
+
+  .ab-author__links {
+    margin-top: 1.5rem !important;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  .ab-author__card {
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    background: rgb(255 255 255 / 0.05);
+    border: 1px solid rgb(255 255 255 / 0.12);
+  }
+
+  .ab-author__card h3 {
+    margin: 0 0 1.25rem;
+    font-size: 1rem;
+    color: #5eead4;
+  }
+
+  .ab-author__card dl {
+    margin: 0;
+  }
+
+  .ab-author__card dt {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgb(148 163 184 / 0.95);
+    margin-top: 1rem;
+  }
+
+  .ab-author__card dt:first-child {
+    margin-top: 0;
+  }
+
+  .ab-author__card dd {
+    margin: 0.35rem 0 0;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: rgb(203 213 225 / 0.85);
+  }
+
+  /* Article */
+  .ab-article {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: var(--color-bg);
+  }
+
+  .ab-article__layout {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .ab-toc {
+    position: sticky;
+    top: 1.5rem;
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-size: 0.8125rem;
+  }
+
+  .ab-toc h2 {
+    margin: 0 0 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+  }
+
+  .ab-toc ol {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  .ab-toc li {
+    margin-bottom: 0.35rem;
+  }
+
+  .ab-toc a {
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .ab-toc a:hover {
+    color: var(--color-accent);
+  }
+
+  .ab-toc__byline {
+    margin: 1.25rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .ab-prose h2 {
+    scroll-margin-top: 1.5rem;
+  }
+
+  .ab-faq dt {
+    font-weight: 600;
+    margin-top: var(--space-lg);
+    color: var(--color-primary);
+  }
+
+  .ab-faq dt:first-of-type {
+    margin-top: 0;
+  }
+
+  .ab-faq dd {
+    margin: 0.5rem 0 0;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  /* CTA */
+  .ab-cta {
+    padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+    background: linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #134e4a 100%);
+    color: #fff;
+  }
+
+  .ab-cta__inner {
+    text-align: center;
+    max-width: 36rem;
+    margin-inline: auto;
+  }
+
+  .ab-cta h2 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: #fff;
+  }
+
+  .ab-cta p {
+    margin: 0 0 1.75rem;
+    color: rgb(255 255 255 / 0.9);
+    line-height: 1.6;
+  }
+
+  .ab-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.875rem;
+  }
+
+  .ab-cta .btn--primary {
+    background: #fff;
+    color: #0f766e;
+  }
+
+  .ab-cta .btn--primary:hover {
+    background: #f0fdfa;
+    color: #0f766e;
+  }
+
+  .ab-cta__btn-light {
+    background: transparent;
+    border: 1px solid rgb(255 255 255 / 0.45);
+    color: #fff;
+  }
+
+  .ab-disclaimer {
+    padding: var(--space-2xl) 0 var(--space-3xl);
+  }
+
+  @media (max-width: 1024px) {
+    .ab-trust {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ab-identity__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ab-author__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .ab-problems__grid,
+    .ab-principles__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ab-article__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .ab-toc {
+      position: static;
+    }
+  }
+</style>

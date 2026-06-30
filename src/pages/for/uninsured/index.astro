@@ -5,43 +5,332 @@ import LegalLayout from '../../../layouts/LegalLayout.astro';
 <LegalLayout
   title="Help for Uninsured & Self-Pay Patients"
   description="Understand hospital bills and check fair prices when you pay out of pocket."
-  crumbs={[{ label: 'For Uninsured' }]}
+  pageClass="page-uninsured"
+  hideTitle
+  crumbs={[{ label: 'Uninsured & Self-Pay' }]}
 >
-  <p>
-    Without insurance, itemized bills can feel overwhelming — and hospitals often charge
-    <strong>chargemaster rates</strong> far above what Medicare or insured patients pay. You have
-    more leverage than you might think.
-  </p>
+  <section class="guide-hero guide-hero--uninsured" slot="hero" aria-labelledby="uninsured-hero-title">
+    <div class="guide-hero__bg" aria-hidden="true">
+      <span class="guide-hero__orb guide-hero__orb--1"></span>
+      <span class="guide-hero__orb guide-hero__orb--2"></span>
+      <span class="guide-hero__grid"></span>
+    </div>
+    <div class="container guide-hero__inner">
+      <p class="guide-hero__eyebrow">For you · Self-pay</p>
+      <h1 id="uninsured-hero-title" class="guide-hero__title">You have more leverage than the bill suggests</h1>
+      <p class="guide-hero__lead">
+        Without insurance, hospitals often bill <strong>chargemaster rates</strong> — sticker prices far above
+        what Medicare or insured patients pay. You can still negotiate, compare, and ask for help.
+      </p>
+      <div class="uninsured-stats" aria-label="Self-pay context">
+        <div class="uninsured-stats__item">
+          <span class="uninsured-stats__num">3–10×</span>
+          <span class="uninsured-stats__label">Typical gap vs Medicare for the same CPT code</span>
+        </div>
+        <div class="uninsured-stats__item">
+          <span class="uninsured-stats__num">$0</span>
+          <span class="uninsured-stats__label">Our tools cost — processed in your browser</span>
+        </div>
+        <div class="uninsured-stats__item">
+          <span class="uninsured-stats__num">4</span>
+          <span class="uninsured-stats__label">Clear steps before you pay full price</span>
+        </div>
+      </div>
+      <div class="guide-hero__actions">
+        <a href="/tools/fair-price/" class="btn btn--primary">Check fair price</a>
+        <a href="#step-1" class="btn btn--secondary">See the playbook</a>
+      </div>
+    </div>
+  </section>
 
-  <h2>Step 1: Get an itemized bill</h2>
-  <p>
-    Request a line-by-line statement with CPT or HCPCS codes, dates of service, and amounts. You need
-    codes to compare prices fairly.
-  </p>
+  <nav class="uninsured-roadmap" aria-label="Self-pay action plan">
+    <a href="#step-1" class="uninsured-roadmap__step">
+      <span class="uninsured-roadmap__num">1</span>
+      <span class="uninsured-roadmap__text">Itemized bill</span>
+    </a>
+    <span class="uninsured-roadmap__line" aria-hidden="true"></span>
+    <a href="#step-2" class="uninsured-roadmap__step">
+      <span class="uninsured-roadmap__num">2</span>
+      <span class="uninsured-roadmap__text">Medicare anchor</span>
+    </a>
+    <span class="uninsured-roadmap__line" aria-hidden="true"></span>
+    <a href="#step-3" class="uninsured-roadmap__step">
+      <span class="uninsured-roadmap__num">3</span>
+      <span class="uninsured-roadmap__text">Discounts & aid</span>
+    </a>
+    <span class="uninsured-roadmap__line" aria-hidden="true"></span>
+    <a href="#step-4" class="uninsured-roadmap__step">
+      <span class="uninsured-roadmap__num">4</span>
+      <span class="uninsured-roadmap__text">Know your codes</span>
+    </a>
+  </nav>
 
-  <h2>Step 2: Check Medicare benchmarks</h2>
+  <h2 id="step-1">Step 1: Get an itemized bill</h2>
   <p>
-    Medicare publishes allowed amounts for nearly every procedure. They are a public anchor — not what
-    you must pay, but a reference for questions. Use our calculator:
+    Request a line-by-line statement with <strong>CPT or HCPCS codes</strong>, dates of service, and amounts
+    per line. A single total is not enough — you need codes to compare prices fairly and spot duplicates.
+  </p>
+  <div class="uninsured-callout">
+    <strong>What to ask billing:</strong>
+    <ul>
+      <li>"Please send an itemized statement with procedure codes for each line."</li>
+      <li>"Can you separate facility charges from physician charges?"</li>
+      <li>"Is this the final patient-responsibility amount or an estimate?"</li>
+    </ul>
+  </div>
+
+  <h2 id="step-2">Step 2: Check Medicare benchmarks</h2>
+  <p>
+    Medicare publishes allowed amounts for nearly every procedure — public data, updated annually. It is
+    <em>not</em> what you must pay, but a documented anchor for questions: "Why is my self-pay charge
+    five times the Medicare rate for code 99213?"
+  </p>
+  <p>
+    Enter your ZIP and CPT codes in our calculator. We show Medicare allowed amount plus a fair range
+    based on our <a href="/methodology/price-benchmarks/">methodology</a>.
   </p>
   <p>
     <a href="/tools/fair-price/" class="btn btn--primary">Fair Price Calculator</a>
+    <a href="/tools/bill-auditor/" class="btn btn--secondary">Bill Auditor</a>
   </p>
 
-  <h2>Step 3: Ask about self-pay discounts</h2>
+  <h2 id="step-3">Step 3: Ask about self-pay discounts</h2>
   <p>
-    Many hospitals offer cash, prompt-pay, or financial assistance programs. Ask before paying the full
-    balance — especially if your charge is well above the Medicare-based fair range.
+    Many hospitals offer cash, prompt-pay, or financial assistance programs — but they rarely advertise them
+    on the statement. Ask <em>before</em> paying the full balance, especially when your charge sits well
+    above the Medicare-based fair range.
+  </p>
+  <div class="uninsured-cards">
+    <div class="uninsured-cards__card">
+      <h3>Cash / prompt-pay</h3>
+      <p>Often 20–40% off if you pay within a set window. Ask for the self-pay rate in writing.</p>
+    </div>
+    <div class="uninsured-cards__card">
+      <h3>Financial assistance</h3>
+      <p>Nonprofit hospitals may have charity care based on income. Request the application early.</p>
+    </div>
+    <div class="uninsured-cards__card">
+      <h3>Payment plans</h3>
+      <p>Interest-free plans are common. Negotiate the monthly amount — do not agree to unaffordable terms.</p>
+    </div>
+  </div>
+  <p>
+    If you received care at an out-of-network facility, see our
+    <a href="/tools/surprise-bill-check/">Surprise Bill Checker</a> for No Surprises Act context.
   </p>
 
-  <h2>Step 4: Read our CPT guides</h2>
+  <h2 id="step-4">Step 4: Read our CPT guides</h2>
   <p>
     Look up the codes on your bill in our <a href="/codes/">CPT encyclopedia</a> for plain-English
-    explanations and typical cost context.
+    explanations and typical cost context. Understanding what each code means helps you ask sharper
+    questions.
   </p>
-
   <p>
     <a href="/learn/cpt-codes-explained/">What is a CPT code? →</a> ·
+    <a href="/learn/how-to-read-medical-bill/">How to read a medical bill →</a> ·
     <a href="/methodology/price-benchmarks/">How we define fair range →</a>
   </p>
+
+  <section class="guide-cta guide-cta--uninsured" aria-label="Recommended tools">
+    <h2>Tools built for self-pay patients</h2>
+    <div class="guide-cta__grid">
+      <a href="/tools/fair-price/" class="guide-cta__card">
+        <strong>Fair Price Calculator</strong>
+        <span>Medicare benchmark + fair range by ZIP</span>
+      </a>
+      <a href="/tools/hospital-compare/" class="guide-cta__card">
+        <strong>Hospital Price Compare</strong>
+        <span>Office vs hospital outpatient estimates</span>
+      </a>
+      <a href="/tools/dispute-letter/" class="guide-cta__card">
+        <strong>Dispute Letter Builder</strong>
+        <span>Editable templates — not legal advice</span>
+      </a>
+    </div>
+  </section>
 </LegalLayout>
+
+<style is:global>
+  .page-uninsured .legal-page__body {
+    --guide-accent: #d97706;
+    --guide-accent-bg: #fffbeb;
+    --guide-accent-border: #fcd34d;
+  }
+
+  .guide-hero--uninsured {
+    --hero-accent: #f59e0b;
+    --hero-accent-light: #fbbf24;
+    --hero-bg: linear-gradient(165deg, #1c1917 0%, #78350f 38%, #b45309 100%);
+  }
+
+  .uninsured-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    max-width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .uninsured-stats__item {
+    padding: var(--space-md);
+    background: rgb(255 255 255 / 0.1);
+    border: 1px solid rgb(255 255 255 / 0.18);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(8px);
+  }
+
+  .uninsured-stats__num {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: #fde68a;
+    line-height: 1.1;
+  }
+
+  .uninsured-stats__label {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.75rem;
+    line-height: 1.35;
+    color: rgb(255 255 255 / 0.82);
+  }
+
+  .uninsured-roadmap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 var(--space-2xl);
+    padding: var(--space-lg);
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border: 1px solid #fcd34d;
+    border-radius: var(--radius-xl);
+  }
+
+  .uninsured-roadmap__step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    border-radius: var(--radius-md);
+    transition: background 0.15s;
+  }
+
+  .uninsured-roadmap__step:hover {
+    background: rgb(245 158 11 / 0.12);
+  }
+
+  .uninsured-roadmap__num {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.875rem;
+    background: #f59e0b;
+    color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgb(245 158 11 / 0.35);
+  }
+
+  .uninsured-roadmap__text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #92400e;
+    text-align: center;
+  }
+
+  .uninsured-roadmap__line {
+    width: 1.5rem;
+    height: 2px;
+    background: #fcd34d;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 480px) {
+    .uninsured-roadmap__line {
+      display: none;
+    }
+  }
+
+  .uninsured-callout {
+    padding: var(--space-lg);
+    background: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: var(--space-lg) 0;
+  }
+
+  .uninsured-callout ul {
+    margin: var(--space-sm) 0 0;
+    padding-left: 1.25rem;
+  }
+
+  .uninsured-callout li {
+    margin-bottom: 0.35rem;
+    font-size: 0.9375rem;
+    color: #78350f;
+  }
+
+  .uninsured-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: var(--space-md);
+    margin: var(--space-lg) 0;
+  }
+
+  .uninsured-cards__card {
+    padding: var(--space-lg);
+    background: #fff;
+    border: 1px solid #fde68a;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 16px rgb(245 158 11 / 0.08);
+  }
+
+  .uninsured-cards__card h3 {
+    margin: 0 0 var(--space-sm);
+    font-size: 1rem;
+    color: #b45309;
+  }
+
+  .uninsured-cards__card p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  .guide-cta--uninsured {
+    margin-top: var(--space-2xl);
+    padding: var(--space-xl);
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border: 1px solid #fcd34d;
+    border-radius: var(--radius-xl);
+  }
+
+  .guide-cta--uninsured h2 {
+    font-size: 1.125rem;
+    margin: 0 0 var(--space-md);
+    color: #92400e;
+  }
+
+  .page-uninsured .guide-cta__card {
+    border-color: #fde68a;
+  }
+
+  .page-uninsured .guide-cta__card:hover {
+    box-shadow: 0 8px 20px rgb(245 158 11 / 0.15);
+  }
+
+  .page-uninsured .guide-cta__card strong {
+    color: #b45309;
+  }
+</style>

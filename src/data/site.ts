@@ -10,6 +10,7 @@ export const site = {
 export const nav = {
   tools: [
     { href: '/tools/fair-price/', label: 'Fair Price Check' },
+    { href: '/tools/hospital-compare/', label: 'Hospital Compare' },
     { href: '/tools/surprise-bill-check/', label: 'Surprise Bill Checker' },
     { href: '/tools/bill-auditor/', label: 'Bill Auditor' },
     { href: '/tools/eob-analyzer/', label: 'EOB Analyzer' },

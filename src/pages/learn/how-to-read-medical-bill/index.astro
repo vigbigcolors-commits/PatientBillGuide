@@ -1,6 +1,8 @@
 ---
 import LegalLayout from '../../../layouts/LegalLayout.astro';
+import AuthorByline from '../../../components/AuthorByline.astro';
 import { site } from '../../../data/site';
+import { author, getAuthorUrl } from '../../../data/author';
 import { articleSchema, faqPageSchema, breadcrumbSchema } from '../../../lib/seo/schema';
 
 const updated = '2026-06-29';
@@ -54,8 +56,9 @@ const schemaGraph = [
     description,
     url: canonical,
     dateModified: updated,
-    authorName: 'Vigen',
-    authorUrl: `${site.url}/authors/vigen/`,
+    authorName: author.name,
+    authorUrl: getAuthorUrl(site.url),
+    authorJobTitle: author.jobTitle,
   }),
   faqPageSchema(faqs),
   breadcrumbSchema(
@@ -78,9 +81,7 @@ const schemaGraph = [
     <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
   </Fragment>
 
-  <p class="article-byline">
-    Written by <a href="/authors/vigen/">Vigen</a> · Last updated {updated}
-  </p>
+  <AuthorByline variant="written" updated={updated} class="article-byline" />
 
   <nav class="article-toc" aria-label="Table of contents">
     <h2>On this page</h2>

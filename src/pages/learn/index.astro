@@ -1,148 +1,1426 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Disclaimer from '../../components/Disclaimer.astro';
+import LearnGuideCard from '../../components/learn/LearnGuideCard.astro';
+import { site } from '../../data/site';
+import { author, getAuthorUrl } from '../../data/author';
+import {
+  learnMeta,
+  learnTrust,
+  learnFlow,
+  learnClusters,
+  learnJourneys,
+  learnGuides,
+  learnRoadmap,
+  learnPrinciples,
+  learnFaqs,
+} from '../../data/learn-hub-content';
+import {
+  articleSchema,
+  breadcrumbSchema,
+  faqPageSchema,
+  medicalWebPageSchema,
+} from '../../lib/seo/schema';
+
+const pageUrl = '/learn/';
+const canonical = new URL(pageUrl, site.url).href;
+const authorUrl = getAuthorUrl(site.url);
+const featuredGuides = learnGuides.slice(0, 3);
+const moreGuides = learnGuides.slice(3);
+
+const schemaGraph = [
+  medicalWebPageSchema({
+    name: learnMeta.title,
+    description: learnMeta.description,
+    url: canonical,
+    dateModified: learnMeta.updated,
+    authorName: author.name,
+    authorUrl,
+    authorJobTitle: author.jobTitle,
+  }),
+  articleSchema({
+    headline: learnMeta.title,
+    description: learnMeta.description,
+    url: canonical,
+    dateModified: learnMeta.updated,
+    authorName: author.name,
+    authorUrl,
+    authorJobTitle: author.jobTitle,
+  }),
+  faqPageSchema(learnFaqs),
+  breadcrumbSchema([{ name: 'Home', url: '/' }, { name: 'Learn' }], site.url),
+];
 ---
 
-<BaseLayout
-  title="Learn — Medical Billing Guides"
-  description="Plain-English guides to medical bills, EOBs, CPT codes, and Medicare billing basics."
->
-  <div class="learn-hub">
-    <div class="container">
+<BaseLayout title={learnMeta.title} description={learnMeta.description} showTrustStrip>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
+
+  {/* ── Hero: light split + flow diagram ── */}
+  <section class="ln-hero" aria-labelledby="ln-hero-heading">
+    <div class="ln-hero__bg" aria-hidden="true">
+      <span class="ln-blob ln-blob--1" />
+      <span class="ln-blob ln-blob--2" />
+      <span class="ln-blob ln-blob--3" />
+      <span class="ln-grid" />
+    </div>
+    <div class="container ln-hero__inner">
       <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Learn' }]} />
-      <header class="learn-hub__header">
-        <h1>Learn</h1>
-        <p>
-          Short, practical guides — no jargon wall. Use these alongside our free tools to understand
-          what you were charged and what to ask your provider.
+      <div class="ln-hero__layout">
+        <div class="ln-hero__copy">
+          <p class="ln-kicker">READ → CHECK → ACT</p>
+          <h1 id="ln-hero-heading">Learn billing — then verify with free tools</h1>
+          <p class="ln-hero__lead">
+            Plain-English guides for hospital bills, insurance EOBs, and CPT codes. Every article
+            hands you to a <strong>browser-only check</strong> — no upload, no account, no jargon wall.
+          </p>
+          <div class="ln-hero__actions">
+            <a href="/learn/how-to-read-medical-bill/" class="btn btn--primary">Start: medical bill</a>
+            <a href="#ln-flow" class="btn btn--secondary">See how it works</a>
+          </div>
+        </div>
+
+        <div class="ln-hero__flow" aria-label="How Learn works">
+          <p class="ln-hero__flow-label">How it works</p>
+          {
+            learnFlow.map((step, i) => (
+              <>
+                <a href={step.href} class={`ln-flow-step ln-flow-step--${step.accent}`}>
+                  <span class="ln-flow-step__num">{step.step}</span>
+                  <span class="ln-flow-step__emoji" aria-hidden="true">{step.emoji}</span>
+                  <span class="ln-flow-step__label">{step.label}</span>
+                  <strong class="ln-flow-step__title">{step.title}</strong>
+                  <span class="ln-flow-step__text">{step.text}</span>
+                </a>
+                {i < learnFlow.length - 1 && (
+                  <span class="ln-flow-arrow" aria-hidden="true">→</span>
+                )}
+              </>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Trust chips ── */}
+  <section class="ln-trust-strip" aria-label="Learn highlights">
+    <div class="container ln-trust-strip__grid">
+      {
+        learnTrust.map((t) => (
+          <div class={`ln-trust-chip ln-trust-chip--${t.accent}`}>
+            <strong>{t.label}</strong>
+            <span>{t.detail}</span>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {/* ── Pipeline strip ── */}
+  <section class="ln-pipeline" id="ln-flow" aria-labelledby="ln-pipeline-heading">
+    <div class="container">
+      <header class="ln-pipeline__head">
+        <h2 id="ln-pipeline-heading">Three steps — always in this order</h2>
+        <p>You do not need every guide. Read what matches your paperwork, check with a tool, then act.</p>
+      </header>
+      <ol class="ln-pipeline__track">
+        {
+          learnFlow.map((step) => (
+            <li class={`ln-pipeline__step ln-pipeline__step--${step.accent}`}>
+              <span class="ln-pipeline__badge">{step.label}</span>
+              <span class="ln-pipeline__emoji" aria-hidden="true">{step.emoji}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+              <a href={step.href} class="ln-pipeline__link">Go →</a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* ── Pick your path ── */}
+  <section class="ln-paths" aria-labelledby="ln-paths-heading">
+    <div class="container">
+      <header class="ln-section-head ln-section-head--center">
+        <p class="ln-kicker ln-kicker--dark">Start here</p>
+        <h2 id="ln-paths-heading">Which paperwork do you have?</h2>
+        <p class="ln-section-lead">Three colored paths — each with numbered steps and a paired tool.</p>
+      </header>
+      <ul class="ln-paths__grid">
+        {
+          learnJourneys.map((j) => (
+            <li class={`ln-path ln-path--${j.accent}`}>
+              <div class="ln-path__top">
+                <span class="ln-path__emoji" aria-hidden="true">{j.emoji}</span>
+                <h3>{j.title}</h3>
+              </div>
+              <ol class="ln-path__steps">
+                {
+                  j.steps.map((s) => (
+                    <li>
+                      <span class="ln-path__step-num">{s.num}</span>
+                      {s.text}
+                    </li>
+                  ))
+                }
+              </ol>
+              <div class="ln-path__actions">
+                <a href={j.href} class="ln-path__cta">{j.cta}</a>
+                <a href={j.toolHref} class="ln-path__tool">
+                  <span class="ln-path__tool-tag">Tool</span>
+                  {j.toolLabel} →
+                </a>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* ── Cluster lanes ── */}
+  <section class="ln-clusters" aria-labelledby="ln-clusters-heading">
+    <div class="container">
+      <header class="ln-section-head ln-section-head--center">
+        <p class="ln-kicker ln-kicker--light">Site map</p>
+        <h2 id="ln-clusters-heading">CHECK · UNDERSTAND · ACT</h2>
+        <p class="ln-section-lead ln-section-lead--light">
+          Same organization as our tools — find the guide or calculator that fits your moment.
         </p>
       </header>
-
-      <div class="learn-grid">
-        <a href="/learn/how-to-read-eob/" class="learn-card card">
-          <span class="learn-card__tag">Insured</span>
-          <h2>How to read an EOB</h2>
-          <p>Decode Explanation of Benefits columns, patient responsibility, and denials.</p>
-          <span class="learn-card__cta">Read guide ›</span>
-        </a>
-        <a href="/learn/how-to-read-medical-bill/" class="learn-card card">
-          <span class="learn-card__tag">Everyone</span>
-          <h2>How to read a medical bill</h2>
-          <p>Itemized hospital bills, facility vs. professional fees, and self-pay basics.</p>
-          <span class="learn-card__cta">Read guide ›</span>
-        </a>
-        <a href="/learn/cpt-codes-explained/" class="learn-card card">
-          <span class="learn-card__tag">Basics</span>
-          <h2>What is a CPT code?</h2>
-          <p>Why procedure codes appear on every bill and how to look yours up.</p>
-          <span class="learn-card__cta">Read guide ›</span>
-        </a>
-        <a href="/codes/" class="learn-card card">
-          <span class="learn-card__tag">Reference</span>
-          <h2>CPT code encyclopedia</h2>
-          <p>Cost guides for common codes with Medicare benchmarks and fair price checks.</p>
-          <span class="learn-card__cta">Browse codes ›</span>
-        </a>
-        <a href="/for/uninsured/" class="learn-card card">
-          <span class="learn-card__tag">Self-pay</span>
-          <h2>Uninsured &amp; self-pay help</h2>
-          <p>Compare hospital charges to Medicare and negotiate with confidence.</p>
-          <span class="learn-card__cta">Get started ›</span>
-        </a>
+      <div class="ln-clusters__grid">
+        {
+          learnClusters.map((cluster) => (
+            <article class={`ln-cluster ln-cluster--${cluster.accent}`}>
+              <header class="ln-cluster__head">
+                <span class="ln-cluster__id">{cluster.id}</span>
+                <h3>{cluster.title}</h3>
+                <p>{cluster.subtitle}</p>
+              </header>
+              <ul class="ln-cluster__list">
+                {
+                  cluster.items.map((item) => (
+                    <li>
+                      <a href={item.href} class:list={['ln-cluster__link', item.tool && 'ln-cluster__link--tool']}>
+                        {item.tool && <span class="ln-cluster__tool-dot" aria-hidden="true" />}
+                        {item.label}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </article>
+          ))
+        }
       </div>
-
-      <section class="learn-hub__tools">
-        <h2>Try a live tool</h2>
-        <p>Check a procedure code against Medicare data in your browser — free, no account.</p>
-        <a href="/tools/fair-price/" class="btn btn--primary">Fair Price Calculator</a>
-      </section>
     </div>
+  </section>
+
+  {/* ── Guides bento ── */}
+  <section class="ln-guides" aria-labelledby="ln-guides-heading">
+    <div class="container">
+      <header class="ln-section-head">
+        <p class="ln-kicker ln-kicker--dark">Live guides</p>
+        <h2 id="ln-guides-heading">8 resources — each pairs with a tool</h2>
+        <p class="ln-section-lead">Top three are the pillars most patients need first.</p>
+      </header>
+      <div class="ln-bento">
+        {
+          featuredGuides.map((g) => (
+            <div class="ln-bento__featured">
+              <LearnGuideCard guide={g} featured />
+            </div>
+          ))
+        }
+        {
+          moreGuides.map((g) => (
+            <div class="ln-bento__item">
+              <LearnGuideCard guide={g} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── Principles ── */}
+  <section class="ln-principles" aria-labelledby="ln-principles-heading">
+    <div class="container">
+      <header class="ln-section-head ln-section-head--center">
+        <p class="ln-kicker ln-kicker--dark">How we write</p>
+        <h2 id="ln-principles-heading">Editorial standards — not marketing fluff</h2>
+      </header>
+      <ul class="ln-principles__grid">
+        {
+          learnPrinciples.map((p) => (
+            <li class={`ln-principle ln-principle--${p.accent}`}>
+              <span class="ln-principle__num">{p.num}</span>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* ── Roadmap timeline ── */}
+  <section class="ln-roadmap" aria-labelledby="ln-roadmap-heading">
+    <div class="container">
+      <header class="ln-section-head ln-section-head--center">
+        <p class="ln-kicker ln-kicker--dark">Coming next</p>
+        <h2 id="ln-roadmap-heading">More guides shipping — tools ready now</h2>
+      </header>
+      <ol class="ln-roadmap__timeline">
+        {
+          learnRoadmap.map((r, i) => (
+            <li class={`ln-roadmap-item ln-roadmap-item--${r.tone}`}>
+              <span class="ln-roadmap-item__dot" aria-hidden="true" />
+              <div class="ln-roadmap-item__body">
+                <div class="ln-roadmap-item__meta">
+                  <span class="ln-roadmap-item__eta">{r.eta}</span>
+                  <span class="ln-roadmap-item__audience">{r.audience}</span>
+                </div>
+                <h3>{r.title}</h3>
+                <p>{r.text}</p>
+                {
+                  r.interim && (
+                    <a href={r.interim.href} class="ln-roadmap-item__interim">
+                      Meanwhile: {r.interim.label} →
+                    </a>
+                  )
+                }
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  {/* ── FAQ interactive ── */}
+  <section class="ln-faq" aria-labelledby="ln-faq-heading">
+    <div class="container">
+      <header class="ln-faq__header">
+        <div>
+          <p class="ln-kicker ln-kicker--dark">FAQ</p>
+          <h2 id="ln-faq-heading">Common questions about Learn</h2>
+        </div>
+        <span class="ln-faq__count" aria-hidden="true">{learnFaqs.length} answers</span>
+      </header>
+      <div class="ln-faq__panel">
+        <ul class="ln-faq__list" role="list">
+          {
+            learnFaqs.map((f, i) => (
+              <li>
+                <button
+                  type="button"
+                  class:list={['ln-faq__q', i === 0 && 'is-active']}
+                  aria-expanded={i === 0 ? 'true' : 'false'}
+                  data-faq-index={i}
+                >
+                  {f.question}
+                </button>
+                <div
+                  class:list={['ln-faq__a', i === 0 && 'is-open']}
+                  hidden={i !== 0}
+                >
+                  <p>{f.answer}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+        <aside class="ln-faq__aside" aria-label="Quick links">
+          <h3>Pairing cheat sheet</h3>
+          <dl>
+            <dt>Hospital bill</dt>
+            <dd><a href="/learn/how-to-read-medical-bill/">Guide</a> → <a href="/tools/bill-auditor/">Auditor</a></dd>
+            <dt>Insurance EOB</dt>
+            <dd><a href="/learn/how-to-read-eob/">Guide</a> → <a href="/tools/eob-analyzer/">Analyzer</a></dd>
+            <dt>CPT code</dt>
+            <dd><a href="/learn/cpt-codes-explained/">Basics</a> → <a href="/tools/fair-price/">Fair Price</a></dd>
+            <dt>Medicare</dt>
+            <dd><a href="/for/seniors-medicare/">Guide</a> → <a href="/tools/fair-price/?tab=medicare">Lookup</a></dd>
+          </dl>
+          <p class="ln-faq__aside-foot">
+            By <a href={author.path}>{author.name}</a> · Updated {learnMeta.updated}
+          </p>
+        </aside>
+      </div>
+      {/* SEO: all FAQ answers in DOM */}
+      <div class="visually-hidden" aria-hidden="true">
+        {
+          learnFaqs.map((f) => (
+            <p><strong>{f.question}</strong> {f.answer}</p>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── CTA ── */}
+  <section class="ln-cta" aria-label="Get started">
+    <div class="container ln-cta__box">
+      <div class="ln-cta__copy">
+        <h2>Read it, then check it</h2>
+        <p>Most patients start with the medical bill guide or Fair Price — both free, both instant.</p>
+      </div>
+      <div class="ln-cta__actions">
+        <a href="/learn/how-to-read-medical-bill/" class="btn btn--primary">Medical bill guide</a>
+        <a href="/tools/fair-price/" class="btn btn--secondary">Fair Price Calculator</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container container--narrow ln-disclaimer">
+    <Disclaimer />
   </div>
 </BaseLayout>
 
+<script>
+  document.querySelectorAll('.ln-faq__q').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const idx = btn.getAttribute('data-faq-index');
+      document.querySelectorAll('.ln-faq__q').forEach((b) => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-expanded', 'false');
+      });
+      document.querySelectorAll('.ln-faq__a').forEach((a) => {
+        a.classList.remove('is-open');
+        a.setAttribute('hidden', '');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-expanded', 'true');
+      const panel = btn.nextElementSibling;
+      if (panel?.classList.contains('ln-faq__a')) {
+        panel.classList.add('is-open');
+        panel.removeAttribute('hidden');
+      }
+    });
+  });
+</script>
+
 <style>
-  .learn-hub {
-    padding: var(--space-xl) 0 var(--space-3xl);
+  .ln-kicker {
+    margin: 0 0 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-accent);
   }
 
-  .learn-hub__header {
-    max-width: 40rem;
-    margin-bottom: var(--space-2xl);
+  .ln-kicker--dark { color: var(--color-accent); }
+  .ln-kicker--light { color: #5eead4; }
+
+  .ln-section-head {
+    margin-bottom: clamp(2rem, 4vw, 2.75rem);
+    max-width: 42rem;
   }
 
-  .learn-hub__header p {
+  .ln-section-head--center {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .ln-section-head h2 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.625rem, 3.5vw, 2.25rem);
+    letter-spacing: -0.025em;
+  }
+
+  .ln-section-lead {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.65;
     color: var(--color-muted);
-    font-size: 1.05rem;
   }
 
-  .learn-grid {
+  .ln-section-lead--light {
+    color: rgb(203 213 225 / 0.85);
+  }
+
+  /* Hero */
+  .ln-hero {
+    position: relative;
+    padding: 2rem 0 2.5rem;
+    background: linear-gradient(180deg, #fafaf9 0%, #f0fdfa 55%, #eff6ff 100%);
+    border-bottom: 1px solid #e7e5e4;
+    overflow: hidden;
+  }
+
+  .ln-hero__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .ln-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+  }
+
+  .ln-blob--1 {
+    width: 18rem;
+    height: 18rem;
+    top: -4rem;
+    right: 10%;
+    background: rgb(13 148 136 / 0.2);
+  }
+
+  .ln-blob--2 {
+    width: 14rem;
+    height: 14rem;
+    bottom: 0;
+    left: -2rem;
+    background: rgb(139 92 246 / 0.15);
+  }
+
+  .ln-blob--3 {
+    width: 10rem;
+    height: 10rem;
+    top: 40%;
+    right: 35%;
+    background: rgb(251 191 36 / 0.12);
+  }
+
+  .ln-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.035;
+    background-image: linear-gradient(#64748b 1px, transparent 1px),
+      linear-gradient(90deg, #64748b 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .ln-hero__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .ln-hero__layout {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-lg);
-    margin-bottom: var(--space-2xl);
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: center;
   }
 
-  .learn-card {
+  .ln-hero h1 {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4.5vw, 2.875rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
+  }
+
+  .ln-hero__lead {
+    margin: 0 0 1.75rem;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+  }
+
+  .ln-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+  }
+
+  .ln-hero__flow {
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    border-radius: 1.25rem;
+    background: #fff;
+    border: 1px solid #e7e5e4;
+    box-shadow: 0 8px 32px rgb(15 23 42 / 0.08);
+  }
+
+  .ln-hero__flow-label {
+    margin: 0 0 0.25rem;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-muted);
+  }
+
+  .ln-flow-step {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 0.25rem 0.625rem;
+    padding: 0.875rem 1rem;
+    border-radius: 0.875rem;
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    border: 1px solid transparent;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
 
-  .learn-card:hover {
-    border-color: var(--color-accent);
-    box-shadow: var(--shadow-md);
+  .ln-flow-step:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgb(15 23 42 / 0.08);
   }
 
-  .learn-card__tag {
+  .ln-flow-step--violet {
+    background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+    border-color: #c4b5fd;
+    color: #5b21b6;
+  }
+
+  .ln-flow-step--teal {
+    background: linear-gradient(135deg, #f0fdfa, #ccfbf1);
+    border-color: #5eead4;
+    color: #0f766e;
+  }
+
+  .ln-flow-step--blue {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-color: #93c5fd;
+    color: #1e40af;
+  }
+
+  .ln-flow-step__num {
+    grid-row: 1 / 3;
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 800;
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 0.08);
+  }
+
+  .ln-flow-step__emoji {
+    font-size: 1.125rem;
+    line-height: 1;
+  }
+
+  .ln-flow-step__label {
+    font-size: 0.5625rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    opacity: 0.75;
+  }
+
+  .ln-flow-step__title {
+    grid-column: 2 / 4;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .ln-flow-step__text {
+    grid-column: 2 / 4;
+    font-size: 0.75rem;
+    line-height: 1.45;
+    opacity: 0.85;
+  }
+
+  .ln-flow-arrow {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--color-muted);
+    opacity: 0.5;
+    line-height: 1;
+  }
+
+  /* Trust strip */
+  .ln-trust-strip {
+    padding: 1rem 0;
+    background: #fff;
+    border-bottom: 1px solid #e7e5e4;
+  }
+
+  .ln-trust-strip__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.625rem;
+  }
+
+  .ln-trust-chip {
+    padding: 0.75rem 1rem;
+    border-radius: 0.875rem;
+    border: 1px solid transparent;
+  }
+
+  .ln-trust-chip strong {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+
+  .ln-trust-chip span {
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    opacity: 0.85;
+  }
+
+  .ln-trust-chip--violet { background: #f5f3ff; border-color: #ddd6fe; color: #5b21b6; }
+  .ln-trust-chip--teal { background: #f0fdfa; border-color: #99f6e4; color: #0f766e; }
+  .ln-trust-chip--blue { background: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+  .ln-trust-chip--amber { background: #fffbeb; border-color: #fde68a; color: #92400e; }
+
+  /* Pipeline — dark band */
+  .ln-pipeline {
+    padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+    background: linear-gradient(155deg, #0f172a 0%, #1e293b 100%);
+    color: #f8fafc;
+  }
+
+  .ln-pipeline__head {
+    text-align: center;
+    max-width: 36rem;
+    margin: 0 auto clamp(2rem, 4vw, 2.5rem);
+  }
+
+  .ln-pipeline__head h2 {
+    margin: 0 0 0.625rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.375rem, 3vw, 1.875rem);
+    color: #fff;
+  }
+
+  .ln-pipeline__head p {
+    margin: 0;
+    color: rgb(203 213 225 / 0.85);
+    line-height: 1.6;
+  }
+
+  .ln-pipeline__track {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    position: relative;
+  }
+
+  .ln-pipeline__track::before {
+    content: '';
+    position: absolute;
+    top: 3.5rem;
+    left: 16%;
+    right: 16%;
+    height: 2px;
+    background: linear-gradient(90deg, #8b5cf6, #0d9488, #3b82f6);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .ln-pipeline__step {
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.12);
+    text-align: center;
+    position: relative;
+  }
+
+  .ln-pipeline__step--violet { border-top: 3px solid #a78bfa; }
+  .ln-pipeline__step--teal { border-top: 3px solid #2dd4bf; }
+  .ln-pipeline__step--blue { border-top: 3px solid #60a5fa; }
+
+  .ln-pipeline__badge {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.1);
+    color: #5eead4;
+  }
+
+  .ln-pipeline__emoji {
+    display: block;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .ln-pipeline__step h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: #fff;
+  }
+
+  .ln-pipeline__step p {
+    margin: 0 0 1rem;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: rgb(203 213 225 / 0.85);
+  }
+
+  .ln-pipeline__link {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #5eead4;
+    text-decoration: none;
+  }
+
+  /* Paths */
+  .ln-paths {
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+    background: var(--color-bg);
+  }
+
+  .ln-paths__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .ln-path {
+    padding: 1.375rem;
+    border-radius: 1.25rem;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 16px rgb(15 23 42 / 0.06);
+  }
+
+  .ln-path--amber {
+    background: linear-gradient(160deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
+    border-color: #fcd34d;
+    color: #78350f;
+  }
+
+  .ln-path--blue {
+    background: linear-gradient(160deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%);
+    border-color: #93c5fd;
+    color: #1e3a8a;
+  }
+
+  .ln-path--teal {
+    background: linear-gradient(160deg, #f0fdfa 0%, #ccfbf1 50%, #99f6e4 100%);
+    border-color: #5eead4;
+    color: #115e59;
+  }
+
+  .ln-path__top {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    margin-bottom: 1rem;
+  }
+
+  .ln-path__emoji {
+    font-size: 1.75rem;
+    line-height: 1;
+  }
+
+  .ln-path h3 {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.35;
+    color: inherit;
+  }
+
+  .ln-path__steps {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ln-path__steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    padding: 0.5rem 0.625rem;
+    border-radius: 0.625rem;
+    background: rgb(255 255 255 / 0.65);
+    border: 1px solid rgb(0 0 0 / 0.05);
+  }
+
+  .ln-path__step-num {
+    flex-shrink: 0;
+    width: 1.375rem;
+    height: 1.375rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    background: currentColor;
+    color: #fff;
+  }
+
+  .ln-path--amber .ln-path__step-num { background: #d97706; }
+  .ln-path--blue .ln-path__step-num { background: #2563eb; }
+  .ln-path--teal .ln-path__step-num { background: #0d9488; }
+
+  .ln-path__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ln-path__cta {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ln-path__tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.625rem;
+    background: #fff;
+    border: 1px solid rgb(0 0 0 / 0.08);
+    color: inherit;
+  }
+
+  .ln-path__tool-tag {
+    font-size: 0.5625rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    background: rgb(0 0 0 / 0.06);
+  }
+
+  /* Clusters — dark section */
+  .ln-clusters {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: linear-gradient(155deg, #134e4a 0%, #0f172a 100%);
+    color: #f8fafc;
+  }
+
+  .ln-clusters .ln-section-head h2 {
+    color: #fff;
+  }
+
+  .ln-clusters__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .ln-cluster {
+    padding: 1.375rem;
+    border-radius: 1.25rem;
+    border: 1px solid rgb(255 255 255 / 0.12);
+    background: rgb(255 255 255 / 0.05);
+  }
+
+  .ln-cluster--teal { border-top: 4px solid #2dd4bf; }
+  .ln-cluster--amber { border-top: 4px solid #fbbf24; }
+  .ln-cluster--blue { border-top: 4px solid #60a5fa; }
+
+  .ln-cluster__id {
+    display: inline-block;
+    margin-bottom: 0.375rem;
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: #5eead4;
+  }
+
+  .ln-cluster__head h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.0625rem;
+    color: #fff;
+  }
+
+  .ln-cluster__head p {
+    margin: 0 0 1rem;
+    font-size: 0.8125rem;
+    color: rgb(203 213 225 / 0.8);
+    line-height: 1.45;
+  }
+
+  .ln-cluster__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .ln-cluster__link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.625rem;
+    border-radius: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: rgb(226 232 240 / 0.95);
+    background: rgb(255 255 255 / 0.04);
+    border: 1px solid transparent;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .ln-cluster__link:hover {
+    background: rgb(255 255 255 / 0.1);
+    border-color: rgb(255 255 255 / 0.15);
+    color: #fff;
+  }
+
+  .ln-cluster__link--tool {
+    font-weight: 600;
+    color: #99f6e4;
+  }
+
+  .ln-cluster__tool-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #2dd4bf;
+    flex-shrink: 0;
+  }
+
+  /* Bento guides */
+  .ln-guides {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: #fff;
+  }
+
+  .ln-bento {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .ln-bento__featured {
+    grid-column: span 1;
+  }
+
+  .ln-bento__item {
+    min-height: 0;
+  }
+
+  /* Principles */
+  .ln-principles {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: linear-gradient(180deg, #fafaf9 0%, #f0fdfa 100%);
+    border-top: 1px solid #e7e5e4;
+  }
+
+  .ln-principles__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .ln-principle {
+    position: relative;
+    padding: 1.375rem 1.375rem 1.25rem 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid transparent;
+    overflow: hidden;
+  }
+
+  .ln-principle__num {
+    position: absolute;
+    top: 0.875rem;
+    right: 1rem;
+    font-family: var(--font-mono);
     font-size: 0.6875rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-accent);
-    margin-bottom: var(--space-sm);
+    opacity: 0.35;
   }
 
-  .learn-card h2 {
-    font-size: 1.125rem;
-    margin: 0 0 var(--space-sm);
-  }
+  .ln-principle--teal { background: #fff; border-color: #99f6e4; border-left: 4px solid #0d9488; }
+  .ln-principle--violet { background: #fff; border-color: #ddd6fe; border-left: 4px solid #7c3aed; }
+  .ln-principle--blue { background: #fff; border-color: #bfdbfe; border-left: 4px solid #2563eb; }
+  .ln-principle--amber { background: #fff; border-color: #fde68a; border-left: 4px solid #d97706; }
+  .ln-principle--green { background: #fff; border-color: #bbf7d0; border-left: 4px solid #16a34a; }
+  .ln-principle--slate { background: #fff; border-color: #e2e8f0; border-left: 4px solid #64748b; }
 
-  .learn-card p {
-    flex: 1;
-    color: var(--color-muted);
+  .ln-principle h3 {
+    margin: 0 0 0.5rem;
     font-size: 0.9375rem;
-    margin: 0 0 var(--space-md);
+    color: var(--color-primary);
+    padding-right: 2rem;
+  }
+
+  .ln-principle p {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  /* Roadmap timeline */
+  .ln-roadmap {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: var(--color-bg);
+  }
+
+  .ln-roadmap__timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 44rem;
+    margin-inline: auto;
+  }
+
+  .ln-roadmap-item {
+    display: grid;
+    grid-template-columns: 1.5rem 1fr;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .ln-roadmap-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 0.6875rem;
+    top: 1.25rem;
+    bottom: 0;
+    width: 2px;
+    background: #e7e5e4;
+  }
+
+  .ln-roadmap-item__dot {
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px currentColor;
+    margin-top: 0.25rem;
+    z-index: 1;
+  }
+
+  .ln-roadmap-item--teal .ln-roadmap-item__dot { background: #0d9488; box-shadow: 0 0 0 2px #0d9488; }
+  .ln-roadmap-item--blue .ln-roadmap-item__dot { background: #2563eb; box-shadow: 0 0 0 2px #2563eb; }
+  .ln-roadmap-item--violet .ln-roadmap-item__dot { background: #7c3aed; box-shadow: 0 0 0 2px #7c3aed; }
+  .ln-roadmap-item--amber .ln-roadmap-item__dot { background: #d97706; box-shadow: 0 0 0 2px #d97706; }
+  .ln-roadmap-item--rose .ln-roadmap-item__dot { background: #e11d48; box-shadow: 0 0 0 2px #e11d48; }
+
+  .ln-roadmap-item__body {
+    padding: 1rem 1.125rem;
+    border-radius: 1rem;
+    background: #fff;
+    border: 1px solid #e7e5e4;
+  }
+
+  .ln-roadmap-item__meta {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .ln-roadmap-item__eta {
+    font-size: 0.5625rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    background: #fef3c7;
+    color: #b45309;
+  }
+
+  .ln-roadmap-item__audience {
+    font-size: 0.5625rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .ln-roadmap-item h3 {
+    margin: 0 0 0.375rem;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .ln-roadmap-item p {
+    margin: 0 0 0.625rem;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--color-muted);
+  }
+
+  .ln-roadmap-item__interim {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-accent);
+  }
+
+  /* FAQ */
+  .ln-faq {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: linear-gradient(180deg, #eff6ff 0%, #fff 100%);
+    border-top: 1px solid #e7e5e4;
+  }
+
+  .ln-faq__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ln-faq__header h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .ln-faq__count {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
+  }
+
+  .ln-faq__panel {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  .ln-faq__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ln-faq__q {
+    width: 100%;
+    text-align: left;
+    padding: 1rem 1.125rem;
+    border-radius: 0.875rem;
+    border: 1px solid #e7e5e4;
+    background: #fff;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  }
+
+  .ln-faq__q:hover {
+    border-color: #93c5fd;
+  }
+
+  .ln-faq__q.is-active {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-color: #3b82f6;
+    color: #1e40af;
+    box-shadow: 0 4px 12px rgb(59 130 246 / 0.12);
+  }
+
+  .ln-faq__a {
+    padding: 0 1.125rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  .ln-faq__a.is-open {
+    animation: ln-fade 0.2s ease;
+  }
+
+  @keyframes ln-fade {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .ln-faq__aside {
+    padding: 1.375rem;
+    border-radius: 1.25rem;
+    background: linear-gradient(155deg, #0f766e, #134e4a);
+    color: #f0fdfa;
+  }
+
+  .ln-faq__aside h3 {
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    color: #99f6e4;
+  }
+
+  .ln-faq__aside dl {
+    margin: 0;
+  }
+
+  .ln-faq__aside dt {
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(153 246 228 / 0.75);
+    margin-top: 0.75rem;
+  }
+
+  .ln-faq__aside dt:first-child {
+    margin-top: 0;
+  }
+
+  .ln-faq__aside dd {
+    margin: 0.25rem 0 0;
+    font-size: 0.875rem;
+  }
+
+  .ln-faq__aside a {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .ln-faq__aside-foot {
+    margin: 1.25rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgb(255 255 255 / 0.15);
+    font-size: 0.75rem;
+    color: rgb(204 251 241 / 0.8);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* CTA */
+  .ln-cta {
+    padding: clamp(2rem, 4vw, 3rem) 0;
+    background: var(--color-bg);
+  }
+
+  .ln-cta__box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2.5rem);
+    border-radius: 1.5rem;
+    background: linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #115e59 100%);
+    color: #fff;
+    box-shadow: 0 12px 40px rgb(13 148 136 / 0.25);
+  }
+
+  .ln-cta__copy h2 {
+    margin: 0 0 0.375rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    color: #fff;
+  }
+
+  .ln-cta__copy p {
+    margin: 0;
+    color: rgb(204 251 241 / 0.9);
     line-height: 1.55;
   }
 
-  .learn-card__cta {
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--color-accent);
+  .ln-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
 
-  .learn-hub__tools {
-    padding: var(--space-xl);
-    background: var(--color-accent-bg);
-    border: 1px solid #99f6e4;
-    border-radius: var(--radius-xl);
-    max-width: 32rem;
+  .ln-cta .btn--primary {
+    background: #fff;
+    color: #0f766e;
   }
 
-  .learn-hub__tools h2 {
-    font-size: 1.1rem;
-    margin: 0 0 var(--space-sm);
+  .ln-cta .btn--secondary {
+    background: transparent;
+    border: 1px solid rgb(255 255 255 / 0.45);
+    color: #fff;
   }
 
-  .learn-hub__tools p {
-    color: var(--color-muted);
-    margin: 0 0 var(--space-md);
+  .ln-disclaimer {
+    padding: var(--space-2xl) 0 var(--space-3xl);
   }
 
-  @media (max-width: 700px) {
-    .learn-grid {
+  @media (max-width: 1024px) {
+    .ln-hero__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .ln-trust-strip__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ln-pipeline__track {
+      grid-template-columns: 1fr;
+    }
+
+    .ln-pipeline__track::before {
+      display: none;
+    }
+
+    .ln-paths__grid,
+    .ln-clusters__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ln-bento {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ln-principles__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ln-faq__panel {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ln-trust-strip__grid,
+    .ln-bento,
+    .ln-principles__grid {
       grid-template-columns: 1fr;
     }
   }

@@ -15,6 +15,8 @@ export interface MedicareLookupExample {
   subtitle?: string;
   cpt: string;
   zip?: string;
+  /** Part B deductible already met this year (optional). */
+  deductibleMet?: string;
 }
 
 export interface BillAuditorExample {
@@ -32,6 +34,30 @@ export interface EobAnalyzerExample {
   text: string;
   /** Optional insurer template hint for the dropdown */
   insurer?: 'auto' | 'uhc' | 'bcbs' | 'aetna' | 'cigna' | 'generic';
+}
+
+export interface SurpriseBillExample {
+  id: string;
+  label: string;
+  subtitle?: string;
+  careSetting: string;
+  isEmergency: boolean;
+  facilityNetwork: string;
+  providerNetwork: string;
+  insuranceType: string;
+  providerRole?: string;
+  consentStatus?: string;
+  billSource?: string;
+}
+
+export interface HospitalCompareExample {
+  id: string;
+  label: string;
+  subtitle?: string;
+  cpt: string;
+  zip?: string;
+  charge: string;
+  careSetting: 'physician_office' | 'asc' | 'hospital_outpatient' | 'er';
 }
 
 export const fairPriceExamples: FairPriceExample[] = [
@@ -80,23 +106,34 @@ export const medicareLookupExamples: MedicareLookupExample[] = [
   {
     id: 'mammogram-medicare',
     label: 'Screening mammogram',
-    subtitle: 'CPT 77067 · Los Angeles area',
+    subtitle: 'CPT 77067 · Los Angeles · deductible met',
     cpt: '77067',
     zip: '90210',
+    deductibleMet: '257',
   },
   {
     id: 'office-medicare',
-    label: 'Office visit (established)',
-    subtitle: 'CPT 99213 · Manhattan',
+    label: 'Office visit — deductible not met',
+    subtitle: 'CPT 99213 · Manhattan · $0 deductible met',
     cpt: '99213',
     zip: '10001',
+    deductibleMet: '0',
+  },
+  {
+    id: 'office-deductible-met',
+    label: 'Office visit — deductible met',
+    subtitle: 'CPT 99213 · typical 20% coinsurance only',
+    cpt: '99213',
+    zip: '10001',
+    deductibleMet: '257',
   },
   {
     id: 'knee-replacement',
     label: 'Total knee replacement',
-    subtitle: 'CPT 27447 · Houston',
+    subtitle: 'CPT 27447 · Houston · splits deductible + coinsurance',
     cpt: '27447',
     zip: '77001',
+    deductibleMet: '0',
   },
   {
     id: 'colonoscopy',
@@ -104,6 +141,15 @@ export const medicareLookupExamples: MedicareLookupExample[] = [
     subtitle: 'CPT 45378 · Boston',
     cpt: '45378',
     zip: '02108',
+    deductibleMet: '200',
+  },
+  {
+    id: 'er-medicare',
+    label: 'ER visit (high severity)',
+    subtitle: 'CPT 99284 · Miami · professional fee only',
+    cpt: '99284',
+    zip: '33139',
+    deductibleMet: '0',
   },
 ];
 
@@ -136,6 +182,17 @@ export const billAuditorExamples: BillAuditorExample[] = [
     text: `03/05/2026 99213 Office visit established patient $150.00
 03/05/2026 36415 Venipuncture $12.00
 03/05/2026 80053 Comprehensive metabolic panel $18.00`,
+  },
+  {
+    id: 'facility-mix',
+    label: 'ER + imaging + labs',
+    subtitle: 'Multi-line ER bill — pricing + duplicates',
+    zip: '33139',
+    text: `03/18/2026 99284 Emergency department visit level 4 $2,890.00
+03/18/2026 71046 Chest x-ray 2 views $890.00
+03/18/2026 80053 Comprehensive metabolic panel $125.00
+03/18/2026 93000 Electrocardiogram complete $320.00
+03/18/2026 99284 Emergency department visit level 4 $2,890.00`,
   },
   {
     id: 'unknown-code-mix',
@@ -248,5 +305,139 @@ Remaining Responsibility: $3.84`,
     subtitle: 'Screening mammogram in-network',
     insurer: 'generic',
     text: `01/15/2026 77067 Screening mammography $450.00 $131.44 $131.44 $0.00`,
+  },
+];
+
+export const surpriseBillExamples: SurpriseBillExample[] = [
+  {
+    id: 'classic-anesthesia',
+    label: 'Surgery anesthesia surprise',
+    subtitle: 'In-network hospital · OON anesthesiologist · private insurance',
+    careSetting: 'hospital_outpatient',
+    isEmergency: false,
+    facilityNetwork: 'in_network',
+    providerNetwork: 'out_of_network',
+    insuranceType: 'private_insured',
+    providerRole: 'anesthesiologist',
+    consentStatus: 'did_not_sign',
+    billSource: 'professional',
+  },
+  {
+    id: 'er-oon',
+    label: 'Out-of-network ER visit',
+    subtitle: 'Emergency · OON hospital & ER doctor · private insurance',
+    careSetting: 'er_emergency',
+    isEmergency: true,
+    facilityNetwork: 'out_of_network',
+    providerNetwork: 'out_of_network',
+    insuranceType: 'private_insured',
+    providerRole: 'er_physician',
+    billSource: 'both',
+  },
+  {
+    id: 'ground-ambulance',
+    label: 'Ground ambulance bill',
+    subtitle: 'After ER visit · OON ambulance company',
+    careSetting: 'ambulance_ground',
+    isEmergency: false,
+    facilityNetwork: 'unknown',
+    providerNetwork: 'out_of_network',
+    insuranceType: 'private_insured',
+    providerRole: 'ambulance',
+    billSource: 'professional',
+  },
+  {
+    id: 'signed-waiver',
+    label: 'Signed OON consent at surgery',
+    subtitle: 'In-network ASC · OON provider · waiver signed',
+    careSetting: 'hospital_outpatient',
+    isEmergency: false,
+    facilityNetwork: 'in_network',
+    providerNetwork: 'out_of_network',
+    insuranceType: 'private_insured',
+    providerRole: 'surgeon',
+    consentStatus: 'signed_waiver',
+    billSource: 'professional',
+  },
+  {
+    id: 'elective-oon-hospital',
+    label: 'Chose out-of-network hospital',
+    subtitle: 'Planned imaging · OON facility · not emergency',
+    careSetting: 'hospital_outpatient',
+    isEmergency: false,
+    facilityNetwork: 'out_of_network',
+    providerNetwork: 'out_of_network',
+    insuranceType: 'private_insured',
+    providerRole: 'radiology',
+    billSource: 'both',
+  },
+  {
+    id: 'air-ambulance',
+    label: 'Air ambulance transport',
+    subtitle: 'OON air ambulance · private insurance',
+    careSetting: 'ambulance_air',
+    isEmergency: true,
+    facilityNetwork: 'unknown',
+    providerNetwork: 'out_of_network',
+    insuranceType: 'private_insured',
+    providerRole: 'ambulance',
+    billSource: 'professional',
+  },
+];
+
+export const hospitalCompareExamples: HospitalCompareExample[] = [
+  {
+    id: 'mammogram-hospital',
+    label: 'Screening mammogram — hospital',
+    subtitle: 'CPT 77067 · Beverly Hills · $4,200',
+    cpt: '77067',
+    zip: '90210',
+    charge: '4200',
+    careSetting: 'hospital_outpatient',
+  },
+  {
+    id: 'er-visit-high',
+    label: 'ER visit (high severity)',
+    subtitle: 'CPT 99284 · Miami · $2,890',
+    cpt: '99284',
+    zip: '33139',
+    charge: '2890',
+    careSetting: 'er',
+  },
+  {
+    id: 'knee-hospital',
+    label: 'Total knee replacement',
+    subtitle: 'CPT 27447 · Houston outpatient · $38,500',
+    cpt: '27447',
+    zip: '77001',
+    charge: '38500',
+    careSetting: 'hospital_outpatient',
+  },
+  {
+    id: 'chest-xray-er',
+    label: 'Chest X-ray in ER',
+    subtitle: 'CPT 71046 · Chicago · $890',
+    cpt: '71046',
+    zip: '60601',
+    charge: '890',
+    careSetting: 'er',
+  },
+  {
+    id: 'colonoscopy-asc',
+    label: 'Colonoscopy — surgery center',
+    subtitle: 'CPT 45378 · Boston ASC · $2,100',
+    cpt: '45378',
+    zip: '02108',
+    charge: '2100',
+    careSetting: 'asc',
+  },
+  {
+    id: 'office-hospital-clinic',
+    label: 'Office visit — hospital clinic',
+    subtitle: 'CPT 99213 · NYC · $185',
+    cpt: '99213',
+    zip: '10001',
+    charge: '185',
+    careSetting: 'hospital_outpatient',
   },
 ];

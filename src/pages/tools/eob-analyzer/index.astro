@@ -5,6 +5,7 @@ import MethodologyFooter from '../../../components/MethodologyFooter.astro';
 import Disclaimer from '../../../components/Disclaimer.astro';
 import { site } from '../../../data/site';
 import { eobAnalyzerExamples } from '../../../data/tool-examples';
+import { EOB_COLUMN_GLOSSARY, EOB_PIPELINE_LANES } from '../../../lib/eob/parse';
 import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
 
 const faqs = [
@@ -29,6 +30,11 @@ const faqs = [
       'Insurers negotiate or apply fee schedules. The allowed amount is what your plan recognizes — often much lower than the provider charged.',
   },
   {
+    question: 'What does "plan paid $0" mean?',
+    answer:
+      'It can mean deductible not met, out-of-network care, non-covered service, or coinsurance not yet applied. Check reason codes on your full EOB.',
+  },
+  {
     question: 'Is this uploaded to your servers?',
     answer: 'No. Parsing happens entirely in your browser.',
   },
@@ -42,12 +48,18 @@ const faqs = [
     answer:
       'Usually you pay the provider per the bill, using the EOB to verify amounts. If you already paid more than the EOB shows you owe, you may request a refund.',
   },
+  {
+    question: 'What should I do after analyzing?',
+    answer:
+      'Compare "You owe" to your provider bill, use Fair Price for outlier CPT codes, Bill Auditor for itemized charges, and Surprise Bill Checker if out-of-network.',
+  },
 ];
 
 const schemaGraph = [
   webApplicationSchema({
     name: 'EOB Analyzer',
-    description: 'Paste Explanation of Benefits text for plain-English column summaries in your browser.',
+    description:
+      'Paste Explanation of Benefits text for insurer-aware parsing, totals, insights, and next steps — in your browser.',
     url: `${site.url}/tools/eob-analyzer/`,
   }),
   faqPageSchema(faqs),
@@ -60,7 +72,7 @@ const schemaGraph = [
 
 <ToolLayout
   title="EOB Analyzer"
-  description="Paste your Explanation of Benefits to decode billed, allowed, plan paid, and patient responsibility columns."
+  description="Paste your Explanation of Benefits to decode billed, allowed, plan paid, and patient responsibility — UHC, BCBS, Aetna, Cigna, and generic formats."
   crumbs={[
     { label: 'Home', href: '/' },
     { label: 'Tools', href: '/tools/' },
@@ -75,11 +87,40 @@ const schemaGraph = [
     <p>
       Paste text from your insurer's Explanation of Benefits. We auto-detect
       <strong>UnitedHealthcare</strong>, <strong>Blue Cross Blue Shield</strong>,
-      <strong>Aetna</strong>, and <strong>Cigna</strong> layouts, then summarize what you may owe.
+      <strong>Aetna</strong>, and <strong>Cigna</strong> layouts — then show totals, insights,
+      and suggested next steps. Not a bill; not legal advice.
     </p>
+    <div class="eob-inline-notice" role="note">
+      <strong>EOB ≠ bill.</strong> You usually pay the provider using the bill as the invoice —
+      the EOB explains how insurance processed the claim. Compare both before paying.
+    </div>
   </Fragment>
 
-  <form class="calculator card" id="eob-analyzer-form">
+  <section class="eob-lanes card" aria-label="How the EOB Analyzer works">
+    <h2 class="eob-lanes__title">EOB pipeline</h2>
+    <ul class="eob-lanes__grid">
+      {EOB_PIPELINE_LANES.map((lane) => (
+        <li class={`eob-lane eob-lane--${lane.level}`}>
+          <span class="eob-lane__title">{lane.title}</span>
+          <span class="eob-lane__detail">{lane.detail}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="eob-glossary card" aria-label="EOB column glossary">
+    <h2 class="eob-glossary__title">Column guide</h2>
+    <dl class="eob-glossary__grid">
+      {EOB_COLUMN_GLOSSARY.map((item) => (
+        <div>
+          <dt>{item.term}</dt>
+          <dd>{item.meaning}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <form class="calculator card tool-form tool-form--blue" id="eob-analyzer-form">
     <div class="field">
       <label class="input-label" for="eob-insurer">Insurer template</label>
       <select class="input-field" id="eob-insurer" name="eob-insurer">
@@ -92,6 +133,7 @@ const schemaGraph = [
       </select>
       <p class="input-hint">Use auto-detect first — override if columns map incorrectly.</p>
     </div>
+
     <div class="field">
       <label class="input-label" for="eob-text">EOB text</label>
       <textarea
@@ -99,17 +141,26 @@ const schemaGraph = [
         id="eob-text"
         name="eob-text"
         rows="10"
-        placeholder={`Example:\n01/15/2026 99213 Office visit $185.00 $108.42 $80.00 $28.42\n01/15/2026 80053 Metabolic panel $45.00 $13.22 $10.00 $3.22`}
+        placeholder={`Example:\nDate of Service: 01/15/2026\nProcedure Code: 99213\nAmount Billed: $185.00\nAllowed Amount: $108.42\nPlan Paid: $80.00\nYour Share: $28.42`}
         required
       ></textarea>
+      <p id="eob-line-preview" class="eob-line-preview" hidden role="status"></p>
+      <p class="input-hint">Copy from insurer portal or PDF — include all dollar columns per service line</p>
     </div>
-    <button type="submit" class="btn btn--primary">Analyze EOB</button>
+
+    <button type="submit" class="btn btn--primary btn--block">Analyze EOB</button>
+    <p class="calculator__note" role="status">All parsing runs in your browser. Nothing is uploaded.</p>
   </form>
 
   <div id="eob-error" class="form-error" hidden></div>
   <div id="eob-results" hidden></div>
 
-  <ToolExamples variant="eob-analyzer" examples={eobAnalyzerExamples} />
+  <ToolExamples
+    variant="eob-analyzer"
+    title="Insurer format examples"
+    hint="Click to load — we analyze automatically."
+    examples={eobAnalyzerExamples}
+  />
 
   <section class="tool-faq card">
     <h2>FAQ</h2>
@@ -125,17 +176,39 @@ const schemaGraph = [
 
   <Disclaimer />
 
-  <div slot="sidebar">
+  <Fragment slot="sidebar">
     <div class="sidebar-card card">
-      <h2>Learn more</h2>
-      <ul>
-        <li><a href="/learn/how-to-read-eob/">How to read an EOB</a></li>
-        <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
-        <li><a href="/for/insured/">Insured audience guide</a></li>
+      <h2>Supported formats</h2>
+      <ul class="means-list">
+        <li><strong>UHC</strong> — block fields: Your Share, Plan Paid</li>
+        <li><strong>BCBS</strong> — table: Amount You Owe, Paid by Plan</li>
+        <li><strong>Aetna</strong> — Negotiated Rate, Patient's Responsibility</li>
+        <li><strong>Cigna</strong> — Member Rate, Remaining Responsibility</li>
       </ul>
     </div>
+
+    <div class="privacy-card">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2l7 4v5c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+      <div>
+        <strong>Private by design</strong>
+        <p>Your EOB text never leaves your device. No account, no upload, no tracking.</p>
+      </div>
+    </div>
+
+    <div class="sidebar-card card">
+      <h2>After you analyze</h2>
+      <ul>
+        <li><a href="/tools/bill-auditor/">Bill Auditor</a></li>
+        <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
+        <li><a href="/tools/surprise-bill-check/">Surprise Bill Checker</a></li>
+        <li><a href="/learn/how-to-read-eob/">How to read an EOB</a></li>
+      </ul>
+    </div>
+
     <MethodologyFooter />
-  </div>
+  </Fragment>
 </ToolLayout>
 
 <script>
@@ -143,11 +216,125 @@ const schemaGraph = [
 </script>
 
 <style>
+  .eob-inline-notice {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #1e40af;
+  }
+
+  .eob-lanes {
+    margin-bottom: var(--space-lg);
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%);
+    border-color: #93c5fd;
+  }
+
+  .eob-lanes__title {
+    font-size: 1rem;
+    margin: 0 0 var(--space-md);
+    color: #1d4ed8;
+  }
+
+  .eob-lanes__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .eob-lane {
+    padding: 0.75rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    font-size: 0.8125rem;
+  }
+
+  .eob-lane--strong {
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+  }
+
+  .eob-lane--weak {
+    background: #fff;
+    border-color: #bfdbfe;
+  }
+
+  .eob-lane__title {
+    display: block;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .eob-lane__detail {
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  .eob-glossary {
+    margin-bottom: var(--space-xl);
+    background: #f8fafc;
+    border-color: var(--color-border);
+  }
+
+  .eob-glossary__title {
+    font-size: 1rem;
+    margin: 0 0 var(--space-md);
+  }
+
+  .eob-glossary__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--space-md);
+    margin: 0;
+  }
+
+  .eob-glossary__grid dt {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #1d4ed8;
+    margin-bottom: 0.25rem;
+  }
+
+  .eob-glossary__grid dd {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.45;
+  }
+
   .bill-textarea {
     min-height: 12rem;
     resize: vertical;
     font-family: var(--font-mono);
     font-size: 0.875rem;
+  }
+
+  .eob-line-preview {
+    margin: var(--space-sm) 0 0;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #1d4ed8;
+    background: #eff6ff;
+    border-radius: var(--radius-sm);
+    border: 1px solid #bfdbfe;
+  }
+
+  .btn--block {
+    width: 100%;
+    margin-top: var(--space-sm);
+  }
+
+  .calculator__note {
+    margin: var(--space-md) 0 0;
+    font-size: 0.8125rem;
   }
 
   .form-error {
@@ -157,6 +344,7 @@ const schemaGraph = [
     border: 1px solid #fecaca;
     border-radius: var(--radius-md);
     color: #991b1b;
+    font-size: 0.875rem;
   }
 
   #eob-results {
@@ -167,6 +355,66 @@ const schemaGraph = [
     margin-top: var(--space-xl);
   }
 
+  .means-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-md);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .means-list li {
+    padding-left: 1rem;
+    border-left: 3px solid #3b82f6;
+  }
+
+  .means-list strong {
+    display: block;
+    color: var(--color-primary);
+    margin-bottom: 0.125rem;
+  }
+
+  .privacy-card {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    padding: var(--space-lg);
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: var(--radius-xl);
+    font-size: 0.875rem;
+    color: #1e40af;
+  }
+
+  .privacy-card svg {
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .privacy-card strong {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .privacy-card p {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .sidebar-card h2 {
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .sidebar-card ul {
+    margin: 0;
+    padding-left: 1.125rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+
   .eob-insurer-badge {
     display: flex;
     flex-wrap: wrap;
@@ -174,8 +422,8 @@ const schemaGraph = [
     gap: 0.5rem 0.75rem;
     margin-bottom: var(--space-md);
     padding: var(--space-sm) var(--space-md);
-    background: #f0f9ff;
-    border: 1px solid #bae6fd;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
     border-radius: var(--radius-md);
     font-size: 0.875rem;
   }
@@ -186,5 +434,250 @@ const schemaGraph = [
     text-transform: uppercase;
     font-size: 0.6875rem;
     letter-spacing: 0.04em;
+  }
+</style>
+
+<style is:global>
+  #eob-results .eob-results {
+    animation: eob-fade-in 0.25s ease-out;
+  }
+
+  @keyframes eob-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.35rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .eob-results__headline {
+    font-size: 1.25rem;
+    margin: 0 0 var(--space-md);
+  }
+
+  .eob-results__headline:focus {
+    outline: none;
+  }
+
+  .eob-results__headline:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+  }
+
+  .eob-owe-highlight {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-lg);
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: var(--radius-md);
+    text-align: center;
+  }
+
+  .eob-owe-highlight--zero {
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+  }
+
+  .eob-owe-highlight__label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .eob-owe-highlight__amount {
+    font-size: 1.75rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: #1d4ed8;
+  }
+
+  .eob-owe-highlight--zero .eob-owe-highlight__amount {
+    color: #047857;
+  }
+
+  .eob-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    margin: 0 0 var(--space-lg);
+    padding: 0;
+  }
+
+  @media (max-width: 600px) {
+    .eob-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .eob-stats > div {
+    padding: var(--space-md);
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .eob-stats dt {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .eob-stats dd {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--color-primary);
+  }
+
+  .eob-insights {
+    margin-bottom: var(--space-lg);
+  }
+
+  .eob-insights h3,
+  .eob-path h3,
+  .eob-next-steps h3 {
+    font-size: 0.9375rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .eob-insights__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .eob-insight {
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border-left: 4px solid transparent;
+  }
+
+  .eob-insight--alert {
+    background: #fef2f2;
+    border-left-color: #dc2626;
+  }
+
+  .eob-insight--watch {
+    background: #fffbeb;
+    border-left-color: #f59e0b;
+  }
+
+  .eob-insight--info {
+    background: #eff6ff;
+    border-left-color: #3b82f6;
+  }
+
+  .eob-insight__headline {
+    margin: 0 0 0.25rem;
+    font-weight: 700;
+    font-size: 0.9375rem;
+  }
+
+  .eob-insight__detail {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .eob-path {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .eob-path__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .eob-path__list li {
+    display: flex;
+    gap: 0.625rem;
+    align-items: flex-start;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .eob-path__num {
+    flex-shrink: 0;
+    width: 1.375rem;
+    height: 1.375rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .eob-table__totals {
+    background: #f8fafc;
+    font-weight: 600;
+  }
+
+  .eob-row--alert {
+    background: #fef2f2;
+  }
+
+  .eob-row--high-owe td:last-child {
+    color: #b45309;
+  }
+
+  .eob-next-steps {
+    margin: var(--space-lg) 0;
+    font-size: 0.9375rem;
+  }
+
+  .eob-next-steps ul {
+    margin: 0;
+    padding-left: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .eob-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .eob-tool-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius-btn);
+    border: 1px solid var(--color-border);
+    background: #fff;
+    text-decoration: none;
+    color: var(--color-primary);
+  }
+
+  .eob-tool-link--primary {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: #fff;
   }
 </style>

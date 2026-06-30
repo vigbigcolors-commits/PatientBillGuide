@@ -4,8 +4,12 @@ import ToolExamples from '../../../components/tools/ToolExamples.astro';
 import MethodologyFooter from '../../../components/MethodologyFooter.astro';
 import Disclaimer from '../../../components/Disclaimer.astro';
 import { site } from '../../../data/site';
-import { fairPriceExamples } from '../../../data/tool-examples';
-import { PART_B_DEDUCTIBLE_2026 } from '../../../lib/pricing/medicare-part-b';
+import { fairPriceExamples, medicareLookupExamples } from '../../../data/tool-examples';
+import {
+  PART_B_DEDUCTIBLE_2026,
+  PART_B_GLOSSARY,
+  PART_B_PIPELINE_LANES,
+} from '../../../lib/pricing/medicare-part-b';
 import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
 
 const faqs = [
@@ -41,7 +45,22 @@ const faqs = [
   {
     question: 'What is the Medicare Part B tab?',
     answer:
-      'Same CMS allowed amount as Fair Price, plus a typical 80/20 split after the Part B deductible. It is an educational estimate — not your EOB or legal advice.',
+      'Same CMS allowed amount as Fair Price, plus an estimated patient share that applies the Part B deductible first, then typical 80/20 coinsurance. It is an educational estimate — not your MSN or legal advice.',
+  },
+  {
+    question: 'Does Medigap change my Part B estimate?',
+    answer:
+      'Yes. Plans like G and N often pay coinsurance after Medicare pays. This tab shows Traditional Medicare math only — check your supplement policy for what it covers.',
+  },
+  {
+    question: 'What about Medicare Advantage?',
+    answer:
+      'Medicare Advantage plans use different networks and copays. CMS allowed amounts here are Traditional Medicare benchmarks — compare to your plan EOB, not this estimate alone.',
+  },
+  {
+    question: 'Are preventive services $0?',
+    answer:
+      'Many in-network preventive services (annual wellness visit, screening mammogram) show $0 patient responsibility under Traditional Medicare. This tool still shows the CMS allowed amount for context.',
   },
   {
     question: 'Is this medical or legal advice?',
@@ -81,38 +100,93 @@ const schemaGraph = [
       Medicare benchmarks and a typical fair range — or switch to the <strong>Medicare Part B</strong> tab for
       coinsurance estimates.
     </p>
-    <div class="facility-inline-notice" role="note">
+    <div class="facility-inline-notice" data-tab-content="fair" role="note">
       <strong>Physician fee only.</strong> Medicare allowed amounts here do not include hospital outpatient,
       ER, or imaging <em>facility fees</em> — often billed on separate lines.
       <a href="/learn/how-to-read-medical-bill/#facility-professional">Facility vs professional →</a>
     </div>
+    <div class="medicare-inline-notice" data-tab-content="medicare" hidden role="note">
+      <strong>Traditional Medicare Part B.</strong> Estimate applies the {PART_B_DEDUCTIBLE_2026} annual
+      deductible, then 80/20 coinsurance. Medigap, Medicare Advantage, and Medicaid work differently —
+      compare to your <a href="/for/seniors-medicare/">MSN or plan EOB</a>.
+    </div>
   </Fragment>
 
   <div class="tool-tabs" role="tablist" aria-label="Calculator mode">
-    <button type="button" class="tool-tab tool-tab--active" role="tab" data-price-tab="fair" aria-selected="true">
+    <button
+      type="button"
+      class="tool-tab tool-tab--active"
+      id="tab-fair"
+      role="tab"
+      data-price-tab="fair"
+      aria-selected="true"
+      aria-controls="calculator-panel"
+      tabindex="0"
+    >
       Fair price check
     </button>
-    <button type="button" class="tool-tab" role="tab" data-price-tab="medicare" aria-selected="false">
+    <button
+      type="button"
+      class="tool-tab"
+      id="tab-medicare"
+      role="tab"
+      data-price-tab="medicare"
+      aria-selected="false"
+      aria-controls="calculator-panel"
+      tabindex="-1"
+    >
       Medicare Part B estimate
     </button>
   </div>
 
-  <form class="calculator card" id="fair-price-form">
+  <section class="part-b-lanes card" data-tab-content="medicare" hidden aria-label="How Part B cost-sharing works">
+    <h2 class="part-b-lanes__title">Part B cost-sharing pipeline</h2>
+    <ul class="part-b-lanes__grid">
+      {PART_B_PIPELINE_LANES.map((lane) => (
+        <li class={`part-b-lane part-b-lane--${lane.level}`}>
+          <span class="part-b-lane__title">{lane.title}</span>
+          <span class="part-b-lane__detail">{lane.detail}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="part-b-glossary card" data-tab-content="medicare" hidden aria-label="Medicare Part B glossary">
+    <h2 class="part-b-glossary__title">Term guide</h2>
+    <dl class="part-b-glossary__grid">
+      {PART_B_GLOSSARY.map((item) => (
+        <div>
+          <dt>{item.term}</dt>
+          <dd>{item.meaning}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <div id="calculator-panel" role="tabpanel" aria-labelledby="tab-fair">
+  <form class="calculator card tool-form tool-form--teal" id="fair-price-form">
     <div class="field">
       <label class="input-label" for="cpt">
         CPT procedure code <span class="required" aria-hidden="true">*</span>
       </label>
-      <input
-        class="input-field"
-        id="cpt"
-        name="cpt"
-        type="text"
-        inputmode="numeric"
-        placeholder="e.g. 99213"
-        autocomplete="off"
-        required
-      />
-      <p class="input-hint">Found on your bill or EOB. Try 99213, 77067, 93000</p>
+      <div class="cpt-combobox">
+        <input
+          class="input-field"
+          id="cpt"
+          name="cpt"
+          type="text"
+          inputmode="numeric"
+          placeholder="e.g. 99213"
+          autocomplete="off"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded="false"
+          aria-controls="cpt-suggestions"
+          required
+        />
+        <ul id="cpt-suggestions" class="cpt-suggestions" role="listbox" hidden></ul>
+      </div>
+      <p class="input-hint">Found on your bill or EOB — start typing for suggestions</p>
     </div>
 
     <div class="field">
@@ -175,11 +249,28 @@ const schemaGraph = [
       Uses CMS Medicare Physician Fee Schedule data. All calculations run in your browser.
     </p>
   </form>
+  </div>
+
+  <div id="fair-price-loading" class="fair-price-loading" hidden role="status" aria-live="polite">
+    <span class="fair-price-loading__spinner" aria-hidden="true"></span>
+    <span>Fetching CMS data… first lookup may take a few seconds.</span>
+  </div>
 
   <div id="fair-price-error" class="fair-price-error" hidden></div>
   <div id="fair-price-results" hidden></div>
 
-  <ToolExamples variant="fair-price" examples={fairPriceExamples} />
+  <div data-tab-content="fair">
+    <ToolExamples variant="fair-price" examples={fairPriceExamples} />
+  </div>
+
+  <div data-tab-content="medicare" hidden>
+    <ToolExamples
+      variant="medicare-lookup"
+      title="Medicare Part B examples"
+      hint="Click to load — we estimate automatically with deductible context."
+      examples={medicareLookupExamples}
+    />
+  </div>
 
   <section class="tool-faq card">
     <h2>FAQ</h2>
@@ -196,12 +287,12 @@ const schemaGraph = [
   <Disclaimer />
 
   <div slot="sidebar">
-    <div class="sidebar-card card">
+    <div class="sidebar-card card" data-tab-content="fair">
       <h2>What this means</h2>
       <ul class="means-list">
         <li>
-          <strong>Medicare allowed amount</strong> — what Medicare approves nationally as a
-          benchmark for this procedure.
+          <strong>Medicare allowed amount</strong> — CMS-approved physician fee for this code,
+          localized to your Medicare area when you enter a ZIP; otherwise the national rate.
         </li>
         <li>
           <strong>Fair range (1.5×–2.5×)</strong> — typical self-pay or commercial charges above
@@ -217,7 +308,35 @@ const schemaGraph = [
       </ul>
     </div>
 
-    <div class="privacy-card">
+    <div class="sidebar-card card" data-tab-content="medicare" hidden>
+      <h2>Part B estimate</h2>
+      <ul class="means-list means-list--medicare">
+        <li>
+          <strong>Allowed amount</strong> — CMS physician fee for this CPT in your Medicare locality.
+        </li>
+        <li>
+          <strong>Deductible ({PART_B_DEDUCTIBLE_2026}/yr)</strong> — you pay 100% of approved amounts until met.
+        </li>
+        <li>
+          <strong>Coinsurance (20%)</strong> — your share after deductible on each approved service.
+        </li>
+        <li>
+          <strong>Medigap / Advantage</strong> — supplements and MA plans change what you actually owe.
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card card" data-tab-content="medicare" hidden>
+      <h2>After you estimate</h2>
+      <ul>
+        <li><a href="/for/seniors-medicare/">Medicare patient guide</a></li>
+        <li><a href="/tools/eob-analyzer/">EOB Analyzer</a></li>
+        <li><a href="/tools/bill-auditor/">Bill Auditor</a></li>
+        <li><a href="/learn/how-to-read-eob/">How to read an EOB</a></li>
+      </ul>
+    </div>
+
+    <div class="privacy-card" data-tab-content="both">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M12 2l7 4v5c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z" stroke="currentColor" stroke-width="1.5" />
       </svg>
@@ -243,6 +362,28 @@ const schemaGraph = [
     margin-bottom: var(--space-lg);
   }
 
+  #calculator-panel .calculator {
+    overflow: visible;
+  }
+
+  .calculator button[type='submit'] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: var(--space-sm);
+  }
+
+  .calculator button[type='submit']:disabled {
+    opacity: 0.72;
+    cursor: wait;
+  }
+
+  .calculator button[type='submit'] svg {
+    flex-shrink: 0;
+  }
+
   .facility-inline-notice {
     margin-top: var(--space-md);
     padding: var(--space-md);
@@ -265,6 +406,19 @@ const schemaGraph = [
     flex-wrap: wrap;
   }
 
+  @media (max-width: 500px) {
+    .tool-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .tool-tab {
+      text-align: center;
+      padding-inline: 0.5rem;
+      font-size: 0.8125rem;
+    }
+  }
+
   .tool-tab {
     padding: 0.625rem 1rem;
     border: 1px solid var(--color-border);
@@ -277,10 +431,99 @@ const schemaGraph = [
     cursor: pointer;
   }
 
-  .tool-tab--active {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
+  .tool-tab--active[data-price-tab='fair'] {
+    background: #0d9488;
+    border-color: #0d9488;
     color: #fff;
+  }
+
+  .tool-tab--active[data-price-tab='medicare'] {
+    background: #059669;
+    border-color: #059669;
+    color: #fff;
+  }
+
+  .tool-tab:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .cpt-combobox {
+    position: relative;
+  }
+
+  .cpt-suggestions {
+    position: absolute;
+    z-index: 20;
+    top: calc(100% + 0.25rem);
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0.25rem 0;
+    list-style: none;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 24px rgb(15 23 42 / 0.12);
+    max-height: 14rem;
+    overflow-y: auto;
+  }
+
+  .cpt-suggestion {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+
+  .cpt-suggestion:hover,
+  .cpt-suggestion[aria-selected='true'] {
+    background: var(--color-accent-bg);
+  }
+
+  .cpt-suggestion__code {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  .cpt-suggestion__desc {
+    color: var(--color-muted);
+    line-height: 1.35;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fair-price-loading {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    padding: var(--space-md) var(--space-lg);
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    color: #0c4a6e;
+  }
+
+  .fair-price-loading__spinner {
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 2px solid #bae6fd;
+    border-top-color: #0284c7;
+    border-radius: 50%;
+    animation: fair-price-spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes fair-price-spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   .part-b-estimate {
@@ -321,14 +564,9 @@ const schemaGraph = [
     padding-left: 2.5rem;
   }
 
-  .calculator button[type='submit'] {
-    margin-top: var(--space-sm);
-  }
-
   .calculator__note {
     margin: var(--space-md) 0 0;
     font-size: 0.8125rem;
-    color: var(--color-muted);
   }
 
   .sidebar-card h2 {
@@ -400,6 +638,38 @@ const schemaGraph = [
     margin-top: var(--space-lg);
   }
 
+  #fair-price-results :global(.price-results__highlight) {
+    grid-column: 1 / -1;
+    padding: var(--space-md);
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: var(--radius-md);
+  }
+
+  #fair-price-results :global(.price-results__highlight dt) {
+    color: #065f46;
+  }
+
+  #fair-price-results :global(.price-results__highlight dd) {
+    font-size: 1.375rem;
+    color: #047857;
+  }
+
+  #fair-price-results :global(.price-results) {
+    animation: fair-price-fade-in 0.25s ease-out;
+  }
+
+  @keyframes fair-price-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.35rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .tool-faq {
     margin-top: var(--space-xl);
   }
@@ -407,5 +677,321 @@ const schemaGraph = [
   .tool-faq h2 {
     font-size: 1.125rem;
     margin: 0 0 var(--space-md);
+  }
+
+  .medicare-inline-notice {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #065f46;
+  }
+
+  .medicare-inline-notice a {
+    font-weight: 600;
+  }
+
+  .part-b-lanes {
+    margin-bottom: var(--space-lg);
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #a7f3d0 100%);
+    border-color: #6ee7b7;
+  }
+
+  .part-b-lanes__title {
+    font-size: 1rem;
+    margin: 0 0 var(--space-md);
+    color: #047857;
+  }
+
+  .part-b-lanes__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: var(--space-sm);
+  }
+
+  .part-b-lane {
+    padding: 0.75rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    font-size: 0.8125rem;
+  }
+
+  .part-b-lane--strong {
+    background: #fff;
+    border-color: #6ee7b7;
+  }
+
+  .part-b-lane--weak {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+  }
+
+  .part-b-lane__title {
+    display: block;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 0.25rem;
+  }
+
+  .part-b-lane__detail {
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  .part-b-glossary {
+    margin-bottom: var(--space-xl);
+    background: #f8fafc;
+    border-color: var(--color-border);
+  }
+
+  .part-b-glossary__title {
+    font-size: 1rem;
+    margin: 0 0 var(--space-md);
+  }
+
+  .part-b-glossary__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--space-md);
+    margin: 0;
+  }
+
+  .part-b-glossary__grid dt {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #047857;
+    margin-bottom: 0.25rem;
+  }
+
+  .part-b-glossary__grid dd {
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.45;
+  }
+
+  .means-list--medicare li {
+    border-left-color: #10b981;
+  }
+</style>
+
+<style is:global>
+  #fair-price-results .part-b-owe-highlight {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-lg);
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    border-radius: var(--radius-md);
+    text-align: center;
+  }
+
+  .part-b-owe-highlight__label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .part-b-owe-highlight__amount {
+    font-size: 1.75rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: #047857;
+  }
+
+  .part-b-deductible-track {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .part-b-deductible-track__header {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-md);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .part-b-deductible-track__bar {
+    height: 0.5rem;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .part-b-deductible-track__fill {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #059669);
+    border-radius: 999px;
+  }
+
+  .part-b-deductible-track__hint {
+    margin: 0.5rem 0 0;
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.45;
+  }
+
+  .part-b-breakdown {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .part-b-breakdown__title {
+    margin: 0 0 0.625rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .part-b-breakdown__bar {
+    display: flex;
+    height: 0.625rem;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #e2e8f0;
+  }
+
+  .part-b-breakdown__seg--deductible {
+    background: #f59e0b;
+  }
+
+  .part-b-breakdown__seg--coinsurance {
+    background: #ef4444;
+  }
+
+  .part-b-breakdown__seg--medicare {
+    background: #10b981;
+  }
+
+  .part-b-breakdown__legend {
+    list-style: none;
+    padding: 0;
+    margin: 0.625rem 0 0;
+    display: grid;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+  }
+
+  .part-b-breakdown__legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .part-b-breakdown__dot {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+
+  .part-b-breakdown__dot--deductible {
+    background: #f59e0b;
+  }
+
+  .part-b-breakdown__dot--coinsurance {
+    background: #ef4444;
+  }
+
+  .part-b-breakdown__dot--medicare {
+    background: #10b981;
+  }
+
+  .part-b-path {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .part-b-path h3,
+  .part-b-next-steps h3 {
+    font-size: 0.9375rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .part-b-path__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .part-b-path__list li {
+    display: flex;
+    gap: 0.625rem;
+    align-items: flex-start;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .part-b-path__num {
+    flex-shrink: 0;
+    width: 1.375rem;
+    height: 1.375rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #d1fae5;
+    color: #047857;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .part-b-next-steps {
+    margin: var(--space-lg) 0;
+    font-size: 0.9375rem;
+  }
+
+  .part-b-next-steps ul {
+    margin: 0;
+    padding-left: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .part-b-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    margin-bottom: var(--space-md);
+  }
+
+  .part-b-tool-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius-btn);
+    border: 1px solid var(--color-border);
+    background: #fff;
+    text-decoration: none;
+    color: var(--color-primary);
+  }
+
+  .part-b-tool-link--primary {
+    background: #10b981;
+    border-color: #10b981;
+    color: #fff;
   }
 </style>

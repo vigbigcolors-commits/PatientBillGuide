@@ -1,16 +1,39 @@
 import type { BillLineItem, BillAuditFlag } from './types';
-import type { NcciColumn2Edit, NcciDataset } from './ncci-types';
+import type { NcciColumn2Edit, NcciCompactEdit, NcciColumn2Edit as Edit, NcciDataset } from './ncci-types';
 
 export type { NcciDataset, NcciPtpEdit, NcciColumn2Edit } from './ncci-types';
 
+function genericNcciRationale(modifier: 0 | 1): string {
+  return modifier === 0
+    ? 'CMS NCCI procedure-to-procedure edit — verify with billing if both lines appear'
+    : 'CMS NCCI edit — separate billing may require an appropriate modifier';
+}
+
+function normalizeEdits(raw: NcciColumn2Edit[] | NcciCompactEdit[]): Edit[] {
+  if (raw.length === 0) return [];
+  const first = raw[0];
+  if (Array.isArray(first)) {
+    return (raw as NcciCompactEdit[]).map(([column2, modifier]) => ({
+      column2,
+      modifier,
+      rationale: genericNcciRationale(modifier),
+    }));
+  }
+  return raw as NcciColumn2Edit[];
+}
+
 function buildPairIndex(
   dataset: NcciDataset,
-): Map<string, NcciColumn2Edit[]> {
+): Map<string, Edit[]> {
   if (dataset.index) {
-    return new Map(Object.entries(dataset.index));
+    const map = new Map<string, Edit[]>();
+    for (const [column1, edits] of Object.entries(dataset.index)) {
+      map.set(column1, normalizeEdits(edits));
+    }
+    return map;
   }
 
-  const index = new Map<string, NcciColumn2Edit[]>();
+  const index = new Map<string, Edit[]>();
   for (const pair of dataset.pairs ?? []) {
     const list = index.get(pair.column1) ?? [];
     list.push({ column2: pair.column2, modifier: pair.modifier, rationale: pair.rationale });

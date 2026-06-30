@@ -1,0 +1,38 @@
+---
+import { author } from '../data/author';
+
+interface Props {
+  /** `by` → "By …" · `written` → "Written by …" */
+  variant?: 'by' | 'written';
+  updated?: string;
+  class?: string;
+}
+
+const { variant = 'by', updated, class: className } = Astro.props;
+const prefix = variant === 'written' ? 'Written by' : 'By';
+const dateLabel = variant === 'written' ? 'Last updated' : 'Updated';
+---
+
+<p class:list={['author-byline', className]}>
+  {prefix}
+  <a href={author.path}>{author.name}</a>
+  {updated && (
+    <>
+      {' '}
+      · {dateLabel} {updated}
+    </>
+  )}
+</p>
+
+<style>
+  .author-byline {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .author-byline a {
+    font-weight: 600;
+    margin-left: 0.25rem;
+  }
+</style>

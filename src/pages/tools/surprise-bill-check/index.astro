@@ -1,12 +1,18 @@
 ---
 import ToolLayout from '../../../layouts/ToolLayout.astro';
+import ToolExamples from '../../../components/tools/ToolExamples.astro';
 import MethodologyFooter from '../../../components/MethodologyFooter.astro';
 import Disclaimer from '../../../components/Disclaimer.astro';
 import { site } from '../../../data/site';
+import { surpriseBillExamples } from '../../../data/tool-examples';
 import {
+  BILL_SOURCE_LABELS,
   CARE_SETTING_LABELS,
+  CONSENT_LABELS,
   INSURANCE_LABELS,
   NETWORK_LABELS,
+  NSA_COVERAGE_LANES,
+  PROVIDER_ROLE_LABELS,
 } from '../../../lib/surprise-bill/check';
 import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
 
@@ -20,6 +26,11 @@ const faqs = [
     question: 'What does the No Surprises Act cover?',
     answer:
       'For many people with job-based or individual insurance, federal rules limit balance billing for emergency care, air ambulance, and certain out-of-network providers at in-network facilities. Ground ambulance and elective out-of-network facilities are common exceptions.',
+  },
+  {
+    question: 'What if I signed an out-of-network consent form?',
+    answer:
+      'For non-emergency care at an in-network facility, signing a notice allowing out-of-network billing may remove federal surprise-billing caps for that provider. Emergency care cannot require you to waive these protections in advance.',
   },
   {
     question: 'Does this tool guarantee I will not owe the bill?',
@@ -40,12 +51,18 @@ const faqs = [
     question: 'Is my data uploaded?',
     answer: 'No. All logic runs in your browser. We never receive your answers.',
   },
+  {
+    question: 'What should I do after a likely-protected result?',
+    answer:
+      'Request an itemized bill, compare your EOB, call your insurer, and consider our surprise-bill dispute letter template if balance billing continues.',
+  },
 ];
 
 const schemaGraph = [
   webApplicationSchema({
     name: 'Surprise Bill Checker',
-    description: 'Screen out-of-network medical bills against federal No Surprises Act rules — educational, browser-based.',
+    description:
+      'Screen out-of-network medical bills against federal No Surprises Act rules with confidence levels, timelines, and next steps.',
     url: `${site.url}/tools/surprise-bill-check/`,
   }),
   faqPageSchema(faqs),
@@ -58,7 +75,7 @@ const schemaGraph = [
 
 <ToolLayout
   title="Surprise Bill Checker"
-  description="Check whether federal No Surprises Act protections may apply to an out-of-network medical bill. Free, private, educational."
+  description="Screen out-of-network medical bills against federal No Surprises Act rules. Confidence levels, decision path, timeline, and dispute letter links — free and private."
   crumbs={[
     { label: 'Home', href: '/' },
     { label: 'Tools', href: '/tools/' },
@@ -71,13 +88,29 @@ const schemaGraph = [
 
   <Fragment slot="intro">
     <p>
-      Answer a few questions about where you received care and your insurance. We screen your
-      scenario against <strong>federal No Surprises Act</strong> rules — with confidence levels and
-      plain-English next steps. This is not legal advice.
+      Answer a few questions about where you received care, who billed you, and your insurance. We screen
+      your scenario against <strong>federal No Surprises Act</strong> rules — with a decision path,
+      confidence level, timeline, and links to dispute tools. Not legal advice.
     </p>
+    <div class="nsa-inline-notice" role="note">
+      <strong>Federal screening only.</strong> State laws, Medicare, Medicaid, and TRICARE follow different
+      rules. This tool does not read your EOB or guarantee savings.
+    </div>
   </Fragment>
 
-  <form class="calculator card" id="surprise-bill-form">
+  <section class="nsa-lanes card" aria-label="What the No Surprises Act often covers">
+    <h2 class="nsa-lanes__title">NSA coverage at a glance</h2>
+    <ul class="nsa-lanes__grid">
+      {NSA_COVERAGE_LANES.map((lane) => (
+        <li class={`nsa-lane nsa-lane--${lane.level}`}>
+          <span class="nsa-lane__title">{lane.title}</span>
+          <span class="nsa-lane__detail">{lane.detail}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <form class="calculator card tool-form tool-form--violet" id="surprise-bill-form">
     <fieldset class="field">
       <legend class="input-label">Where did you receive care?</legend>
       <div class="radio-grid">
@@ -98,10 +131,10 @@ const schemaGraph = [
         <label class="radio-inline"><input type="radio" name="is-emergency" value="yes" /> Yes</label>
         <label class="radio-inline"><input type="radio" name="is-emergency" value="no" checked /> No</label>
       </div>
-      <p class="input-hint">Emergency protections apply even at out-of-network facilities.</p>
+      <p class="input-hint">Emergency protections apply even at out-of-network facilities — consent waivers cannot apply.</p>
     </fieldset>
 
-    <fieldset class="field">
+    <fieldset class="field" data-field="facility-network">
       <legend class="input-label">Hospital or facility network status</legend>
       <div class="radio-row">
         {
@@ -116,7 +149,7 @@ const schemaGraph = [
     </fieldset>
 
     <fieldset class="field">
-      <legend class="input-label">Provider who sent the bill (doctor, ambulance, lab)</legend>
+      <legend class="input-label">Provider who sent the bill</legend>
       <div class="radio-row">
         {
           Object.entries(NETWORK_LABELS).map(([value, label]) => (
@@ -128,6 +161,51 @@ const schemaGraph = [
         }
       </div>
       <p class="input-hint">Classic surprise bills: in-network hospital + out-of-network anesthesiologist or ER doctor.</p>
+    </fieldset>
+
+    <fieldset class="field" data-field="provider-role">
+      <legend class="input-label">Which provider type sent the bill?</legend>
+      <div class="radio-grid radio-grid--compact">
+        {
+          Object.entries(PROVIDER_ROLE_LABELS).map(([value, label]) => (
+            <label class="radio-card radio-card--compact">
+              <input type="radio" name="provider-role" value={value} required={value === 'unknown'} checked={value === 'unknown'} />
+              <span>{label}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <fieldset class="field" data-field="consent" hidden>
+      <legend class="input-label">Did you sign an out-of-network consent notice?</legend>
+      <div class="radio-row radio-row--stack">
+        {
+          Object.entries(CONSENT_LABELS)
+            .filter(([value]) => value !== 'not_applicable')
+            .map(([value, label]) => (
+              <label class="radio-inline radio-inline--block">
+                <input type="radio" name="consent-status" value={value} required={value === 'not_sure'} checked={value === 'not_sure'} />
+                {label}
+              </label>
+            ))
+        }
+      </div>
+      <p class="input-hint">At in-network hospitals, signing a waiver may allow balance billing for non-emergency care.</p>
+    </fieldset>
+
+    <fieldset class="field">
+      <legend class="input-label">What type of bill did you receive?</legend>
+      <div class="radio-row radio-row--stack">
+        {
+          Object.entries(BILL_SOURCE_LABELS).map(([value, label]) => (
+            <label class="radio-inline radio-inline--block">
+              <input type="radio" name="bill-source" value={value} required={value === 'unknown'} checked={value === 'unknown'} />
+              {label}
+            </label>
+          ))
+        }
+      </div>
     </fieldset>
 
     <fieldset class="field">
@@ -144,11 +222,19 @@ const schemaGraph = [
       </div>
     </fieldset>
 
-    <button type="submit" class="btn btn--primary">Check surprise bill risk</button>
+    <button type="submit" class="btn btn--primary btn--block">Check surprise bill risk</button>
+    <p class="calculator__note" role="status">Educational screening only — runs entirely in your browser.</p>
   </form>
 
   <div id="surprise-bill-error" class="form-error" hidden></div>
   <div id="surprise-bill-results" hidden></div>
+
+  <ToolExamples
+    variant="surprise-bill"
+    title="Real-world scenarios"
+    hint="Click to load answers — we run the screening automatically."
+    examples={surpriseBillExamples}
+  />
 
   <section class="tool-faq card">
     <h2>FAQ</h2>
@@ -164,17 +250,47 @@ const schemaGraph = [
 
   <Disclaimer />
 
-  <div slot="sidebar">
+  <Fragment slot="sidebar">
     <div class="sidebar-card card">
-      <h2>Related tools</h2>
-      <ul>
-        <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
-        <li><a href="/tools/eob-analyzer/">EOB Analyzer</a></li>
-        <li><a href="/tools/bill-auditor/">Bill Auditor</a></li>
+      <h2>What this screens</h2>
+      <ul class="means-list">
+        <li>
+          <strong>Emergency care</strong> — in-network cost-sharing even if the ER or hospital is out-of-network.
+        </li>
+        <li>
+          <strong>In-network hospital + OON doctor</strong> — classic ancillary surprise (anesthesia, radiology, pathology).
+        </li>
+        <li>
+          <strong>Consent waivers</strong> — signing an OON notice may remove NSA caps for non-emergency care.
+        </li>
+        <li>
+          <strong>Ground ambulance</strong> — weak federal protection; state rules vary widely.
+        </li>
       </ul>
     </div>
+
+    <div class="privacy-card">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2l7 4v5c0 5-3.5 9.5-7 11-3.5-1.5-7-6-7-11V6l7-4z" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+      <div>
+        <strong>Private by design</strong>
+        <p>Your answers never leave your device. No account, no upload, no tracking of your scenario.</p>
+      </div>
+    </div>
+
+    <div class="sidebar-card card">
+      <h2>If protections likely apply</h2>
+      <ul>
+        <li><a href="/tools/dispute-letter/?template=surprise-bill">Surprise bill dispute letter</a></li>
+        <li><a href="/tools/eob-analyzer/">EOB Analyzer</a></li>
+        <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
+        <li><a href="/learn/how-to-read-eob/">How to read an EOB</a></li>
+      </ul>
+    </div>
+
     <MethodologyFooter />
-  </div>
+  </Fragment>
 </ToolLayout>
 
 <script>
@@ -182,56 +298,101 @@ const schemaGraph = [
 </script>
 
 <style>
-  .radio-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-    gap: 0.625rem;
-    margin-top: 0.5rem;
-  }
-
-  .radio-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
-    padding: 0.75rem 0.875rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    font-size: 0.9375rem;
-    line-height: 1.4;
-    transition: border-color 0.15s, background 0.15s;
-  }
-
-  .radio-card:has(input:checked) {
-    border-color: #8b5cf6;
+  .nsa-inline-notice {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
     background: #f5f3ff;
+    border: 1px solid #ddd6fe;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #4c1d95;
   }
 
-  .radio-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem 1.5rem;
-    margin-top: 0.5rem;
+  .nsa-lanes {
+    margin-bottom: var(--space-xl);
+    background: linear-gradient(135deg, #faf5ff 0%, #f5f3ff 50%, #ede9fe 100%);
+    border-color: #ddd6fe;
   }
 
-  .radio-inline {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    cursor: pointer;
-    font-size: 0.9375rem;
+  .nsa-lanes__title {
+    font-size: 1rem;
+    margin: 0 0 var(--space-md);
+    color: #5b21b6;
   }
 
-  fieldset.field {
-    border: none;
+  .nsa-lanes__grid {
+    list-style: none;
     padding: 0;
-    margin: 0 0 var(--space-lg);
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: var(--space-sm);
   }
 
-  fieldset.field legend.input-label {
-    float: left;
-    width: 100%;
+  .nsa-lane {
+    padding: 0.75rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    font-size: 0.8125rem;
+  }
+
+  .nsa-lane--strong {
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+  }
+
+  .nsa-lane--weak {
+    background: #fff7ed;
+    border-color: #fed7aa;
+  }
+
+  .nsa-lane__title {
+    display: block;
+    font-weight: 700;
+    color: var(--color-primary);
     margin-bottom: 0.25rem;
+  }
+
+  .nsa-lane__detail {
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  .calculator .field {
+    margin-bottom: var(--space-lg);
+  }
+
+  .radio-grid--compact {
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  }
+
+  .radio-card--compact {
+    padding: 0.625rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .radio-row--stack {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .radio-inline--block {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    line-height: 1.4;
+  }
+
+  .btn--block {
+    width: 100%;
+    margin-top: var(--space-sm);
+  }
+
+  .calculator__note {
+    margin: var(--space-md) 0 0;
+    font-size: 0.8125rem;
   }
 
   .form-error {
@@ -241,16 +402,94 @@ const schemaGraph = [
     border: 1px solid #fecaca;
     border-radius: var(--radius-md);
     color: #991b1b;
+    font-size: 0.875rem;
   }
 
   #surprise-bill-results {
     margin-top: var(--space-lg);
   }
 
+  #surprise-bill-results :global(.surprise-results) {
+    animation: surprise-fade-in 0.25s ease-out;
+  }
+
+  @keyframes surprise-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.35rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .tool-faq {
     margin-top: var(--space-xl);
   }
 
+  .means-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-md);
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .means-list li {
+    padding-left: 1rem;
+    border-left: 3px solid #8b5cf6;
+  }
+
+  .means-list strong {
+    display: block;
+    color: var(--color-primary);
+    margin-bottom: 0.125rem;
+  }
+
+  .privacy-card {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    padding: var(--space-lg);
+    background: #f5f3ff;
+    border: 1px solid #ddd6fe;
+    border-radius: var(--radius-xl);
+    font-size: 0.875rem;
+    color: #5b21b6;
+  }
+
+  .privacy-card svg {
+    flex-shrink: 0;
+    margin-top: 0.125rem;
+  }
+
+  .privacy-card strong {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .privacy-card p {
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .sidebar-card h2 {
+    font-size: 1rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .sidebar-card ul {
+    margin: 0;
+    padding-left: 1.125rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+</style>
+
+<style is:global>
   .surprise-results__badge {
     display: flex;
     flex-wrap: wrap;
@@ -275,27 +514,158 @@ const schemaGraph = [
     color: #5b21b6;
   }
 
-  :global(.surprise-risk--protected) {
-    border-left: 4px solid #059669;
+  .surprise-results__headline {
+    font-size: 1.25rem;
+    margin: 0 0 var(--space-sm);
   }
 
-  :global(.surprise-risk--elevated) {
-    border-left: 4px solid #dc2626;
+  .surprise-results__headline:focus {
+    outline: none;
   }
 
-  :global(.surprise-risk--unclear) {
-    border-left: 4px solid #d97706;
+  .surprise-results__headline:focus-visible {
+    outline: 2px solid #8b5cf6;
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
   }
 
-  :global(.surprise-risk--normal) {
-    border-left: 4px solid #2563eb;
+  .surprise-results__summary {
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0 0 var(--space-lg);
   }
 
-  :global(.surprise-caveats) {
+  .surprise-path {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    background: #f8fafc;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+
+  .surprise-path h3,
+  .surprise-section h3 {
+    font-size: 0.9375rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .surprise-path__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .surprise-path__list li {
+    display: flex;
+    gap: 0.625rem;
+    align-items: flex-start;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .surprise-path__num {
+    flex-shrink: 0;
+    width: 1.375rem;
+    height: 1.375rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #ede9fe;
+    color: #5b21b6;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .surprise-section {
+    margin-bottom: var(--space-lg);
+    font-size: 0.9375rem;
+  }
+
+  .surprise-section ul {
+    margin: 0;
+    padding-left: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .surprise-timeline ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.625rem;
+  }
+
+  .surprise-timeline li {
+    padding-left: 0.75rem;
+    border-left: 3px solid #8b5cf6;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .surprise-dispute-cta {
+    margin: var(--space-lg) 0;
+    padding: var(--space-lg);
+    background: #f5f3ff;
+    border: 1px solid #ddd6fe;
+    border-radius: var(--radius-md);
+  }
+
+  .surprise-dispute-cta p {
+    margin: 0 0 var(--space-md);
+    font-size: 0.9375rem;
+    color: #4c1d95;
+  }
+
+  .surprise-caveats {
     margin-top: var(--space-md);
     padding: var(--space-md);
     background: #fffbeb;
     border-radius: var(--radius-md);
     font-size: 0.9375rem;
+  }
+
+  .surprise-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: var(--space-lg);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .surprise-tool-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius-btn);
+    border: 1px solid var(--color-border);
+    background: #fff;
+    text-decoration: none;
+    color: var(--color-primary);
+  }
+
+  .surprise-tool-link--primary {
+    background: #8b5cf6;
+    border-color: #8b5cf6;
+    color: #fff;
+  }
+
+  .surprise-risk--protected {
+    border-left: 4px solid #059669;
+  }
+
+  .surprise-risk--elevated {
+    border-left: 4px solid #dc2626;
+  }
+
+  .surprise-risk--unclear {
+    border-left: 4px solid #d97706;
+  }
+
+  .surprise-risk--normal {
+    border-left: 4px solid #2563eb;
   }
 </style>

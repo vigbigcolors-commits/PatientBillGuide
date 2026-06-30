@@ -1,18 +1,25 @@
 {
   "mpfs": {
     "version": "2026",
-    "url": "/data/mpfs-2026.json",
+    "url": "/data/mpfs-2026.json.gz",
     "codeCount": 7740
   },
   "zipLocality": {
     "version": "2026",
-    "url": "/data/zip-to-locality.json",
+    "url": "/data/zip-to-locality.json.gz",
     "zipCount": 42956
+  },
+  "cptIndex": {
+    "version": "2026",
+    "url": "/data/cpt-index.json.gz",
+    "codeCount": 7740
   },
   "ncci": {
     "version": "2026Q3",
-    "url": "/data/ncci-ptp.json.gz",
-    "pairCount": 1728585
+    "mode": "chunked",
+    "chunkUrl": "/data/ncci-chunks/{prefix}.json.gz",
+    "pairCount": 1728585,
+    "format": "compact-v1"
   },
-  "updatedAt": "2026-06-29"
+  "updatedAt": "2026-06-30"
 }

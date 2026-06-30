@@ -1,30 +1,380 @@
 ---
-import LegalLayout from '../../layouts/LegalLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ToolsDirectory from '../../components/tools/ToolsDirectory.astro';
+import Disclaimer from '../../components/Disclaimer.astro';
+import { site } from '../../data/site';
+import { toolsHubMeta, toolsHubTrust, toolsHubAudiences } from '../../data/tools-hub-content';
+import { liveToolCount } from '../../data/tools-directory';
+import { breadcrumbSchema, webApplicationSchema } from '../../lib/seo/schema';
+import { directoryTools } from '../../data/tools-directory';
+
+const liveApps = directoryTools.filter((t) => t.status === 'live' && t.href);
+
+const schemaGraph = [
+  breadcrumbSchema([{ name: 'Home', url: '/' }, { name: 'Tools' }], site.url),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'PatientBillGuide billing tools',
+    description: toolsHubMeta.description,
+    numberOfItems: liveApps.length,
+    itemListElement: liveApps.map((tool, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: tool.title,
+      url: `${site.url}${tool.href}`,
+    })),
+  },
+  ...liveApps.map((tool) =>
+    webApplicationSchema({
+      name: tool.title,
+      description: tool.description,
+      url: `${site.url}${tool.href}`,
+    }),
+  ),
+];
 ---
 
-<LegalLayout
-  title="Tools"
-  description="Free PatientBillGuide tools — fair price checks, bill auditor, EOB analyzer, surprise bill checker, and more."
-  crumbs={[{ label: 'Tools' }]}
->
-  <h2>CHECK — fair numbers</h2>
-  <ul>
-    <li><a href="/tools/fair-price/"><strong>Fair Price Calculator</strong></a> — live</li>
-    <li><a href="/tools/fair-price/?tab=medicare"><strong>Medicare Part B estimate</strong></a> — tab on Fair Price</li>
-    <li><a href="/tools/surprise-bill-check/"><strong>Surprise Bill Checker</strong></a> — live</li>
-    <li>Hospital Price Compare — planned</li>
-  </ul>
+<BaseLayout title={toolsHubMeta.title} description={toolsHubMeta.description} showTrustStrip>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
 
-  <h2>UNDERSTAND — your documents</h2>
-  <ul>
-    <li><a href="/tools/bill-auditor/"><strong>Itemized Bill Auditor</strong></a> — live</li>
-    <li><a href="/tools/eob-analyzer/"><strong>EOB Analyzer</strong></a> — UHC, BCBS, Aetna, Cigna</li>
-    <li>Quick Code Lookup — planned (use <a href="/codes/">CPT encyclopedia</a> for now)</li>
-  </ul>
+  {/* ── Light hero ── */}
+  <section class="th-hero" aria-labelledby="tools-hero-heading">
+    <div class="th-hero__bg" aria-hidden="true">
+      <span class="th-blob th-blob--1"></span>
+      <span class="th-blob th-blob--2"></span>
+      <span class="th-grid"></span>
+    </div>
+    <div class="container th-hero__inner">
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Tools' }]} />
+      <div class="th-hero__layout">
+        <div class="th-hero__copy">
+          <p class="th-eyebrow">CHECK → UNDERSTAND → ACT</p>
+          <h1 id="tools-hero-heading">Free billing tools</h1>
+          <p class="th-hero__lead">
+            Each tool answers one real patient question — fair price, confusing bill, insurance
+            statement, or what to write back. Everything runs <strong>in your browser</strong>: no
+            account, no upload.
+          </p>
+          <div class="th-hero__actions">
+            <a href="/tools/fair-price/" class="btn btn--primary">Fair Price Calculator</a>
+            <a href="#cluster-CHECK" class="btn btn--secondary">Browse all tools</a>
+          </div>
+        </div>
+        <ul class="th-chips" role="list">
+          {
+            toolsHubTrust.map((t) => (
+              <li class="th-chip">
+                <strong>{t.label}</strong>
+                <span>{t.detail}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
 
-  <h2>ACT — next steps</h2>
-  <ul>
-    <li><a href="/tools/dispute-letter/"><strong>Dispute Letter Builder</strong></a> — live</li>
-    <li>Self-Pay Negotiation Script — coming soon</li>
-  </ul>
-</LegalLayout>
+  {/* ── Audience strip ── */}
+  <section class="th-audiences" aria-label="Tools by situation">
+    <div class="container th-audiences__grid">
+      {
+        toolsHubAudiences.map((a) => (
+          <a href={a.href} class="th-audience">
+            <span class="th-audience__label">{a.label}</span>
+            <span class="th-audience__text">{a.text}</span>
+            <span class="th-audience__arrow" aria-hidden="true">→</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  {/* ── Directory ── */}
+  <section class="th-directory" aria-label="All tools">
+    <div class="container">
+      <ToolsDirectory />
+      <div class="th-disclaimer">
+        <Disclaimer />
+      </div>
+    </div>
+  </section>
+
+  {/* ── CTA ── */}
+  <section class="th-cta" aria-label="Get started">
+    <div class="container th-cta__box">
+      <div class="th-cta__copy">
+        <h2>One CPT code, one ZIP — under a minute</h2>
+        <p>Most patients start with Fair Price before paying a hospital or clinic bill.</p>
+      </div>
+      <div class="th-cta__actions">
+        <a href="/tools/fair-price/" class="btn btn--primary">Fair Price Calculator</a>
+        <a href="/how-it-works/" class="btn btn--secondary">How it works</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .th-eyebrow {
+    margin: 0 0 0.625rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+  }
+
+  /* Light hero */
+  .th-hero {
+    position: relative;
+    padding: 2rem 0 2.5rem;
+    background: linear-gradient(180deg, #fafaf9 0%, #f0fdfa 100%);
+    border-bottom: 1px solid #e7e5e4;
+    overflow: hidden;
+  }
+
+  .th-hero__bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .th-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+  }
+
+  .th-blob--1 {
+    width: 20rem;
+    height: 20rem;
+    top: -6rem;
+    right: 10%;
+    background: rgb(153 246 228 / 0.45);
+  }
+
+  .th-blob--2 {
+    width: 14rem;
+    height: 14rem;
+    bottom: -4rem;
+    left: -2rem;
+    background: rgb(254 243 199 / 0.5);
+  }
+
+  .th-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgb(15 23 42 / 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(15 23 42 / 0.025) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: linear-gradient(180deg, black 0%, transparent 90%);
+  }
+
+  .th-hero__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .th-hero__layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .th-hero__copy {
+    max-width: 38rem;
+  }
+
+  .th-hero h1 {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(2.125rem, 4.5vw, 2.875rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
+  }
+
+  .th-hero__lead {
+    margin: 0 0 1.5rem;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+  }
+
+  .th-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .th-chips {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .th-chip {
+    padding: 0.875rem 1rem;
+    background: rgb(255 255 255 / 0.75);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgb(255 255 255 / 0.9);
+    border-radius: 0.875rem;
+    box-shadow: 0 4px 16px rgb(13 148 136 / 0.06);
+  }
+
+  .th-chip strong {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #0f766e;
+    margin-bottom: 0.15rem;
+  }
+
+  .th-chip span {
+    font-size: 0.75rem;
+    line-height: 1.45;
+    color: var(--color-muted);
+  }
+
+  /* Audiences */
+  .th-audiences {
+    padding: 1rem 0;
+    background: #fff;
+    border-bottom: 1px solid #f5f5f4;
+  }
+
+  .th-audiences__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  .th-audience {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    background: #fafaf9;
+    border: 1px solid #e7e5e4;
+    border-radius: 0.875rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+
+  .th-audience:hover {
+    background: #f0fdfa;
+    border-color: #99f6e4;
+    transform: translateY(-1px);
+  }
+
+  .th-audience__label {
+    flex-shrink: 0;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-accent);
+    min-width: 4.5rem;
+  }
+
+  .th-audience__text {
+    flex: 1;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--color-muted);
+  }
+
+  .th-audience__arrow {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  /* Directory */
+  .th-directory {
+    padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+    background: #fafaf9;
+  }
+
+  .th-disclaimer {
+    margin-top: var(--space-2xl);
+  }
+
+  .th-disclaimer :global(.disclaimer) {
+    margin: 0;
+  }
+
+  /* CTA — soft, not dark */
+  .th-cta {
+    padding: clamp(2rem, 4vw, 3rem) 0;
+    background: #fff;
+    border-top: 1px solid #e7e5e4;
+  }
+
+  .th-cta__box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.75rem 2rem;
+    border-radius: 1.25rem;
+    background: linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 50%, #fff 100%);
+    border: 1px solid #99f6e4;
+    box-shadow: 0 8px 28px rgb(13 148 136 / 0.08);
+  }
+
+  .th-cta__copy h2 {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    letter-spacing: -0.02em;
+    color: var(--color-primary);
+  }
+
+  .th-cta__copy p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+  }
+
+  .th-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 900px) {
+    .th-hero__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .th-chips {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .th-chip {
+      flex: 1 1 calc(50% - 0.5rem);
+    }
+
+    .th-audiences__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .th-cta__box {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

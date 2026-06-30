@@ -45,6 +45,13 @@ export function initDisputeLetter(root: ParentNode = document) {
   templateSelect?.addEventListener('change', updateDesc);
   updateDesc();
 
+  const params = new URLSearchParams(window.location.search);
+  const preset = params.get('template');
+  if (preset && templateSelect && preset in TEMPLATE_LABELS) {
+    templateSelect.value = preset;
+    updateDesc();
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const letter = buildDisputeLetter(readForm(form));

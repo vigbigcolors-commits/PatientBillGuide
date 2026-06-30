@@ -28,4 +28,16 @@ export interface BillAuditResult {
   summary: string;
   looksNormal: boolean;
   skippedUnknownCodes: number;
+  stats: BillAuditStats;
+  /** Plain-English list of checks performed */
+  checksRun: string[];
+  nextSteps: string[];
+}
+
+export interface BillAuditStats {
+  totalCharged: number;
+  uniqueCodes: number;
+  byCategory: Record<FlagCategory, number>;
+  bySeverity: Record<FlagSeverity, number>;
+  concernCount: number;
 }

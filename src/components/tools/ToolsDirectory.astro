@@ -1,0 +1,307 @@
+---
+import ToolCard from './ToolCard.astro';
+import { directoryTools, toolClusters, liveToolCount } from '../../data/tools-directory';
+
+const liveTools = directoryTools.filter((t) => t.status === 'live' && t.href);
+---
+
+<div class="tools-directory">
+  <nav class="tools-directory__nav" aria-label="Tool clusters">
+    {
+      toolClusters.map((cluster) => (
+        <a href={`#cluster-${cluster.id}`} class="tools-directory__nav-link">
+          <span class="tools-directory__nav-step">{cluster.step}</span>
+          <span class="tools-directory__nav-text">
+            <strong>{cluster.label}</strong>
+            <span>{cluster.subtitle}</span>
+          </span>
+        </a>
+      ))
+    }
+  </nav>
+
+  {/* Featured bento — top 3 most-used tools */}
+  <section class="tools-directory__bento" aria-labelledby="tools-bento-heading">
+    <header class="tools-directory__bento-head">
+      <div>
+        <h2 id="tools-bento-heading">Most patients start here</h2>
+        <p>Fair price check, bill audit, or EOB decode — pick your entry point.</p>
+      </div>
+      <span class="tools-directory__live-pill">{liveToolCount} live · browser-only</span>
+    </header>
+    <div class="tools-directory__bento-grid">
+      {
+        liveTools
+          .filter((t) => ['fair-price', 'bill-auditor', 'eob-analyzer'].includes(t.id))
+          .map((tool) => <ToolCard tool={tool} featured />)
+      }
+    </div>
+  </section>
+
+  {
+    toolClusters.map((cluster) => {
+      const tools = directoryTools.filter((t) => t.cluster === cluster.id);
+      const liveInCluster = tools.filter((t) => t.status === 'live').length;
+      return (
+        <section
+          id={`cluster-${cluster.id}`}
+          class={`tools-directory__section tools-directory__section--${cluster.id.toLowerCase()}`}
+          aria-labelledby={`cluster-heading-${cluster.id}`}
+        >
+          <header class="tools-directory__section-head">
+            <div class="tools-directory__section-icon" aria-hidden="true">
+              {cluster.step}
+            </div>
+            <div class="tools-directory__section-text">
+              <span class="tools-directory__cluster-tag">{cluster.id}</span>
+              <h2 id={`cluster-heading-${cluster.id}`}>{cluster.label}</h2>
+              <p>{cluster.subtitle}</p>
+            </div>
+            <span class="tools-directory__section-count">
+              {liveInCluster} live · {tools.length - liveInCluster} coming
+            </span>
+          </header>
+
+          <div class="tools-directory__grid">
+            {tools.map((tool) => (
+              <ToolCard tool={tool} />
+            ))}
+          </div>
+        </section>
+      );
+    })
+  }
+</div>
+
+<style>
+  .tools-directory__nav {
+    display: flex;
+    gap: 0.625rem;
+    margin-bottom: clamp(2rem, 4vw, 2.75rem);
+    padding: 0.5rem;
+    background: #fff;
+    border: 1px solid #e7e5e4;
+    border-radius: 1.125rem;
+    box-shadow: 0 2px 12px rgb(15 23 42 / 0.04);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tools-directory__nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tools-directory__nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 10.5rem;
+    padding: 0.875rem 1rem;
+    border-radius: 0.875rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+
+  .tools-directory__nav-link:hover {
+    background: #f0fdfa;
+  }
+
+  .tools-directory__nav-step {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 2.125rem;
+    height: 2.125rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(145deg, #5eead4, #0d9488);
+    border-radius: 0.625rem;
+    box-shadow: 0 2px 8px rgb(13 148 136 / 0.25);
+  }
+
+  .tools-directory__nav-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+
+  .tools-directory__nav-text strong {
+    font-size: 0.9375rem;
+    color: var(--color-primary);
+  }
+
+  .tools-directory__nav-text span {
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  /* Bento */
+  .tools-directory__bento {
+    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+    padding-bottom: clamp(2rem, 4vw, 2.5rem);
+    border-bottom: 1px solid #e7e5e4;
+  }
+
+  .tools-directory__bento-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .tools-directory__bento-head h2 {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .tools-directory__bento-head p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+  }
+
+  .tools-directory__live-pill {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 0.45rem 0.875rem;
+    border-radius: 999px;
+    background: #ecfdf5;
+    color: #0f766e;
+    border: 1px solid #99f6e4;
+  }
+
+  .tools-directory__bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.875rem;
+  }
+
+  /* Sections */
+  .tools-directory__section {
+    margin-bottom: clamp(2.75rem, 5vw, 3.75rem);
+    scroll-margin-top: 1.5rem;
+  }
+
+  .tools-directory__section:last-child {
+    margin-bottom: 0;
+  }
+
+  .tools-directory__section--check {
+    --section-tint: #f0fdfa;
+  }
+
+  .tools-directory__section--understand {
+    --section-tint: #fffbeb;
+  }
+
+  .tools-directory__section--act {
+    --section-tint: #eff6ff;
+  }
+
+  .tools-directory__section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.25rem;
+    margin-bottom: 1.375rem;
+    padding: 1.25rem 1.375rem;
+    border-radius: 1.125rem;
+    background: var(--section-tint, #fafaf9);
+    border: 1px solid rgb(0 0 0 / 0.05);
+  }
+
+  .tools-directory__section-icon {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(145deg, #64748b, #334155);
+    border-radius: 0.75rem;
+  }
+
+  .tools-directory__section--check .tools-directory__section-icon {
+    background: linear-gradient(145deg, #2dd4bf, #0d9488);
+  }
+
+  .tools-directory__section--understand .tools-directory__section-icon {
+    background: linear-gradient(145deg, #fbbf24, #d97706);
+  }
+
+  .tools-directory__section--act .tools-directory__section-icon {
+    background: linear-gradient(145deg, #60a5fa, #2563eb);
+  }
+
+  .tools-directory__section-text {
+    flex: 1;
+    min-width: 12rem;
+  }
+
+  .tools-directory__cluster-tag {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+  }
+
+  .tools-directory__section-text h2 {
+    margin: 0 0 0.2rem;
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .tools-directory__section-text p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+  }
+
+  .tools-directory__section-count {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-muted);
+    padding: 0.4rem 0.875rem;
+    background: #fff;
+    border-radius: 999px;
+    border: 1px solid #e7e5e4;
+  }
+
+  .tools-directory__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.875rem;
+  }
+
+  @media (max-width: 1100px) {
+    .tools-directory__bento-grid,
+    .tools-directory__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .tools-directory__bento-grid,
+    .tools-directory__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tools-directory__section-head {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

@@ -2,55 +2,64 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { cptCodeList } from '../../data/cpt-codes';
+
+const categories = [...new Set(cptCodeList.map((c) => c.category))].sort();
+const byCategory = categories.map((cat) => ({
+  name: cat,
+  codes: cptCodeList.filter((c) => c.category === cat),
+}));
 ---
 
 <BaseLayout
   title="CPT Codes — Cost & Billing Guides"
-  description="Plain-English guides to common CPT procedure codes with Medicare benchmarks and fair price ranges. Free, browser-based tools."
+  description="Plain-English guides to 30 common CPT procedure codes with Medicare benchmarks and fair price ranges. Free, browser-based tools."
 >
   <div class="codes-hub">
     <div class="container">
       <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'CPT Codes' }]} />
       <header class="codes-hub__header">
+        <p class="codes-hub__eyebrow">30 guides · original plain English</p>
         <h1>CPT procedure codes</h1>
         <p>
-          Original plain-English guides to 20 frequently billed Tier-1 codes — with Medicare
-          benchmarks and embedded price checks. Expanding toward 50 codes.
+          Original guides to frequently billed codes — office visits, ER, imaging, labs, surgery,
+          and more. Each page includes Medicare benchmarks and an embedded price check. Fair Price
+          supports <strong>7,700+ codes</strong> beyond this list.
         </p>
       </header>
 
       <section class="codes-hub__tools card">
-        <h2>Quick price check</h2>
-        <p>Know your code? Jump straight to the calculator.</p>
+        <div>
+          <h2>Know your code?</h2>
+          <p>Jump to the calculator — any Medicare fee schedule code + your ZIP.</p>
+        </div>
         <a class="btn btn--primary" href="/tools/fair-price/">Fair Price Calculator</a>
       </section>
 
-      <section>
-        <h2>Featured CPT codes</h2>
-        <ul class="code-list">
-          {
-            cptCodeList.map((item) => (
-              <li class="code-list__item card">
-                <a href={`/codes/cpt/${item.code}/`} class="code-list__link">
-                  <span class="code-list__code">{item.code}</span>
-                  <span class="code-list__meta">
-                    <span class="code-list__category">{item.category}</span>
-                    <span class="code-list__label">{item.label}</span>
-                  </span>
-                  <span class="code-list__arrow" aria-hidden="true">›</span>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
+      {
+        byCategory.map((group) => (
+          <section class="codes-hub__group">
+            <h2 class="codes-hub__group-title">{group.name}</h2>
+            <ul class="code-grid">
+              {group.codes.map((item) => (
+                <li>
+                  <a href={`/codes/cpt/${item.code}/`} class="code-card">
+                    <span class="code-card__code">{item.code}</span>
+                    <span class="code-card__label">{item.label}</span>
+                    <span class="code-card__arrow" aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
 
-      <section class="codes-hub__coming">
+      <section class="codes-hub__coming card">
         <h2>Data coverage</h2>
         <p>
-          Fair Price and Medicare Lookup support <strong>7,700+ Medicare fee schedule codes</strong> and{' '}
-          <strong>42,000+ US ZIP codes</strong> mapped to CMS localities, with national fallback when needed. See{' '}
-          <a href="/methodology/data-sources/">data sources</a>.
+          Fair Price and Medicare Lookup support <strong>7,700+ Medicare fee schedule codes</strong>{' '}
+          and <strong>42,000+ US ZIP codes</strong> mapped to CMS localities, with national fallback
+          when needed. See <a href="/methodology/data-sources/">data sources</a>.
         </p>
       </section>
     </div>
@@ -62,93 +71,141 @@ import { cptCodeList } from '../../data/cpt-codes';
     padding: var(--space-xl) 0 var(--space-3xl);
   }
 
+  .codes-hub__eyebrow {
+    margin: 0 0 var(--space-sm);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+  }
+
   .codes-hub__header {
-    max-width: 40rem;
+    max-width: 42rem;
     margin-bottom: var(--space-xl);
   }
 
   .codes-hub__header p {
     color: var(--color-muted);
     font-size: 1.05rem;
+    line-height: 1.65;
+    margin: 0;
   }
 
   .codes-hub__tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
     margin-bottom: var(--space-2xl);
-    max-width: 32rem;
+    padding: var(--space-lg) var(--space-xl);
   }
 
   .codes-hub__tools h2 {
     font-size: 1.1rem;
-    margin: 0 0 var(--space-sm);
+    margin: 0 0 var(--space-xs);
   }
 
   .codes-hub__tools p {
     color: var(--color-muted);
-    margin: 0 0 var(--space-md);
+    margin: 0;
+    font-size: 0.9375rem;
   }
 
-  .code-list {
+  .codes-hub__group {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .codes-hub__group-title {
+    margin: 0 0 var(--space-md);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .code-grid {
     list-style: none;
     padding: 0;
-    margin: var(--space-md) 0 0;
+    margin: 0;
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: var(--space-md);
   }
 
-  .code-list__link {
+  .code-card {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-md);
     padding: var(--space-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
     text-decoration: none;
     color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    height: 100%;
   }
 
-  .code-list__link:hover .code-list__code {
+  .code-card:hover {
+    border-color: #99f6e4;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .code-card:hover .code-card__code {
     color: var(--color-accent-hover);
   }
 
-  .code-list__code {
+  .code-card__code {
+    flex-shrink: 0;
     font-family: var(--font-mono);
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--color-accent);
-    min-width: 4rem;
+    line-height: 1.3;
   }
 
-  .code-list__meta {
+  .code-card__label {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-muted);
   }
 
-  .code-list__category {
-    font-size: 0.75rem;
+  .code-card__arrow {
+    flex-shrink: 0;
+    color: var(--color-accent);
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--color-muted);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.2s, transform 0.2s;
   }
 
-  .code-list__label {
-    font-size: 0.9rem;
-    color: var(--color-text);
-  }
-
-  .code-list__arrow {
-    color: var(--color-muted);
-    font-size: 1.25rem;
+  .code-card:hover .code-card__arrow {
+    opacity: 1;
+    transform: translateX(0);
   }
 
   .codes-hub__coming {
-    margin-top: var(--space-2xl);
-    max-width: 40rem;
-    color: var(--color-muted);
+    margin-top: var(--space-xl);
+    max-width: 42rem;
+    padding: var(--space-lg) var(--space-xl);
   }
 
   .codes-hub__coming h2 {
     font-size: 1.1rem;
     color: var(--color-primary);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .codes-hub__coming p {
+    margin: 0;
+    color: var(--color-muted);
+    line-height: 1.65;
   }
 </style>

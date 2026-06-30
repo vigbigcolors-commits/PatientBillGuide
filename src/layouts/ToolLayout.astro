@@ -55,9 +55,24 @@ const { title, description, crumbs = [] } = Astro.props;
 
   .tool-page__grid {
     display: grid;
-    grid-template-columns: 1fr 320px;
+    grid-template-columns: minmax(0, 1fr) 300px;
     gap: var(--space-xl);
     align-items: start;
+  }
+
+  .tool-page__main {
+    min-width: 0;
+  }
+
+  .tool-page__aside {
+    min-width: 0;
+  }
+
+  @media (min-width: 901px) {
+    .tool-page__aside {
+      position: sticky;
+      top: 5.5rem;
+    }
   }
 
   @media (max-width: 900px) {

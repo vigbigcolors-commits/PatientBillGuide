@@ -48,10 +48,24 @@ export interface ZipLocalityMap {
   [zip: string]: string;
 }
 
+/** Compact CPT index for autocomplete: [code, shortDescription] tuples. */
+export interface CptIndex {
+  version: string;
+  codes: [string, string][];
+}
+
 export interface DataManifest {
   mpfs: { version: string; url: string; codeCount?: number };
   zipLocality: { version: string; url: string; zipCount?: number };
-  ncci?: { version: string; url: string; pairCount?: number };
+  cptIndex?: { version: string; url: string; codeCount?: number };
+  ncci?: {
+    version: string;
+    url?: string;
+    pairCount?: number;
+    format?: string;
+    mode?: 'chunked' | 'full';
+    chunkUrl?: string;
+  };
   updatedAt: string;
 }
 

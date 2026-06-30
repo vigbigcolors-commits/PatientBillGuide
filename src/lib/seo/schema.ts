@@ -32,6 +32,22 @@ export function breadcrumbSchema(items: { name: string; url?: string }[], siteUr
   };
 }
 
+export function personSchema(opts: {
+  name: string;
+  url: string;
+  jobTitle?: string;
+  description?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: opts.name,
+    url: opts.url,
+    ...(opts.jobTitle ? { jobTitle: opts.jobTitle } : {}),
+    ...(opts.description ? { description: opts.description } : {}),
+  };
+}
+
 export function articleSchema(opts: {
   headline: string;
   description: string;
@@ -40,6 +56,7 @@ export function articleSchema(opts: {
   datePublished?: string;
   authorName: string;
   authorUrl: string;
+  authorJobTitle?: string;
 }) {
   return {
     '@context': 'https://schema.org',
@@ -49,7 +66,11 @@ export function articleSchema(opts: {
     url: opts.url,
     dateModified: opts.dateModified,
     datePublished: opts.datePublished ?? opts.dateModified,
-    author: { '@type': 'Person', name: opts.authorName, url: opts.authorUrl },
+    author: personSchema({
+      name: opts.authorName,
+      url: opts.authorUrl,
+      jobTitle: opts.authorJobTitle,
+    }),
     publisher: {
       '@type': 'Organization',
       name: 'PatientBillGuide',
@@ -65,6 +86,7 @@ export function medicalWebPageSchema(opts: {
   dateModified: string;
   authorName: string;
   authorUrl: string;
+  authorJobTitle?: string;
 }) {
   return {
     '@context': 'https://schema.org',
@@ -73,7 +95,11 @@ export function medicalWebPageSchema(opts: {
     description: opts.description,
     url: opts.url,
     dateModified: opts.dateModified,
-    author: { '@type': 'Person', name: opts.authorName, url: opts.authorUrl },
+    author: personSchema({
+      name: opts.authorName,
+      url: opts.authorUrl,
+      jobTitle: opts.authorJobTitle,
+    }),
     publisher: { '@type': 'Organization', name: 'PatientBillGuide', url: 'https://patientbillguide.com' },
   };
 }
@@ -96,6 +122,51 @@ export function howToSchema(opts: {
       name: s.name,
       text: s.text,
     })),
+  };
+}
+
+export function organizationSchema(opts: {
+  name: string;
+  url: string;
+  description: string;
+  founderName?: string;
+  founderUrl?: string;
+  founderJobTitle?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: opts.name,
+    url: opts.url,
+    description: opts.description,
+    ...(opts.founderName
+      ? {
+          founder: personSchema({
+            name: opts.founderName,
+            url: opts.founderUrl ?? opts.url,
+            jobTitle: opts.founderJobTitle,
+          }),
+        }
+      : {}),
+  };
+}
+
+export function aboutPageSchema(opts: {
+  name: string;
+  description: string;
+  url: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: opts.name,
+    description: opts.description,
+    url: opts.url,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'PatientBillGuide',
+      url: 'https://patientbillguide.com',
+    },
   };
 }
 

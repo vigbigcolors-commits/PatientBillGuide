@@ -12,19 +12,27 @@ interface Props {
   title: string;
   description?: string;
   crumbs?: Crumb[];
+  /** Extra class on `<article>` for page-scoped theming */
+  pageClass?: string;
+  /** Hide default h1 in header when hero provides its own title */
+  hideTitle?: boolean;
 }
 
-const { title, description, crumbs = [] } = Astro.props;
+const { title, description, crumbs = [], pageClass, hideTitle = false } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
   <slot name="head" slot="head" />
-  <article class="legal-page">
+  <article class:list={['legal-page', pageClass]}>
+    <slot name="hero" />
     <div class="container container--narrow">
       {crumbs.length > 0 && <Breadcrumbs items={crumbs} />}
-      <header class="legal-page__header">
-        <h1>{title}</h1>
-      </header>
+      {!hideTitle && (
+        <header class="legal-page__header">
+          <h1>{title}</h1>
+          {description && <p class="legal-page__lead">{description}</p>}
+        </header>
+      )}
       <div class="prose legal-page__body">
         <slot />
       </div>
@@ -40,6 +48,14 @@ const { title, description, crumbs = [] } = Astro.props;
 
   .legal-page__header {
     margin-bottom: var(--space-xl);
+  }
+
+  .legal-page__lead {
+    margin: var(--space-sm) 0 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+    max-width: 42rem;
   }
 
   .legal-page__body {
@@ -87,5 +103,150 @@ const { title, description, crumbs = [] } = Astro.props;
   .legal-page__body :global(.faq dd) {
     margin: var(--space-xs) 0 0;
     color: var(--color-muted);
+  }
+
+  /* Pages with full-bleed hero: tighten top padding */
+  .legal-page:has(:global(.guide-hero)) {
+    padding-top: 0;
+  }
+
+  :global(.guide-cta) {
+    margin-top: var(--space-2xl);
+    padding: var(--space-xl);
+    border-radius: var(--radius-xl);
+  }
+
+  :global(.guide-cta h2) {
+    font-size: 1.125rem;
+    margin: 0 0 var(--space-md);
+  }
+
+  :global(.guide-cta__grid) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: var(--space-md);
+  }
+
+  :global(.guide-cta__card) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: var(--space-md);
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  :global(.guide-cta__card:hover) {
+    transform: translateY(-2px);
+  }
+
+  :global(.guide-cta__card strong) {
+    font-size: 0.9375rem;
+  }
+
+  :global(.guide-cta__card span:last-child) {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  :global(.guide-hero) {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(2.5rem, 6vw, 4rem) 0 clamp(3rem, 7vw, 4.5rem);
+    color: #fff;
+    background: var(--hero-bg, linear-gradient(165deg, #0f172a, #1e293b));
+  }
+
+  :global(.guide-hero__bg) {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  :global(.guide-hero__orb) {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.45;
+  }
+
+  :global(.guide-hero__orb--1) {
+    width: 20rem;
+    height: 20rem;
+    top: -4rem;
+    right: -4rem;
+    background: var(--hero-accent-light, #2dd4bf);
+  }
+
+  :global(.guide-hero__orb--2) {
+    width: 14rem;
+    height: 14rem;
+    bottom: -2rem;
+    left: 10%;
+    background: var(--hero-accent, #0d9488);
+  }
+
+  :global(.guide-hero__grid) {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: linear-gradient(180deg, #000 30%, transparent 90%);
+  }
+
+  :global(.guide-hero__inner) {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  :global(.guide-hero__eyebrow) {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 0.72);
+    margin: 0 0 var(--space-sm);
+  }
+
+  :global(.guide-hero__title) {
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin: 0 0 var(--space-md);
+    color: #fff;
+  }
+
+  :global(.guide-hero__lead) {
+    margin: 0 auto var(--space-lg);
+    max-width: 32rem;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: rgb(255 255 255 / 0.88);
+  }
+
+  :global(.guide-hero__actions) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    justify-content: center;
+    margin-top: var(--space-xl);
+  }
+
+  :global(.guide-hero__actions .btn--secondary) {
+    background: rgb(255 255 255 / 0.12);
+    border: 1px solid rgb(255 255 255 / 0.28);
+    color: #fff;
+  }
+
+  :global(.guide-hero__actions .btn--secondary:hover) {
+    background: rgb(255 255 255 / 0.2);
+    color: #fff;
   }
 </style>

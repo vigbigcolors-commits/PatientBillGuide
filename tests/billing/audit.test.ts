@@ -1,9 +1,8 @@
-import { readFileSync, existsSync } from 'node:fs';
-import { gunzipSync } from 'node:zlib';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-
 import { auditBill, parseBillText } from '../../src/lib/billing';
+import { loadNcciForTestCodes } from './ncci-data';
 
 
 
@@ -132,11 +131,7 @@ describe('auditBill', () => {
   });
 
   it('flags NCCI unbundling pairs on same date', () => {
-    const gzPath = join(dataDir, 'ncci-ptp.json.gz');
-    const jsonPath = join(dataDir, 'ncci-ptp.json');
-    const ncci = existsSync(gzPath)
-      ? JSON.parse(gunzipSync(readFileSync(gzPath)).toString('utf8'))
-      : JSON.parse(readFileSync(jsonPath, 'utf8'));
+    const ncci = loadNcciForTestCodes(['80053', '84460']);
     const items = parseBillText(
       '01/15/2026 80053 Comprehensive metabolic panel $45.00\n01/15/2026 84460 ALT liver enzyme $18.00',
     );
@@ -145,5 +140,13 @@ describe('auditBill', () => {
     expect(result.looksNormal).toBe(false);
   });
 
+  it('returns stats and next steps', () => {
+    const items = parseBillText('99213 Office visit $150.00');
+    const result = auditBill(items, mpfs, zipMap, '10001');
+    expect(result.stats.totalCharged).toBe(150);
+    expect(result.stats.uniqueCodes).toBe(1);
+    expect(result.checksRun.length).toBeGreaterThan(0);
+    expect(result.nextSteps.length).toBeGreaterThan(0);
+  });
 });
 

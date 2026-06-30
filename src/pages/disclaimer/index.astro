@@ -1,39 +1,841 @@
 ---
-import LegalLayout from '../../layouts/LegalLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { site } from '../../data/site';
+import {
+  disclaimerMeta,
+  disclaimerPillars,
+  disclaimerQuickRead,
+  disclaimerSections,
+  disclaimerNotList,
+  disclaimerIsList,
+  disclaimerCalmSteps,
+  disclaimerFaqs,
+} from '../../data/disclaimer-content';
+import { breadcrumbSchema, faqPageSchema } from '../../lib/seo/schema';
+
+const pageUrl = '/disclaimer/';
+const canonical = new URL(pageUrl, site.url).href;
+
+const schemaGraph = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: disclaimerMeta.title,
+    description: disclaimerMeta.description,
+    url: canonical,
+    dateModified: disclaimerMeta.updated,
+    isPartOf: { '@type': 'WebSite', name: site.name, url: site.url },
+    about: {
+      '@type': 'Thing',
+      name: 'Medical billing educational disclaimer',
+    },
+  },
+  faqPageSchema(disclaimerFaqs),
+  breadcrumbSchema([{ name: 'Home', url: '/' }, { name: 'Disclaimer' }], site.url),
+];
 ---
 
-<LegalLayout
-  title="Disclaimer"
-  description="Medical and legal disclaimer for PatientBillGuide educational tools."
-  crumbs={[{ label: 'Disclaimer' }]}
->
-  <h2>Not medical advice</h2>
-  <p>
-    Content on PatientBillGuide is for general educational purposes only. It is not medical
-    advice, diagnosis, or treatment. For health concerns, contact a licensed clinician.
-  </p>
+<BaseLayout title={disclaimerMeta.title} description={disclaimerMeta.description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
 
-  <h2>Not legal or insurance advice</h2>
-  <p>
-    We are not attorneys or licensed insurance professionals. Dispute letters and guides are
-    editable templates, not legal documents. For legal disputes or plan selection, consult
-    qualified professionals.
-  </p>
+  {/* ── Hero: iron shield ── */}
+  <header class="dc-hero" aria-labelledby="dc-hero-heading">
+    <div class="dc-hero__rivets" aria-hidden="true" />
+    <div class="container dc-hero__inner">
+      <Breadcrumbs items={[{ label: 'Disclaimer' }]} />
+      <div class="dc-hero__layout">
+        <div class="dc-hero__copy">
+          <p class="dc-kicker">Legal clarity · Human tone · Zero hype</p>
+          <h1 id="dc-hero-heading">Disclaimer</h1>
+          <p class="dc-hero__lead">
+            PatientBillGuide is built to <strong>reduce confusion</strong> — not to replace clinicians,
+            lawyers, insurers, or your own judgment. This page is the full boundary map: what we do,
+            what we never promise, and how to use the site without extra stress.
+          </p>
+          <p class="dc-hero__updated">Last updated {disclaimerMeta.updated}</p>
+          <div class="dc-hero__links">
+            <a href="/terms/">Terms of Use</a>
+            <span aria-hidden="true">·</span>
+            <a href="/privacy/">Privacy</a>
+            <span aria-hidden="true">·</span>
+            <a href="/methodology/limitations/">Methodology limits</a>
+          </div>
+        </div>
 
-  <h2>No guarantee of savings</h2>
-  <p>
-    We do not guarantee lower bills, successful disputes, or specific financial outcomes.
-    User stories, if published, reflect individual experiences.
-  </p>
+        <div class="dc-shield" aria-hidden="true">
+          <svg class="dc-shield__svg" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              class="dc-shield__outline"
+              d="M60 8 L104 28 V68 C104 98 84 118 60 132 C36 118 16 98 16 68 V28 Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linejoin="round"
+            />
+            <path
+              class="dc-shield__inner"
+              d="M60 24 L88 38 V66 C88 88 74 102 60 110 C46 102 32 88 32 66 V38 Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-opacity="0.45"
+            />
+            <path
+              class="dc-shield__bolt"
+              d="M60 42 V58 M52 50 H68 M60 66 V82 M48 74 H72"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+          </svg>
+          <p class="dc-shield__caption">Educational shield — not legal armor for operators</p>
+        </div>
+      </div>
+    </div>
+  </header>
 
-  <h2>Billing flags are not accusations</h2>
-  <p>
-    We describe <strong>possible billing concerns</strong> with confidence levels. We do not
-    accuse providers of fraud without evidence. A normal result is common and valid.
-  </p>
+  {/* ── Quick read ── */}
+  <section class="dc-quick" aria-label="Disclaimer at a glance">
+    <div class="container dc-quick__grid">
+      {
+        disclaimerQuickRead.map((item) => (
+          <div class={`dc-quick__item dc-quick__item--${item.tone}`}>{item.text}</div>
+        ))
+      }
+    </div>
+  </section>
 
-  <h2>Affiliate disclosure</h2>
-  <p>
-    Some pages may include disclosed affiliate links in the future. Core tools remain free.
-  </p>
-</LegalLayout>
+  {/* ── Four pillars ── */}
+  <section class="dc-pillars" aria-labelledby="dc-pillars-heading">
+    <div class="container">
+      <h2 id="dc-pillars-heading" class="dc-section-label">Four plates of the shield</h2>
+      <ul class="dc-pillars__grid">
+        {
+          disclaimerPillars.map((p) => (
+            <li class="dc-pillar">
+              <span class="dc-pillar__symbol" aria-hidden="true">{p.symbol}</span>
+              <h3>{p.label}</h3>
+              <p>{p.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* ── Main legal body ── */}
+  <div class="dc-body">
+    <div class="container dc-body__layout">
+      <nav class="dc-toc" aria-label="Disclaimer sections">
+        <h2>Jump to</h2>
+        <ol>
+          {disclaimerSections.map((s) => (
+            <li><a href={`#${s.id}`}>{s.title.replace(/^\d+\.\s*/, '')}</a></li>
+          ))}
+          <li><a href="#dc-identity">What we are / are not</a></li>
+          <li><a href="#dc-calm">Use without panic</a></li>
+          <li><a href="#dc-faq">FAQ</a></li>
+        </ol>
+      </nav>
+
+      <div class="dc-prose">
+        {
+          disclaimerSections.map((section) => (
+            <section
+              id={section.id}
+              class={`dc-block dc-block--${section.tone}`}
+              aria-labelledby={`${section.id}-heading`}
+            >
+              <h2 id={`${section.id}-heading`}>{section.title}</h2>
+              <aside class="dc-human">
+                <span class="dc-human__tag">In plain words</span>
+                <p>{section.human}</p>
+              </aside>
+              <ol class="dc-provisions">
+                {section.provisions.map((prov) => (
+                  <li>{prov}</li>
+                ))}
+              </ol>
+            </section>
+          ))
+        }
+
+        {/* Identity columns */}
+        <section id="dc-identity" class="dc-identity" aria-labelledby="dc-identity-heading">
+          <h2 id="dc-identity-heading">What PatientBillGuide is — and is not</h2>
+          <div class="dc-identity__grid">
+            <div class="dc-identity__col dc-identity__col--not">
+              <h3>We are not</h3>
+              <ul>
+                {disclaimerNotList.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="dc-identity__col dc-identity__col--is">
+              <h3>We are</h3>
+              <ul>
+                {disclaimerIsList.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Calm methodology */}
+        <section id="dc-calm" class="dc-calm" aria-labelledby="dc-calm-heading">
+          <h2 id="dc-calm-heading">How to use this site without added stress</h2>
+          <p class="dc-calm__intro">
+            A psychologist would call this cognitive offloading: put the numbers in the tool, put the
+            feelings somewhere safe, and bring <em>questions</em> — not shame — to the billing office.
+          </p>
+          <ol class="dc-calm__steps">
+            {
+              disclaimerCalmSteps.map((s) => (
+                <li>
+                  <span class="dc-calm__step">{s.step}</span>
+                  <p>{s.text}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </section>
+
+        {/* FAQ */}
+        <section id="dc-faq" class="dc-faq" aria-labelledby="dc-faq-heading">
+          <h2 id="dc-faq-heading">Disclaimer FAQ</h2>
+          <ul class="dc-faq__list" role="list">
+            {
+              disclaimerFaqs.map((f, i) => (
+                <li>
+                  <button
+                    type="button"
+                    class:list={['dc-faq__q', i === 0 && 'is-active']}
+                    aria-expanded={i === 0 ? 'true' : 'false'}
+                  >
+                    {f.question}
+                  </button>
+                  <div class:list={['dc-faq__a', i === 0 && 'is-open']} hidden={i !== 0}>
+                    <p>{f.answer}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <footer class="dc-foot">
+          <p>
+            Questions about this Disclaimer? <a href="/contact/">Contact us</a> · Corrections:{' '}
+            <a href="/corrections/">/corrections/</a>
+          </p>
+        </footer>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll('.dc-faq__q').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.dc-faq__q').forEach((b) => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-expanded', 'false');
+      });
+      document.querySelectorAll('.dc-faq__a').forEach((a) => {
+        a.classList.remove('is-open');
+        a.setAttribute('hidden', '');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-expanded', 'true');
+      const panel = btn.nextElementSibling;
+      if (panel?.classList.contains('dc-faq__a')) {
+        panel.classList.add('is-open');
+        panel.removeAttribute('hidden');
+      }
+    });
+  });
+</script>
+
+<style>
+  .dc-kicker {
+    margin: 0 0 0.625rem;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #94a3b8;
+  }
+
+  .dc-section-label {
+    margin: 0 0 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-muted);
+    text-align: center;
+  }
+
+  /* Hero */
+  .dc-hero {
+    position: relative;
+    padding: 2rem 0 2.5rem;
+    background: linear-gradient(165deg, #0c1222 0%, #1e293b 55%, #0f172a 100%);
+    color: #f1f5f9;
+    overflow: hidden;
+    border-bottom: 3px solid #334155;
+  }
+
+  .dc-hero__rivets {
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    background-image: radial-gradient(circle, #cbd5e1 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+    pointer-events: none;
+  }
+
+  .dc-hero :global(.breadcrumbs a),
+  .dc-hero :global(.breadcrumbs span) {
+    color: rgb(148 163 184 / 0.8);
+  }
+
+  .dc-hero :global(.breadcrumbs a:hover) {
+    color: #e2e8f0;
+  }
+
+  .dc-hero__layout {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .dc-hero h1 {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+
+  .dc-hero__lead {
+    margin: 0 0 1rem;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: rgb(203 213 225 / 0.92);
+  }
+
+  .dc-hero__updated {
+    margin: 0 0 1rem;
+    font-size: 0.8125rem;
+    font-family: var(--font-mono);
+    color: #64748b;
+  }
+
+  .dc-hero__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .dc-hero__links a {
+    color: #cbd5e1;
+    text-decoration: none;
+  }
+
+  .dc-hero__links a:hover {
+    color: #fff;
+  }
+
+  /* Shield animation */
+  .dc-shield {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #94a3b8;
+  }
+
+  .dc-shield__svg {
+    width: 8.5rem;
+    height: auto;
+    filter: drop-shadow(0 8px 24px rgb(0 0 0 / 0.35));
+  }
+
+  .dc-shield__outline {
+    stroke-dasharray: 340;
+    stroke-dashoffset: 340;
+  }
+
+  .dc-shield__bolt {
+    stroke-dasharray: 80;
+    stroke-dashoffset: 80;
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .dc-shield__outline {
+      animation: dc-draw 2.2s ease forwards 0.2s;
+    }
+
+    .dc-shield__bolt {
+      animation: dc-bolt 0.8s ease forwards 1.6s;
+    }
+
+    .dc-shield__svg {
+      animation: dc-float 6s ease-in-out infinite 2.5s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dc-shield__outline {
+      stroke-dashoffset: 0;
+    }
+
+    .dc-shield__bolt {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+
+    .dc-shield__svg {
+      animation: none;
+    }
+  }
+
+  @keyframes dc-draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes dc-bolt {
+    to { stroke-dashoffset: 0; opacity: 1; }
+  }
+
+  @keyframes dc-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .dc-shield__caption {
+    margin: 1rem 0 0;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: center;
+    color: #64748b;
+    max-width: 14rem;
+  }
+
+  /* Quick read */
+  .dc-quick {
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 0;
+  }
+
+  .dc-quick__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.625rem;
+  }
+
+  .dc-quick__item {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.4;
+    border: 1px solid transparent;
+  }
+
+  .dc-quick__item--navy { background: #0f172a; color: #f8fafc; border-color: #1e293b; }
+  .dc-quick__item--slate { background: #fff; color: #334155; border-color: #cbd5e1; }
+  .dc-quick__item--amber { background: #fffbeb; color: #78350f; border-color: #fcd34d; }
+  .dc-quick__item--teal { background: #f0fdfa; color: #115e59; border-color: #99f6e4; }
+
+  /* Pillars */
+  .dc-pillars {
+    padding: 2.5rem 0;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .dc-pillars__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.875rem;
+  }
+
+  .dc-pillar {
+    padding: 1.125rem;
+    border-radius: 0.625rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-top: 3px solid #475569;
+  }
+
+  .dc-pillar__symbol {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    color: #64748b;
+  }
+
+  .dc-pillar h3 {
+    margin: 0 0 0.375rem;
+    font-size: 0.875rem;
+    color: #0f172a;
+  }
+
+  .dc-pillar p {
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: #64748b;
+  }
+
+  /* Body layout */
+  .dc-body {
+    padding: clamp(2.5rem, 5vw, 3.5rem) 0 4rem;
+    background: var(--color-bg);
+  }
+
+  .dc-body__layout {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 3rem);
+    align-items: start;
+  }
+
+  .dc-toc {
+    position: sticky;
+    top: 1.5rem;
+    padding: 1.125rem;
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.625rem;
+    font-size: 0.75rem;
+    box-shadow: 0 1px 3px rgb(15 23 42 / 0.04);
+  }
+
+  .dc-toc h2 {
+    margin: 0 0 0.625rem;
+    font-size: 0.625rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+  }
+
+  .dc-toc ol {
+    margin: 0;
+    padding-left: 1rem;
+  }
+
+  .dc-toc li {
+    margin-bottom: 0.3rem;
+  }
+
+  .dc-toc a {
+    color: #334155;
+    text-decoration: none;
+  }
+
+  .dc-toc a:hover {
+    color: #0f172a;
+    text-decoration: underline;
+  }
+
+  /* Legal blocks */
+  .dc-block {
+    margin-bottom: 2rem;
+    padding: 1.5rem 1.5rem 1.375rem;
+    border-radius: 0.625rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    scroll-margin-top: 1.5rem;
+  }
+
+  .dc-block--navy { border-left: 4px solid #1e293b; }
+  .dc-block--slate { border-left: 4px solid #64748b; }
+  .dc-block--amber { border-left: 4px solid #b45309; }
+  .dc-block--iron {
+    border-left: 4px solid #334155;
+    background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+    border-color: #94a3b8;
+  }
+
+  .dc-block h2 {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+  }
+
+  .dc-human {
+    margin: 0 0 1.125rem;
+    padding: 0.875rem 1rem;
+    border-radius: 0.5rem;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+  }
+
+  .dc-human__tag {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.5625rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+  }
+
+  .dc-human p {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: #475569;
+    font-style: italic;
+  }
+
+  .dc-provisions {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .dc-provisions li {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: #334155;
+  }
+
+  .dc-block--iron .dc-provisions li {
+    font-size: 0.8125rem;
+    color: #1e293b;
+  }
+
+  /* Identity */
+  .dc-identity {
+    margin-bottom: 2rem;
+    scroll-margin-top: 1.5rem;
+  }
+
+  .dc-identity h2 {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+    color: #0f172a;
+  }
+
+  .dc-identity__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .dc-identity__col {
+    padding: 1.25rem;
+    border-radius: 0.625rem;
+    border: 1px solid #e2e8f0;
+  }
+
+  .dc-identity__col--not {
+    background: #fafafa;
+    border-left: 4px solid #78716c;
+  }
+
+  .dc-identity__col--is {
+    background: #f8fafc;
+    border-left: 4px solid #334155;
+  }
+
+  .dc-identity__col h3 {
+    margin: 0 0 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #64748b;
+  }
+
+  .dc-identity__col ul {
+    margin: 0;
+    padding-left: 1.125rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: #334155;
+  }
+
+  .dc-identity__col li + li {
+    margin-top: 0.35rem;
+  }
+
+  /* Calm */
+  .dc-calm {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border-radius: 0.625rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    scroll-margin-top: 1.5rem;
+  }
+
+  .dc-calm h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.125rem;
+    color: #0f172a;
+  }
+
+  .dc-calm__intro {
+    margin: 0 0 1.25rem;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: #475569;
+  }
+
+  .dc-calm__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+  }
+
+  .dc-calm__steps li {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+  }
+
+  .dc-calm__step {
+    display: inline-block;
+    margin-bottom: 0.375rem;
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #0f172a;
+    padding: 0.15rem 0.45rem;
+    background: #e2e8f0;
+    border-radius: 4px;
+  }
+
+  .dc-calm__steps p {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: #475569;
+  }
+
+  /* FAQ */
+  .dc-faq {
+    scroll-margin-top: 1.5rem;
+  }
+
+  .dc-faq h2 {
+    margin: 0 0 1rem;
+    font-size: 1.125rem;
+  }
+
+  .dc-faq__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .dc-faq__q {
+    width: 100%;
+    text-align: left;
+    padding: 0.875rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #0f172a;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .dc-faq__q:hover {
+    border-color: #64748b;
+  }
+
+  .dc-faq__q.is-active {
+    background: #0f172a;
+    border-color: #0f172a;
+    color: #f8fafc;
+  }
+
+  .dc-faq__a {
+    padding: 0 1rem 0.875rem;
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: #475569;
+  }
+
+  .dc-foot {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.875rem;
+    color: #64748b;
+  }
+
+  .dc-foot a {
+    font-weight: 600;
+    color: #334155;
+  }
+
+  @media (max-width: 1024px) {
+    .dc-hero__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .dc-shield {
+      order: -1;
+    }
+
+    .dc-quick__grid,
+    .dc-pillars__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dc-body__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .dc-toc {
+      position: static;
+    }
+
+    .dc-calm__steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .dc-quick__grid,
+    .dc-pillars__grid,
+    .dc-identity__grid,
+    .dc-calm__steps {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

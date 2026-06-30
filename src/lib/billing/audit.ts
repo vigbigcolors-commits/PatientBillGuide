@@ -232,6 +232,56 @@ export function auditBill(
   );
   const looksNormal = concernFlags.length === 0;
 
+  const byCategory: BillAuditResult['stats']['byCategory'] = {
+    duplicate: 0,
+    pricing: 0,
+    quantity: 0,
+    data: 0,
+    coverage: 0,
+    unbundling: 0,
+  };
+  const bySeverity: BillAuditResult['stats']['bySeverity'] = { low: 0, medium: 0, high: 0 };
+  for (const f of flags) {
+    byCategory[f.category]++;
+    bySeverity[f.severity]++;
+  }
+
+  const checksRun = [
+    `Parsed ${items.length} line item${items.length === 1 ? '' : 's'} with CPT codes and dollar amounts`,
+    zip
+      ? `Compared charges to Medicare benchmarks localized to ZIP ${zip}`
+      : 'Compared charges to national Medicare median benchmarks (no ZIP provided)',
+    ncci
+      ? 'Checked same-day code pairs against CMS NCCI practitioner PTP edits'
+      : 'NCCI unbundling check skipped (data not loaded)',
+    'Scanned for duplicate CPT + amount on the same service date',
+    'Flagged same CPT with different amounts on one date',
+  ];
+
+  const nextSteps: string[] = [
+    'Request an itemized bill with CPT/HCPCS codes, dates, and provider NPI if anything is missing.',
+    'Compare your bill to your EOB — allowed amounts and patient responsibility should eventually align.',
+  ];
+  if (flags.some((f) => f.category === 'pricing')) {
+    nextSteps.push(
+      'For outlier charges, look up each CPT in our Fair Price Calculator with your ZIP for localized benchmarks.',
+    );
+  }
+  if (flags.some((f) => f.category === 'duplicate')) {
+    nextSteps.push(
+      'Ask billing to explain duplicate lines — confirm each is a separate, medically necessary service.',
+    );
+  }
+  if (flags.some((f) => f.category === 'unbundling')) {
+    nextSteps.push(
+      'Ask whether panel and component lab codes were billed correctly — NCCI edits may require bundling.',
+    );
+  }
+  if (flags.some((f) => f.category === 'coverage')) {
+    nextSteps.push('For unrecognized CPT codes, ask billing for a plain-English description of each service.');
+  }
+  nextSteps.push('Keep copies of the bill, EOB, and any call reference numbers before paying in full.');
+
   return {
     lineCount: items.length,
     flags,
@@ -241,7 +291,58 @@ export function auditBill(
         ? 'Based on public Medicare benchmarks, this bill looks normal — no obvious concerns found.'
         : looksNormal
           ? `Found ${flags.length} informational note${flags.length === 1 ? '' : 's'} — no major pricing or duplicate concerns.`
-          : `Found ${flags.length} possible billing concern${flags.length === 1 ? '' : 's'} worth reviewing.`,
+          : `Found ${concernFlags.length} billing concern${concernFlags.length === 1 ? '' : 's'} worth reviewing (${flags.length} total flag${flags.length === 1 ? '' : 's'}).`,
     looksNormal,
+    stats: {
+      totalCharged: Math.round(items.reduce((sum, i) => sum + i.charged, 0) * 100) / 100,
+      uniqueCodes: new Set(items.map((i) => i.code)).size,
+      byCategory,
+      bySeverity,
+      concernCount: concernFlags.length,
+    },
+    checksRun,
+    nextSteps,
   };
 }
+
+export const FLAG_CATEGORY_LABELS: Record<BillAuditFlag['category'], string> = {
+  duplicate: 'Duplicate',
+  pricing: 'Pricing',
+  quantity: 'Quantity',
+  data: 'Data mismatch',
+  coverage: 'Coverage gap',
+  unbundling: 'NCCI unbundling',
+};
+
+export const AUDIT_CHECK_LANES = [
+  {
+    id: 'parse',
+    title: 'Parse lines',
+    detail: 'Extract CPT codes, dates, quantities, and dollar amounts from pasted text',
+    level: 'strong' as const,
+  },
+  {
+    id: 'pricing',
+    title: 'Medicare benchmarks',
+    detail: 'Compare each charge to CMS allowed + 1.5×–2.5× fair range (ZIP-localized)',
+    level: 'strong' as const,
+  },
+  {
+    id: 'duplicate',
+    title: 'Duplicate scan',
+    detail: 'Same CPT + amount on the same date, or conflicting amounts',
+    level: 'strong' as const,
+  },
+  {
+    id: 'ncci',
+    title: 'NCCI unbundling',
+    detail: 'CMS practitioner PTP edits — panel + component codes same day',
+    level: 'strong' as const,
+  },
+  {
+    id: 'limits',
+    title: 'What we cannot see',
+    detail: 'Medical necessity, network contracts, hospital-only NCCI',
+    level: 'weak' as const,
+  },
+];

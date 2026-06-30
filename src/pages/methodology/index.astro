@@ -1,22 +1,944 @@
 ---
-import LegalLayout from '../../layouts/LegalLayout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Disclaimer from '../../components/Disclaimer.astro';
+import { site } from '../../data/site';
+import { author, getAuthorUrl } from '../../data/author';
+import {
+  methodologyMeta,
+  methodologyStats,
+  methodologyPillars,
+  methodologyCompare,
+  methodologyDeepLinks,
+  methodologyFaqs,
+} from '../../data/methodology-hub-content';
+import {
+  articleSchema,
+  breadcrumbSchema,
+  faqPageSchema,
+  medicalWebPageSchema,
+} from '../../lib/seo/schema';
+
+const pageUrl = '/methodology/';
+const canonical = new URL(pageUrl, site.url).href;
+const authorUrl = getAuthorUrl(site.url);
+
+const schemaGraph = [
+  medicalWebPageSchema({
+    name: methodologyMeta.title,
+    description: methodologyMeta.description,
+    url: canonical,
+    dateModified: methodologyMeta.updated,
+    authorName: author.name,
+    authorUrl,
+    authorJobTitle: author.jobTitle,
+  }),
+  articleSchema({
+    headline: methodologyMeta.title,
+    description: methodologyMeta.description,
+    url: canonical,
+    dateModified: methodologyMeta.updated,
+    authorName: author.name,
+    authorUrl,
+    authorJobTitle: author.jobTitle,
+  }),
+  faqPageSchema(methodologyFaqs),
+  breadcrumbSchema([{ name: 'Home', url: '/' }, { name: 'Methodology' }], site.url),
+];
+
+const accentBorder: Record<string, string> = {
+  teal: '#0d9488',
+  blue: '#3b82f6',
+  violet: '#8b5cf6',
+  amber: '#d97706',
+  green: '#059669',
+  slate: '#64748b',
+};
 ---
 
-<LegalLayout
-  title="Methodology"
-  description="How PatientBillGuide calculates fair price benchmarks and billing flags."
-  crumbs={[{ label: 'Methodology' }]}
->
-  <p>
-    Our tools use <strong>documented, reproducible methods</strong> based on public US healthcare
-    data. We publish sources, formulas, and limitations so you can judge results yourself.
-  </p>
+<BaseLayout title={methodologyMeta.title} description={methodologyMeta.description} showTrustStrip>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
 
-  <h2>Core topics</h2>
-  <ul>
-    <li><a href="/methodology/data-sources/">Data sources</a> — CMS MPFS, NCCI, hospital files</li>
-    <li><a href="/methodology/price-benchmarks/">Price benchmarks</a> — Medicare allowed + fair range</li>
-    <li><a href="/methodology/billing-flags/">Billing flags</a> — duplicates, unbundling, confidence</li>
-    <li><a href="/methodology/limitations/">Limitations</a> — what we cannot detect</li>
-  </ul>
-</LegalLayout>
+  {/* ── Hero: evidence ledger ── */}
+  <section class="meth-hero" aria-labelledby="meth-hero-heading">
+    <div class="meth-hero__grid-bg" aria-hidden="true"></div>
+    <div class="container meth-hero__inner">
+      <Breadcrumbs items={[{ label: 'Methodology' }]} />
+      <div class="meth-hero__badge">Open methodology · YMYL-grade transparency</div>
+      <h1 id="meth-hero-heading">How we calculate, flag, and explain your numbers</h1>
+      <p class="meth-hero__lead">
+        PatientBillGuide is built on a simple premise: if we ask you to trust a price comparison or
+        billing flag, you should be able to <strong>read the formula</strong>,
+        <strong>see the source file</strong>, and <strong>understand the limits</strong> — without
+        creating an account or uploading your bill.
+      </p>
+      <ul class="meth-stats" role="list">
+        {
+          methodologyStats.map((s) => (
+            <li class="meth-stat">
+              <span class="meth-stat__value">{s.value}</span>
+              <span class="meth-stat__label">{s.label}</span>
+              <span class="meth-stat__detail">{s.detail}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* ── Pillars: strongest sides ── */}
+  <section class="meth-pillars" aria-labelledby="meth-pillars-heading">
+    <div class="container">
+      <header class="meth-section-head">
+        <p class="meth-kicker">Our strongest sides</p>
+        <h2 id="meth-pillars-heading">Six pillars of evidence — not marketing adjectives</h2>
+        <p class="meth-section-lead">
+          These are architectural choices, not footer disclaimers. Each pillar links to a deep-dive
+          page where we show sources, edge cases, and what we refuse to claim.
+        </p>
+      </header>
+
+      <div class="meth-pillars__stack">
+        {
+          methodologyPillars.map((pillar, i) => (
+            <article
+              class="meth-pillar"
+              style={`--pillar-accent: ${accentBorder[pillar.accent] ?? '#0d9488'}`}
+            >
+              <div class="meth-pillar__index" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <div class="meth-pillar__body">
+                <p class="meth-pillar__tag">{pillar.title}</p>
+                <h3>{pillar.headline}</h3>
+                <p class="meth-pillar__text">{pillar.text}</p>
+                <ul class="meth-pillar__proof">
+                  {pillar.proof.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+                <a href={pillar.href} class="meth-pillar__link">
+                  {pillar.linkLabel} →
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── Comparison table ── */}
+  <section class="meth-compare" aria-labelledby="meth-compare-heading">
+    <div class="container">
+      <header class="meth-section-head meth-section-head--center">
+        <p class="meth-kicker meth-kicker--light">Side by side</p>
+        <h2 id="meth-compare-heading">{methodologyCompare.headline}</h2>
+      </header>
+      <div class="meth-compare__wrap" role="region" aria-label="Comparison table" tabindex="0">
+        <table class="meth-compare__table">
+          <thead>
+            <tr>
+              <th scope="col">Aspect</th>
+              <th scope="col">Typical bill help site</th>
+              <th scope="col" class="meth-compare__us">PatientBillGuide</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              methodologyCompare.rows.map((row) => (
+                <tr>
+                  <th scope="row">{row.aspect}</th>
+                  <td>{row.typical}</td>
+                  <td class="meth-compare__us">{row.us}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Architecture flow ── */}
+  <section class="meth-flow" aria-labelledby="meth-flow-heading">
+    <div class="container">
+      <header class="meth-section-head">
+        <p class="meth-kicker">Client-side pipeline</p>
+        <h2 id="meth-flow-heading">What happens when you run a tool</h2>
+      </header>
+      <ol class="meth-flow__steps">
+        <li class="meth-flow__step">
+          <span class="meth-flow__icon" aria-hidden="true">1</span>
+          <div>
+            <h3>You enter data locally</h3>
+            <p>CPT + ZIP, or pasted bill / EOB text. Nothing is POSTed to an analysis API.</p>
+          </div>
+        </li>
+        <li class="meth-flow__arrow" aria-hidden="true">→</li>
+        <li class="meth-flow__step">
+          <span class="meth-flow__icon" aria-hidden="true">2</span>
+          <div>
+            <h3>Browser fetches public bundles</h3>
+            <p>
+              MPFS JSON, ZIP-locality map, NCCI chunks by CPT prefix — cached from Cloudflare CDN.
+            </p>
+          </div>
+        </li>
+        <li class="meth-flow__arrow" aria-hidden="true">→</li>
+        <li class="meth-flow__step">
+          <span class="meth-flow__icon" aria-hidden="true">3</span>
+          <div>
+            <h3>Engine applies documented rules</h3>
+            <p>
+              Medicare lookup, 1.5×–2.5× range, duplicate detection, NCCI PTP pairs — with Vitest
+              coverage on core modules.
+            </p>
+          </div>
+        </li>
+        <li class="meth-flow__arrow" aria-hidden="true">→</li>
+        <li class="meth-flow__step">
+          <span class="meth-flow__icon" aria-hidden="true">4</span>
+          <div>
+            <h3>Results with confidence + limits inline</h3>
+            <p>
+              Plain English, severity, and data-quality confidence — including explicit “bill looks
+              normal” when rules pass.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  {/* ── Deep links ── */}
+  <section class="meth-deep" aria-labelledby="meth-deep-heading">
+    <div class="container">
+      <header class="meth-section-head meth-section-head--center">
+        <h2 id="meth-deep-heading">Methodology deep dives</h2>
+        <p class="meth-section-lead">
+          Each subpage is written for patients and auditors who want reproducible detail.
+        </p>
+      </header>
+      <ul class="meth-deep__grid">
+        {
+          methodologyDeepLinks.map((link) => (
+            <li>
+              <a href={link.href} class="meth-deep-card">
+                <h3>{link.title}</h3>
+                <p>{link.text}</p>
+                <span class="meth-deep-card__cta">Read full page →</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* ── Article + FAQ ── */}
+  <article class="meth-article" aria-labelledby="meth-article-heading">
+    <div class="container meth-article__layout">
+      <nav class="meth-toc" aria-label="Table of contents">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#philosophy">Philosophy</a></li>
+          <li><a href="#mpfs">Medicare MPFS anchor</a></li>
+          <li><a href="#fair-range">Fair range math</a></li>
+          <li><a href="#ncci">NCCI unbundling</a></li>
+          <li><a href="#confidence">Confidence levels</a></li>
+          <li><a href="#limits">Stated limits</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ol>
+        <p class="meth-toc__byline">
+          By <a href={author.path}>{author.name}</a><br />
+          Updated {methodologyMeta.updated}
+        </p>
+      </nav>
+
+      <div class="prose meth-prose">
+        <h2 id="philosophy">Methodology philosophy</h2>
+        <p>
+          Healthcare billing content is <strong>YMYL</strong> — Your Money Your Life. Google and,
+          more importantly, patients should evaluate us on Experience, Expertise, Authoritativeness,
+          and Trustworthiness. That means publishing not only <em>what</em> we output but
+          <em>why</em> and <em>when it fails</em>.
+        </p>
+        <p>
+          PatientBillGuide deliberately avoids black-box “AI overcharge scores.” Our engines apply
+          deterministic rules to public CMS datasets. When we use heuristics — like the 1.5×–2.5×
+          commercial band — we label them as educational ranges, not contractual prices. When we
+          cannot know something (your payer contract, medical necessity, facility cost-to-charge
+          ratio), we say so on the results screen and on
+          <a href="/methodology/limitations/">limitations</a>.
+        </p>
+
+        <h2 id="mpfs">Medicare Physician Fee Schedule as public anchor</h2>
+        <p>
+          The CMS <strong>Medicare Physician Fee Schedule (MPFS)</strong> publishes non-facility
+          physician allowed amounts by CPT/HCPCS code and geographic locality. These figures are
+          updated on a documented cadence and downloadable from CMS. We ingest MPFS into a static
+          JSON bundle (currently 2026 vintage at launch) and map US ZIP codes to CMS localities via
+          our public ZIP-to-locality file.
+        </p>
+        <p>
+          Medicare rates are not what every hospital charges — commercial insurers negotiate
+          independently, and self-pay patients may see chargemaster multiples. Medicare is still
+          the most transparent nationwide anchor available to consumers without API keys or hospital
+          contracts. See <a href="/methodology/data-sources/">data sources</a> for file names and
+          update policy.
+        </p>
+
+        <h2 id="fair-range">Fair range: 1.5×–2.5× Medicare allowed</h2>
+        <p>
+          Commercial pricing varies by market, payer, and site of service. We display an educational
+          band of approximately <strong>1.5× to 2.5×</strong> the Medicare allowed amount as a
+          rough “typical commercial zone.” Charges within the band may be unremarkable; charges above
+          warrant questions; charges far above are stronger review signals — still not proof of
+          overcharging.
+        </p>
+        <p>
+          Full interpretation guidance, including emergency and facility-fee caveats, lives on
+          <a href="/methodology/price-benchmarks/">price benchmarks</a>. Fair Price optionally
+          compares your entered charge to this band and reports locality match confidence.
+        </p>
+
+        <h2 id="ncci">NCCI procedure-to-procedure edits</h2>
+        <p>
+          The Bill Auditor loads <strong>National Correct Coding Initiative (NCCI)</strong>
+          procedure-to-procedure edit chunks based on CPT prefixes present in your pasted bill. When
+          two codes on the same service date appear in an edit pair Medicare typically does not pay
+          separately, we surface a <strong>possible unbundling concern</strong> with confidence —
+          not a determination of billing fraud.
+        </p>
+        <p>
+          Chunked loading keeps the browser responsive: only the NCCI slices your codes need are
+          fetched and decompressed client-side. Some legitimate billing scenarios still use modifier
+          overrides we cannot see from pasted text alone.
+        </p>
+
+        <h2 id="confidence">Confidence levels (data quality, not legal certainty)</h2>
+        <ul>
+          <li>
+            <strong>High</strong> — strong pattern match on public rules (e.g., exact duplicate line;
+            ZIP matched to locality; code found in MPFS)
+          </li>
+          <li>
+            <strong>Medium</strong> — plausible concern; contract context or modifiers may explain it;
+            national fallback locality used
+          </li>
+          <li>
+            <strong>Low</strong> — informational; common in some settings (e.g., above Medicare but
+            within commercial band)
+          </li>
+        </ul>
+        <p>
+          Confidence describes <em>how well our public data matched your input</em>, not whether you
+          legally owe a balance. See <a href="/methodology/billing-flags/">billing flags</a>.
+        </p>
+
+        <h2 id="limits">Limits we publish upfront</h2>
+        <ul>
+          <li>Physician professional fees — not hospital facility charges or implant pass-through</li>
+          <li>Regex parsers on pasted text — not OCR of scanned PDFs (planned later)</li>
+          <li>No access to private insurer contract rates or hospital cost-to-charge ratios</li>
+          <li>No medical necessity or upcoding detection without clinical documentation</li>
+          <li>Dispute letters are editable templates — not legal advice</li>
+        </ul>
+        <p>
+          Corrections and data version changes are logged at <a href="/corrections/">/corrections/</a>.
+          Questions? <a href="/contact/">Contact us</a> or read <a href="/about/">About</a>.
+        </p>
+
+        <h2 id="faq">Frequently asked questions</h2>
+        <dl class="meth-faq">
+          {
+            methodologyFaqs.map((f) => (
+              <>
+                <dt>{f.question}</dt>
+                <dd>{f.answer}</dd>
+              </>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </article>
+
+  {/* ── CTA ── */}
+  <section class="meth-cta" aria-label="Try the tools">
+    <div class="container meth-cta__inner">
+      <h2>See the methodology in action</h2>
+      <p>Run a live check — same public data, same rules, in your browser.</p>
+      <div class="meth-cta__actions">
+        <a href="/tools/fair-price/" class="btn btn--primary">Fair Price Calculator</a>
+        <a href="/tools/bill-auditor/" class="btn btn--secondary meth-cta__btn-light">Bill Auditor</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container container--narrow meth-disclaimer">
+    <Disclaimer />
+  </div>
+</BaseLayout>
+
+<style>
+  .meth-kicker {
+    margin: 0 0 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+  }
+
+  .meth-kicker--light {
+    color: #5eead4;
+  }
+
+  .meth-section-head {
+    margin-bottom: clamp(2rem, 4vw, 2.75rem);
+    max-width: 42rem;
+  }
+
+  .meth-section-head--center {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .meth-section-head h2 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.625rem, 3.5vw, 2.25rem);
+    letter-spacing: -0.025em;
+  }
+
+  .meth-section-lead {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  /* Hero */
+  .meth-hero {
+    position: relative;
+    padding: 2rem 0 3.5rem;
+    background: #fafaf9;
+    border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+
+  .meth-hero__grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgb(15 23 42 / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(15 23 42 / 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: linear-gradient(180deg, black 0%, transparent 85%);
+  }
+
+  .meth-hero__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 52rem;
+  }
+
+  .meth-hero__badge {
+    display: inline-block;
+    margin-bottom: 1rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #0f766e;
+    background: #ccfbf1;
+    border: 1px solid #99f6e4;
+    border-radius: 999px;
+  }
+
+  .meth-hero h1 {
+    margin: 0 0 1.25rem;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
+  }
+
+  .meth-hero__lead {
+    margin: 0 0 2.5rem;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+    max-width: 44rem;
+  }
+
+  .meth-stats {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .meth-stat {
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+  }
+
+  .meth-stat__value {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1.2;
+  }
+
+  .meth-stat__label {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .meth-stat__detail {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--color-muted);
+  }
+
+  /* Pillars */
+  .meth-pillars {
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+    background: var(--color-bg);
+  }
+
+  .meth-pillars__stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .meth-pillar {
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 1.75rem;
+    border-radius: 1.25rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--pillar-accent, #0d9488);
+    transition: box-shadow 0.25s;
+  }
+
+  .meth-pillar:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .meth-pillar__index {
+    font-family: var(--font-mono);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--pillar-accent, #0d9488);
+    opacity: 0.35;
+    line-height: 1;
+    padding-top: 0.15rem;
+  }
+
+  .meth-pillar__tag {
+    margin: 0 0 0.35rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--color-muted);
+  }
+
+  .meth-pillar h3 {
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.125rem, 2vw, 1.375rem);
+    line-height: 1.3;
+  }
+
+  .meth-pillar__text {
+    margin: 0 0 1rem;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--color-muted);
+  }
+
+  .meth-pillar__proof {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text);
+  }
+
+  .meth-pillar__proof li + li {
+    margin-top: 0.35rem;
+  }
+
+  .meth-pillar__link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-accent);
+  }
+
+  /* Compare */
+  .meth-compare {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: #0f172a;
+    color: #f8fafc;
+  }
+
+  .meth-compare .meth-section-head h2 {
+    color: #fff;
+  }
+
+  .meth-compare__wrap {
+    overflow-x: auto;
+    border-radius: 1rem;
+    border: 1px solid rgb(255 255 255 / 0.12);
+  }
+
+  .meth-compare__table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+
+  .meth-compare__table th,
+  .meth-compare__table td {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid rgb(255 255 255 / 0.08);
+  }
+
+  .meth-compare__table thead th {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgb(148 163 184 / 0.95);
+    background: rgb(255 255 255 / 0.04);
+  }
+
+  .meth-compare__table tbody th[scope='row'] {
+    font-weight: 600;
+    color: #e2e8f0;
+    width: 18%;
+  }
+
+  .meth-compare__table tbody td {
+    color: rgb(203 213 225 / 0.85);
+    width: 41%;
+  }
+
+  .meth-compare__us {
+    background: rgb(13 148 136 / 0.12);
+    color: #99f6e4 !important;
+    font-weight: 500;
+  }
+
+  .meth-compare__table tbody tr:last-child th,
+  .meth-compare__table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* Flow */
+  .meth-flow {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: linear-gradient(180deg, #f0fdfa 0%, var(--color-bg) 100%);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .meth-flow__steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .meth-flow__step {
+    flex: 1 1 160px;
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+  }
+
+  .meth-flow__icon {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #fff;
+    background: var(--color-accent);
+    border-radius: 0.5rem;
+  }
+
+  .meth-flow__step h3 {
+    margin: 0 0 0.35rem;
+    font-size: 0.9375rem;
+  }
+
+  .meth-flow__step p {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--color-muted);
+  }
+
+  .meth-flow__arrow {
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    color: var(--color-accent);
+    padding: 0 0.25rem;
+  }
+
+  /* Deep links */
+  .meth-deep {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: #fff;
+  }
+
+  .meth-deep__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .meth-deep-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+
+  .meth-deep-card:hover {
+    transform: translateY(-3px);
+    border-color: #99f6e4;
+    box-shadow: 0 12px 28px rgb(13 148 136 / 0.1);
+  }
+
+  .meth-deep-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.0625rem;
+    color: var(--color-primary);
+  }
+
+  .meth-deep-card p {
+    flex: 1;
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  .meth-deep-card__cta {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  /* Article */
+  .meth-article {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: var(--color-bg);
+  }
+
+  .meth-article__layout {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .meth-toc {
+    position: sticky;
+    top: 1.5rem;
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-size: 0.8125rem;
+  }
+
+  .meth-toc h2 {
+    margin: 0 0 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+  }
+
+  .meth-toc ol {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+
+  .meth-toc li {
+    margin-bottom: 0.35rem;
+  }
+
+  .meth-toc a {
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .meth-toc a:hover {
+    color: var(--color-accent);
+  }
+
+  .meth-toc__byline {
+    margin: 1.25rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .meth-prose h2 {
+    scroll-margin-top: 1.5rem;
+  }
+
+  .meth-faq dt {
+    font-weight: 600;
+    margin-top: var(--space-lg);
+    color: var(--color-primary);
+  }
+
+  .meth-faq dt:first-of-type {
+    margin-top: 0;
+  }
+
+  .meth-faq dd {
+    margin: 0.5rem 0 0;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+
+  /* CTA */
+  .meth-cta {
+    padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+    background: linear-gradient(135deg, #134e4a 0%, #0f766e 50%, #0d9488 100%);
+    color: #fff;
+  }
+
+  .meth-cta__inner {
+    text-align: center;
+    max-width: 36rem;
+    margin-inline: auto;
+  }
+
+  .meth-cta h2 {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: #fff;
+  }
+
+  .meth-cta p {
+    margin: 0 0 1.75rem;
+    color: rgb(255 255 255 / 0.9);
+    line-height: 1.6;
+  }
+
+  .meth-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.875rem;
+  }
+
+  .meth-cta .btn--primary {
+    background: #fff;
+    color: #0f766e;
+  }
+
+  .meth-cta .btn--primary:hover {
+    background: #f0fdfa;
+    color: #0f766e;
+  }
+
+  .meth-cta__btn-light {
+    background: transparent;
+    border: 1px solid rgb(255 255 255 / 0.45);
+    color: #fff;
+  }
+
+  .meth-disclaimer {
+    padding: var(--space-2xl) 0 var(--space-3xl);
+  }
+
+  @media (max-width: 1024px) {
+    .meth-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .meth-flow__arrow {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .meth-pillar {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .meth-pillar__index {
+      font-size: 1.25rem;
+    }
+
+    .meth-deep__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .meth-article__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .meth-toc {
+      position: static;
+    }
+  }
+</style>

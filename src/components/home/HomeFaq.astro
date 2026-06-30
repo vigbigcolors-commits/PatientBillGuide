@@ -1,58 +1,603 @@
 ---
-import { homeFaqs } from '../../data/home-content';
+import { homeFaqs, homeFaqCategories } from '../../data/home-content';
+
+const categoryLabels: Record<string, string> = {
+  price: 'Fair price',
+  privacy: 'Privacy',
+  bill: 'Bills & EOBs',
+  trust: 'Trust & limits',
+};
 ---
 
 <section class="home-faq" aria-labelledby="home-faq-heading">
-  <div class="container container--narrow">
-    <header class="section-header section-header--center">
-      <p class="section-eyebrow">FAQ</p>
-      <h2 id="home-faq-heading">Common questions</h2>
-    </header>
-    <dl class="faq-list">
-      {
-        homeFaqs.map((item) => (
-          <>
-            <dt>{item.question}</dt>
-            <dd>{item.answer}</dd>
-          </>
-        ))
-      }
-    </dl>
-    <p class="home-faq__more">
-      More on <a href="/disclaimer/">disclaimers</a>, <a href="/methodology/limitations/">limitations</a>,
-      and <a href="/contact/">contact</a>.
-    </p>
+  <div class="home-faq__shell">
+    <div class="container home-faq__inner">
+      <header class="home-faq__header">
+        <div class="home-faq__header-text">
+          <p class="home-faq__eyebrow">FAQ</p>
+          <h2 id="home-faq-heading">Questions patients ask first</h2>
+          <p class="home-faq__lead">
+            Tap a question — the full answer appears instantly. No hunting through accordion walls
+            of text.
+          </p>
+        </div>
+        <div class="home-faq__stat" aria-hidden="true">
+          <span class="home-faq__stat-num">{homeFaqs.length}</span>
+          <span class="home-faq__stat-label">essential answers</span>
+        </div>
+      </header>
+
+      <div class="home-faq__filters" role="tablist" aria-label="Filter questions by topic">
+        {
+          homeFaqCategories.map((cat, i) => (
+            <button
+              type="button"
+              class:list={['home-faq__filter', i === 0 && 'is-active']}
+              role="tab"
+              aria-selected={i === 0 ? 'true' : 'false'}
+              data-faq-filter={cat.id}
+            >
+              {cat.label}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="home-faq__panel">
+        {/* Question picker */}
+        <div class="home-faq__picker" role="tabpanel" aria-label="Choose a question">
+          <p class="home-faq__picker-label">Pick a question</p>
+          <ul class="home-faq__questions" role="list">
+            {
+              homeFaqs.map((item, i) => (
+                <li
+                  class="home-faq__q-row"
+                  data-faq-category={item.category}
+                  data-faq-id={item.id}
+                >
+                  <button
+                    type="button"
+                    class:list={['home-faq__q-btn', i === 0 && 'is-active']}
+                    aria-expanded={i === 0 ? 'true' : 'false'}
+                    aria-controls={`faq-answer-${item.id}`}
+                    data-faq-target={item.id}
+                  >
+                    <span class="home-faq__q-badge">{categoryLabels[item.category]}</span>
+                    <span class="home-faq__q-text">{item.picker}</span>
+                    <svg class="home-faq__q-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                  </button>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        {/* Answer stage — all answers in DOM for SEO */}
+        <div class="home-faq__stage">
+          {
+            homeFaqs.map((item, i) => (
+              <article
+                id={`faq-answer-${item.id}`}
+                class:list={['home-faq__answer-card', i === 0 && 'is-visible']}
+                data-faq-panel={item.id}
+                aria-hidden={i === 0 ? 'false' : 'true'}
+              >
+                <span class="home-faq__answer-tag">{categoryLabels[item.category]}</span>
+                <h3 class="home-faq__answer-q">{item.question}</h3>
+                <p class="home-faq__answer-body">{item.answer}</p>
+                {
+                  item.link && (
+                    <a href={item.link.href} class="home-faq__answer-link">
+                      {item.link.label}
+                      <span aria-hidden="true">→</span>
+                    </a>
+                  )
+                }
+              </article>
+            ))
+          }
+
+          <div class="home-faq__stage-foot">
+            <p>
+              Still stuck? Read <a href="/how-it-works/">How it works</a>,
+              <a href="/methodology/">methodology</a>, or <a href="/contact/">contact us</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile: inline answers under each question (visible on small screens) */}
+      <ul class="home-faq__mobile" role="list">
+        {
+          homeFaqs.map((item) => (
+            <li class="home-faq__mobile-item" data-faq-category={item.category}>
+              <details class="home-faq__mobile-details" name="home-faq-mobile">
+                <summary>
+                  <span class="home-faq__q-badge">{categoryLabels[item.category]}</span>
+                  {item.question}
+                </summary>
+                <div class="home-faq__mobile-body">
+                  <p>{item.answer}</p>
+                  {item.link && <a href={item.link.href}>{item.link.label} →</a>}
+                </div>
+              </details>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </div>
 </section>
 
 <style>
   .home-faq {
-    padding: var(--space-3xl) 0;
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
     background: var(--color-bg);
   }
 
-  .faq-list dt {
+  .home-faq__shell {
+    background: linear-gradient(165deg, #0b1220 0%, #0f172a 55%, #134e4a 100%);
+    border-radius: clamp(1.25rem, 3vw, 1.75rem);
+    margin-inline: max(1rem, calc((100vw - var(--max-width)) / 2 + 1rem));
+    overflow: hidden;
+    box-shadow:
+      0 24px 48px rgb(15 23 42 / 0.18),
+      inset 0 1px 0 rgb(255 255 255 / 0.06);
+  }
+
+  .home-faq__inner {
+    padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .home-faq__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .home-faq__header-text {
+    max-width: 32rem;
+  }
+
+  .home-faq__eyebrow {
+    margin: 0 0 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #5eead4;
+  }
+
+  .home-faq__header h2 {
+    margin: 0 0 0.625rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.625rem, 3.5vw, 2.25rem);
+    letter-spacing: -0.025em;
+    color: #fff;
+  }
+
+  .home-faq__lead {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgb(203 213 225 / 0.88);
+  }
+
+  .home-faq__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    min-width: 6.5rem;
+  }
+
+  .home-faq__stat-num {
+    font-family: var(--font-mono);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #5eead4;
+    line-height: 1;
+  }
+
+  .home-faq__stat-label {
+    margin-top: 0.35rem;
+    font-size: 0.6875rem;
     font-weight: 600;
-    color: var(--color-primary);
-    margin-top: var(--space-lg);
-    font-size: 1.025rem;
-  }
-
-  .faq-list dt:first-of-type {
-    margin-top: 0;
-  }
-
-  .faq-list dd {
-    margin: var(--space-sm) 0 0;
-    color: var(--color-muted);
-    line-height: 1.7;
-    font-size: 0.95rem;
-  }
-
-  .home-faq__more {
-    margin-top: var(--space-2xl);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgb(148 163 184 / 0.9);
     text-align: center;
-    font-size: 0.9rem;
+  }
+
+  .home-faq__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .home-faq__filter {
+    padding: 0.45rem 0.875rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: rgb(203 213 225 / 0.85);
+    background: rgb(255 255 255 / 0.05);
+    border: 1px solid rgb(255 255 255 / 0.12);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+
+  .home-faq__filter:hover {
+    background: rgb(255 255 255 / 0.1);
+    color: #fff;
+  }
+
+  .home-faq__filter.is-active {
+    background: #0d9488;
+    border-color: #14b8a6;
+    color: #fff;
+  }
+
+  .home-faq__panel {
+    display: grid;
+    grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .home-faq__picker {
+    background: rgb(255 255 255 / 0.04);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    border-radius: 1.25rem;
+    padding: 0.75rem;
+    max-height: 28rem;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(45 212 191 / 0.4) transparent;
+  }
+
+  .home-faq__picker-label {
+    margin: 0 0 0.5rem;
+    padding: 0.25rem 0.625rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgb(148 163 184 / 0.85);
+  }
+
+  .home-faq__questions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .home-faq__q-row.is-hidden {
+    display: none;
+  }
+
+  .home-faq__q-btn {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.5rem;
+    width: 100%;
+    padding: 0.75rem 0.875rem;
+    text-align: left;
+    font-family: inherit;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.875rem;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .home-faq__q-btn:hover {
+    background: rgb(255 255 255 / 0.06);
+  }
+
+  .home-faq__q-btn.is-active {
+    background: rgb(255 255 255 / 0.1);
+    border-color: rgb(45 212 191 / 0.35);
+  }
+
+  .home-faq__q-badge {
+    flex-shrink: 0;
+    font-size: 0.5625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.45rem;
+    border-radius: 999px;
+    color: #5eead4;
+    background: rgb(13 148 136 / 0.2);
+    border: 1px solid rgb(45 212 191 / 0.25);
+  }
+
+  .home-faq__q-text {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #f1f5f9;
+  }
+
+  .home-faq__q-chevron {
+    flex-shrink: 0;
+    color: rgb(148 163 184 / 0.6);
+    transition: transform 0.2s, color 0.2s;
+  }
+
+  .home-faq__q-btn.is-active .home-faq__q-chevron {
+    color: #5eead4;
+    transform: translateX(2px);
+  }
+
+  .home-faq__stage {
+    position: relative;
+    min-height: 16rem;
+    background: #fff;
+    border-radius: 1.25rem;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .home-faq__answer-card {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    animation: faq-fade 0.3s ease-out;
+  }
+
+  .home-faq__answer-card.is-visible {
+    display: flex;
+  }
+
+  @keyframes faq-fade {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .home-faq__answer-tag {
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-accent);
+  }
+
+  .home-faq__answer-q {
+    margin: 0 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: var(--color-primary);
+  }
+
+  .home-faq__answer-body {
+    margin: 0;
+    flex: 1;
+    font-size: 1rem;
+    line-height: 1.75;
     color: var(--color-muted);
+  }
+
+  .home-faq__answer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 1.25rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-accent);
+  }
+
+  .home-faq__answer-link:hover {
+    color: var(--color-accent-hover);
+  }
+
+  .home-faq__stage-foot {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .home-faq__stage-foot p {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+
+  .home-faq__mobile {
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0 0;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .home-faq__mobile-item.is-hidden {
+    display: none;
+  }
+
+  .home-faq__mobile-details {
+    background: rgb(255 255 255 / 0.06);
+    border: 1px solid rgb(255 255 255 / 0.12);
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  .home-faq__mobile-details[open] {
+    border-color: rgb(45 212 191 / 0.4);
+    background: rgb(255 255 255 / 0.08);
+  }
+
+  .home-faq__mobile-details summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 1.125rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    color: #f1f5f9;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .home-faq__mobile-details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .home-faq__mobile-body {
+    padding: 0 1.125rem 1.125rem;
+  }
+
+  .home-faq__mobile-body p {
+    margin: 0 0 0.75rem;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: rgb(203 213 225 / 0.9);
+  }
+
+  .home-faq__mobile-body a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #5eead4;
+  }
+
+  @media (max-width: 768px) {
+    .home-faq__shell {
+      margin-inline: 1rem;
+      border-radius: 1.25rem;
+    }
+
+    .home-faq__panel {
+      display: none;
+    }
+
+    .home-faq__mobile {
+      display: flex;
+    }
+
+    .home-faq__stat {
+      width: 100%;
+      flex-direction: row;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .home-faq__stat-num {
+      font-size: 1.375rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-faq__answer-card {
+      animation: none;
+    }
   }
 </style>
+
+<script>
+  const root = document.querySelector('.home-faq');
+  if (root) {
+    const filters = root.querySelectorAll<HTMLButtonElement>('[data-faq-filter]');
+    const qRows = root.querySelectorAll<HTMLElement>('.home-faq__q-row');
+    const qBtns = root.querySelectorAll<HTMLButtonElement>('[data-faq-target]');
+    const panels = root.querySelectorAll<HTMLElement>('[data-faq-panel]');
+    const mobileItems = root.querySelectorAll<HTMLElement>('.home-faq__mobile-item');
+
+    let activeFilter = 'all';
+
+    function showPanel(id: string) {
+      qBtns.forEach((btn) => {
+        const on = btn.dataset.faqTarget === id;
+        btn.classList.toggle('is-active', on);
+        btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+      });
+      panels.forEach((panel) => {
+        const on = panel.dataset.faqPanel === id;
+        panel.classList.toggle('is-visible', on);
+        panel.setAttribute('aria-hidden', on ? 'false' : 'true');
+      });
+    }
+
+    function applyFilter(filter: string) {
+      activeFilter = filter;
+      filters.forEach((f) => {
+        const on = f.dataset.faqFilter === filter;
+        f.classList.toggle('is-active', on);
+        f.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+
+      const match = (cat: string | undefined) => filter === 'all' || cat === filter;
+
+      qRows.forEach((row) => {
+        row.classList.toggle('is-hidden', !match(row.dataset.faqCategory));
+      });
+      mobileItems.forEach((item) => {
+        item.classList.toggle('is-hidden', !match(item.dataset.faqCategory));
+      });
+
+      const firstVisible = root.querySelector<HTMLElement>(
+        '.home-faq__q-row:not(.is-hidden) [data-faq-target]',
+      );
+      if (firstVisible?.dataset.faqTarget) {
+        showPanel(firstVisible.dataset.faqTarget);
+      }
+    }
+
+    filters.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.faqFilter ?? 'all';
+        applyFilter(filter);
+      });
+    });
+
+    qBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.faqTarget;
+        if (id) showPanel(id);
+      });
+    });
+
+    /* One open mobile accordion at a time */
+    root.querySelectorAll<HTMLDetailsElement>('.home-faq__mobile-details').forEach((el) => {
+      el.addEventListener('toggle', () => {
+        if (!el.open) return;
+        root.querySelectorAll<HTMLDetailsElement>('.home-faq__mobile-details').forEach((other) => {
+          if (other !== el) other.open = false;
+        });
+      });
+    });
+  }
+</script>

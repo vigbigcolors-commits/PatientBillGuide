@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { detectInsurer } from '../../src/lib/eob/detect-insurer';
-import { parseEobDocument, parseEobWithInsurer, summarizeEob } from '../../src/lib/eob/parse';
+import { parseEobDocument, parseEobWithInsurer, summarizeEob, analyzeEob } from '../../src/lib/eob/parse';
 
 const UHC_SAMPLE = `UnitedHealthcare
 Explanation of Benefits
@@ -140,6 +140,25 @@ describe('summarizeEob', () => {
     const { lines, insurer } = parseEobDocument(UHC_SAMPLE);
     const summary = summarizeEob(lines, insurer);
     expect(summary.totalPatientOwes).toBe(31.64);
+    expect(summary.totalBilled).toBeGreaterThan(0);
     expect(summary.codes).toContain('99213');
+  });
+});
+
+describe('analyzeEob', () => {
+  it('builds insights for BCBS ER line with plan paid zero', () => {
+    const parsed = parseEobDocument(BCBS_SAMPLE);
+    const analysis = analyzeEob(parsed);
+    expect(analysis.insights.length).toBeGreaterThan(0);
+    expect(analysis.checksRun.length).toBeGreaterThan(0);
+    expect(analysis.nextSteps.length).toBeGreaterThan(0);
+    expect(analysis.totalPlanPaid).toBeGreaterThan(0);
+  });
+
+  it('reports zero owe insight for preventive generic sample', () => {
+    const raw = '01/15/2026 77067 Screening mammography $450.00 $131.44 $131.44 $0.00';
+    const analysis = analyzeEob(parseEobWithInsurer(raw, 'generic'));
+    expect(analysis.totalPatientOwes).toBe(0);
+    expect(analysis.insights.some((i) => i.id === 'zero-owe')).toBe(true);
   });
 });

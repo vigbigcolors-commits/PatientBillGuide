@@ -1,11 +1,24 @@
 ---
-import type { FairPriceExample, MedicareLookupExample, BillAuditorExample, EobAnalyzerExample } from '../../data/tool-examples';
+import type {
+  FairPriceExample,
+  MedicareLookupExample,
+  BillAuditorExample,
+  EobAnalyzerExample,
+  SurpriseBillExample,
+  HospitalCompareExample,
+} from '../../data/tool-examples';
 
 interface Props {
   title?: string;
   hint?: string;
-  examples: FairPriceExample[] | MedicareLookupExample[] | BillAuditorExample[] | EobAnalyzerExample[];
-  variant: 'fair-price' | 'medicare-lookup' | 'bill-auditor' | 'eob-analyzer';
+  examples:
+    | FairPriceExample[]
+    | MedicareLookupExample[]
+    | BillAuditorExample[]
+    | EobAnalyzerExample[]
+    | SurpriseBillExample[]
+    | HospitalCompareExample[];
+  variant: 'fair-price' | 'medicare-lookup' | 'bill-auditor' | 'eob-analyzer' | 'surprise-bill' | 'hospital-compare';
 }
 
 const { title = 'Quick examples', hint = 'Click to load — then we run the check automatically.', examples, variant } = Astro.props;

@@ -5,32 +5,242 @@ import LegalLayout from '../../layouts/LegalLayout.astro';
 <LegalLayout
   title="Privacy Policy"
   description="PatientBillGuide privacy policy — client-side processing, no PHI upload."
+  pageClass="page-privacy"
+  hideTitle
   crumbs={[{ label: 'Privacy Policy' }]}
 >
-  <p><em>Last updated June 2026.</em></p>
+  <section class="guide-hero guide-hero--privacy" slot="hero" aria-labelledby="privacy-hero-title">
+    <div class="guide-hero__bg" aria-hidden="true">
+      <span class="guide-hero__orb guide-hero__orb--1"></span>
+      <span class="guide-hero__orb guide-hero__orb--2"></span>
+      <span class="guide-hero__grid"></span>
+    </div>
+    <div class="container guide-hero__inner">
+      <div class="privacy-shield" aria-hidden="true">
+        <svg viewBox="0 0 64 72" width="64" height="72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M32 4L8 14v18c0 14.4 10.2 27.9 24 32 13.8-4.1 24-17.6 24-32V14L32 4z"
+            fill="url(#shield-grad)"
+            stroke="rgb(255 255 255 / 0.35)"
+            stroke-width="1.5"
+          />
+          <path d="M26 36l6 6 12-14" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          <defs>
+            <linearGradient id="shield-grad" x1="32" y1="4" x2="32" y2="68" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#334155" />
+              <stop offset="1" stop-color="#0f172a" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <p class="guide-hero__eyebrow">Trust · Transparency</p>
+      <h1 id="privacy-hero-title" class="guide-hero__title">Your bill stays on your device</h1>
+      <p class="guide-hero__lead">
+        PatientBillGuide tools run in your browser. We do not ask you to upload medical bills to our servers
+        or create an account to use calculators and checkers.
+      </p>
+      <p class="privacy-hero-date"><em>Last updated June 2026</em></p>
+    </div>
+  </section>
+
+  <div class="privacy-pillars" role="list" aria-label="Privacy principles">
+    <div class="privacy-pillars__item" role="listitem">
+      <span class="privacy-pillars__icon" aria-hidden="true">🔒</span>
+      <strong>Browser-only processing</strong>
+      <span>Bill text and CPT codes are parsed locally — not sent to us for analysis.</span>
+    </div>
+    <div class="privacy-pillars__item" role="listitem">
+      <span class="privacy-pillars__icon" aria-hidden="true">👤</span>
+      <strong>No account required</strong>
+      <span>Use every tool without signing in or sharing identity information.</span>
+    </div>
+    <div class="privacy-pillars__item" role="listitem">
+      <span class="privacy-pillars__icon" aria-hidden="true">📋</span>
+      <strong>No PHI collection by design</strong>
+      <span>We do not intentionally collect protected health information through our tools.</span>
+    </div>
+    <div class="privacy-pillars__item" role="listitem">
+      <span class="privacy-pillars__icon" aria-hidden="true">📖</span>
+      <strong>Plain language</strong>
+      <span>This policy explains what we do and do not do — no legal maze.</span>
+    </div>
+  </div>
 
   <h2>Summary</h2>
   <p>
-    PatientBillGuide tools process bill text and codes <strong>in your browser</strong>. We do
-    not require accounts and do not intentionally collect protected health information (PHI)
-    through our tools.
+    PatientBillGuide is a consumer education site with free billing tools. When you paste bill text or enter
+    CPT codes, that input is processed <strong>in your browser</strong> using JavaScript and public CMS
+    data files loaded from our CDN. We do not operate a backend that stores your pasted bills.
+  </p>
+  <p>
+    That design choice matters for medical privacy: your itemized charges, diagnosis references, and account
+    numbers never need to leave your device for our calculators to work.
   </p>
 
-  <h2>Server logs</h2>
+  <h2>What our tools do locally</h2>
+  <ul>
+    <li><strong>Fair Price Calculator</strong> — looks up Medicare fee schedule data by code and ZIP in your browser.</li>
+    <li><strong>Bill Auditor</strong> — parses pasted line items client-side and compares against public benchmarks.</li>
+    <li><strong>EOB Analyzer</strong> — extracts columns from pasted EOB text without server upload.</li>
+    <li><strong>Dispute Letter Builder</strong> — generates editable text from your inputs; you copy and send it yourself.</li>
+  </ul>
   <p>
-    Like most websites, our host may log standard technical data (IP address, browser type,
-  pages requested) for security and performance.
+    Public data files (MPFS, NCCI, ZIP-to-locality maps) are static JSON served from our host — the same for
+    every visitor. Your personal bill content is not written into those files.
   </p>
 
-  <h2>Analytics &amp; advertising</h2>
+  <h2>What we may collect</h2>
+  <h3>Server logs</h3>
   <p>
-    We may use privacy-conscious analytics and Google AdSense after launch. Third-party
-    services have their own policies. We will update this page before enabling ads.
+    Like most websites, our hosting provider (Cloudflare Pages) may log standard technical data when you
+    load pages: IP address, browser type, pages requested, timestamps. These logs support security,
+    abuse prevention, and performance — not medical analysis.
+  </p>
+  <h3>Analytics</h3>
+  <p>
+    We may add privacy-conscious analytics after launch to understand which pages help users most. If we
+    enable analytics, we will prefer tools that minimize personal data and honor Do Not Track where
+    applicable. This page will be updated before any analytics go live.
+  </p>
+  <h3>Advertising</h3>
+  <p>
+    We plan to use Google AdSense after the site meets program requirements. Ad networks may use cookies
+    and device identifiers under their own policies. We will update this policy and, where required,
+    display consent controls before enabling personalized ads.
+  </p>
+
+  <h2>What we do not do</h2>
+  <ul>
+    <li>Sell your medical bill content — we never receive it through our tools.</li>
+    <li>Require Social Security numbers, insurance member IDs, or date of birth to use calculators.</li>
+    <li>Provide medical advice, legal advice, or insurance enrollment services.</li>
+    <li>Share data with debt collectors, providers, or insurers on your behalf.</li>
+  </ul>
+
+  <h2>Cookies &amp; local storage</h2>
+  <p>
+    Core tools work without cookies. Third-party services (ads, embedded widgets if added later) may set
+    their own cookies. You can clear site data through your browser settings at any time.
+  </p>
+
+  <h2>Children's privacy</h2>
+  <p>
+    PatientBillGuide is intended for adults managing their own healthcare bills. We do not knowingly collect
+    personal information from children under 13.
+  </p>
+
+  <h2>Changes to this policy</h2>
+  <p>
+    We will post updates on this page with a revised "last updated" date. Material changes (such as enabling
+    ads or analytics) will be called out at the top of the page when they take effect.
   </p>
 
   <h2>Contact</h2>
   <p>
-    Questions: <a href="mailto:contact@patientbillguide.com">contact@patientbillguide.com</a> or our
+    Privacy questions: <a href="mailto:contact@patientbillguide.com">contact@patientbillguide.com</a> or our
     <a href="/contact/">contact page</a>.
   </p>
+  <p>
+    See also: <a href="/terms/">Terms of Use</a> · <a href="/disclaimer/">Disclaimer</a> ·
+    <a href="/methodology/data-sources/">Data sources</a>
+  </p>
+
+  <section class="privacy-footer-band" aria-label="Privacy commitment">
+    <p>
+      <strong>Bottom line:</strong> We built PatientBillGuide so you can research bills without handing
+      them to another company. Your paste buffer is yours.
+    </p>
+  </section>
 </LegalLayout>
+
+<style is:global>
+  .page-privacy .legal-page__body {
+    --guide-accent: #475569;
+    --guide-accent-bg: #f8fafc;
+    --guide-accent-border: #cbd5e1;
+  }
+
+  .guide-hero--privacy {
+    --hero-accent: #64748b;
+    --hero-accent-light: #94a3b8;
+    --hero-bg: linear-gradient(165deg, #020617 0%, #0f172a 40%, #1e293b 100%);
+  }
+
+  .privacy-shield {
+    margin-bottom: var(--space-md);
+    filter: drop-shadow(0 8px 24px rgb(0 0 0 / 0.4));
+    animation: privacy-shield-pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes privacy-shield-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  .privacy-hero-date {
+    margin: var(--space-md) 0 0;
+    font-size: 0.875rem;
+    color: rgb(255 255 255 / 0.65);
+  }
+
+  .privacy-pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    gap: var(--space-md);
+    margin: 0 0 var(--space-2xl);
+    padding: 0;
+  }
+
+  .privacy-pillars__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: var(--space-lg);
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 20px rgb(15 23 42 / 0.06);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .privacy-pillars__item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgb(15 23 42 / 0.1);
+  }
+
+  .privacy-pillars__icon {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .privacy-pillars__item strong {
+    font-size: 0.9375rem;
+    color: #0f172a;
+  }
+
+  .privacy-pillars__item span:last-child {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--color-muted);
+  }
+
+  .privacy-footer-band {
+    margin-top: var(--space-2xl);
+    padding: var(--space-xl);
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-radius: var(--radius-xl);
+    color: #fff;
+    text-align: center;
+  }
+
+  .privacy-footer-band p {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: rgb(255 255 255 / 0.92);
+  }
+
+  .privacy-footer-band strong {
+    color: #94a3b8;
+  }
+</style>

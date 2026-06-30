@@ -1,6 +1,8 @@
 ---
 import LegalLayout from '../../../layouts/LegalLayout.astro';
+import AuthorByline from '../../../components/AuthorByline.astro';
 import { site } from '../../../data/site';
+import { author, getAuthorUrl } from '../../../data/author';
 import { articleSchema, faqPageSchema, breadcrumbSchema } from '../../../lib/seo/schema';
 
 const updated = '2026-06-29';
@@ -54,8 +56,9 @@ const schemaGraph = [
     description,
     url: canonical,
     dateModified: updated,
-    authorName: 'Vigen',
-    authorUrl: `${site.url}/authors/vigen/`,
+    authorName: author.name,
+    authorUrl: getAuthorUrl(site.url),
+    authorJobTitle: author.jobTitle,
   }),
   faqPageSchema(faqs),
   breadcrumbSchema(
@@ -69,14 +72,46 @@ const schemaGraph = [
 ];
 ---
 
-<LegalLayout title={title} description={description} crumbs={[{ label: 'Learn', href: '/learn/' }, { label: 'How to Read an EOB' }]}>
+<LegalLayout title={title} description={description} pageClass="page-eob" hideTitle crumbs={[{ label: 'Learn', href: '/learn/' }, { label: 'How to Read an EOB' }]}>
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
   </Fragment>
 
-  <p class="article-byline">
-    Written by <a href="/authors/vigen/">Vigen</a> · Last updated {updated}
-  </p>
+  <section class="guide-hero guide-hero--eob" slot="hero" aria-labelledby="eob-hero-title">
+    <div class="guide-hero__bg" aria-hidden="true">
+      <span class="guide-hero__orb guide-hero__orb--1"></span>
+      <span class="guide-hero__orb guide-hero__orb--2"></span>
+      <span class="guide-hero__grid"></span>
+    </div>
+    <div class="container guide-hero__inner">
+      <p class="guide-hero__eyebrow">Learn · Insurance</p>
+      <h1 id="eob-hero-title" class="guide-hero__title">How to Read an EOB</h1>
+      <p class="guide-hero__lead">
+        Decode allowed amounts, patient responsibility, and denial codes — without drowning in insurance jargon.
+      </p>
+      <div class="eob-mock" role="img" aria-label="Sample EOB columns: billed, allowed, plan paid, you owe">
+        <div class="eob-mock__header">
+          <span>Explanation of Benefits</span>
+          <span class="eob-mock__badge">Not a bill</span>
+        </div>
+        <div class="eob-mock__row eob-mock__row--head">
+          <span>Service</span><span>Billed</span><span>Allowed</span><span>Plan paid</span><span>You owe</span>
+        </div>
+        <div class="eob-mock__row">
+          <span><code>99213</code> Office visit</span><span>$185</span><span class="eob-mock__allowed">$108</span><span>$80</span><span class="eob-mock__owe">$28</span>
+        </div>
+        <div class="eob-mock__row">
+          <span><code>80053</code> Metabolic panel</span><span>$45</span><span class="eob-mock__allowed">$13</span><span>$10</span><span class="eob-mock__owe">$3</span>
+        </div>
+      </div>
+      <div class="guide-hero__actions">
+        <a href="/tools/eob-analyzer/" class="btn btn--primary">Try EOB Analyzer</a>
+        <a href="#what-is-eob" class="btn btn--secondary">Start reading</a>
+      </div>
+    </div>
+  </section>
+
+  <AuthorByline variant="written" updated={updated} class="article-byline" />
 
   <nav class="article-toc" aria-label="Table of contents">
     <h2>On this page</h2>
@@ -445,4 +480,157 @@ const schemaGraph = [
       ))
     }
   </dl>
+
+  <section class="guide-cta guide-cta--eob" aria-label="Related tools">
+    <h2>Put this guide to work</h2>
+    <div class="guide-cta__grid">
+      <a href="/tools/eob-analyzer/" class="guide-cta__card">
+        <strong>EOB Analyzer</strong>
+        <span>Paste EOB text → line-by-line table</span>
+      </a>
+      <a href="/tools/fair-price/" class="guide-cta__card">
+        <strong>Fair Price Calculator</strong>
+        <span>Check allowed amounts by CPT + ZIP</span>
+      </a>
+      <a href="/learn/how-to-read-medical-bill/" class="guide-cta__card">
+        <strong>Read a medical bill</strong>
+        <span>When the hospital statement arrives</span>
+      </a>
+    </div>
+  </section>
 </LegalLayout>
+
+<style is:global>
+  .page-eob .legal-page__body {
+    --guide-accent: #2563eb;
+    --guide-accent-bg: #eff6ff;
+    --guide-accent-border: #93c5fd;
+  }
+
+  .page-eob .article-toc {
+    background: linear-gradient(135deg, #eff6ff 0%, #fff 100%);
+    border-color: #93c5fd;
+  }
+
+  .page-eob .article-toc a:hover {
+    color: #1d4ed8;
+  }
+
+  .guide-hero--eob {
+    --hero-accent: #2563eb;
+    --hero-accent-light: #60a5fa;
+    --hero-bg: linear-gradient(165deg, #0f172a 0%, #1e3a8a 42%, #1e40af 100%);
+  }
+
+  .eob-mock {
+    margin: var(--space-xl) auto 0;
+    max-width: 36rem;
+    background: rgb(255 255 255 / 0.97);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 24px 48px rgb(0 0 0 / 0.25);
+    overflow: hidden;
+    font-size: 0.8125rem;
+  }
+
+  .eob-mock__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: #eff6ff;
+    border-bottom: 1px solid #bfdbfe;
+    font-weight: 700;
+    color: #1e40af;
+  }
+
+  .eob-mock__badge {
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.5rem;
+    background: #dbeafe;
+    border-radius: 999px;
+    color: #1d4ed8;
+  }
+
+  .eob-mock__row {
+    display: grid;
+    grid-template-columns: 1.4fr repeat(4, 1fr);
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+
+  .eob-mock__row--head {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #64748b;
+    background: #f8fafc;
+  }
+
+  .eob-mock__row code {
+    font-size: 0.75rem;
+    color: #2563eb;
+  }
+
+  .eob-mock__allowed {
+    color: #059669;
+    font-weight: 600;
+  }
+
+  .eob-mock__owe {
+    color: #1d4ed8;
+    font-weight: 700;
+  }
+
+  .guide-cta--eob {
+    margin-top: var(--space-2xl);
+    padding: var(--space-xl);
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border: 1px solid #93c5fd;
+    border-radius: var(--radius-xl);
+  }
+
+  .guide-cta--eob h2 {
+    font-size: 1.125rem;
+    margin: 0 0 var(--space-md);
+    color: #1e40af;
+  }
+
+  .guide-cta__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: var(--space-md);
+  }
+
+  .guide-cta__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: var(--space-md);
+    background: #fff;
+    border: 1px solid #bfdbfe;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .guide-cta__card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgb(37 99 235 / 0.15);
+  }
+
+  .guide-cta__card strong {
+    color: #1e40af;
+    font-size: 0.9375rem;
+  }
+
+  .guide-cta__card span {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+</style>

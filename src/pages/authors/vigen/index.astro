@@ -1,34 +1,187 @@
 ---
-import LegalLayout from '../../../layouts/LegalLayout.astro';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import Disclaimer from '../../../components/Disclaimer.astro';
+import { author } from '../../../data/author';
+import { site } from '../../../data/site';
+import { articleSchema, breadcrumbSchema, personSchema } from '../../../lib/seo/schema';
+
+const pageUrl = author.path;
+const canonical = new URL(pageUrl, site.url).href;
+
+const schemaGraph = [
+  personSchema({
+    name: author.name,
+    url: canonical,
+    jobTitle: author.jobTitle,
+    description: author.bioLong,
+  }),
+  articleSchema({
+    headline: `${author.name} — ${author.role}`,
+    description: author.bioShort,
+    url: canonical,
+    dateModified: '2026-06-29',
+    authorName: author.name,
+    authorUrl: canonical,
+    authorJobTitle: author.jobTitle,
+  }),
+  breadcrumbSchema(
+    [{ name: 'Home', url: '/' }, { name: 'Authors', url: '/authors/' }, { name: author.name }],
+    site.url,
+  ),
+];
 ---
 
-<LegalLayout
-  title="Vigen"
-  description="Author bio — founder of PatientBillGuide, independent healthcare billing researcher."
-  crumbs={[
-    { label: 'Authors', href: '/authors/' },
-    { label: 'Vigen' },
-  ]}
+<BaseLayout
+  title={`${author.name} — Author & Founder`}
+  description={author.bioShort}
+  showTrustStrip
 >
-  <p>
-    <strong>Vigen</strong> founded PatientBillGuide to make US medical billing more
-    understandable for everyday patients. The site combines public CMS data, original
-    educational content, and client-side tools — built as an independent project separate
-    from any healthcare provider or insurer.
-  </p>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
 
-  <h2>Focus areas</h2>
-  <ul>
-    <li>Medicare fee schedule benchmarks and fair price heuristics</li>
-    <li>Plain-English explanations of CPT codes and billing patterns</li>
-    <li>Tool design for uninsured and insured audiences</li>
-  </ul>
+  <article class="auth-page">
+    <div class="container container--narrow">
+      <Breadcrumbs items={[{ label: 'Authors', href: '/authors/' }, { label: author.name }]} />
 
-  <h2>Editorial approach</h2>
-  <p>
-    Content is written for clarity, not to sensationalize billing problems. When evidence is
-    limited, we say so. We document methodology, corrections, and limitations openly.
-  </p>
+      <header class="auth-hero">
+        <p class="auth-hero__role">{author.role}</p>
+        <h1>{author.name}</h1>
+        <p class="auth-hero__title">{author.title}</p>
+        <p class="auth-hero__lead">{author.bioLong}</p>
+      </header>
 
-  <p><em>Full credentials and contact details will be added before public launch.</em></p>
-</LegalLayout>
+      <section class="auth-block auth-block--teal" aria-labelledby="auth-focus-heading">
+        <h2 id="auth-focus-heading">Research &amp; development focus</h2>
+        <ul>
+          <li>Medicare Physician Fee Schedule benchmarks and documented fair-range heuristics</li>
+          <li>Plain-English CPT and billing pattern education (original writing — not AMA copy)</li>
+          <li>Client-side tool design for uninsured, insured, and Medicare patients</li>
+          <li>NCCI unbundling and duplicate-line detection — with Vitest-covered engine rules</li>
+        </ul>
+      </section>
+
+      <section class="auth-block auth-block--slate" aria-labelledby="auth-approach-heading">
+        <h2 id="auth-approach-heading">Editorial approach</h2>
+        <p>
+          Content is written for clarity, not to sensationalize billing problems. When evidence from
+          public data is limited, we say so. Methodology, data sources, limitations, and a public
+          corrections log are part of the site — not hidden behind signup.
+        </p>
+        <p>
+          PatientBillGuide is <strong>not</strong> a medical practice, law firm, or insurer. Tools
+          provide educational benchmarks and pattern checks — not medical advice, legal advice, or
+          guaranteed savings.
+        </p>
+      </section>
+
+      <section class="auth-links">
+        <h2>On this site</h2>
+        <ul>
+          <li><a href="/about/">About PatientBillGuide</a></li>
+          <li><a href="/methodology/">Methodology hub</a></li>
+          <li><a href="/learn/">Learn guides</a></li>
+          <li><a href="/tools/">Free tools</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </section>
+
+      <Disclaimer />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .auth-page {
+    padding: var(--space-xl) 0 var(--space-3xl);
+  }
+
+  .auth-hero {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .auth-hero__role {
+    margin: 0 0 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+  }
+
+  .auth-hero h1 {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    letter-spacing: -0.03em;
+  }
+
+  .auth-hero__title {
+    margin: 0 0 1rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .auth-hero__lead {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+
+  .auth-block {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid transparent;
+  }
+
+  .auth-block--teal {
+    background: linear-gradient(155deg, #f0fdfa, #ccfbf1);
+    border-color: #99f6e4;
+  }
+
+  .auth-block--slate {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+  }
+
+  .auth-block h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.125rem;
+  }
+
+  .auth-block p,
+  .auth-block li {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  .auth-block ul {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  .auth-block li + li {
+    margin-top: 0.35rem;
+  }
+
+  .auth-links h2 {
+    font-size: 1rem;
+    margin: 0 0 0.75rem;
+  }
+
+  .auth-links ul {
+    margin: 0 0 var(--space-2xl);
+    padding-left: 1.25rem;
+  }
+
+  .auth-links a {
+    font-weight: 600;
+  }
+</style>

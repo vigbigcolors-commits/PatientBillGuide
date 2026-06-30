@@ -32,5 +32,6 @@ coverage/
 Thumbs.db
 *.local
 
-# Commit public/data/ncci-ptp.json.gz — required for Cloudflare deploy (Bill Auditor)
-!public/data/ncci-ptp.json.gz
+# Commit NCCI chunks for Bill Auditor (browser loads by CPT prefix)
+public/data/ncci-chunks/*
+!public/data/ncci-chunks/*.json.gz

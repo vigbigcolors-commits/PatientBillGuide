@@ -1,6 +1,8 @@
 ---
 import LegalLayout from '../../../layouts/LegalLayout.astro';
+import AuthorByline from '../../../components/AuthorByline.astro';
 import { site } from '../../../data/site';
+import { author, getAuthorUrl } from '../../../data/author';
 import { articleSchema, faqPageSchema, breadcrumbSchema } from '../../../lib/seo/schema';
 
 const updated = '2026-06-29';
@@ -49,8 +51,9 @@ const schemaGraph = [
     description,
     url: canonical,
     dateModified: updated,
-    authorName: 'Vigen',
-    authorUrl: `${site.url}/authors/vigen/`,
+    authorName: author.name,
+    authorUrl: getAuthorUrl(site.url),
+    authorJobTitle: author.jobTitle,
   }),
   faqPageSchema(faqs),
   breadcrumbSchema(
@@ -67,15 +70,47 @@ const schemaGraph = [
 <LegalLayout
   title={title}
   description={description}
+  pageClass="page-cpt"
+  hideTitle
   crumbs={[{ label: 'Learn', href: '/learn/' }, { label: 'CPT Codes Explained' }]}
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
   </Fragment>
 
-  <p class="article-byline">
-    Written by <a href="/authors/vigen/">Vigen</a> · Last updated {updated}
-  </p>
+  <section class="guide-hero guide-hero--cpt" slot="hero" aria-labelledby="cpt-hero-title">
+    <div class="guide-hero__bg" aria-hidden="true">
+      <span class="guide-hero__orb guide-hero__orb--1"></span>
+      <span class="guide-hero__orb guide-hero__orb--2"></span>
+      <span class="guide-hero__grid"></span>
+    </div>
+    <div class="container guide-hero__inner">
+      <p class="guide-hero__eyebrow">Learn · Billing codes</p>
+      <h1 id="cpt-hero-title" class="guide-hero__title">What Is a CPT Code?</h1>
+      <p class="guide-hero__lead">
+        Five digits on your bill that unlock price research, EOB reading, and smarter questions to billing.
+      </p>
+      <div class="cpt-display" role="img" aria-label="Example CPT code 99213 office visit">
+        <span class="cpt-display__label">CPT</span>
+        <span class="cpt-display__digits" aria-hidden="true">
+          <span>9</span><span>9</span><span>2</span><span>1</span><span>3</span>
+        </span>
+        <span class="cpt-display__desc">Established patient office visit</span>
+      </div>
+      <div class="cpt-hero-chips">
+        <span>Office visits</span>
+        <span>Lab tests</span>
+        <span>Imaging</span>
+        <span>Surgery</span>
+      </div>
+      <div class="guide-hero__actions">
+        <a href="/codes/" class="btn btn--primary">Browse CPT encyclopedia</a>
+        <a href="/tools/fair-price/" class="btn btn--secondary">Check a code's price</a>
+      </div>
+    </div>
+  </section>
+
+  <AuthorByline variant="written" updated={updated} class="article-byline" />
 
   <p>
     <strong>CPT codes</strong> (Current Procedural Terminology) are five-digit codes that describe medical
@@ -263,4 +298,141 @@ const schemaGraph = [
       <a href="/methodology/data-sources/">data sources</a>.
     </em>
   </p>
+
+  <section class="guide-cta guide-cta--cpt" aria-label="Next steps">
+    <h2>From code to fair price</h2>
+    <div class="guide-cta__grid">
+      <a href="/tools/fair-price/" class="guide-cta__card">
+        <strong>Fair Price Calculator</strong>
+        <span>Medicare allowed + fair range by ZIP</span>
+      </a>
+      <a href="/codes/cpt/99213/" class="guide-cta__card">
+        <strong>Code page: 99213</strong>
+        <span>Example encyclopedia entry</span>
+      </a>
+      <a href="/tools/bill-auditor/" class="guide-cta__card">
+        <strong>Bill Auditor</strong>
+        <span>Paste itemized lines for review</span>
+      </a>
+    </div>
+  </section>
 </LegalLayout>
+
+<style is:global>
+  .page-cpt .legal-page__body {
+    --guide-accent: #0d9488;
+    --guide-accent-bg: #f0fdfa;
+    --guide-accent-border: #5eead4;
+  }
+
+  .guide-hero--cpt {
+    --hero-accent: #14b8a6;
+    --hero-accent-light: #2dd4bf;
+    --hero-bg: linear-gradient(165deg, #042f2e 0%, #0f766e 45%, #115e59 100%);
+  }
+
+  .cpt-display {
+    margin: var(--space-xl) auto 0;
+    padding: var(--space-lg) var(--space-xl);
+    max-width: 22rem;
+    background: rgb(0 0 0 / 0.35);
+    border: 1px solid rgb(45 212 191 / 0.35);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(12px);
+  }
+
+  .cpt-display__label {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #5eead4;
+    margin-bottom: 0.5rem;
+  }
+
+  .cpt-display__digits {
+    display: flex;
+    justify-content: center;
+    gap: 0.35rem;
+    font-family: ui-monospace, 'Cascadia Code', 'Consolas', monospace;
+    font-size: clamp(2rem, 8vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .cpt-display__digits span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 3rem;
+    background: linear-gradient(180deg, #134e4a 0%, #0f766e 100%);
+    border: 1px solid #2dd4bf;
+    border-radius: var(--radius-md);
+    color: #ccfbf1;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.3);
+    animation: cpt-digit-float 3s ease-in-out infinite;
+  }
+
+  .cpt-display__digits span:nth-child(2) { animation-delay: 0.15s; }
+  .cpt-display__digits span:nth-child(3) { animation-delay: 0.3s; }
+  .cpt-display__digits span:nth-child(4) { animation-delay: 0.45s; }
+  .cpt-display__digits span:nth-child(5) { animation-delay: 0.6s; }
+
+  @keyframes cpt-digit-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  .cpt-display__desc {
+    display: block;
+    margin-top: var(--space-md);
+    font-size: 0.8125rem;
+    color: rgb(255 255 255 / 0.78);
+  }
+
+  .cpt-hero-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: var(--space-lg);
+  }
+
+  .cpt-hero-chips span {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgb(255 255 255 / 0.1);
+    border: 1px solid rgb(255 255 255 / 0.2);
+    border-radius: 999px;
+    color: rgb(255 255 255 / 0.9);
+  }
+
+  .guide-cta--cpt {
+    margin-top: var(--space-2xl);
+    padding: var(--space-xl);
+    background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+    border: 1px solid #5eead4;
+    border-radius: var(--radius-xl);
+  }
+
+  .guide-cta--cpt h2 {
+    font-size: 1.125rem;
+    margin: 0 0 var(--space-md);
+    color: #0f766e;
+  }
+
+  .page-cpt .guide-cta__card {
+    border-color: #99f6e4;
+  }
+
+  .page-cpt .guide-cta__card:hover {
+    box-shadow: 0 8px 20px rgb(13 148 136 / 0.15);
+  }
+
+  .page-cpt .guide-cta__card strong {
+    color: #0f766e;
+  }
+</style>
