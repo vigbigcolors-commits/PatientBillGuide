@@ -35,3 +35,9 @@ Thumbs.db
 # Commit NCCI chunks for Bill Auditor (browser loads by CPT prefix)
 public/data/ncci-chunks/*
 !public/data/ncci-chunks/*.json.gz
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
