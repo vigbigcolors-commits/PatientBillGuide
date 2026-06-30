@@ -1,0 +1,11 @@
+# Cloudflare Workers static assets — used by Git integration:
+#   build: npm run build
+#   deploy: npx wrangler deploy
+# Pure static Astro output (no SSR worker).
+
+name = "patientbillguide"
+compatibility_date = "2026-06-29"
+
+[assets]
+directory = "./dist"
+not_found_handling = "404-page"

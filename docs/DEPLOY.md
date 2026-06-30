@@ -13,7 +13,27 @@ This is the standard, low-maintenance setup: push to `main` → automatic deploy
 - Push this repo to GitHub (e.g. `your-org/PatientBillGuide`)
 - Default branch: `main`
 
-## 2. Cloudflare Pages
+## 2. Cloudflare — two dashboard UIs
+
+Cloudflare now offers **Workers (Git builds)** and classic **Pages**. PatientBillGuide supports both.
+
+### A) Workers + Git (what you see now)
+
+Dashboard shows **Build command**, **Deploy command** (`npx wrangler deploy`), **Version command** — **no** “output directory” field. That is normal.
+
+| Setting | Value |
+|---------|--------|
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Root directory | `/` |
+| Production branch | `main` |
+| Variable | `NODE_VERSION` = `22` (optional) |
+
+The repo includes **`wrangler.toml`** — it tells Wrangler to publish `./dist` as static assets. Without this file, deploy “succeeds” but the site can return 503.
+
+After `wrangler.toml` is on `main`, click **Retry deployment** in Cloudflare.
+
+### B) Classic Pages + Git
 
 1. [Cloudflare Dashboard](https://dash.cloudflare.com) → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**
 2. Select the GitHub repo
@@ -26,7 +46,7 @@ This is the standard, low-maintenance setup: push to `main` → automatic deploy
 | Root directory | `/` |
 | Node version | 22 (`NODE_VERSION=22` env var if needed) |
 
-4. **Save and Deploy** — first build runs from GitHub
+4. **Save and Deploy** — no `wrangler deploy` step
 
 **Important:** Commit `public/data/*` and `package-lock.json` before connecting. Use
 `npm run build` (not `build:fresh`) for routine deploys — see pre-deploy checklist below.
