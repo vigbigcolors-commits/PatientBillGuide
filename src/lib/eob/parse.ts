@@ -8,6 +8,7 @@ import { parseBcbsEob } from './templates/bcbs';
 import { parseCignaEob } from './templates/cigna';
 import { parseGenericEob } from './templates/generic';
 import { parseUhcEob } from './templates/uhc';
+import { normalizePastedHealthcareText } from '../text/normalize-pasted';
 import type {
   EobAnalysis,
   EobInsight,
@@ -73,7 +74,7 @@ export function parseEobText(raw: string): EobLine[] {
 }
 
 export function parseEobDocument(raw: string): EobParseResult {
-  const trimmed = raw.trim();
+  const trimmed = normalizePastedHealthcareText(raw.trim());
   const insurer = detectInsurer(trimmed);
   let lines = parseWithTemplate(trimmed, insurer);
 
@@ -90,13 +91,14 @@ export function parseEobDocument(raw: string): EobParseResult {
 
 /** Re-parse with a specific insurer template (manual override). */
 export function parseEobWithInsurer(raw: string, id: EobInsurerId): EobParseResult {
+  const trimmed = normalizePastedHealthcareText(raw.trim());
   const insurer: EobInsurerMatch = {
     id,
     label: insurerLabel(id),
     confidence: 'high',
   };
-  let lines = parseWithTemplate(raw.trim(), insurer);
-  if (lines.length === 0) lines = parseGenericEob(raw.trim());
+  let lines = parseWithTemplate(trimmed, insurer);
+  if (lines.length === 0) lines = parseGenericEob(trimmed);
   return {
     lines,
     insurer,

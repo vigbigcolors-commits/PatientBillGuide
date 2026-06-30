@@ -4,6 +4,7 @@ import { findNcciUnbundlingFlags } from './ncci';
 import { WELL_ABOVE_MULTIPLIER } from '../pricing/types';
 import type { MpfsDataset, ZipLocalityMap } from '../pricing/types';
 import { lookupPrice, formatUsd } from '../pricing/lookup';
+import { splitHealthcareLines } from '../text/normalize-pasted';
 
 const CPT_RE = /\b(\d{5})\b/g;
 const MONEY_RE = /\$?\s*([\d,]+\.\d{2}|\d{1,3}(?:,\d{3})*(?:\.\d{2})?)/g;
@@ -18,7 +19,7 @@ function parseQuantity(line: string): number | undefined {
 }
 
 export function parseBillText(raw: string): BillLineItem[] {
-  const lines = raw.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  const lines = splitHealthcareLines(raw);
   const items: BillLineItem[] = [];
 
   for (const line of lines) {

@@ -3,6 +3,7 @@ import {
   isPriceLookupError,
   loadPricingData,
   lookupPrice,
+  normalizeCptCode,
   parseCurrency,
   prefetchPricingData,
 } from '../lib/pricing';
@@ -127,17 +128,7 @@ export function initHospitalCompare(root: ParentNode = document) {
   bindCptTypeahead(root);
   bindToolExamples(root, 'hospital-compare', 'hospital-compare-form');
 
-  let dataPromise: ReturnType<typeof loadPricingData> | null = null;
   let dataLoaded = false;
-  const getData = () => {
-    if (!dataPromise) {
-      dataPromise = loadPricingData().then((d) => {
-        dataLoaded = true;
-        return d;
-      });
-    }
-    return dataPromise;
-  };
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -168,7 +159,16 @@ export function initHospitalCompare(root: ParentNode = document) {
     if (!dataLoaded && loading) loading.hidden = false;
 
     try {
-      const { mpfs, zipMap } = await getData();
+      const code = normalizeCptCode(cpt.value);
+      if (!code) {
+        if (error) {
+          error.textContent = 'Enter a valid 5-digit CPT code.';
+          error.hidden = false;
+        }
+        return;
+      }
+      const { mpfs, zipMap } = await loadPricingData('/data', { codes: [code] });
+      dataLoaded = true;
       const outcome = lookupPrice({ code: cpt.value, zip: zip?.value, chargedAmount: charged, chargedAmountRaw: chargeRaw }, mpfs, zipMap);
 
       if (isPriceLookupError(outcome)) {

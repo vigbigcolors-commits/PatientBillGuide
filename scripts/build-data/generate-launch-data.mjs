@@ -39,13 +39,46 @@ async function writePricingGzipAssets(dataDir, mpfs, zipMap, codeList) {
     writeGzipJson(join(dataDir, 'cpt-index.json.gz'), cptIndex),
   ]);
 
+  await writeMpfsChunks(dataDir, mpfs);
+
   return cptIndex;
+}
+
+async function writeMpfsChunks(dataDir, mpfs) {
+  const chunksDir = join(dataDir, 'mpfs-chunks');
+  mkdirSync(chunksDir, { recursive: true });
+
+  const meta = {
+    version: mpfs.version,
+    source: mpfs.source,
+    conversion_factor: mpfs.conversion_factor,
+    localities: mpfs.localities,
+  };
+  await writeGzipJson(join(dataDir, 'mpfs-meta.json.gz'), meta);
+
+  const byPrefix = {};
+  for (const [code, record] of Object.entries(mpfs.codes)) {
+    const prefix = code[0] ?? '0';
+    if (!byPrefix[prefix]) byPrefix[prefix] = {};
+    byPrefix[prefix][code] = record;
+  }
+
+  for (const [prefix, codes] of Object.entries(byPrefix)) {
+    await writeGzipJson(join(chunksDir, `${prefix}.json.gz`), {
+      version: mpfs.version,
+      prefix,
+      codes,
+    });
+  }
 }
 
 function writeManifest(dataDir, codeList, zipMap, ncciParsed, pairCount, prefixCount) {
   const manifest = {
     mpfs: {
       version: '2026',
+      mode: 'chunked',
+      metaUrl: '/data/mpfs-meta.json.gz',
+      chunkUrl: '/data/mpfs-chunks/{prefix}.json.gz',
       url: '/data/mpfs-2026.json.gz',
       codeCount: codeList.length,
     },

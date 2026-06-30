@@ -1,9 +1,10 @@
 import { CPT_RE, DATE_RE, MONEY_RE } from '../money';
 import type { EobLine } from '../types';
+import { splitHealthcareLines } from '../../text/normalize-pasted';
 
 /** Generic line-by-line parser — dates, CPT codes, dollar columns. */
 export function parseGenericEob(raw: string): EobLine[] {
-  const lines = raw.split(/\r?\n/).map((l) => l.trim()).filter((l) => l.length > 8);
+  const lines = splitHealthcareLines(raw).filter((l) => l.length > 8);
   const results: EobLine[] = [];
 
   for (const line of lines) {

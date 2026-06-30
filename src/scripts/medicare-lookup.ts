@@ -3,6 +3,7 @@ import {
   isPriceLookupError,
   loadPricingData,
   lookupPrice,
+  normalizeCptCode,
 } from '../lib/pricing';
 import type { PriceLookupResult } from '../lib/pricing';
 import { bootOnReady } from '../lib/dom/boot';
@@ -64,8 +65,6 @@ export async function initMedicareLookup(root: ParentNode = document) {
 
   bindToolExamples(root, 'medicare-lookup', 'medicare-lookup-form');
 
-  let dataPromise: ReturnType<typeof loadPricingData> | null = null;
-
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (error) {
@@ -79,7 +78,15 @@ export async function initMedicareLookup(root: ParentNode = document) {
 
     submit.disabled = true;
     try {
-      const { mpfs, zipMap } = await (dataPromise ??= loadPricingData());
+      const code = normalizeCptCode(cpt.value);
+      if (!code) {
+        if (error) {
+          error.textContent = 'Enter a valid 5-digit CPT code.';
+          error.hidden = false;
+        }
+        return;
+      }
+      const { mpfs, zipMap } = await loadPricingData('/data', { codes: [code] });
       const outcome = lookupPrice({ code: cpt.value, zip: zip?.value }, mpfs, zipMap);
       if (isPriceLookupError(outcome)) {
         if (error) {

@@ -55,7 +55,14 @@ export interface CptIndex {
 }
 
 export interface DataManifest {
-  mpfs: { version: string; url: string; codeCount?: number };
+  mpfs: {
+    version: string;
+    url: string;
+    codeCount?: number;
+    mode?: 'chunked' | 'full';
+    metaUrl?: string;
+    chunkUrl?: string;
+  };
   zipLocality: { version: string; url: string; zipCount?: number };
   cptIndex?: { version: string; url: string; codeCount?: number };
   ncci?: {

@@ -202,18 +202,6 @@ export async function initBillAuditor(root: ParentNode = document) {
   const { form, text, zip, linePreview, submit, results, error } = getElements(root);
   if (!form || !text || !submit) return;
 
-  let dataLoaded = false;
-  let dataPromise: ReturnType<typeof loadPricingData> | null = null;
-  const getData = () => {
-    if (!dataPromise) {
-      dataPromise = loadPricingData().then((data) => {
-        dataLoaded = true;
-        return data;
-      });
-    }
-    return dataPromise;
-  };
-
   prefetchPricingData();
   bindToolExamples(root, 'bill-auditor', 'bill-auditor-form');
 
@@ -269,10 +257,9 @@ export async function initBillAuditor(root: ParentNode = document) {
       }
 
       if (results) showLoading(results, 'pricing');
-      const { mpfs, zipMap } = await getData();
-
+      const billCodes = [...new Set(items.map((i) => i.code))];
+      const { mpfs, zipMap } = await loadPricingData('/data', { codes: billCodes });
       if (results) showLoading(results, 'ncci');
-      const billCodes = items.map((i) => i.code);
       const ncci = await loadNcciForCodes(billCodes);
 
       const result = auditBill(items, mpfs, zipMap, zipVal ? normalizeZip(zipVal)! : undefined, ncci);

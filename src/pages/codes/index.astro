@@ -12,13 +12,13 @@ const byCategory = categories.map((cat) => ({
 
 <BaseLayout
   title="CPT Codes — Cost & Billing Guides"
-  description="Plain-English guides to 30 common CPT procedure codes with Medicare benchmarks and fair price ranges. Free, browser-based tools."
+  description="Plain-English guides to common CPT procedure codes with Medicare benchmarks and fair price ranges. Free, browser-based tools."
 >
   <div class="codes-hub">
     <div class="container">
       <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'CPT Codes' }]} />
       <header class="codes-hub__header">
-        <p class="codes-hub__eyebrow">30 guides · original plain English</p>
+        <p class="codes-hub__eyebrow">{cptCodeList.length} guides · original plain English</p>
         <h1>CPT procedure codes</h1>
         <p>
           Original guides to frequently billed codes — office visits, ER, imaging, labs, surgery,

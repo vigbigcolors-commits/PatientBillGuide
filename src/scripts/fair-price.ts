@@ -3,6 +3,7 @@ import {
   isPriceLookupError,
   loadPricingData,
   lookupPrice,
+  normalizeCptCode,
   parseCurrency,
   analyzePartBCost,
   prefetchPricingData,
@@ -297,16 +298,6 @@ export async function initFairPriceForm(root: ParentNode = document) {
   setMode(root, mode);
 
   let dataLoaded = false;
-  let dataPromise: ReturnType<typeof loadPricingData> | null = null;
-  const getData = () => {
-    if (!dataPromise) {
-      dataPromise = loadPricingData().then((data) => {
-        dataLoaded = true;
-        return data;
-      });
-    }
-    return dataPromise;
-  };
 
   prefetchPricingData();
   bindCptTypeahead(root);
@@ -382,7 +373,13 @@ export async function initFairPriceForm(root: ParentNode = document) {
     if (!dataLoaded) setLoading(loading, true);
 
     try {
-      const { mpfs, zipMap } = await getData();
+      const code = normalizeCptCode(cpt.value);
+      if (!code) {
+        showError(error, 'Enter a valid 5-digit CPT code.');
+        return;
+      }
+      const { mpfs, zipMap } = await loadPricingData('/data', { codes: [code] });
+      dataLoaded = true;
       const chargedRaw = price?.value?.trim() ?? '';
       const outcome = lookupPrice(
         {

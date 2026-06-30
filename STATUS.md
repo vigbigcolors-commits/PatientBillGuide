@@ -2,9 +2,9 @@
 
 > Update this file after every work session. Agents should read this first.
 
-**Last updated:** 2026-06-29  
+**Last updated:** 2026-06-30  
 **Current phase:** Week 8 — deploy ready  
-**Phase status:** 6 live tools · 56 tests · 53 pages · audit fixes applied  
+**Phase status:** 7 live tools · 84 tests · 164 pages · 130 CPT guides · chunked MPFS + IndexedDB  
 **Domain:** PatientBillGuide.com  
 
 ---

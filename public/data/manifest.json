@@ -2,7 +2,10 @@
   "mpfs": {
     "version": "2026",
     "url": "/data/mpfs-2026.json.gz",
-    "codeCount": 7740
+    "codeCount": 7740,
+    "mode": "chunked",
+    "metaUrl": "/data/mpfs-meta.json.gz",
+    "chunkUrl": "/data/mpfs-chunks/{prefix}.json.gz"
   },
   "zipLocality": {
     "version": "2026",
