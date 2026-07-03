@@ -52,8 +52,10 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    align-content: flex-start;
     gap: var(--space-sm) var(--space-xl);
     padding: 0.625rem 0;
+    min-height: 2.375rem;
   }
 
   .trust-strip__item {
@@ -64,6 +66,10 @@
   }
 
   @media (max-width: 640px) {
+    .trust-strip__inner {
+      min-height: 4.25rem;
+    }
+
     .trust-strip__item {
       white-space: normal;
     }

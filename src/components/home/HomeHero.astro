@@ -145,6 +145,8 @@ import HomeHeroHighlights from './HomeHeroHighlights.astro';
     letter-spacing: -0.025em;
     color: #111827;
     margin: 0 0 1rem;
+    /* Reserve LCP block height to avoid font-swap layout shift */
+    min-height: 2.475em;
   }
 
   .home-hero__title-accent {
