@@ -34,7 +34,20 @@ npm run dev
 
 ---
 
-## What is already built (2026-06-29)
+## What is already built (updated 2026-07-05)
+
+- **Site live:** https://patientbillguide.com (Cloudflare Pages)
+- **7 tools:** Fair Price, Bill Auditor, EOB, Surprise Bill, Hospital Compare, Dispute Letter, Medicare tab
+- **130 CPT guides** + learn pillars + full trust/EEAT stack
+- **163 URLs** in sitemap · **84 Vitest** tests
+- **GSC:** domain property verified · sitemap submitted
+- CMS MPFS + NCCI chunked data in `public/data/`
+
+**Next build phase:** Batch 2 CPT (+70), compare pages, category hubs — see [GROWTH_MASTER.md](GROWTH_MASTER.md)
+
+---
+
+## What was built by 2026-06-29 (archive)
 
 - Astro scaffold, 21 static pages, build OK
 - Figma UI v1: homepage, header, trust strip, footer, fair-price layout

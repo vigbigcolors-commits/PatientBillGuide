@@ -1,0 +1,245 @@
+---
+import CodesGuideLayout from '../../../layouts/CodesGuideLayout.astro';
+import AuthorByline from '../../../components/AuthorByline.astro';
+import MethodologyFooter from '../../../components/MethodologyFooter.astro';
+import Disclaimer from '../../../components/Disclaimer.astro';
+import { cptComparePages, cptCompareSlugs } from '../../../data/cpt-compare';
+import { launchCptCodes, allCptPages } from '../../../data/cpt-codes';
+import { site } from '../../../data/site';
+import { author, getAuthorUrl } from '../../../data/author';
+import { faqPageSchema, medicalWebPageSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+
+export function getStaticPaths() {
+  return cptCompareSlugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const page = cptComparePages[slug!];
+if (!page) return Astro.redirect('/codes/');
+
+const published = new Set(launchCptCodes);
+const hasGuideA = published.has(page.codeA as (typeof launchCptCodes)[number]);
+const hasGuideB = published.has(page.codeB as (typeof launchCptCodes)[number]);
+
+const updated = '2026-07-05';
+const pageUrl = `/codes/compare/${page.slug}/`;
+const canonical = new URL(pageUrl, site.url).href;
+
+const schemaGraph = [
+  medicalWebPageSchema({
+    name: page.title,
+    description: page.metaDescription,
+    url: canonical,
+    dateModified: updated,
+    authorName: author.name,
+    authorUrl: getAuthorUrl(site.url),
+    authorJobTitle: author.jobTitle,
+  }),
+  faqPageSchema(page.faq),
+  breadcrumbSchema(
+    [
+      { name: 'Home', url: '/' },
+      { name: 'CPT Codes', url: '/codes/' },
+      { name: `${page.codeA} vs ${page.codeB}` },
+    ],
+    site.url,
+  ),
+];
+---
+
+<CodesGuideLayout
+  title={page.title}
+  description={page.metaDescription}
+  eyebrow="Code comparison"
+  crumbs={[
+    { label: 'Home', href: '/' },
+    { label: 'CPT Codes', href: '/codes/' },
+    { label: `${page.codeA} vs ${page.codeB}` },
+  ]}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
+  </Fragment>
+
+  <p slot="summary" class="codes-guide-summary">{page.summary}</p>
+
+  <section>
+    <h2>Overview</h2>
+    {page.intro.map((p) => <p>{p}</p>)}
+  </section>
+
+  <section>
+    <h2>Side-by-side comparison</h2>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th scope="col">Aspect</th>
+            <th scope="col"><code>{page.codeA}</code></th>
+            <th scope="col"><code>{page.codeB}</code></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Short label</th>
+            <td>{page.labelA}</td>
+            <td>{page.labelB}</td>
+          </tr>
+          {
+            page.comparisonRows.map((row) => (
+              <tr>
+                <th scope="row">{row.aspect}</th>
+                <td>{row.codeA}</td>
+                <td>{row.codeB}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="cta-row">
+      {
+        hasGuideA && (
+          <a class="btn btn--secondary" href={`/codes/cpt/${page.codeA}/`}>
+            CPT {page.codeA} guide
+          </a>
+        )
+      }
+      {
+        hasGuideB && (
+          <a class="btn btn--secondary" href={`/codes/cpt/${page.codeB}/`}>
+            CPT {page.codeB} guide
+          </a>
+        )
+      }
+      <a class="btn btn--primary" href={`/tools/fair-price/?code=${page.codeA}`}>
+        Check {page.codeA} price
+      </a>
+      <a class="btn btn--primary" href={`/tools/fair-price/?code=${page.codeB}`}>
+        Check {page.codeB} price
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Key differences</h2>
+    <ul>
+      {page.keyDifferences.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>When is CPT {page.codeA} used?</h2>
+    <ul>
+      {page.whenCodeA.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>When is CPT {page.codeB} used?</h2>
+    <ul>
+      {page.whenCodeB.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>Cost context</h2>
+    {page.costContext.map((p) => <p>{p}</p>)}
+    <p>
+      See <a href="/methodology/price-benchmarks/">how we calculate fair ranges</a> and our{' '}
+      <a href="/methodology/data-sources/">CMS data sources</a>.
+    </p>
+  </section>
+
+  <section>
+    <h2>Billing notes</h2>
+    <ul>
+      {page.billingNotes.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>What to do on your bill</h2>
+    <ul>
+      {page.whatToDo.map((item) => <li>{item}</li>)}
+    </ul>
+    <p>
+      <a class="btn btn--primary" href="/tools/bill-auditor/">Run Bill Auditor</a>
+    </p>
+  </section>
+
+  {
+    page.relatedCompares.length > 0 && (
+      <section>
+        <h2>Related comparisons</h2>
+        <ul>
+          {page.relatedCompares.map((r) => (
+            <li>
+              <a href={`/codes/compare/${r.slug}/`}>{r.label}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section>
+    <h2>FAQ</h2>
+    <dl class="faq">
+      {
+        page.faq.map((item) => (
+          <>
+            <dt>{item.question}</dt>
+            <dd>{item.answer}</dd>
+          </>
+        ))
+      }
+    </dl>
+  </section>
+
+  <AuthorByline variant="written" updated={updated} class="cpt-byline" />
+  <Disclaimer />
+
+  <div slot="sidebar">
+    <div class="widget-card card">
+      <h2>Category</h2>
+      <p>
+        <a href={`/codes/category/${page.categorySlug}/`}>
+          Browse {page.categorySlug.replace(/-/g, ' ')} codes
+        </a>
+      </p>
+    </div>
+    <div class="sidebar-links card">
+      <h2>Tools</h2>
+      <ul>
+        <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
+        <li><a href="/tools/bill-auditor/">Bill Auditor</a></li>
+        <li><a href="/codes/">All CPT guides</a></li>
+      </ul>
+    </div>
+    <MethodologyFooter />
+  </div>
+</CodesGuideLayout>
+
+<style>
+  .cpt-byline {
+    margin-top: var(--space-2xl);
+  }
+
+  .widget-card h2,
+  .sidebar-links h2 {
+    font-size: 1rem;
+    margin: 0 0 var(--space-sm);
+  }
+
+  .sidebar-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .sidebar-links li + li {
+    margin-top: var(--space-sm);
+  }
+</style>

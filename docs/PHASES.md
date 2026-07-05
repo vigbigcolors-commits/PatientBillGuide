@@ -124,13 +124,53 @@ Work in order within each week. Trust minimum first, then **Fair Price** ASAP.
 
 ---
 
-## Month 3–6 — Scale
+## Post-launch — Jul 2026 ✅ site live
 
-- CPT Tier 2 toward 150
+**Goal:** Index, scale CPT encyclopedia, activate growth channels.  
+**Playbook:** [GROWTH_MASTER.md](GROWTH_MASTER.md)
+
+### Done
+
+- [x] Cloudflare Pages + `patientbillguide.com`
+- [x] GSC domain property (DNS verification)
+- [x] Sitemap `sitemap-index.xml` submitted (Success)
+- [x] 163 URLs in sitemap · 130 CPT guides live
+
+### Weeks 1–4 post-launch
+
+1. **Batch 2 CPT** — +70 codes → **200 total**
+2. **5 compare pages** — `99213-vs-99214`, ER levels, colonoscopy, …
+3. **5 category hubs** — office-visits, imaging, lab, ER, surgery
+4. GSC URL inspection — homepage, Fair Price, top 10 CPT
+5. **Reddit launch** — Fair Price (one quality post)
+6. **AdSense application**
+7. `contact@patientbillguide.com` mailbox
+
+### Exit criteria (month 1 post-launch)
+
+- 200+ CPT pages, 10 compare/category URLs
+- GSC shows discovered URLs from `sitemap-0.xml`
+- AdSense submitted
+
+---
+
+## Month 3–6 — Scale (updated targets)
+
+- CPT toward **500** (25–50 per weekly batch — see GROWTH_MASTER.md)
+- 5 compare + 5 category pages *(if not done in month 1)*
 - Hospital data pipeline
 - EOB parser insurers expansion
 - State surprise billing guides (top 10)
 - Prep `/medicare/open-enrollment/` for Sep 2026
+- Glossary terms (12+)
+- 3 `/stories/` case studies
+
+### Exit criteria
+
+- **500 CPT** pages ≥ 800 words original copy
+- **550–700** total indexed pages
+- AdSense approved or pending
+- 5k+ monthly organic visits (conservative path)
 
 ---
 

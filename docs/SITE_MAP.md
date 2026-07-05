@@ -183,10 +183,13 @@ Each tool page: methodology footer + limitations + disclaimer.
 
 ## Page count targets
 
-| Milestone | Total | Trigger |
-|-----------|-------|---------|
-| Week 1 | ~10 | Staging live |
-| Week 3 | ~35 | AdSense prep |
-| Week 6 | ~65+ | AdSense apply |
-| Month 6 | 75+ | Medicare hub |
-| Year 2 | 200+ | Scale |
+| Milestone | Total | CPT | Trigger |
+|-----------|-------|-----|---------|
+| Week 1 | ~10 | — | Staging live |
+| Week 3 | ~35 | 20 | AdSense prep |
+| Week 6 | ~65+ | 50 | AdSense apply |
+| **Launch Jul 2026** ✅ | **163** | **130** | Production + GSC |
+| Month 1 post-launch | ~220 | 200 | Batch 2 + compare/category |
+| Month 6 | **550–700** | **500** | Super platform scale A |
+| Month 12 | 800–1,800 | 500–1,500 | Scale B |
+| Year 2 | 2,000+ | toward 7,740 | MPFS ceiling where quality allows |

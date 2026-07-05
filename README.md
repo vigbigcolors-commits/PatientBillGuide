@@ -10,14 +10,15 @@
 
 | Item | Value |
 |------|-------|
-| **Domain** | PatientBillGuide.com (pending DNS) |
-| **Phase** | Week 8 — deploy ready |
+| **Domain** | [patientbillguide.com](https://patientbillguide.com/) — **live** |
+| **Phase** | Post-launch — SEO & CPT scale |
 | **Live tools** | 7 (see below) |
-| **Tests** | 75 passing (`npm test`) |
-| **Pages** | 64 static routes (`npm run build`) |
-| **GitHub** | Pushed to `main` |
-| **Deploy** | Cloudflare Pages — see [docs/DEPLOY.md](docs/DEPLOY.md) |
+| **Tests** | 84 passing (`npm test`) |
+| **Pages** | 163 in sitemap · 130 CPT guides |
+| **GSC** | Domain verified · sitemap submitted |
+| **Deploy** | Cloudflare Pages — [docs/DEPLOY.md](docs/DEPLOY.md) |
 | **Tracker** | [STATUS.md](STATUS.md) |
+| **Growth plan** | [docs/GROWTH_MASTER.md](docs/GROWTH_MASTER.md) |
 
 ### Live tools
 

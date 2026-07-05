@@ -2,6 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { cptCodeList } from '../../data/cpt-codes';
+import { cptCategorySlugs, cptCategoryPages } from '../../data/cpt-categories';
+import { cptCompareSlugs, cptComparePages } from '../../data/cpt-compare';
 
 const categories = [...new Set(cptCodeList.map((c) => c.category))].sort();
 const byCategory = categories.map((cat) => ({
@@ -33,6 +35,50 @@ const byCategory = categories.map((cat) => ({
           <p>Jump to the calculator — any Medicare fee schedule code + your ZIP.</p>
         </div>
         <a class="btn btn--primary" href="/tools/fair-price/">Fair Price Calculator</a>
+      </section>
+
+      <section class="codes-hub__browse">
+        <h2 class="codes-hub__section-title">Browse by category</h2>
+        <ul class="browse-grid">
+          {
+            cptCategorySlugs.map((slug) => {
+              const cat = cptCategoryPages[slug];
+              return (
+                <li>
+                  <a href={`/codes/category/${slug}/`} class="browse-card">
+                    <span class="browse-card__eyebrow">{cat.eyebrow}</span>
+                    <span class="browse-card__title">{cat.title.split('—')[0].trim()}</span>
+                    <span class="browse-card__arrow" aria-hidden="true">→</span>
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </section>
+
+      <section class="codes-hub__browse">
+        <h2 class="codes-hub__section-title">Code comparisons</h2>
+        <p class="codes-hub__section-desc">
+          High-intent guides when two similar codes appear on your bill or EOB.
+        </p>
+        <ul class="compare-list">
+          {
+            cptCompareSlugs.map((slug) => {
+              const cmp = cptComparePages[slug];
+              return (
+                <li>
+                  <a href={`/codes/compare/${slug}/`}>
+                    <strong>
+                      {cmp.codeA} vs {cmp.codeB}
+                    </strong>
+                    — {cmp.summary.slice(0, 100)}{cmp.summary.length > 100 ? '…' : ''}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
       </section>
 
       {
@@ -111,6 +157,113 @@ const byCategory = categories.map((cat) => ({
     color: var(--color-muted);
     margin: 0;
     font-size: 0.9375rem;
+  }
+
+  .codes-hub__section-title {
+    margin: 0 0 var(--space-md);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-muted);
+  }
+
+  .codes-hub__section-desc {
+    margin: calc(-1 * var(--space-sm)) 0 var(--space-md);
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+  }
+
+  .codes-hub__browse {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .browse-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .browse-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    min-height: 100%;
+  }
+
+  .browse-card:hover {
+    border-color: #99f6e4;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .browse-card__eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+  }
+
+  .browse-card__title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    line-height: 1.4;
+    padding-right: 1.5rem;
+  }
+
+  .browse-card__arrow {
+    position: absolute;
+    right: var(--space-lg);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-accent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .browse-card:hover .browse-card__arrow {
+    opacity: 1;
+  }
+
+  .compare-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .compare-list a {
+    display: block;
+    padding: var(--space-md) var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+  }
+
+  .compare-list a:hover {
+    border-color: #99f6e4;
+  }
+
+  .compare-list strong {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
   }
 
   .codes-hub__group {

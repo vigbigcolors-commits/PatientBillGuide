@@ -1,7 +1,8 @@
 # PatientBillGuide.com — Master Plan
 
-**Locked:** 2026-06-29  
-**Tagline:** *Honest healthcare numbers — before, during, and after you get the bill.*
+**Locked:** 2026-06-29 · **Post-launch update:** 2026-07-05  
+**Tagline:** *Honest healthcare numbers — before, during, and after you get the bill.*  
+**Growth & SEO (live):** [GROWTH_MASTER.md](GROWTH_MASTER.md)
 
 ---
 
@@ -111,14 +112,30 @@ Lead gen pop-ups: **not** in first 3 months.
 
 ---
 
-## 6-month targets
+## Platform milestones (super platform build)
+
+| Phase | When | Pages (approx) | CPT guides | Focus |
+|-------|------|----------------|------------|-------|
+| **Launch** ✅ | Jul 2026 | 163 | 130 | 7 tools live, GSC, sitemap |
+| **Scale A** | Weeks 1–8 post-launch | 250–300 | 200 | Batch 2 CPT + compare + category |
+| **Scale B** | Month 3–6 | 550–700 | **500** | Weekly CPT batches, learn, states, AdSense |
+| **Scale C** | Month 6–12 | 800–1,800 | 500–1,500 | HCPCS pilot, hospital data, more compare |
+| **Medicare season** | Sep–Oct 2026 | +hub | — | AEP tools + affiliate (disclosed) |
+| **Year 2** | 2027 | 2,000+ | MPFS ceiling ~7,740 | Full encyclopedia where quality allows |
+
+**North star:** The most trusted **free, private** US medical billing transparency hub — CHECK → UNDERSTAND → ACT → LEARN on one domain.
+
+---
+
+## 6-month targets (updated post-launch)
 
 | Metric | Target |
 |--------|--------|
-| Pages live | 65+ |
-| Tools live | 6–8 |
+| Pages live | **550–700** (500 CPT + hubs/learn/tools) |
+| CPT guides | **500** quality (800+ words each) |
+| Tools live | **7–8** (hospital compare v1+) |
 | Monthly visits | 15k–50k (with viral); 5–15k conservative |
-| Revenue | $200–$1,500/mo combined |
+| Revenue | AdSense + soft affiliate; $200–$1,500/mo combined |
 | 12–24 mo | 100k+ visits/mo, Medicare season spike |
 
 ---
@@ -155,6 +172,7 @@ One pipeline feeds all CHECK tools:
 
 ## Related docs
 
+- [GROWTH_MASTER.md](GROWTH_MASTER.md) — **SEO, CPT scale, long tail, 30-day queue**
 - [SITE_MAP.md](SITE_MAP.md) — full URL tree
 - [PHASES.md](PHASES.md) — week-by-week tasks
 - [STATUS.md](../STATUS.md) — live tracker
