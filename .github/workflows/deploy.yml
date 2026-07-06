@@ -1,8 +1,9 @@
-name: Deploy Cloudflare Pages
+# Optional manual deploy via GitHub Actions.
+# Primary deploy path: Cloudflare Workers Git integration (push to main → wrangler deploy).
+# Do not enable push trigger here if Cloudflare Git is already connected (duplicate deploys).
+name: Deploy Cloudflare Workers
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -20,9 +21,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
-      - name: Publish to Cloudflare Pages
+      - name: Publish to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=patientbillguide
+          command: deploy
