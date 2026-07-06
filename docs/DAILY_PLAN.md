@@ -9,7 +9,7 @@
 
 ---
 
-## День 1 — 5 июля 2026 ✅ СЕГОДНЯ (закрыт)
+## День 1 — 5 июля 2026 ✅
 
 ### Задачи
 - [x] GSC: domain property + DNS verify
@@ -37,36 +37,52 @@ Deploy compare/category на live + GSC indexing + проверка sitemap 174 
 
 ---
 
-## День 2 — 6 июля 2026
+## День 2 — 6 июля 2026 ✅
 
 ### Задачи
-- [ ] `git push` → Cloudflare deploy (compare + category на live)
-- [ ] Открыть live URLs — smoke test 3 compare + 2 category
-- [ ] GSC → **URL Inspection** → Request indexing:
-  - `https://patientbillguide.com/`
-  - `https://patientbillguide.com/tools/fair-price/`
-  - `https://patientbillguide.com/codes/compare/99213-vs-99214/`
-  - `https://patientbillguide.com/codes/category/imaging/`
-  - топ-5 CPT: 99213, 99214, 77067, 71046, 45378
-- [ ] GSC → Sitemaps: проверить discovered URLs (ожидаем ~174 после краула)
-- [ ] Обновить STATUS.md — отчёт дня 2
+- [x] `git push` → Cloudflare deploy (compare + category на live) — уже на `main`, live 200 OK
+- [x] Smoke test: 12 URL — все **200 OK**
+- [ ] GSC → **URL Inspection** → Request indexing *(вручную в GSC — см. чеклист ниже)*
+- [ ] GSC → Sitemaps: discovered URLs *(проверить в панели — live sitemap **173** URL)*
+- [x] Обновить STATUS.md — отчёт дня 2
 
-### Отчёт дня 2 *(заполнить вечером)*
-- Deploy: ☐ OK / ☐ проблема: …
-- GSC indexing запросов: ☐
-- Discovered URLs в GSC: …
-- Заметки: …
+### Отчёт дня 2
+- Deploy: ✅ OK (origin/main синхронизирован, compare/category live)
+- Smoke test: ✅ 12/12 URLs → 200
+- Live sitemap: **173** URL в `sitemap-0.xml` (build локально 174 — `/404` не в sitemap)
+- Tests: **84 passed**
+- GSC indexing: ⏳ пользователь (чеклист ниже)
+
+### GSC — чеклист indexing (5–10 мин, вручную)
+
+1. [Google Search Console](https://search.google.com/search-console) → property `patientbillguide.com`
+2. **Проверка URL** → вставить URL → **Запросить индексирование**:
+
+| # | URL |
+|---|-----|
+| 1 | `https://patientbillguide.com/` |
+| 2 | `https://patientbillguide.com/tools/fair-price/` |
+| 3 | `https://patientbillguide.com/codes/compare/99213-vs-99214/` |
+| 4 | `https://patientbillguide.com/codes/category/imaging/` |
+| 5 | `https://patientbillguide.com/codes/cpt/99213/` |
+| 6 | `https://patientbillguide.com/codes/cpt/99214/` |
+| 7 | `https://patientbillguide.com/codes/cpt/77067/` |
+| 8 | `https://patientbillguide.com/codes/cpt/71046/` |
+| 9 | `https://patientbillguide.com/codes/cpt/45378/` |
+
+3. **Файлы Sitemap** → проверить discovered pages (ожидаем ~173)
 
 ### → День 3
-Batch 2 CPT: подготовка seed + генерация первой половины (+35 кодов).
+Batch 2 CPT: seed + генерация **+35 кодов** → ~165 CPT, ~209 страниц.
 
 ---
 
 ## День 3 — 7 июля 2026
 
 ### Задачи
-- [ ] Расширить `cpt-seed-150.mjs` или новый seed из MPFS (70 кодов не в encyclopedia)
-- [ ] `npm run generate:cpt-pages` — первая партия **+35 CPT**
+- [ ] Расширить seed из MPFS (коды не в encyclopedia)
+- [ ] `npm run generate:cpt-pages` — **макс 25–35 CPT** (см. [GOOGLE_QUALITY.md](GOOGLE_QUALITY.md) Gate D)
+- [ ] **10% manual QA** — прочитать 3 страницы из батча, убрать template stiffness
 - [ ] EEAT pass: 800+ слов, related links только на live codes
 - [ ] `npm test && npm run build` — цель **~209 страниц**, **~165 CPT**
 - [ ] Deploy
@@ -234,4 +250,4 @@ Batch 3 CPT: +25 кодов (мягкий старт к 250).
 
 ---
 
-**Текущий день:** 1 ✅ закрыт → **следующий: День 2 (6 июля)**
+**Текущий день:** 2 ✅ закрыт (GSC indexing — вручную) → **следующий: День 3 (7 июля)**

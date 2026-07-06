@@ -12,7 +12,8 @@ Instructions for Cursor / AI agents continuing this project.
 6. Read [docs/MASTER_PLAN.md](docs/MASTER_PLAN.md) — strategy and tool clusters
 7. Read [docs/GROWTH_MASTER.md](docs/GROWTH_MASTER.md) — SEO, CPT scale, long-tail (post-launch)
 8. Read [docs/DAILY_PLAN.md](docs/DAILY_PLAN.md) — **current day tasks** (do not skip ahead)
-9. Work **only** the current phase in STATUS.md unless user explicitly overrides
+9. Read [docs/GOOGLE_QUALITY.md](docs/GOOGLE_QUALITY.md) — **Zero-Doorway Rule** (mandatory before any new URLs)
+10. Work **only** the current phase in STATUS.md unless user explicitly overrides
 
 ## Project summary
 
@@ -24,6 +25,9 @@ Instructions for Cursor / AI agents continuing this project.
 
 ## Key constraints
 
+- **Zero-Doorway Rule** — every page answers a real question on-page; no thin SEO funnels ([GOOGLE_QUALITY.md](docs/GOOGLE_QUALITY.md))
+- Never auto-generate compare pages or empty category hubs
+- CPT batches: max 25–50/deploy, 10% manual QA; top 50 codes hand-edited
 - Never copy AMA/AAPC CPT descriptions verbatim — write original plain-English
 - Never claim "fraud" or "guaranteed savings"
 - Always show confidence levels on billing flags

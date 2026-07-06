@@ -43,6 +43,9 @@ Use this for **every page** before publish. Target: YMYL 10/10.
 - [ ] ~~Fake doctor credentials~~
 - [ ] ~~Fake reviews or star ratings~~
 - [ ] ~~500 identical CPT pages with one swapped variable~~
+- [ ] ~~**Doorway pages**~~ — thin URL exists only to rank and funnel (see [GOOGLE_QUALITY.md](GOOGLE_QUALITY.md))
+- [ ] ~~**Auto-generated compare matrix**~~ — e.g. all CPT pairs; compare is manual only
+- [ ] ~~**Empty category hubs**~~ — link lists without unique editorial content
 - [ ] ~~Missing disclaimer on tool pages~~
 - [ ] ~~Copying AMA/AAPC CPT descriptions verbatim~~
 - [ ] ~~Popups blocking tool usage~~

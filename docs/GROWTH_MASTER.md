@@ -150,7 +150,7 @@ It is a *strategy*. One strong CPT page **is** a long-tail page.
 
 ## 6. Quality guardrails (non-negotiable)
 
-From EEAT_CHECKLIST + DECISIONS — **every** CPT page must have:
+From EEAT_CHECKLIST + DECISIONS + **[GOOGLE_QUALITY.md](GOOGLE_QUALITY.md)** — **every** CPT page must have:
 
 - [ ] Original plain-English (never AMA/AAPC verbatim)
 - [ ] Medicare benchmark section + link to `/methodology/price-benchmarks/`
@@ -263,6 +263,8 @@ Traffic **lags** publishing by 6–12 weeks — do not panic if week 1 after dep
 |----------|-----|
 | 1,000 CPT pages/day | YMYL thin-content / spam risk |
 | 10k pages before 500 quality pages | No index budget, no trust |
+| **Auto compare for all CPT pairs** | **Doorway farm — Google penalty** |
+| **Category page per keyword** | Thin doorway without editorial |
 | Copy AMA descriptions | Legal + EEAT failure |
 | “Your hospital committed fraud” | Brand + manual action risk |
 | Publish code without MPFS row | Broken Fair Price widget |

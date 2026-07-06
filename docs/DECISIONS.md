@@ -57,6 +57,18 @@ All decisions agreed in planning sessions. Do not change without explicit discus
 | 34 | Content priority after launch | **Compare pages + category hubs** alongside CPT batches (high ROI per page) |
 | 35 | Growth playbook doc | **[GROWTH_MASTER.md](GROWTH_MASTER.md)** is the SEO/scale source of truth post-launch |
 
+## Google quality — locked 2026-07-06
+
+| # | Decision | Value |
+|---|----------|-------|
+| 36 | **Zero-Doorway Rule** | Every URL must fully answer a patient question on-page; no thin SEO funnels — see [GOOGLE_QUALITY.md](GOOGLE_QUALITY.md) |
+| 37 | Compare pages | **Manual only**, max ~25 total, **never** auto-generate all CPT pairs |
+| 38 | Category hubs | **Manual only**, max ~15, min 5 live CPT guides per category |
+| 39 | CPT batch generator | Max **25–50/deploy**, 10% manual QA sample; top 50 codes hand-edited |
+| 40 | Doorway test | 4-question gate in GOOGLE_QUALITY.md **before every new URL type** |
+| 41 | Jul 5–6 compare + category | **Approved** — hand-written, not doorways |
+| 42 | `cpt-batch-100` pages | **Live but watch zone** — do not scale same template to 1000+ without upgrade |
+
 ## Out of scope for this domain
 
 - EV / solar tax credit calculators (separate project later)
@@ -68,3 +80,6 @@ All decisions agreed in planning sessions. Do not change without explicit discus
 - Lead gen pop-ups in first 3 months
 - **10,000 CPT pages in 10 days** (rejected — use tiered rollout in GROWTH_MASTER.md)
 - Publishing CPT codes **without** MPFS row in `supported-cpt-codes.ts`
+- **Doorway pages** — thin keyword URLs, auto compare matrices, empty category hubs (see GOOGLE_QUALITY.md)
+- **Auto-generated compare** pages (`99213-vs-99214` style at scale)
+- Scaling `cpt-batch-100` template to 1,000+ without editorial upgrade + QA
