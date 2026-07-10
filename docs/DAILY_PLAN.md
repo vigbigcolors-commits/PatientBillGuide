@@ -122,7 +122,34 @@ Batch 2 завершение: ещё +35 CPT → **200 total** + deploy.
 
 ---
 
-## День 4 — 8 июля 2026
+## День 4 — 10 июля 2026 ✅
+
+### Задачи
+- [x] Batch 2 вторая половина: **+35 CPT** → **200 CPT guides**
+- [x] Обновить category hubs (автоматически подтянут новые коды)
+- [x] `npm test && npm run build` — **244 страниц**
+- [x] **10% manual QA** — 90832, 96413, 57452 (hand-edited)
+- [ ] Deploy (push → Cloudflare Git)
+- [ ] GSC: resubmit sitemap или дождаться авто-краула
+- [x] Отчёт в STATUS — milestone **Scale A CPT 200** 🎯
+
+### Отчёт дня 4
+| Метрика | Было | Стало |
+|---------|------|-------|
+| CPT guides | 165 | **200** (+35) |
+| Build pages | 209 | **244** |
+| Tests | 84 | **84 passed** |
+
+**Коды:** mental health (90832–90853), PT (97530/97535), infusion/chemo (96365–96413), ENT (69420/69421), GYN colposcopy (57452/57454), derm, pulmonary, chronic care (99490), vaccines, ophthalmology.
+
+**Скрипт:** `npm run generate:cpt-batch-day4`
+
+### → День 5
+Trust + monetization: `contact@` + AdSense application.
+
+---
+
+## День 4 — 8 июля 2026 (archive)
 
 ### Задачи
 - [ ] Batch 2 вторая половина: **+35 CPT** → **200 CPT guides**
@@ -274,4 +301,4 @@ Batch 3 CPT: +25 кодов (мягкий старт к 250).
 
 ---
 
-**Текущий день:** 3 ✅ закрыт (deploy pending push) → **следующий: День 4**
+**Текущий день:** 4 ✅ закрыт (deploy pending push) → **следующий: День 5**

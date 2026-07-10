@@ -20,7 +20,8 @@
     "data:generate": "node scripts/build-data/generate-launch-data.mjs",
     "data:chunk-mpfs": "node scripts/build-data/chunk-mpfs.mjs",
     "generate:cpt-pages": "node scripts/generate-cpt-pages.mjs",
-    "generate:cpt-batch": "node scripts/build-data/build-batch2-seed.mjs && node scripts/generate-cpt-batch.mjs"
+    "generate:cpt-batch": "node scripts/build-data/build-batch2-seed.mjs && node scripts/generate-cpt-batch.mjs",
+    "generate:cpt-batch-day4": "node scripts/build-data/build-batch2-seed-day4.mjs && node scripts/generate-cpt-batch.mjs --day4"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",

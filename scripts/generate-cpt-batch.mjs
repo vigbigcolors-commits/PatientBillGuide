@@ -7,9 +7,30 @@ import { writeFileSync, readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { CPT_CODES_BATCH2_35, CPT_BATCH2_35_LIST } from './build-data/cpt-seed-batch2-35.mjs';
+import { CPT_CODES_BATCH2_35B, CPT_BATCH2_35B_LIST } from './build-data/cpt-seed-batch2-35b.mjs';
 import { CPT_CODES_150 } from './build-data/cpt-seed-150.mjs';
 
-const ALL_SEEDS = { ...CPT_CODES_150, ...CPT_CODES_BATCH2_35 };
+const isDay4 = process.argv.includes('--day4');
+
+const BATCH_CONFIG = isDay4
+  ? {
+      seed: CPT_CODES_BATCH2_35B,
+      list: CPT_BATCH2_35B_LIST,
+      outFile: 'cpt-batch-scale-35b.ts',
+      exportName: 'cptBatchScale35b',
+      label: 'Batch 2 scale — Day 4 part 2 (35 CPT → 200 total)',
+      count: 35,
+    }
+  : {
+      seed: CPT_CODES_BATCH2_35,
+      list: CPT_BATCH2_35_LIST,
+      outFile: 'cpt-batch-scale-35.ts',
+      exportName: 'cptBatchScale35',
+      label: 'Batch 2 scale — 35 CPT guides (Day 3)',
+      count: 35,
+    };
+
+const ALL_SEEDS = { ...CPT_CODES_150, ...CPT_CODES_BATCH2_35, ...CPT_CODES_BATCH2_35B };
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -19,6 +40,7 @@ const EXISTING_FILES = [
   join(ROOT, 'src/data/cpt-batch-2.ts'),
   join(ROOT, 'src/data/cpt-batch-100.ts'),
   join(ROOT, 'src/data/cpt-batch-scale-35.ts'),
+  join(ROOT, 'src/data/cpt-batch-scale-35b.ts'),
 ];
 
 /** @param {string} code @param {string} descShort */
@@ -321,19 +343,20 @@ function wordCount(page) {
 }
 
 function main() {
+  const { seed, list, outFile, exportName, label, count } = BATCH_CONFIG;
   const existing = getExistingCodes();
-  const selected = CPT_BATCH2_35_LIST.filter((c) => CPT_CODES_BATCH2_35[c] && !existing.has(c));
+  const selected = list.filter((c) => seed[c] && !existing.has(c));
 
-  if (selected.length !== 35) {
-    throw new Error(`Expected 35 new codes, got ${selected.length} (${existing.size} existing)`);
+  if (selected.length !== count) {
+    throw new Error(`Expected ${count} new codes, got ${selected.length} (${existing.size} existing)`);
   }
 
   /** @type {Record<string, ReturnType<typeof generatePage>>} */
   const pages = {};
   for (const code of selected) {
-    const seed = CPT_CODES_BATCH2_35[code];
-    const cat = getCategory(code, seed.description_short);
-    pages[code] = generatePage(code, seed, cat);
+    const row = seed[code];
+    const cat = getCategory(code, row.description_short);
+    pages[code] = generatePage(code, row, cat);
   }
 
   const existingByCategory = new Map();
@@ -369,11 +392,14 @@ function main() {
     .map((c) => formatPage({ ...pages[c], relatedCodes: pages[c].relatedCodes }))
     .join('\n\n');
 
-  const OUT = join(ROOT, 'src/data/cpt-batch-scale-35.ts');
+  const OUT = join(ROOT, 'src/data', outFile);
+  const regenCmd = isDay4
+    ? 'node scripts/build-data/build-batch2-seed-day4.mjs && node scripts/generate-cpt-batch.mjs --day4'
+    : 'npm run generate:cpt-batch';
   const file = `import type { CptPageData } from './cpt-codes';
 
-/** Auto-generated Batch 2 scale — 35 CPT guides (Day 3). Regenerate: node scripts/generate-cpt-batch.mjs */
-export const cptBatchScale35: Record<string, CptPageData> = {
+/** Auto-generated ${label}. Regenerate: ${regenCmd} */
+export const ${exportName}: Record<string, CptPageData> = {
 ${body}
 };
 `;

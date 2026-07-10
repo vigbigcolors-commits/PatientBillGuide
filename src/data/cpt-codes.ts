@@ -23,6 +23,7 @@ import { extraCptPages } from './cpt-extra';
 import { cptBatch2 } from './cpt-batch-2';
 import { cptBatch100 } from './cpt-batch-100';
 import { cptBatchScale35 } from './cpt-batch-scale-35';
+import { cptBatchScale35b } from './cpt-batch-scale-35b';
 
 const launchCptCodesBase = [
   '99213', '99214', '99215', '99203', '99204', '99283', '99284', '99285',
@@ -34,8 +35,9 @@ const launchCptCodesBase = [
 
 const batch100Codes = Object.keys(cptBatch100).sort() as (keyof typeof cptBatch100)[];
 const batchScale35Codes = Object.keys(cptBatchScale35).sort() as (keyof typeof cptBatchScale35)[];
+const batchScale35bCodes = Object.keys(cptBatchScale35b).sort() as (keyof typeof cptBatchScale35b)[];
 
-export const launchCptCodes = [...launchCptCodesBase, ...batch100Codes, ...batchScale35Codes] as const;
+export const launchCptCodes = [...launchCptCodesBase, ...batch100Codes, ...batchScale35Codes, ...batchScale35bCodes] as const;
 
 export type LaunchCptCode = (typeof launchCptCodes)[number];
 
@@ -410,6 +412,7 @@ export const allCptPages: Record<string, CptPageData> = {
   ...cptBatch2,
   ...cptBatch100,
   ...cptBatchScale35,
+  ...cptBatchScale35b,
 };
 
 export const cptCodeList = launchCptCodes.map((code) => {
