@@ -34,16 +34,19 @@ npm run dev
 
 ---
 
-## What is already built (updated 2026-07-05)
+## What is already built (updated 2026-07-10)
 
 - **Site live:** https://patientbillguide.com (Cloudflare Pages)
 - **7 tools:** Fair Price, Bill Auditor, EOB, Surprise Bill, Hospital Compare, Dispute Letter, Medicare tab
-- **130 CPT guides** + learn pillars + full trust/EEAT stack
-- **163 URLs** in sitemap · **84 Vitest** tests
-- **GSC:** domain property verified · sitemap submitted
+- **200 CPT guides** + 5 compare + 5 category hubs + learn pillars + full trust/EEAT stack
+- **244 URLs** in build · **84 Vitest** tests
+- **GSC:** domain property verified · sitemap submitted · [GSC_INDEXING.md](GSC_INDEXING.md) (no mass manual indexing)
 - CMS MPFS + NCCI chunked data in `public/data/`
+- **Batch 2 complete:** 130 → 200 CPT (`generate:cpt-batch` + `generate:cpt-batch-day4`)
 
-**Next build phase:** Batch 2 CPT (+70), compare pages, category hubs — see [GROWTH_MASTER.md](GROWTH_MASTER.md)
+**In progress (uncommitted):** `/codes/` paginated hub — 24 codes/page, prev/next arrows, category filter.
+
+**Next phase:** Day 5 — `contact@` + AdSense · see [STATUS.md](../STATUS.md) and [DAILY_PLAN.md](DAILY_PLAN.md)
 
 ---
 

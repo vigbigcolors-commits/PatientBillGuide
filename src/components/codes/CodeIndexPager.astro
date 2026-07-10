@@ -1,0 +1,209 @@
+---
+export interface CodeIndexItem {
+  code: string;
+  label: string;
+  category: string;
+}
+
+interface Props {
+  codes: CodeIndexItem[];
+  categories: string[];
+  pageSize?: number;
+}
+
+const { codes, categories, pageSize = 24 } = Astro.props;
+const sorted = [...codes].sort((a, b) => a.code.localeCompare(b.code, undefined, { numeric: true }));
+---
+
+<section class="codes-hub__all" aria-labelledby="codes-all-title">
+  <div class="codes-hub__all-header">
+    <div>
+      <h2 id="codes-all-title" class="codes-hub__section-title">All CPT guides</h2>
+      <p class="codes-hub__section-desc">
+        Browse {sorted.length} codes — use arrows or filter by category.
+      </p>
+    </div>
+    <label class="codes-hub__filter">
+      <span class="visually-hidden">Filter by category</span>
+      <select id="code-category-filter" class="codes-hub__filter-select">
+        <option value="all">All categories</option>
+        {categories.map((cat) => (
+          <option value={cat}>{cat}</option>
+        ))}
+      </select>
+    </label>
+  </div>
+
+  <div id="code-index-pager" class="code-index-pager" data-page-size={pageSize}>
+    <ul class="code-grid">
+      {
+        sorted.map((item, index) => (
+          <li data-code-item data-category={item.category} hidden={index >= pageSize}>
+            <a href={`/codes/cpt/${item.code}/`} class="code-card">
+              <span class="code-card__code">{item.code}</span>
+              <span class="code-card__label">{item.label}</span>
+              <span class="code-card__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <nav class="code-pager" aria-label="CPT code pages">
+      <button type="button" class="code-pager__btn" data-pager-prev aria-label="Previous codes">
+        <span aria-hidden="true">←</span>
+        <span class="code-pager__btn-label">Previous</span>
+      </button>
+      <p class="code-pager__status" data-pager-status>Loading…</p>
+      <button type="button" class="code-pager__btn" data-pager-next aria-label="Next codes">
+        <span class="code-pager__btn-label">Next</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </nav>
+  </div>
+
+  <noscript>
+    <p class="codes-hub__noscript">
+      JavaScript is required for paginated browsing. <a href="/tools/fair-price/">Fair Price</a> supports
+      all Medicare fee schedule codes, or open any category hub above.
+    </p>
+    <ul class="code-grid">
+      {
+        sorted.slice(0, 48).map((item) => (
+          <li>
+            <a href={`/codes/cpt/${item.code}/`} class="code-card">
+              <span class="code-card__code">{item.code}</span>
+              <span class="code-card__label">{item.label}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </noscript>
+</section>
+
+<script>
+  import '../../scripts/code-index-pager.ts';
+</script>
+
+<style>
+  .codes-hub__all {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .codes-hub__all-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+  }
+
+  .codes-hub__all-header .codes-hub__section-title {
+    margin-bottom: var(--space-xs);
+  }
+
+  .codes-hub__all-header .codes-hub__section-desc {
+    margin: 0;
+  }
+
+  .codes-hub__filter-select {
+    min-width: 12rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9375rem;
+    font-family: inherit;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+  }
+
+  .codes-hub__filter-select:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .code-index-pager {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .code-pager {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
+  }
+
+  .code-pager__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0.625rem 1.125rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--color-primary);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, opacity 0.2s;
+  }
+
+  .code-pager__btn:hover:not(:disabled) {
+    border-color: #99f6e4;
+    background: #f0fdfa;
+  }
+
+  .code-pager__btn:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .code-pager__btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .code-pager__status {
+    margin: 0;
+    min-width: 12rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .code-pager__btn-label {
+    display: none;
+  }
+
+  @media (min-width: 480px) {
+    .code-pager__btn-label {
+      display: inline;
+    }
+  }
+
+  .codes-hub__noscript {
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

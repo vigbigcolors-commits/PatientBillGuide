@@ -129,7 +129,7 @@ Batch 2 завершение: ещё +35 CPT → **200 total** + deploy.
 - [x] Обновить category hubs (автоматически подтянут новые коды)
 - [x] `npm test && npm run build` — **244 страниц**
 - [x] **10% manual QA** — 90832, 96413, 57452 (hand-edited)
-- [ ] Deploy (push → Cloudflare Git)
+- [x] Deploy (push → Cloudflare Git)
 - [ ] GSC: resubmit sitemap или дождаться авто-краула
 - [x] Отчёт в STATUS — milestone **Scale A CPT 200** 🎯
 
@@ -301,4 +301,5 @@ Batch 3 CPT: +25 кодов (мягкий старт к 250).
 
 ---
 
-**Текущий день:** 4 ✅ закрыт (deploy pending push) → **следующий: День 5**
+**Текущий день:** 4 ✅ закрыт · Day 4 pushed (`db22074`) · **следующий: День 5**  
+**Вне плана (вечер 10 июл):** пагинация `/codes/` — готова локально, **не запушена**
