@@ -19,7 +19,8 @@
     "data:fetch": "node scripts/build-data/fetch-cms.mjs",
     "data:generate": "node scripts/build-data/generate-launch-data.mjs",
     "data:chunk-mpfs": "node scripts/build-data/chunk-mpfs.mjs",
-    "generate:cpt-pages": "node scripts/generate-cpt-pages.mjs"
+    "generate:cpt-pages": "node scripts/generate-cpt-pages.mjs",
+    "generate:cpt-batch": "node scripts/build-data/build-batch2-seed.mjs && node scripts/generate-cpt-batch.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",

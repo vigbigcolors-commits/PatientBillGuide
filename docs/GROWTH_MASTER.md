@@ -250,7 +250,7 @@ Traffic **lags** publishing by 6–12 weeks — do not panic if week 1 after dep
 1. **Batch 2 CPT** — +70 codes → **200 total**  
 2. **5 compare pages** — highest long-tail ROI per page  
 3. **5 category hubs** — internal linking + head terms  
-4. **Request indexing** in GSC for homepage + Fair Price + top 10 CPT  
+4. **Sitemap + monthly GSC review** — see [GSC_INDEXING.md](GSC_INDEXING.md); **no** mass manual URL Inspection  
 5. **Reddit launch** — Fair Price tool (one strong post, not spam)  
 6. **AdSense application** — site qualifies on page count  
 7. **contact@patientbillguide.com** — trust signal for GSC / users  

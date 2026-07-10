@@ -68,6 +68,7 @@ All decisions agreed in planning sessions. Do not change without explicit discus
 | 40 | Doorway test | 4-question gate in GOOGLE_QUALITY.md **before every new URL type** |
 | 41 | Jul 5–6 compare + category | **Approved** — hand-written, not doorways |
 | 42 | `cpt-batch-100` pages | **Live but watch zone** — do not scale same template to 1000+ without upgrade |
+| 43 | GSC indexing | **No mass manual URL Inspection** — sitemap + quality + launch channels ([GSC_INDEXING.md](GSC_INDEXING.md)); Product Hunt / Reddit for tools |
 
 ## Out of scope for this domain
 

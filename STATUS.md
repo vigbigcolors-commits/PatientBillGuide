@@ -2,11 +2,11 @@
 
 > Update this file after every work session. Agents should read this first.
 
-**Last updated:** 2026-07-06  
-**Current phase:** Post-launch — Day 3 next (Batch 2 CPT)  
-**Phase status:** 7 live tools · 84 tests · **174 build / 173 live sitemap** · 130 CPT · 5 compare · 5 category  
+**Last updated:** 2026-07-10  
+**Current phase:** Post-launch — Day 4 next (Batch 2 part 2: +35 CPT → 200)  
+**Phase status:** 7 live tools · 84 tests · **209 build** · **165 CPT** · 5 compare · 5 category  
 **Domain:** PatientBillGuide.com  
-**Master docs:** [GROWTH_MASTER.md](docs/GROWTH_MASTER.md) · [DAILY_PLAN.md](docs/DAILY_PLAN.md) · [MASTER_PLAN.md](docs/MASTER_PLAN.md)
+**Master docs:** [GROWTH_MASTER.md](docs/GROWTH_MASTER.md) · [DAILY_PLAN.md](docs/DAILY_PLAN.md) · [GSC_INDEXING.md](docs/GSC_INDEXING.md)
 
 ---
 
@@ -15,13 +15,11 @@
 | Milestone | Target date | CPT | Total pages | Status |
 |-----------|-------------|-----|-------------|--------|
 | **Launch** | Jul 2026 | 130 | 174 | ✅ Live + compare/category |
-| **Scale A** | Aug 2026 | 200 | ~220 | 🟡 Day 2 done · Batch 2 CPT next |
+| **Scale A** | Aug 2026 | 200 | ~220 | 🟡 Day 3 done (165 CPT) · +35 on Day 4 |
 | **Scale B** | Oct 2026 | 350 | ~400 | 🔲 |
 | **6-month** | Jan 2027 | **500** | **550–700** | 🔲 |
 | **12-month** | Jul 2027 | 500–1,500 | 800–1,800 | 🔲 |
 | **Medicare AEP** | Sep–Oct 2026 | — | +medicare hub | 🔲 |
-
-**Strategy one-liner:** Tools first → CPT long tail in weekly batches → compare/category/learn for fast wins → Reddit + AdSense → scale to MPFS ceiling (~7,740) over years, not days.
 
 ---
 
@@ -30,22 +28,15 @@
 - [x] Site live at patientbillguide.com (Cloudflare)
 - [x] GSC domain property verified (DNS)
 - [x] Sitemap submitted (`sitemap-index.xml` — Success)
-- [x] Compare + category **deployed live** (smoke test 12/12 → 200)
-- [ ] GSC: Request indexing 9 URLs (Day 2 — user manual, see DAILY_PLAN)
-- [ ] GSC: discovered URLs ~173 in sitemap
-- [ ] **Batch 2 CPT** (+70 → 200 total) — **Day 3–4**
+- [x] Compare + category deployed live
+- [x] **GSC strategy** — [GSC_INDEXING.md](docs/GSC_INDEXING.md): no mass manual indexing (DECISIONS #43)
+- [x] **Batch 2 part 1** — +35 CPT → **165 total** (Day 3)
+- [ ] **Batch 2 part 2** — +35 CPT → **200 total** (Day 4)
 - [x] **5 compare pages** + **5 category hubs**
 - [ ] AdSense application — Day 5
 - [ ] Set up `contact@patientbillguide.com` — Day 5
+- [ ] Product Hunt launch — after contact@ (Day 5+)
 - [ ] Reddit launch (Fair Price) — Day 7
-
----
-
-## Week 8 — Deploy prep ✅
-
-- [x] Cloudflare Pages + custom domain
-- [x] GSC submit
-- [x] Full codebase on GitHub (`origin/main` up to date)
 
 ---
 
@@ -67,7 +58,6 @@
 
 | Date | Done |
 |------|------|
-| 2026-07-06 | **Day 2:** deploy verified live · smoke 12/12 · GOOGLE_QUALITY + Zero-Doorway Rule locked |
-| 2026-07-05 | **Day 1:** Compare (5) + category (5) — manual, approved; GSC; GROWTH_MASTER |
-| 2026-06-29 | Full deploy audit + fixes (CMS Linux unzip, stale content, headers, contact email) |
-| 2026-06-29 | Week 7 dispute letters + Week 8 NCCI polish + hero redesign + EOB Aetna/Cigna fix |
+| 2026-07-10 | **Day 3:** +35 CPT (165 total), 209 pages, GSC_INDEXING locked, generate:cpt-batch |
+| 2026-07-06 | **Day 2:** deploy verified · GOOGLE_QUALITY · deploy workflow fix |
+| 2026-07-05 | **Day 1:** Compare (5) + category (5); GSC; GROWTH_MASTER |

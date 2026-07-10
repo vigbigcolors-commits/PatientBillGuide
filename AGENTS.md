@@ -13,7 +13,8 @@ Instructions for Cursor / AI agents continuing this project.
 7. Read [docs/GROWTH_MASTER.md](docs/GROWTH_MASTER.md) — SEO, CPT scale, long-tail (post-launch)
 8. Read [docs/DAILY_PLAN.md](docs/DAILY_PLAN.md) — **current day tasks** (do not skip ahead)
 9. Read [docs/GOOGLE_QUALITY.md](docs/GOOGLE_QUALITY.md) — **Zero-Doorway Rule** (mandatory before any new URLs)
-10. Work **only** the current phase in STATUS.md unless user explicitly overrides
+10. Read [docs/GSC_INDEXING.md](docs/GSC_INDEXING.md) — **no mass manual URL indexing** (tool-site playbook)
+11. Work **only** the current phase in STATUS.md unless user explicitly overrides
 
 ## Project summary
 

@@ -42,7 +42,7 @@ Deploy compare/category на live + GSC indexing + проверка sitemap 174 
 ### Задачи
 - [x] `git push` → Cloudflare deploy (compare + category на live) — уже на `main`, live 200 OK
 - [x] Smoke test: 12 URL — все **200 OK**
-- [ ] GSC → **URL Inspection** → Request indexing *(вручную в GSC — см. чеклист ниже)*
+- [ ] GSC → **URL Inspection** → ~~Request indexing~~ **ОТМЕНЕНО** — см. [GSC_INDEXING.md](GSC_INDEXING.md) (DECISIONS #43)
 - [ ] GSC → Sitemaps: discovered URLs *(проверить в панели — live sitemap **173** URL)*
 - [x] Обновить STATUS.md — отчёт дня 2
 
@@ -77,7 +77,31 @@ Batch 2 CPT: seed + генерация **+35 кодов** → ~165 CPT, ~209 с�
 
 ---
 
-## День 3 — 7 июля 2026
+## День 3 — 10 июля 2026 ✅
+
+### Задачи
+- [x] Расширить seed из MPFS — `cpt-seed-batch2-35.mjs` (35 кодов)
+- [x] `npm run generate:cpt-batch` — **35 CPT** (Gate D)
+- [x] **10% manual QA** — 99234, 90837, 45381 (917–945 слов, related → live)
+- [x] EEAT pass: 800+ слов, MPFS medians, Fair Price widget
+- [x] `npm test && npm run build` — **209 страниц**, **165 CPT**
+- [x] [GSC_INDEXING.md](GSC_INDEXING.md) — профессиональная стратегия (без ручного spam)
+- [ ] Deploy (push → Cloudflare Git)
+- [x] Отчёт в STATUS
+
+### Отчёт дня 3
+- Коды добавлены: **35** (hospital E/M, SNF, home visit, surgery, imaging, PT, mental health, vaccines…)
+- Build pages: **209** (было 174)
+- CPT total: **165** (было 130)
+- Tests: **84 passed**
+- GSC: **отменён** чеклист 9 URL — заменён на [GSC_INDEXING.md](GSC_INDEXING.md)
+
+### → День 4
+Batch 2 завершение: ещё **+35 CPT** → **200 total** + deploy.
+
+---
+
+## День 3 — 7 июля 2026 (archive — перенесён на 10 июля)
 
 ### Задачи
 - [ ] Расширить seed из MPFS (коды не в encyclopedia)
@@ -250,4 +274,4 @@ Batch 3 CPT: +25 кодов (мягкий старт к 250).
 
 ---
 
-**Текущий день:** 2 ✅ закрыт (GSC indexing — вручную) → **следующий: День 3 (7 июля)**
+**Текущий день:** 3 ✅ закрыт (deploy pending push) → **следующий: День 4**

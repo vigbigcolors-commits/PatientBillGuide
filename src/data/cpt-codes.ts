@@ -22,6 +22,7 @@ export interface CptPageData {
 import { extraCptPages } from './cpt-extra';
 import { cptBatch2 } from './cpt-batch-2';
 import { cptBatch100 } from './cpt-batch-100';
+import { cptBatchScale35 } from './cpt-batch-scale-35';
 
 const launchCptCodesBase = [
   '99213', '99214', '99215', '99203', '99204', '99283', '99284', '99285',
@@ -32,8 +33,9 @@ const launchCptCodesBase = [
 ] as const;
 
 const batch100Codes = Object.keys(cptBatch100).sort() as (keyof typeof cptBatch100)[];
+const batchScale35Codes = Object.keys(cptBatchScale35).sort() as (keyof typeof cptBatchScale35)[];
 
-export const launchCptCodes = [...launchCptCodesBase, ...batch100Codes] as const;
+export const launchCptCodes = [...launchCptCodesBase, ...batch100Codes, ...batchScale35Codes] as const;
 
 export type LaunchCptCode = (typeof launchCptCodes)[number];
 
@@ -407,6 +409,7 @@ export const allCptPages: Record<string, CptPageData> = {
   ...extraCptPages,
   ...cptBatch2,
   ...cptBatch100,
+  ...cptBatchScale35,
 };
 
 export const cptCodeList = launchCptCodes.map((code) => {
