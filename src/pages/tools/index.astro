@@ -5,32 +5,43 @@ import ToolsDirectory from '../../components/tools/ToolsDirectory.astro';
 import Disclaimer from '../../components/Disclaimer.astro';
 import { site } from '../../data/site';
 import { toolsHubMeta, toolsHubTrust, toolsHubAudiences } from '../../data/tools-hub-content';
-import { liveToolCount } from '../../data/tools-directory';
+import { liveToolCount, schemaLiveTools } from '../../data/tools-directory';
 import { breadcrumbSchema, webApplicationSchema } from '../../lib/seo/schema';
-import { directoryTools } from '../../data/tools-directory';
-
-const liveApps = directoryTools.filter((t) => t.status === 'live' && t.href);
 
 const schemaGraph = [
   breadcrumbSchema([{ name: 'Home', url: '/' }, { name: 'Tools' }], site.url),
   {
     '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'PatientBillGuide billing tools',
+    '@type': 'CollectionPage',
+    name: 'Free medical billing tools',
     description: toolsHubMeta.description,
-    numberOfItems: liveApps.length,
-    itemListElement: liveApps.map((tool, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      name: tool.title,
-      url: `${site.url}${tool.href}`,
-    })),
+    url: `${site.url}/tools/`,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: site.name,
+      url: site.url,
+    },
+    mainEntity: {
+      '@type': 'ItemList',
+      name: 'PatientBillGuide billing tools',
+      description: toolsHubMeta.description,
+      numberOfItems: schemaLiveTools.length,
+      itemListElement: schemaLiveTools.map((tool, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: tool.title,
+        url: `${site.url}${tool.href}`,
+        item: { '@id': `${site.url}${tool.href}#app` },
+      })),
+    },
   },
-  ...liveApps.map((tool) =>
+  ...schemaLiveTools.map((tool) =>
     webApplicationSchema({
       name: tool.title,
       description: tool.description,
       url: `${site.url}${tool.href}`,
+      id: `${site.url}${tool.href}#app`,
+      featureList: tool.schemaFeatures,
     }),
   ),
 ];

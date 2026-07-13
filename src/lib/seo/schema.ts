@@ -1,11 +1,46 @@
 /**
  * JSON-LD schema helpers for SEO.
+ *
+ * Software / web apps follow Google Search Central:
+ * https://developers.google.com/search/docs/appearance/structured-data/software-app
+ *
+ * Required for Software App rich results: name, offers.price, and aggregateRating OR review.
+ * We do NOT invent ratings/reviews — schema stays honest. Semantic WebApplication markup
+ * still signals browser tools; rich-result eligibility can wait for real reviews.
  */
+
+import { author } from '../../data/author';
+import { site } from '../../data/site';
 
 export interface FaqItem {
   question: string;
   answer: string;
 }
+
+/** Google-supported applicationCategory values for SoftwareApplication. */
+export type GoogleApplicationCategory =
+  | 'GameApplication'
+  | 'SocialNetworkingApplication'
+  | 'TravelApplication'
+  | 'ShoppingApplication'
+  | 'SportsApplication'
+  | 'LifestyleApplication'
+  | 'BusinessApplication'
+  | 'DesignApplication'
+  | 'DeveloperApplication'
+  | 'DriverApplication'
+  | 'EducationalApplication'
+  | 'HealthApplication'
+  | 'FinanceApplication'
+  | 'SecurityApplication'
+  | 'BrowserApplication'
+  | 'CommunicationApplication'
+  | 'DesktopEnhancementApplication'
+  | 'EntertainmentApplication'
+  | 'MultimediaApplication'
+  | 'HomeApplication'
+  | 'UtilitiesApplication'
+  | 'ReferenceApplication';
 
 export function faqPageSchema(faqs: FaqItem[]) {
   return {
@@ -170,19 +205,57 @@ export function aboutPageSchema(opts: {
   };
 }
 
-export function webApplicationSchema(opts: {
+export interface WebApplicationSchemaOpts {
   name: string;
   description: string;
   url: string;
-}) {
+  /** Optional stable @id for @graph linking (homepage / hub). */
+  id?: string;
+  applicationCategory?: GoogleApplicationCategory;
+  /** Schema.org Text — comma/period-separated capabilities. */
+  featureList?: string | string[];
+  browserRequirements?: string;
+}
+
+/**
+ * Browser-only PatientBillGuide tools.
+ * Uses WebApplication (Google-supported SoftwareApplication subtype) + SoftwareApplication co-type.
+ */
+export function webApplicationSchema(opts: WebApplicationSchemaOpts) {
+  const featureList = Array.isArray(opts.featureList)
+    ? opts.featureList.filter(Boolean).join('. ')
+    : opts.featureList;
+
   return {
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
+    '@type': ['WebApplication', 'SoftwareApplication'],
+    ...(opts.id ? { '@id': opts.id } : {}),
     name: opts.name,
     description: opts.description,
     url: opts.url,
-    applicationCategory: 'HealthApplication',
-    operatingSystem: 'Any',
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    applicationCategory: opts.applicationCategory ?? 'HealthApplication',
+    operatingSystem: 'Web browser',
+    browserRequirements:
+      opts.browserRequirements ??
+      'Requires JavaScript. Runs entirely in your browser — no install, no account, no server-side upload of bill data.',
+    isAccessibleForFree: true,
+    offers: {
+      '@type': 'Offer',
+      price: 0,
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    ...(featureList ? { featureList } : {}),
+    publisher: {
+      '@type': 'Organization',
+      name: site.name,
+      url: site.url,
+    },
+    creator: {
+      '@type': 'Person',
+      name: author.name,
+      url: `${site.url}${author.path}`,
+      jobTitle: author.jobTitle,
+    },
   };
 }

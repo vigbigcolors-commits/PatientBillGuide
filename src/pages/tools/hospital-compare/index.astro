@@ -11,6 +11,9 @@ import {
   HOSPITAL_PIPELINE_LANES,
 } from '../../../lib/hospital-compare/benchmarks';
 import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+import { directoryTools } from '../../../data/tools-directory';
+
+const toolMeta = directoryTools.find((t) => t.id === 'hospital-compare')!;
 
 const faqs = [
   {
@@ -56,10 +59,11 @@ const faqs = [
 
 const schemaGraph = [
   webApplicationSchema({
-    name: 'Hospital Price Compare',
-    description:
-      'Compare hospital charges to CMS physician fees plus estimated facility components — ER, outpatient, ASC, and office settings.',
+    name: toolMeta.title,
+    description: toolMeta.description,
     url: `${site.url}/tools/hospital-compare/`,
+    id: `${site.url}/tools/hospital-compare/#app`,
+    featureList: toolMeta.schemaFeatures,
   }),
   faqPageSchema(faqs),
   breadcrumbSchema(

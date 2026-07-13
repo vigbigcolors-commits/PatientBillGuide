@@ -144,11 +144,23 @@ Use this for **every page** before publish. Target: YMYL 10/10.
 
 | Page type | Schema types |
 |-----------|--------------|
-| Homepage | Organization, WebSite, SearchAction |
-| Tool | SoftwareApplication, FAQPage, BreadcrumbList |
+| Homepage | Organization, WebSite, SearchAction, **WebApplication** (Fair Price + Bill Auditor) |
+| Tool | **WebApplication + SoftwareApplication** (co-type), FAQPage, BreadcrumbList |
+| Tools hub | CollectionPage, ItemList, WebApplication per live tool |
 | CPT | MedicalWebPage, FAQPage, BreadcrumbList |
 | Learn | Article, BreadcrumbList |
 | FAQ sections | FAQPage (can combine with primary type) |
+
+### Software / WebApplication (Google)
+
+Follow [Software App structured data](https://developers.google.com/search/docs/appearance/structured-data/software-app):
+
+- **Required for rich results:** `name`, `offers.price` (0 if free), and `aggregateRating` **or** `review`
+- **We include:** name, offers.price=0, applicationCategory=`HealthApplication`, operatingSystem, browserRequirements, isAccessibleForFree, featureList, publisher, creator
+- **We do NOT invent** aggregateRating / review until real user reviews exist (manual-action risk)
+- Subtype: `@type: ["WebApplication", "SoftwareApplication"]` — browser tools, no install
+
+Validate with [Rich Results Test](https://search.google.com/test/rich-results) after deploy.
 
 Validate with Google Rich Results Test before launch.
 

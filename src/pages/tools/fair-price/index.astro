@@ -11,6 +11,9 @@ import {
   PART_B_PIPELINE_LANES,
 } from '../../../lib/pricing/medicare-part-b';
 import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+import { directoryTools } from '../../../data/tools-directory';
+
+const toolMeta = directoryTools.find((t) => t.id === 'fair-price')!;
 
 const faqs = [
   {
@@ -70,9 +73,11 @@ const faqs = [
 
 const schemaGraph = [
   webApplicationSchema({
-    name: 'Fair Price Calculator',
-    description: 'Compare medical charges to Medicare benchmarks and fair price ranges by CPT and ZIP.',
+    name: toolMeta.title,
+    description: toolMeta.description,
     url: `${site.url}/tools/fair-price/`,
+    id: `${site.url}/tools/fair-price/#app`,
+    featureList: toolMeta.schemaFeatures,
   }),
   faqPageSchema(faqs),
   breadcrumbSchema(

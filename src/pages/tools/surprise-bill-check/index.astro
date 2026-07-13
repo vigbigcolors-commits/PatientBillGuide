@@ -15,6 +15,9 @@ import {
   PROVIDER_ROLE_LABELS,
 } from '../../../lib/surprise-bill/check';
 import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+import { directoryTools } from '../../../data/tools-directory';
+
+const toolMeta = directoryTools.find((t) => t.id === 'surprise-bill')!;
 
 const faqs = [
   {
@@ -60,10 +63,11 @@ const faqs = [
 
 const schemaGraph = [
   webApplicationSchema({
-    name: 'Surprise Bill Checker',
-    description:
-      'Screen out-of-network medical bills against federal No Surprises Act rules with confidence levels, timelines, and next steps.',
+    name: toolMeta.title,
+    description: toolMeta.description,
     url: `${site.url}/tools/surprise-bill-check/`,
+    id: `${site.url}/tools/surprise-bill-check/#app`,
+    featureList: toolMeta.schemaFeatures,
   }),
   faqPageSchema(faqs),
   breadcrumbSchema(

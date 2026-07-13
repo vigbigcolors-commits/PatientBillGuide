@@ -5,6 +5,9 @@ import Disclaimer from '../../../components/Disclaimer.astro';
 import { site } from '../../../data/site';
 import { TEMPLATE_DESCRIPTIONS, TEMPLATE_LABELS } from '../../../lib/dispute/letters';
 import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+import { directoryTools } from '../../../data/tools-directory';
+
+const toolMeta = directoryTools.find((t) => t.id === 'dispute-letter')!;
 
 const faqs = [
   {
@@ -35,9 +38,11 @@ const faqs = [
 
 const schemaGraph = [
   webApplicationSchema({
-    name: 'Dispute Letter Builder',
-    description: 'Generate editable medical billing dispute letter templates in your browser.',
+    name: toolMeta.title,
+    description: toolMeta.description,
     url: `${site.url}/tools/dispute-letter/`,
+    id: `${site.url}/tools/dispute-letter/#app`,
+    featureList: toolMeta.schemaFeatures,
   }),
   faqPageSchema(faqs),
   breadcrumbSchema(

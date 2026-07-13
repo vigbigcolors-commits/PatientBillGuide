@@ -7,6 +7,9 @@ import { site } from '../../../data/site';
 import { billAuditorExamples } from '../../../data/tool-examples';
 import { AUDIT_CHECK_LANES } from '../../../lib/billing/audit';
 import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+import { directoryTools } from '../../../data/tools-directory';
+
+const toolMeta = directoryTools.find((t) => t.id === 'bill-auditor')!;
 
 const faqs = [
   {
@@ -57,10 +60,11 @@ const faqs = [
 
 const schemaGraph = [
   webApplicationSchema({
-    name: 'Itemized Bill Auditor',
-    description:
-      'Paste hospital bill text to flag duplicates, Medicare price outliers, and NCCI unbundling — with confidence levels and next steps.',
+    name: toolMeta.title,
+    description: toolMeta.description,
     url: `${site.url}/tools/bill-auditor/`,
+    id: `${site.url}/tools/bill-auditor/#app`,
+    featureList: toolMeta.schemaFeatures,
   }),
   faqPageSchema(faqs),
   breadcrumbSchema(

@@ -35,6 +35,8 @@ export interface DirectoryTool {
   roadmap?: string[];
   /** Interim link while tool is not live */
   interim?: { label: string; href: string };
+  /** Honest capability list for WebApplication featureList (live tools only). */
+  schemaFeatures?: string[];
 }
 
 export const toolClusters: { id: ToolCluster; label: string; subtitle: string; step: string }[] = [
@@ -58,6 +60,12 @@ export const directoryTools: DirectoryTool[] = [
     accent: 'teal',
     icon: 'price',
     stat: '7,700+ codes',
+    schemaFeatures: [
+      'CPT code + ZIP Medicare allowed amount lookup',
+      'Educational fair range 1.5×–2.5× Medicare',
+      'Medicare Part B deductible and coinsurance estimate tab',
+      'Private client-side calculation — no account required',
+    ],
   },
   {
     id: 'medicare-tab',
@@ -96,6 +104,12 @@ export const directoryTools: DirectoryTool[] = [
     accent: 'violet',
     icon: 'surprise',
     stat: 'NSA screening',
+    schemaFeatures: [
+      'No Surprises Act screening for out-of-network bills',
+      'Emergency vs planned care decision paths',
+      'Consent waiver and provider-role checks',
+      'Private browser-only questionnaire',
+    ],
   },
   {
     id: 'hospital-compare',
@@ -115,6 +129,12 @@ export const directoryTools: DirectoryTool[] = [
     accent: 'indigo',
     icon: 'hospital',
     stat: '4 care settings',
+    schemaFeatures: [
+      'Hospital charge vs CMS physician fee benchmarks',
+      'Facility component estimates by care setting',
+      'ER, hospital outpatient, ASC, and office paths',
+      'Private client-side comparison',
+    ],
   },
   {
     id: 'bill-auditor',
@@ -134,6 +154,12 @@ export const directoryTools: DirectoryTool[] = [
     accent: 'amber',
     icon: 'audit',
     stat: 'NCCI + MPFS',
+    schemaFeatures: [
+      'Paste itemized bill text for local analysis',
+      'Duplicate and price-outlier flags with confidence levels',
+      'NCCI unbundling pattern checks',
+      'Links to dispute letter templates',
+    ],
   },
   {
     id: 'eob-analyzer',
@@ -153,6 +179,12 @@ export const directoryTools: DirectoryTool[] = [
     accent: 'blue',
     icon: 'eob',
     stat: '4 insurers',
+    schemaFeatures: [
+      'Paste Explanation of Benefits text',
+      'Insurer-aware parsing for major US plans',
+      'Line-by-line table with totals and insights',
+      'Private browser-only processing',
+    ],
   },
   {
     id: 'code-lookup',
@@ -188,6 +220,12 @@ export const directoryTools: DirectoryTool[] = [
     accent: 'teal',
     icon: 'letter',
     stat: '3 templates',
+    schemaFeatures: [
+      'Editable dispute letter templates',
+      'Overcharge, duplicate, and surprise-bill starters',
+      'Copy and customize in the browser',
+      'Educational templates — not legal advice',
+    ],
   },
   {
     id: 'negotiation-script',
@@ -210,5 +248,11 @@ export const directoryTools: DirectoryTool[] = [
     interim: { label: 'Self-pay guide', href: '/for/uninsured/' },
   },
 ];
+
+/** Live tools with a canonical path (no query string) — for WebApplication schema. */
+export const schemaLiveTools = directoryTools.filter(
+  (t): t is DirectoryTool & { href: string; schemaFeatures: string[] } =>
+    t.status === 'live' && Boolean(t.href) && !t.href.includes('?') && Boolean(t.schemaFeatures?.length),
+);
 
 export const liveToolCount = directoryTools.filter((t) => t.status === 'live').length;

@@ -9,7 +9,10 @@ import HomeLearn from '../components/home/HomeLearn.astro';
 import HomeFaq from '../components/home/HomeFaq.astro';
 import { site } from '../data/site';
 import { homeFaqs } from '../data/home-content';
-import { faqPageSchema } from '../lib/seo/schema';
+import { faqPageSchema, webApplicationSchema } from '../lib/seo/schema';
+import { schemaLiveTools } from '../data/tools-directory';
+
+const homepageApps = schemaLiveTools.filter((t) => t.id === 'fair-price' || t.id === 'bill-auditor');
 
 const schema = {
   '@context': 'https://schema.org',
@@ -28,12 +31,22 @@ const schema = {
       name: site.name,
       description: site.description,
       publisher: { '@id': `${site.url}/#organization` },
+      hasPart: homepageApps.map((t) => ({ '@id': `${site.url}${t.href}#app` })),
       potentialAction: {
         '@type': 'SearchAction',
         target: `${site.url}/tools/fair-price/?code={search_term_string}`,
         'query-input': 'required name=search_term_string',
       },
     },
+    ...homepageApps.map((tool) =>
+      webApplicationSchema({
+        name: tool.title,
+        description: tool.description,
+        url: `${site.url}${tool.href}`,
+        id: `${site.url}${tool.href}#app`,
+        featureList: tool.schemaFeatures,
+      }),
+    ),
     faqPageSchema(homeFaqs),
   ],
 };

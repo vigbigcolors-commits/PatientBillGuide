@@ -7,6 +7,9 @@ import { site } from '../../../data/site';
 import { eobAnalyzerExamples } from '../../../data/tool-examples';
 import { EOB_COLUMN_GLOSSARY, EOB_PIPELINE_LANES } from '../../../lib/eob/parse';
 import { faqPageSchema, webApplicationSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+import { directoryTools } from '../../../data/tools-directory';
+
+const toolMeta = directoryTools.find((t) => t.id === 'eob-analyzer')!;
 
 const faqs = [
   {
@@ -57,10 +60,11 @@ const faqs = [
 
 const schemaGraph = [
   webApplicationSchema({
-    name: 'EOB Analyzer',
-    description:
-      'Paste Explanation of Benefits text for insurer-aware parsing, totals, insights, and next steps — in your browser.',
+    name: toolMeta.title,
+    description: toolMeta.description,
     url: `${site.url}/tools/eob-analyzer/`,
+    id: `${site.url}/tools/eob-analyzer/#app`,
+    featureList: toolMeta.schemaFeatures,
   }),
   faqPageSchema(faqs),
   breadcrumbSchema(
