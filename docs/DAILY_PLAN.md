@@ -168,7 +168,26 @@ Trust + monetization: `contact@` + AdSense application.
 
 ---
 
-## День 5 — 9 июля 2026
+## День 5 — 13 июля 2026 (in progress)
+
+### Задачи
+- [x] Пагинация `/codes/` уже live (`9cebb09`)
+- [x] Проверить `/contact/` — mailto + EEAT copy
+- [ ] Настроить **contact@patientbillguide.com** — [DAY5_MANUAL.md](DAY5_MANUAL.md) §A *(пользователь)*
+- [ ] **Google AdSense** — подать заявку — [DAY5_MANUAL.md](DAY5_MANUAL.md) §B *(пользователь)*
+- [ ] GSC → Performance — первый взгляд (может быть пусто — норма)
+- [ ] Отчёт в STATUS
+
+### Отчёт дня 5 *(заполнить после manual)*
+- Email: ☐
+- AdSense status: …
+
+### → День 6
+Learn content: pillar «Surprise Medical Bills».
+
+---
+
+## День 5 — 9 июля 2026 (archive)
 
 ### Задачи
 - [ ] Настроить **contact@patientbillguide.com** (Cloudflare Email Routing или forwarding)
@@ -301,5 +320,4 @@ Batch 3 CPT: +25 кодов (мягкий старт к 250).
 
 ---
 
-**Текущий день:** 4 ✅ закрыт · Day 4 pushed (`db22074`) · **следующий: День 5**  
-**Вне плана (вечер 10 июл):** пагинация `/codes/` — готова локально, **не запушена**
+**Текущий день:** **5** (in progress) — manual: contact@ + AdSense · [DAY5_MANUAL.md](DAY5_MANUAL.md)

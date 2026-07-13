@@ -8,15 +8,14 @@ Track errors, open questions, and fixes **as we go**.
 
 ### [OPEN] Git: most of codebase untracked
 - **Found:** 2026-06-29 audit
-- **Severity:** **critical** (blocks deploy)
-- **Description:** Only ~22 planning files committed. Full Astro app, `public/data/`, `package-lock.json` must be committed and pushed before Cloudflare Git connect.
-- **Fix:** `git add` source + data + lockfile → push to `main`
+- **Severity:** ~~critical~~ → **fixed** (site live on Cloudflare from full repo)
+- **Fix:** codebase committed and deployed — close when convenient
 
 ### [OPEN] Contact email inbox
 - **Found:** 2026-06-29
 - **Severity:** medium
 - **Description:** Site shows `contact@patientbillguide.com` — mailbox must be created on domain host
-- **Fix:** _pending_
+- **Fix:** Day 5 — Cloudflare Email Routing · see [DAY5_MANUAL.md](DAY5_MANUAL.md) §A · _awaiting user_
 
 ### [OPEN] Author display name format
 - **Severity:** low (placeholder bio OK for launch)

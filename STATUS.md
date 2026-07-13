@@ -2,14 +2,14 @@
 
 > Update this file after every work session. Agents should read this first.
 
-**Last updated:** 2026-07-10 (end of session)  
-**Current phase:** Post-launch — **Day 5 next** (contact@ + AdSense)  
+**Last updated:** 2026-07-13  
+**Current phase:** Post-launch — **Day 5 in progress** (contact@ + AdSense — manual)  
 **Phase status:** 7 live tools · 84 tests · **244 build** · **200 CPT** · 5 compare · 5 category  
 **Domain:** PatientBillGuide.com  
-**Master docs:** [GROWTH_MASTER.md](docs/GROWTH_MASTER.md) · [DAILY_PLAN.md](docs/DAILY_PLAN.md) · [GSC_INDEXING.md](docs/GSC_INDEXING.md)
+**Master docs:** [GROWTH_MASTER.md](docs/GROWTH_MASTER.md) · [DAILY_PLAN.md](docs/DAILY_PLAN.md) · [DAY5_MANUAL.md](docs/DAY5_MANUAL.md)
 
-> **Продолжить завтра:** скажи агенту `Continue PatientBillGuide from STATUS.md`  
-> **Незакоммичено:** пагинация `/codes/` (см. ниже) — commit + push в начале сессии.
+> **Day 5 playbook:** [docs/DAY5_MANUAL.md](docs/DAY5_MANUAL.md) — Cloudflare Email Routing + AdSense apply (your login).  
+> Reply: `Email: works` / `AdSense: submitted` when done.
 
 ---
 
@@ -43,19 +43,9 @@
 
 ---
 
-## Uncommitted work (2026-07-10 evening)
+## Uncommitted work (2026-07-10 evening) — ✅ done
 
-**UX fix:** `/codes/` hub — пагинация вместо 200 кодов на одной странице.
-
-| File | Change |
-|------|--------|
-| `src/components/codes/CodeIndexPager.astro` | NEW — 24 codes/page, prev/next, category filter |
-| `src/scripts/code-index-pager.ts` | NEW — client pager logic |
-| `src/pages/codes/index.astro` | Replaced per-category long lists with `CodeIndexPager` |
-
-**Проверено локально:** `npm run build` OK · dev server `http://localhost:4321/codes/`
-
-**Завтра первым делом:** `git add` → commit → `git push` (deploy pager на live).
+**UX fix:** `/codes/` pagination — committed + live (`9cebb09`).
 
 ---
 
@@ -77,21 +67,22 @@
 
 | Date | Done |
 |------|------|
-| 2026-07-10 (pm) | **Codes hub UX:** paginated index 24/page + category filter — **local only, not pushed** |
-| 2026-07-10 | **Day 4:** +35 CPT → **200 total**, 244 pages, QA 90832/96413/57452 · `db22074` pushed to main |
-| 2026-07-10 | **Day 3:** +35 CPT (165 total), 209 pages, GSC_INDEXING locked, `generate:cpt-batch` |
-| 2026-07-06 | **Day 2:** deploy verified · GOOGLE_QUALITY · deploy workflow fix |
-| 2026-07-05 | **Day 1:** Compare (5) + category (5); GSC; GROWTH_MASTER |
+| 2026-07-13 | **Day 5 start:** contact page EEAT polish · [DAY5_MANUAL.md](docs/DAY5_MANUAL.md) · await user Email + AdSense |
+| 2026-07-10 (pm) | **Codes hub UX:** paginated index 24/page — pushed (`9cebb09`) |
+| 2026-07-10 | **Day 4:** +35 CPT → **200 total**, 244 pages · `db22074` |
+| 2026-07-10 | **Day 3:** +35 CPT (165 total), GSC_INDEXING locked |
+| 2026-07-06 | **Day 2:** deploy verified · GOOGLE_QUALITY |
+| 2026-07-05 | **Day 1:** Compare (5) + category (5); GSC |
 
 ---
 
-## Tomorrow — Day 5 checklist
+## Day 5 checklist (2026-07-13)
 
-1. **Commit + push** codes pager (uncommitted files above)
-2. **contact@patientbillguide.com** — Cloudflare Email Routing или forwarding
-3. Проверить `/contact/` — ссылка на email работает
-4. **Google AdSense** — подать заявку (244+ страниц, trust stack готов)
-5. Smoke test live после deploy: `/codes/`, `/codes/cpt/90832/`, sitemap ~243 URL
-6. GSC — опционально: проверить discovered URLs (не mass URL Inspection — см. GSC_INDEXING.md)
+- [x] `/codes/` pager live
+- [x] `/contact/` page reviewed + expanded (mailto ready)
+- [ ] **You:** Cloudflare Email Routing → `contact@` → personal inbox ([DAY5_MANUAL.md](docs/DAY5_MANUAL.md) §A)
+- [ ] **You:** Google AdSense apply for `patientbillguide.com` ([DAY5_MANUAL.md](docs/DAY5_MANUAL.md) §B)
+- [ ] Optional: GSC Performance glance
+- [ ] Report back → close Day 5 in STATUS
 
-**Не делать завтра без явного запроса:** новый CPT batch (пауза после 200), Reddit (это День 7).
+**Next after Day 5:** Day 6 — learn pillar Surprise Medical Bills (or Product Hunt after contact@ works).
