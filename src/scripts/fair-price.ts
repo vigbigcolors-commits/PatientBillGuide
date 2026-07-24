@@ -35,6 +35,28 @@ function getFormElements(root: ParentNode = document) {
   };
 }
 
+function buildDisputeLetterHref(result: PriceLookupResult): string {
+  const params = new URLSearchParams();
+  params.set('template', 'overcharge');
+  params.set('code', result.code);
+  if (result.userComparison) {
+    params.set('amount', String(Math.round(result.userComparison.charged * 100) / 100));
+  }
+  const locality =
+    result.localitySource === 'zip' && result.localityLabel
+      ? result.localityLabel
+      : 'national median';
+  params.set(
+    'benchmark',
+    `Medicare allowed ~${formatUsd(result.medicareAllowed)} (${locality}); fair range ${formatUsd(result.fairRangeLow)}–${formatUsd(result.fairRangeHigh)}`,
+  );
+  return `/tools/dispute-letter/?${params.toString()}`;
+}
+
+function isCptGuidePage(): boolean {
+  return typeof window !== 'undefined' && /\/codes\/cpt\/\d{5}\/?$/.test(window.location.pathname);
+}
+
 function renderFairResults(container: HTMLElement, result: PriceLookupResult) {
   const confidenceLabel = { high: 'High', medium: 'Medium', low: 'Low' }[result.confidence];
   const noticeClass = `locality-notice locality-notice--${result.localityNotice.type}`;
@@ -42,15 +64,22 @@ function renderFairResults(container: HTMLElement, result: PriceLookupResult) {
     result.localitySource === 'zip' && result.localityLabel
       ? result.localityLabel
       : 'National median';
+  const onCptGuide = isCptGuidePage();
 
   let comparisonHtml = '';
   if (result.userComparison) {
-    const statusClass = `result-comparison--${result.userComparison.status}`;
+    const c = result.userComparison;
+    const statusClass = `result-comparison--${c.status}`;
+    const markupLine =
+      c.pctAboveFairHigh > 0
+        ? `<p class="result-comparison__markup"><strong>${c.vsMedicareMultiple}×</strong> Medicare allowed (${c.vsMedicarePct}% of Medicare) · <strong>${c.pctAboveFairHigh}%</strong> above the 2.5× fair-range high</p>`
+        : `<p class="result-comparison__markup"><strong>${c.vsMedicareMultiple}×</strong> Medicare allowed (${c.vsMedicarePct}% of Medicare)</p>`;
     comparisonHtml = `
       <div class="result-comparison ${statusClass}">
-        <h3>${result.userComparison.headline}</h3>
-        <p class="result-comparison__charged">Your charge: <strong>${formatUsd(result.userComparison.charged)}</strong></p>
-        <p>${result.userComparison.detail}</p>
+        <h3>${c.headline}</h3>
+        <p class="result-comparison__charged">Your charge: <strong>${formatUsd(c.charged)}</strong></p>
+        ${markupLine}
+        <p>${c.detail}</p>
       </div>`;
   }
 
@@ -63,6 +92,34 @@ function renderFairResults(container: HTMLElement, result: PriceLookupResult) {
         <p class="facility-fee-notice__detail">${result.facilityFeeNotice.detail}</p>
         <p class="facility-fee-notice__link"><a href="/learn/how-to-read-medical-bill/#facility-professional">Facility vs professional fees →</a></p>
       </div>`;
+  }
+
+  const showDisputeCta =
+    result.userComparison &&
+    (result.userComparison.status === 'above_fair_range' ||
+      result.userComparison.status === 'well_above_fair_range');
+  const disputeHref = buildDisputeLetterHref(result);
+
+  let nextStepHtml = '';
+  if (showDisputeCta) {
+    nextStepHtml = `
+      <div class="price-results__next">
+        <p class="price-results__next-label">Possible next step</p>
+        <a class="btn btn--primary btn--sm" href="${disputeHref}">Open Dispute Letter template</a>
+        <p class="price-results__next-hint">Editable starting template — not legal advice. Review before sending.</p>
+      </div>`;
+  } else if (onCptGuide) {
+    nextStepHtml = `
+      <p class="price-results__cta">
+        <a href="/tools/bill-auditor/">Audit a full itemized bill</a>
+        · <a href="${disputeHref}">Dispute Letter Builder</a>
+      </p>`;
+  } else {
+    nextStepHtml = `
+      <p class="price-results__cta">
+        <a href="/codes/cpt/${result.code}/">Learn more about CPT ${result.code}</a>
+        · <a href="${disputeHref}">Dispute Letter Builder</a>
+      </p>`;
   }
 
   container.innerHTML = `
@@ -96,9 +153,7 @@ function renderFairResults(container: HTMLElement, result: PriceLookupResult) {
         Based on CMS Physician Fee Schedule (${result.dataVersion}).
         <a href="/methodology/price-benchmarks/">How we calculate fair range</a>
       </p>
-      <p class="price-results__cta">
-        <a href="/codes/cpt/${result.code}/">Learn more about CPT ${result.code}</a>
-      </p>
+      ${nextStepHtml}
     </div>`;
   container.hidden = false;
 }

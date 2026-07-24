@@ -77,6 +77,8 @@ describe('lookupPrice', () => {
     expect('error' in result).toBe(false);
     if ('error' in result) return;
     expect(result.userComparison?.status).toBe('within_fair_range');
+    expect(result.userComparison?.vsMedicareMultiple).toBeCloseTo(200 / result.medicareAllowed, 2);
+    expect(result.userComparison?.pctAboveFairHigh).toBe(0);
   });
 
   it('flags well above fair range', () => {
@@ -84,6 +86,8 @@ describe('lookupPrice', () => {
     expect('error' in result).toBe(false);
     if ('error' in result) return;
     expect(result.userComparison?.status).toBe('well_above_fair_range');
+    expect(result.userComparison?.vsMedicarePct).toBeGreaterThan(250);
+    expect(result.userComparison?.pctAboveFairHigh).toBeGreaterThan(0);
   });
 
   it('handles screening mammography 77067 + Burbank ZIP', () => {

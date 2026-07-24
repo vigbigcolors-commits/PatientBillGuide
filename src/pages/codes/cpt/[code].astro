@@ -7,7 +7,12 @@ import { launchCptCodes, allCptPages } from '../../../data/cpt-codes';
 import { getComparesForCode } from '../../../data/cpt-compare';
 import { site } from '../../../data/site';
 import { author, getAuthorUrl } from '../../../data/author';
-import { faqPageSchema, medicalWebPageSchema, breadcrumbSchema } from '../../../lib/seo/schema';
+import {
+  faqPageSchema,
+  medicalWebPageSchema,
+  breadcrumbSchema,
+  webApplicationSchema,
+} from '../../../lib/seo/schema';
 
 export function getStaticPaths() {
   return launchCptCodes.map((code) => ({ params: { code } }));
@@ -35,6 +40,19 @@ const schemaGraph = [
     authorName: author.name,
     authorUrl: getAuthorUrl(site.url),
     authorJobTitle: author.jobTitle,
+  }),
+  webApplicationSchema({
+    name: `CPT ${page.code} Fair Price Check`,
+    description: `Compare your CPT ${page.code} charge to the CMS Medicare Physician Fee Schedule and our documented fair range. Runs entirely in your browser — no account, no bill upload.`,
+    url: canonical,
+    id: `${canonical}#price-check`,
+    applicationCategory: 'FinanceApplication',
+    featureList: [
+      `Pre-filled CPT ${page.code} Medicare allowed lookup by ZIP`,
+      'Educational fair range 1.5×–2.5× Medicare',
+      'Charge vs benchmark comparison with confidence levels',
+      'Deep link to editable Dispute Letter templates when above fair range',
+    ],
   }),
   faqPageSchema(page.faq),
   breadcrumbSchema(
@@ -100,6 +118,13 @@ const schemaGraph = [
       <a class="btn btn--secondary" href={`/tools/bill-auditor/`}>
         Audit your bill
       </a>
+      {' '}
+      <a
+        class="btn btn--secondary"
+        href={`/tools/dispute-letter/?template=overcharge&code=${page.code}`}
+      >
+        Dispute Letter template
+      </a>
     </p>
   </section>
 
@@ -163,7 +188,10 @@ const schemaGraph = [
   <div slot="sidebar">
     <div class="widget-card card">
       <h2>Check your price</h2>
-      <p class="widget-card__hint">Medicare benchmark + fair range for CPT {page.code}</p>
+      <p class="widget-card__hint">
+        Enter your ZIP and billed amount. See Medicare allowed, fair range, and markup vs
+        benchmark — then open an editable dispute letter template if the charge looks high.
+      </p>
       <form class="mini-calculator" id="fair-price-form">
         <input type="hidden" id="cpt" name="cpt" value={page.code} />
         <div class="field">
@@ -200,7 +228,12 @@ const schemaGraph = [
       <h2>More tools</h2>
       <ul>
         <li><a href="/tools/fair-price/">Fair Price Calculator</a></li>
-        <li><a href="/tools/">All tools</a></li>
+        <li>
+          <a href={`/tools/dispute-letter/?template=overcharge&code=${page.code}`}>
+            Dispute Letter Builder
+          </a>
+        </li>
+        <li><a href="/tools/bill-auditor/">Bill Auditor</a></li>
         <li><a href="/methodology/price-benchmarks/">Price benchmarks</a></li>
       </ul>
     </div>

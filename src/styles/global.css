@@ -635,6 +635,36 @@ ol {
   margin: var(--space-sm) 0 0;
 }
 
+.result-comparison__markup {
+  margin: 0 0 var(--space-sm) !important;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.price-results__next {
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.price-results__next-label {
+  margin: 0 0 var(--space-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-muted);
+}
+
+.price-results__next-hint {
+  margin: var(--space-sm) 0 0;
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+  line-height: 1.45;
+}
+
 .locality-notice {
   padding: var(--space-md);
   border-radius: var(--radius-md);

@@ -90,6 +90,12 @@ export interface UserPriceComparison {
   status: PriceComparisonStatus;
   headline: string;
   detail: string;
+  /** charged / medicareAllowed (e.g. 2.5 = 2.5× Medicare) */
+  vsMedicareMultiple: number;
+  /** Round percent of Medicare allowed (e.g. 250 = 250% of Medicare) */
+  vsMedicarePct: number;
+  /** Percent above fair-range high; 0 when at or below high */
+  pctAboveFairHigh: number;
 }
 
 export interface LocalityNotice {

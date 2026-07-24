@@ -102,7 +102,7 @@ export const homeInsights = [
     text: 'CMS publishes what Medicare pays in every ZIP. It’s the most transparent public price anchor in US healthcare — useful for uninsured and insured patients alike.',
     tag: 'Benchmarks',
     tone: 'green',
-    href: '/tools/medicare-lookup/',
+    href: '/tools/fair-price/?tab=medicare',
     proof: 'CMS MPFS by locality',
     icon: 'chart',
   },

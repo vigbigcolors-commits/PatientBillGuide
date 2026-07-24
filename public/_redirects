@@ -1,0 +1,3 @@
+# Medicare lookup consolidated into Fair Price (Part B tab)
+/tools/medicare-lookup /tools/fair-price/?tab=medicare 301
+/tools/medicare-lookup/ /tools/fair-price/?tab=medicare 301

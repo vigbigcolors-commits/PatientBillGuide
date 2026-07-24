@@ -52,6 +52,34 @@ export function initDisputeLetter(root: ParentNode = document) {
     updateDesc();
   }
 
+  const code = params.get('code')?.trim();
+  const amount = params.get('amount')?.trim();
+  const benchmark = params.get('benchmark')?.trim();
+  const lineItems = form.querySelector<HTMLTextAreaElement>('#line-items');
+  const amountInput = form.querySelector<HTMLInputElement>('#amount-disputed');
+  const benchmarkInput = form.querySelector<HTMLInputElement>('#benchmark-note');
+
+  if (code && lineItems && !lineItems.value.trim()) {
+    const safeCode = code.replace(/[^\dA-Za-z]/g, '').slice(0, 5);
+    if (safeCode) {
+      const amountHint = amount ? ` — billed $${amount.replace(/[^\d.]/g, '')}` : '';
+      lineItems.value = `CPT ${safeCode}${amountHint}`;
+      lineItems.placeholder = `CPT ${safeCode}${amountHint}`;
+    }
+  }
+  if (amount && amountInput && !amountInput.value.trim()) {
+    amountInput.value = amount.replace(/[^\d.]/g, '');
+  }
+  if (benchmark && benchmarkInput && !benchmarkInput.value.trim()) {
+    benchmarkInput.value = benchmark.slice(0, 200);
+  }
+  if (code || amount || benchmark) {
+    if (!preset && templateSelect && 'overcharge' in TEMPLATE_LABELS) {
+      templateSelect.value = 'overcharge';
+      updateDesc();
+    }
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const letter = buildDisputeLetter(readForm(form));

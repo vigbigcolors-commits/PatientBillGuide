@@ -79,7 +79,7 @@ export const howItWorksTools = [
     pain: '“Is this price fair?”',
   },
   {
-    href: '/tools/medicare-lookup/',
+    href: '/tools/fair-price/?tab=medicare',
     cluster: 'CHECK',
     name: 'Medicare Allowed Lookup',
     status: 'live',

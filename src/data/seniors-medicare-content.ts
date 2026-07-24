@@ -190,7 +190,7 @@ export const medicareTools = [
   {
     title: 'Medicare Lookup',
     text: 'Dedicated lookup for Medicare fee schedule amounts.',
-    href: '/tools/medicare-lookup/',
+    href: '/tools/fair-price/?tab=medicare',
     accent: 'green',
   },
   {

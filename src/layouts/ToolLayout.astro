@@ -11,12 +11,20 @@ interface Props {
   title: string;
   description?: string;
   crumbs?: Crumb[];
+  canonicalUrl?: string;
+  noindex?: boolean;
 }
 
-const { title, description, crumbs = [] } = Astro.props;
+const { title, description, crumbs = [], canonicalUrl, noindex = false } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} showTrustStrip={true}>
+<BaseLayout
+  title={title}
+  description={description}
+  showTrustStrip={true}
+  canonicalUrl={canonicalUrl}
+  noindex={noindex}
+>
   <slot name="head" slot="head" />
   <div class="tool-page">
     <div class="container">

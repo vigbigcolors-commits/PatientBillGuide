@@ -17,6 +17,15 @@ Track errors, open questions, and fixes **as we go**.
 - **Description:** Site shows `contact@patientbillguide.com` — mailbox must be created on domain host
 - **Fix:** Day 5 — Cloudflare Email Routing · see [DAY5_MANUAL.md](DAY5_MANUAL.md) §A · _awaiting user_
 
+### [FIXED] medicare-lookup dual canonical
+- **Found:** 2026-07-18 GSC “Alternate page with proper canonical”
+- **Fix:** single canonical → `/tools/fair-price/`, `noindex`, sitemap filter, Cloudflare `_redirects` 301 (2026-07-24)
+
+### [NOTE] GSC: Discovered – not indexed (Jul 2026)
+- **Not a code bug / not a “YMYL filter” requiring URL migration**
+- New domain + sitemap flood → crawl queue; keep URLs, strengthen CPT utility + launch channels
+- Anti-patterns locked: DECISIONS #43–45 · [GSC_INDEXING.md](GSC_INDEXING.md)
+
 ### [OPEN] Author display name format
 - **Severity:** low (placeholder bio OK for launch)
 - **Fix:** _pending — see AUTHOR_STRATEGY.md_

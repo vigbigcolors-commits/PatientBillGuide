@@ -144,11 +144,23 @@ function compareCharged(
       'Your charge is significantly above the typical range. Consider requesting an itemized bill, comparing hospital vs. office rates, and asking about financial assistance.',
   };
 
+  const vsMedicareMultiple =
+    medicareAllowed > 0 ? Math.round((charged / medicareAllowed) * 100) / 100 : 0;
+  const vsMedicarePct =
+    medicareAllowed > 0 ? Math.round((charged / medicareAllowed) * 100) : 0;
+  const pctAboveFairHigh =
+    fairRangeHigh > 0 && charged > fairRangeHigh
+      ? Math.round(((charged - fairRangeHigh) / fairRangeHigh) * 100)
+      : 0;
+
   return {
     charged,
     status,
     headline: headlines[status],
     detail: details[status],
+    vsMedicareMultiple,
+    vsMedicarePct,
+    pctAboveFairHigh,
   };
 }
 

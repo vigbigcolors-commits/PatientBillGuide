@@ -44,8 +44,11 @@ Manual **Request indexing** for hundreds of URLs is **not** a growth strategy.
 
 - Request indexing for every new CPT page
 - Submit 50+ URLs/day via URL Inspection
+- **Google Indexing API** bulk pushes (same spam risk as mass Inspection)
 - Buy links or use indexing services
 - Publish batches if prior batch shows mass "not indexed"
+- **Rename all CPT URLs** and 301 “to force reindex” — does not bypass crawl delay; resets equity
+- Treat **Discovered – currently not indexed** on a new domain as a YMYL penalty requiring a stack rewrite
 
 ---
 

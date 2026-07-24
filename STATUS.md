@@ -2,14 +2,15 @@
 
 > Update this file after every work session. Agents should read this first.
 
-**Last updated:** 2026-07-13  
-**Current phase:** Post-launch — **Day 5 in progress** (contact@ + AdSense — manual)  
+**Last updated:** 2026-07-24  
+**Current phase:** Post-launch — CPT utility ready (local) · **next:** deploy + contact@ · **PH ~Tue 2026-07-31**  
 **Phase status:** 7 live tools · 84 tests · **244 build** · **200 CPT** · 5 compare · 5 category  
 **Domain:** PatientBillGuide.com  
-**Master docs:** [GROWTH_MASTER.md](docs/GROWTH_MASTER.md) · [DAILY_PLAN.md](docs/DAILY_PLAN.md) · [DAY5_MANUAL.md](docs/DAY5_MANUAL.md)
+**Master docs:** [NEXT_SESSION.md](docs/NEXT_SESSION.md) · [GROWTH_MASTER.md](docs/GROWTH_MASTER.md) · [DAILY_PLAN.md](docs/DAILY_PLAN.md)
 
-> **Day 5 playbook:** [docs/DAY5_MANUAL.md](docs/DAY5_MANUAL.md) — Cloudflare Email Routing + AdSense apply (your login).  
-> Reply: `Email: works` / `AdSense: submitted` when done.
+> **Tomorrow:** [docs/NEXT_SESSION.md](docs/NEXT_SESSION.md) — deploy CPT utility, contact@, Product Hunt prep.  
+> AdSense: deferred (user). Referral/affiliate clinics: discuss after traffic — see NEXT_SESSION.  
+> Indexing: Discovered ≠ penalty; no URL migration (DECISIONS #43–45).
 
 ---
 
@@ -67,6 +68,7 @@
 
 | Date | Done |
 |------|------|
+| 2026-07-24 | CPT utility coded (local) · referral idea parked in [NEXT_SESSION.md](docs/NEXT_SESSION.md) · PH target ~Tue 2026-07-31 |
 | 2026-07-13 | **Day 5 start:** contact page EEAT polish · [DAY5_MANUAL.md](docs/DAY5_MANUAL.md) · await user Email + AdSense |
 | 2026-07-10 (pm) | **Codes hub UX:** paginated index 24/page — pushed (`9cebb09`) |
 | 2026-07-10 | **Day 4:** +35 CPT → **200 total**, 244 pages · `db22074` |

@@ -69,6 +69,8 @@ All decisions agreed in planning sessions. Do not change without explicit discus
 | 41 | Jul 5–6 compare + category | **Approved** — hand-written, not doorways |
 | 42 | `cpt-batch-100` pages | **Live but watch zone** — do not scale same template to 1000+ without upgrade |
 | 43 | GSC indexing | **No mass manual URL Inspection** — sitemap + quality + launch channels ([GSC_INDEXING.md](GSC_INDEXING.md)); Product Hunt / Reddit for tools |
+| 44 | CPT utility path | Enhance **existing** `/codes/cpt/[code]/` with Fair Price widget + Dispute Letter deep-links — **never** mass-rename CPT URLs to bypass indexing lag |
+| 45 | Stack lock (post-launch) | Stay on **Astro + client-side MPFS JSON** — no Next.js rewrite, no server SQLite price API for CPT |
 
 ## Out of scope for this domain
 
@@ -84,3 +86,8 @@ All decisions agreed in planning sessions. Do not change without explicit discus
 - **Doorway pages** — thin keyword URLs, auto compare matrices, empty category hubs (see GOOGLE_QUALITY.md)
 - **Auto-generated compare** pages (`99213-vs-99214` style at scale)
 - Scaling `cpt-batch-100` template to 1,000+ without editorial upgrade + QA
+- **Mass CPT URL migration** (`/codes/cpt/X/` → `/tools/cpt-X-fair-price`) to “reset sandbox” — destroys discovered equity
+- **Google Indexing API** bulk submit / mass Request indexing (see #43)
+- **Next.js + SQLite server price API** (contradicts client-side + Astro locks)
+- Replacing CPT editorial prose with calculator-only pages (thin / doorway)
+- Framing dispute templates as “legal” documents or guaranteed savings

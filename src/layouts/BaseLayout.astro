@@ -13,6 +13,10 @@ interface Props {
   description?: string;
   ogType?: string;
   showTrustStrip?: boolean;
+  /** Absolute or site-relative URL; defaults to current pathname */
+  canonicalUrl?: string;
+  /** When true, emit noindex,follow (redirect/stub pages) */
+  noindex?: boolean;
 }
 
 const {
@@ -20,10 +24,14 @@ const {
   description = site.description,
   ogType = 'website',
   showTrustStrip = false,
+  canonicalUrl,
+  noindex = false,
 } = Astro.props;
 
 const pageTitle = title === site.name ? title : `${title} | ${site.name}`;
-const canonical = new URL(Astro.url.pathname, site.url).href;
+const canonical = canonicalUrl
+  ? new URL(canonicalUrl, site.url).href
+  : new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL('/og-image.svg', site.url).href;
 ---
 
@@ -37,6 +45,7 @@ const ogImage = new URL('/og-image.svg', site.url).href;
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
