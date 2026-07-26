@@ -1,10 +1,10 @@
 /** Methodology hub — strengths, evidence pillars, and SEO content. */
 
 export const methodologyMeta = {
-  updated: '2026-06-29',
+  updated: '2026-07-26',
   title: 'Methodology — How We Calculate & Flag Bills',
   description:
-    'How we calculate: CMS MPFS benchmarks, 1.5×–2.5× fair range, NCCI rules, confidence levels, and limitations.',
+    'CMS MPFS benchmarks, 1.5×–2.5× fair range, NCCI flags, confidence levels, limits — plus link to our editorial standards.',
 };
 
 export const methodologyStats = [
@@ -144,6 +144,11 @@ export const methodologyDeepLinks = [
     href: '/methodology/limitations/',
     title: 'Limitations',
     text: 'Physician-fee focus, no OCR, no contract rates, no medical necessity — stated upfront.',
+  },
+  {
+    href: '/about/#editorial-standards',
+    title: 'Editorial standards',
+    text: 'Original CPT prose, unique pages, no mirror sites — content rules on About (not the legal disclaimer).',
   },
 ];
 

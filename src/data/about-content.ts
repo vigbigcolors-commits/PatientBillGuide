@@ -1,10 +1,10 @@
 /** About page — structured content for SEO, EEAT, and UI blocks. */
 
 export const aboutMeta = {
-  updated: '2026-06-29',
+  updated: '2026-07-26',
   title: 'About PatientBillGuide',
   description:
-    'Independent US healthcare billing guide: fair price checks, bill audits, EOB decoding, and surprise-bill screening — plus what we cannot do.',
+    'Independent US billing guide: fair-price tools, original CPT writing, unique pages, CMS benchmarks — and what we refuse to do.',
 };
 
 export const aboutTrust = [
@@ -108,6 +108,44 @@ export const aboutPrinciples = [
   },
 ];
 
+/** Editorial / content standards — not a legal disclaimer (see /disclaimer/). */
+export const aboutEditorialIntro =
+  'These are our content rules for YMYL healthcare billing pages. They sit beside — not instead of — the legal Disclaimer. Tools and CPT guides must stay useful on their own page; we do not publish thin SEO mirrors.';
+
+export const aboutEditorialStandards = [
+  {
+    title: 'Original plain-English only',
+    text: 'CPT and billing explainers are written by us for patients. We never paste AMA or AAPC description text verbatim. Licensed code names inform our summaries; the wording on this site is original.',
+  },
+  {
+    title: 'Every page must be unique',
+    text: 'Each indexable URL gets its own title, meta description, H1, and body. We do not ship mass-identical templates with only the code number swapped. Automated checks fail the build if long paragraphs are copied across many CPT guides.',
+  },
+  {
+    title: 'No duplicate publishing elsewhere',
+    text: 'We do not republish the same CPT or pSEO articles on Medium, guest blogs, or other domains as ranking mirrors. PatientBillGuide.com is the canonical home for this prose.',
+  },
+  {
+    title: 'CMS anchors, not accusations',
+    text: 'Medicare MPFS and related public files are comparison anchors. A charge above Medicare is common and not proof of wrongdoing. Flags are “possible billing concerns” with confidence levels — never default “fraud.”',
+  },
+  {
+    title: 'Show limits next to results',
+    text: 'Methodology, data sources, and known limits are linked from tools and guides. “Bill looks normal” is a first-class outcome. Dispute letters are editable starting templates, not legal advice.',
+  },
+  {
+    title: 'Quality over page count',
+    text: 'Compare pages and category hubs are hand-built, not auto-generated from every CPT pair. New CPT batches ship in small waves with manual QA — not thousands of thin URLs in a day.',
+  },
+];
+
+export const aboutEditorialLinks = [
+  { href: '/methodology/', label: 'Methodology hub' },
+  { href: '/disclaimer/', label: 'Legal disclaimer' },
+  { href: '/corrections/', label: 'Corrections log' },
+  { href: '/privacy/', label: 'Privacy policy' },
+];
+
 export const aboutWeAre = [
   'An independent educational site and free tool hub for US patients and caregivers',
   'A plain-English bridge between confusing bills and public CMS benchmarks',
@@ -152,5 +190,10 @@ export const aboutFaqs = [
     question: 'How is this different from other medical bill review sites?',
     answer:
       'Many services require uploads, accounts, or paid advocates. We publish reproducible methodology, center CMS public data, assign confidence levels, and treat “looks normal” as a first-class result. Read our methodology hub for formulas, sources, and known limits.',
+  },
+  {
+    question: 'Are your CPT pages copied from AMA or other sites?',
+    answer:
+      'No. We write original plain-English guides and require unique titles, metas, and body copy per URL. We do not republish the same articles on other domains. Legal and clinical limits are on the Disclaimer; editorial rules are summarized in Editorial standards on this About page.',
   },
 ];

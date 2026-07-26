@@ -9,6 +9,9 @@ import {
   aboutTrust,
   aboutProblems,
   aboutPrinciples,
+  aboutEditorialIntro,
+  aboutEditorialStandards,
+  aboutEditorialLinks,
   aboutWeAre,
   aboutWeAreNot,
   aboutFaqs,
@@ -152,6 +155,38 @@ const schemaGraph = [
     </div>
   </section>
 
+  {/* ── Editorial standards (content rules — not legal disclaimer) ── */}
+  <section class="ab-editorial" id="editorial-standards" aria-labelledby="ab-editorial-heading">
+    <div class="container">
+      <header class="ab-section-head">
+        <p class="ab-eyebrow ab-eyebrow--dark">Content quality</p>
+        <h2 id="ab-editorial-heading">Editorial standards</h2>
+        <p class="ab-section-lead">{aboutEditorialIntro}</p>
+      </header>
+      <ul class="ab-editorial__grid">
+        {
+          aboutEditorialStandards.map((s) => (
+            <li class="ab-editorial__card">
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="ab-editorial__links">
+        Related:{' '}
+        {
+          aboutEditorialLinks.map((l, i) => (
+            <>
+              {i > 0 ? ' · ' : ''}
+              <a href={l.href}>{l.label}</a>
+            </>
+          ))
+        }
+      </p>
+    </div>
+  </section>
+
   {/* ── We are / We are not ── */}
   <section class="ab-identity" aria-labelledby="ab-identity-heading">
     <div class="container ab-identity__grid">
@@ -230,6 +265,7 @@ const schemaGraph = [
           <li><a href="#hub">One hub, three clusters</a></li>
           <li><a href="#privacy">Privacy promise</a></li>
           <li><a href="#audiences">Who we serve</a></li>
+          <li><a href="#editorial-standards">Editorial standards</a></li>
           <li><a href="#truth">The full truth about limits</a></li>
           <li><a href="#success">How we measure success</a></li>
           <li><a href="#faq">FAQ</a></li>
@@ -321,6 +357,16 @@ const schemaGraph = [
           <strong>Medicare beneficiaries and caregivers</strong> use the Medicare tab in Fair Price
           and <a href="/for/seniors-medicare/">dedicated guidance</a> to understand professional vs.
           facility fees — a common source of surprise even on Medicare.
+        </p>
+
+        <h2 id="editorial-prose">Editorial standards in practice</h2>
+        <p>
+          Full rules are listed above under <a href="#editorial-standards">Editorial standards</a>.
+          In short: original plain-English CPT writing (never AMA/AAPC verbatim), unique titles and
+          bodies per URL, no republishing the same guides on other domains, CMS benchmarks without
+          fraud accusations, and published limits next to every tool. Legal boundaries live on the
+          <a href="/disclaimer/">Disclaimer</a>; math lives in
+          <a href="/methodology/">Methodology</a>.
         </p>
 
         <h2 id="truth">The full truth about what we cannot do</h2>
@@ -677,6 +723,60 @@ const schemaGraph = [
     color: var(--color-muted);
   }
 
+  /* Editorial standards */
+  .ab-editorial {
+    padding: clamp(3rem, 6vw, 4rem) 0;
+    background: #fff;
+    border-bottom: 1px solid var(--color-border);
+    scroll-margin-top: 1.5rem;
+  }
+
+  .ab-editorial__grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .ab-editorial__card {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: #f8fafc;
+    border: 1px solid var(--color-border);
+    border-left: 4px solid #0d9488;
+  }
+
+  .ab-editorial__card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    color: var(--color-primary);
+  }
+
+  .ab-editorial__card p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  .ab-editorial__links {
+    margin: 1.75rem 0 0;
+    font-size: 0.9375rem;
+    color: var(--color-muted);
+  }
+
+  .ab-editorial__links a {
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .ab-editorial__links a:hover {
+    text-decoration: underline;
+  }
+
   /* Identity */
   .ab-identity {
     padding: clamp(3rem, 6vw, 4rem) 0;
@@ -959,7 +1059,8 @@ const schemaGraph = [
 
   @media (max-width: 768px) {
     .ab-problems__grid,
-    .ab-principles__grid {
+    .ab-principles__grid,
+    .ab-editorial__grid {
       grid-template-columns: 1fr;
     }
 
