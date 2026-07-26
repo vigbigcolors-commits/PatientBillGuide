@@ -5,6 +5,17 @@
 
 ---
 
+## Quora (locked — DECISIONS #49)
+
+- Human, polite, expert tone — not marketing copy  
+- Solve the pain first; never write for the link  
+- Link only when it directly helps **that** question  
+- Soft inline link (e.g. “…I use https://… for that”)  
+- **~1 link per 2–3 answers** — other answers = no URL  
+- No double links, no “check our site” dumps  
+
+---
+
 ## Locked this session
 
 - **DECISIONS #48** — original unique content (on-site + not republished elsewhere)
