@@ -28,9 +28,9 @@ export const cptCategoryPages: Record<string, CptCategoryPage> = {
   'office-visits': {
     slug: 'office-visits',
     eyebrow: 'Evaluation & management',
-    title: 'Office Visit CPT Codes (99202–99215) — Cost & Billing Guide',
+    title: 'Office Visit CPT Codes (99202–99215)',
     metaDescription:
-      'Common office visit CPT codes 99202–99215 explained: new vs established patients, complexity levels, Medicare benchmarks, and how to check your doctor bill.',
+      'CPT 99202–99215 explained: new vs established patients, complexity, Medicare benchmarks, and how to check a doctor bill.',
     summary:
       'Office visit codes (E/M) describe the clinician\'s evaluation and decision-making — not procedures done in the room. They are the most frequently billed CPT family on outpatient bills.',
     intro: [
@@ -90,9 +90,9 @@ export const cptCategoryPages: Record<string, CptCategoryPage> = {
   'emergency-room': {
     slug: 'emergency-room',
     eyebrow: 'Emergency department',
-    title: 'Emergency Room Visit CPT Codes (99281–99285) — Billing Explained',
+    title: 'ER Visit CPT Codes (99281–99285)',
     metaDescription:
-      'ER visit codes 99281–99285: five acuity levels, physician vs facility fees, typical Medicare costs, and how to read your emergency department bill.',
+      'ER codes 99281–99285: acuity levels, physician vs facility fees, Medicare costs, and how to read an emergency bill.',
     summary:
       'Emergency department E/M codes run from 99281 (lowest acuity) to 99285 (highest). They describe the emergency clinician\'s work — facility fees and imaging usually bill separately and often cost far more.',
     intro: [
@@ -143,9 +143,9 @@ export const cptCategoryPages: Record<string, CptCategoryPage> = {
   imaging: {
     slug: 'imaging',
     eyebrow: 'Radiology & diagnostic imaging',
-    title: 'Medical Imaging CPT Codes — MRI, CT, X-Ray & Mammography Costs',
+    title: 'Imaging CPT Codes — MRI, CT, X-Ray, Mammogram',
     metaDescription:
-      'Common imaging CPT codes: chest X-ray 71046, CT head 70450, MRI spine 72148, screening mammogram 77067. Medicare benchmarks, facility fees, and price check tools.',
+      'Imaging CPT costs: chest X-ray 71046, CT 70450, MRI 72148, mammogram 77067. Medicare benchmarks and facility-fee tips.',
     summary:
       'Imaging codes bill for X-ray, CT, MRI, ultrasound, and mammography. The same CPT study can cost dramatically more at a hospital ER than at a freestanding imaging center — site of service matters more than many patients expect.',
     intro: [
@@ -196,9 +196,9 @@ export const cptCategoryPages: Record<string, CptCategoryPage> = {
   laboratory: {
     slug: 'laboratory',
     eyebrow: 'Clinical laboratory',
-    title: 'Common Lab Test CPT Codes — Panels, Blood Draw & Medicare Costs',
+    title: 'Lab Test CPT Codes — Panels, CBC & Blood Draw',
     metaDescription:
-      'Frequent lab CPT codes: metabolic panel 80053, CBC 85025, TSH 84443, venipuncture 36415. Compare hospital lab markup vs Medicare clinical lab fee schedule.',
+      'Lab CPT codes: metabolic panel 80053, CBC 85025, TSH 84443, venipuncture 36415. Medicare vs hospital lab markup.',
     summary:
       'Laboratory CPT codes cover blood panels, cultures, urinalysis, and the blood draw itself (36415). Hospital lab charges often exceed standalone lab Medicare rates by large multiples.',
     intro: [
@@ -249,9 +249,9 @@ export const cptCategoryPages: Record<string, CptCategoryPage> = {
   surgery: {
     slug: 'surgery',
     eyebrow: 'Surgery & procedures',
-    title: 'Frequently Billed Surgery CPT Codes — Costs & Bill Structure',
+    title: 'Surgery CPT Codes — Common Procedures & Costs',
     metaDescription:
-      'Common surgery CPT codes: colonoscopy 45378, knee replacement 27447, cataract 66984, arthroscopy 29881. Surgeon fees vs facility, anesthesia, and implants explained.',
+      'Surgery CPT costs: colonoscopy 45378, knee 27447, cataract 66984, arthroscopy 29881. Surgeon vs facility fees.',
     summary:
       'Surgery bills bundle surgeon professional fees, facility charges, anesthesia, implants, and post-op services on separate lines. One CPT on the surgeon bill is rarely the total episode cost.',
     intro: [

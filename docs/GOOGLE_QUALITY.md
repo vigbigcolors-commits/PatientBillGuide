@@ -69,12 +69,21 @@ Google [spam policies](https://developers.google.com/search/docs/essentials/spam
 ### Gate A — All content pages
 
 - [ ] Unique title + meta (not duplicated across URLs)
+- [ ] Unique H1 (not duplicated across URLs)
+- [ ] Bare `<title>` ideally **≤58 characters** before ` | PatientBillGuide` (CPT: use `buildCptSeoTitle`)
+- [ ] Meta description roughly **110–158** characters, unique intent per URL
 - [ ] One clear user question answered on-page
 - [ ] Author byline + `dateModified`
 - [ ] Disclaimer on tool-adjacent content
 - [ ] ≥3 internal links to real pages (no 404)
 - [ ] Link to `/methodology/` where prices mentioned
 - [ ] Passes [EEAT_CHECKLIST.md](EEAT_CHECKLIST.md) red flags scan
+- [ ] After deploy build: `npm run audit:seo` must pass (duplicate title/meta/H1 = fail)
+
+### Gate A+ — Uniqueness is mandatory (DECISIONS #46)
+
+**Never ship** two indexable URLs that share the same title, meta description, or H1.  
+Template CPT batches must still produce **code-specific** titles/metas (procedure name + Medicare figure). Shared paragraph skeletons are a **watch zone** — Gate D 10% QA must catch copy-paste stiffness.
 
 ### Gate B — Compare pages (manual only)
 

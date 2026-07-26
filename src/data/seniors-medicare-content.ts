@@ -6,7 +6,7 @@ export const medicareMeta = {
   updated: '2026-06-29',
   title: 'Medicare Billing Help for Seniors & Caregivers',
   description:
-    'Plain-English Medicare billing guide: MSN vs bills, Part B allowed amounts, participating providers, facility fees, and free tools to check CMS benchmarks in your ZIP.',
+    'Medicare billing for seniors: MSN vs bills, Part B allowed amounts, facility fees, and CMS ZIP benchmarks.',
 };
 
 export const medicareTrust = [

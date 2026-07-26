@@ -4,7 +4,7 @@ export const methodologyMeta = {
   updated: '2026-06-29',
   title: 'Methodology — How We Calculate & Flag Bills',
   description:
-    'PatientBillGuide methodology: CMS Medicare MPFS benchmarks, 1.5×–2.5× fair range, NCCI unbundling rules, confidence levels, client-side architecture, and published limitations.',
+    'How we calculate: CMS MPFS benchmarks, 1.5×–2.5× fair range, NCCI rules, confidence levels, and limitations.',
 };
 
 export const methodologyStats = [

@@ -4,7 +4,7 @@ export const aboutMeta = {
   updated: '2026-06-29',
   title: 'About PatientBillGuide',
   description:
-    'PatientBillGuide is an independent US healthcare billing guide. Learn what problems we solve — fair price checks, bill audits, EOB decoding, surprise bill screening — and what we honestly cannot do.',
+    'Independent US healthcare billing guide: fair price checks, bill audits, EOB decoding, and surprise-bill screening — plus what we cannot do.',
 };
 
 export const aboutTrust = [

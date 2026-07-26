@@ -4,7 +4,7 @@ export const howItWorksMeta = {
   updated: '2026-06-29',
   title: 'How PatientBillGuide Works',
   description:
-    'Learn how PatientBillGuide helps you check fair medical prices, audit itemized bills, and read EOBs — using public Medicare data, 100% in your browser, with no account or upload.',
+    'How Fair Price, Bill Auditor, and EOB tools work — CMS Medicare data, 100% in your browser, no account or upload.',
 };
 
 export const howItWorksTrust = [

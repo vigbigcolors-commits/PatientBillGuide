@@ -37,7 +37,7 @@ export const cptComparePages: Record<string, CptComparePage> = {
     labelB: 'Established patient — moderate complexity',
     title: 'CPT 99213 vs 99214 — Office Visit Codes Compared',
     metaDescription:
-      'Compare CPT 99213 and 99214 office visit codes: complexity levels, typical Medicare costs, when each is used, and how to review your doctor bill without assuming fraud.',
+      'Compare CPT 99213 vs 99214: complexity, Medicare costs, when each applies, and how to review a doctor bill without assuming fraud.',
     summary:
       '99213 and 99214 are the two most common established-patient office visit codes. The difference is documented medical decision-making complexity — not simply how long you waited or how many questions you asked.',
     categorySlug: 'office-visits',
@@ -149,9 +149,9 @@ export const cptComparePages: Record<string, CptComparePage> = {
     codeB: '99215',
     labelA: 'Established patient — moderate complexity',
     labelB: 'Established patient — high complexity',
-    title: 'CPT 99214 vs 99215 — Moderate vs High Complexity Office Visit',
+    title: 'CPT 99214 vs 99215 — High Complexity Office Visits',
     metaDescription:
-      'CPT 99214 vs 99215 explained: when high-complexity office visits are billed, typical Medicare rates, and how to review your bill with context — not accusations.',
+      'CPT 99214 vs 99215: when high-complexity visits are billed, Medicare rates, and how to review your bill with context.',
     summary:
       '99215 is the highest routine outpatient E/M level for established patients. It is less common than 99214 but appears on specialist and complex primary-care bills where documentation supports high medical decision-making risk.',
     categorySlug: 'office-visits',

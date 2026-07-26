@@ -4,19 +4,19 @@ import type { CptPageData } from './cpt-codes';
 export const cptBatchScale35: Record<string, CptPageData> = {
     '11750': {
       code: '11750',
-      title: 'CPT Code 11750 — Surgical or procedural service Cost & Billing Guide',
-      metaDescription: 'CPT 11750 is surgical or procedural service. See typical Medicare costs near $158, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 11750 bills for surgical or procedural service — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $158.',
+      title: 'CPT Code 11750 — Excision of nail or nail bed tissue Cost & Billing Guide',
+      metaDescription: 'CPT 11750 is excision of nail or nail bed tissue. See typical Medicare costs near $158, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 11750 bills for excision of nail or nail bed tissue — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $158.',
       category: 'Surgery',
       categorySlug: 'surgery',
       whatIs: [
-      'CPT 11750 is a Current Procedural Terminology code used on US medical bills to describe surgical or procedural service. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Surgical or procedural service. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 11750 is a Current Procedural Terminology code used on US medical bills to describe excision of nail or nail bed tissue. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Excision of nail or nail bed tissue. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $158 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 11750 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Surgeon professional fees are only one line on a surgery bill — anesthesia, facility, implants, and post-acute care bill separately.',
     ],
       whenUsed: [
-      'Providers report CPT 11750 when surgical or procedural service is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 11750 when excision of nail or nail bed tissue is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -47,7 +47,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 11750 mean in plain English?',
-        answer: 'It identifies surgical or procedural service on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Surgical or procedural service.',
+        answer: 'It identifies excision of nail or nail bed tissue on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Excision of nail or nail bed tissue.',
       },
       {
         question: 'How much should CPT 11750 cost?',
@@ -70,19 +70,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '17000': {
       code: '17000',
-      title: 'CPT Code 17000 — Surgical or procedural service Cost & Billing Guide',
-      metaDescription: 'CPT 17000 is surgical or procedural service. See typical Medicare costs near $66, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 17000 bills for surgical or procedural service — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $66.',
+      title: 'CPT Code 17000 — Destruction of first premalignant skin lesion Cost & Billing Guide',
+      metaDescription: 'CPT 17000 is destruction of first premalignant skin lesion. See typical Medicare costs near $66, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 17000 bills for destruction of first premalignant skin lesion — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $66.',
       category: 'Surgery',
       categorySlug: 'surgery',
       whatIs: [
-      'CPT 17000 is a Current Procedural Terminology code used on US medical bills to describe surgical or procedural service. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Surgical or procedural service. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 17000 is a Current Procedural Terminology code used on US medical bills to describe destruction of first premalignant skin lesion. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Destruction of first premalignant skin lesion. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $66 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 17000 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Surgeon professional fees are only one line on a surgery bill — anesthesia, facility, implants, and post-acute care bill separately.',
     ],
       whenUsed: [
-      'Providers report CPT 17000 when surgical or procedural service is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 17000 when destruction of first premalignant skin lesion is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -108,12 +108,12 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       relatedCodes: [
       { code: '10060', label: 'Incision and drainage, abscess, simple' },
       { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '11750', label: 'Surgical or procedural service' },
+      { code: '11750', label: 'Excision of nail or nail bed tissue' },
       ],
       faq: [
       {
         question: 'What does CPT 17000 mean in plain English?',
-        answer: 'It identifies surgical or procedural service on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Surgical or procedural service.',
+        answer: 'It identifies destruction of first premalignant skin lesion on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Destruction of first premalignant skin lesion.',
       },
       {
         question: 'How much should CPT 17000 cost?',
@@ -136,19 +136,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '27448': {
       code: '27448',
-      title: 'CPT Code 27448 — Surgical or procedural service Cost & Billing Guide',
-      metaDescription: 'CPT 27448 is surgical or procedural service. See typical Medicare costs near $763, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 27448 bills for surgical or procedural service — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $763.',
+      title: 'CPT Code 27448 — Osteotomy of the femur Cost & Billing Guide',
+      metaDescription: 'CPT 27448 is osteotomy of the femur. See typical Medicare costs near $763, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 27448 bills for osteotomy of the femur — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $763.',
       category: 'Surgery',
       categorySlug: 'surgery',
       whatIs: [
-      'CPT 27448 is a Current Procedural Terminology code used on US medical bills to describe surgical or procedural service. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Surgical or procedural service. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 27448 is a Current Procedural Terminology code used on US medical bills to describe osteotomy of the femur. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Osteotomy of the femur. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $763 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 27448 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Surgeon professional fees are only one line on a surgery bill — anesthesia, facility, implants, and post-acute care bill separately.',
     ],
       whenUsed: [
-      'Providers report CPT 27448 when surgical or procedural service is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 27448 when osteotomy of the femur is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -174,12 +174,12 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       relatedCodes: [
       { code: '10060', label: 'Incision and drainage, abscess, simple' },
       { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '11750', label: 'Surgical or procedural service' },
+      { code: '11750', label: 'Excision of nail or nail bed tissue' },
       ],
       faq: [
       {
         question: 'What does CPT 27448 mean in plain English?',
-        answer: 'It identifies surgical or procedural service on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Surgical or procedural service.',
+        answer: 'It identifies osteotomy of the femur on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Osteotomy of the femur.',
       },
       {
         question: 'How much should CPT 27448 cost?',
@@ -202,19 +202,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '29880': {
       code: '29880',
-      title: 'CPT Code 29880 — Surgical or procedural service Cost & Billing Guide',
-      metaDescription: 'CPT 29880 is surgical or procedural service. See typical Medicare costs near $533, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 29880 bills for surgical or procedural service — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $533.',
+      title: 'CPT Code 29880 — Knee arthroscopy with meniscectomy, medial and lateral Cost & Billing Guide',
+      metaDescription: 'CPT 29880 is knee arthroscopy with meniscectomy, medial and lateral. See typical Medicare costs near $533, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 29880 bills for knee arthroscopy with meniscectomy, medial and lateral — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $533.',
       category: 'Surgery',
       categorySlug: 'surgery',
       whatIs: [
-      'CPT 29880 is a Current Procedural Terminology code used on US medical bills to describe surgical or procedural service. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Surgical or procedural service. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 29880 is a Current Procedural Terminology code used on US medical bills to describe knee arthroscopy with meniscectomy, medial and lateral. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Knee arthroscopy with meniscectomy, medial and lateral. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $533 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 29880 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Surgeon professional fees are only one line on a surgery bill — anesthesia, facility, implants, and post-acute care bill separately.',
     ],
       whenUsed: [
-      'Providers report CPT 29880 when surgical or procedural service is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 29880 when knee arthroscopy with meniscectomy, medial and lateral is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -240,12 +240,12 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       relatedCodes: [
       { code: '10060', label: 'Incision and drainage, abscess, simple' },
       { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '11750', label: 'Surgical or procedural service' },
+      { code: '11750', label: 'Excision of nail or nail bed tissue' },
       ],
       faq: [
       {
         question: 'What does CPT 29880 mean in plain English?',
-        answer: 'It identifies surgical or procedural service on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Surgical or procedural service.',
+        answer: 'It identifies knee arthroscopy with meniscectomy, medial and lateral on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Knee arthroscopy with meniscectomy, medial and lateral.',
       },
       {
         question: 'How much should CPT 29880 cost?',
@@ -268,19 +268,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '45381': {
       code: '45381',
-      title: 'CPT Code 45381 — Surgical or procedural service Cost & Billing Guide',
-      metaDescription: 'CPT 45381 is surgical or procedural service. See typical Medicare costs near $490, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 45381 bills for surgical or procedural service — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $490.',
+      title: 'CPT Code 45381 — Colonoscopy with submucosal injection Cost & Billing Guide',
+      metaDescription: 'CPT 45381 is colonoscopy with submucosal injection. See typical Medicare costs near $490, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 45381 bills for colonoscopy with submucosal injection — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $490.',
       category: 'Surgery',
       categorySlug: 'surgery',
       whatIs: [
-      'CPT 45381 is a Current Procedural Terminology code used on US medical bills to describe surgical or procedural service. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Surgical or procedural service. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 45381 is a Current Procedural Terminology code used on US medical bills to describe colonoscopy with submucosal injection. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Colonoscopy with submucosal injection. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $490 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 45381 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Surgeon professional fees are only one line on a surgery bill — anesthesia, facility, implants, and post-acute care bill separately.',
     ],
       whenUsed: [
-      'Providers report CPT 45381 when surgical or procedural service is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 45381 when colonoscopy with submucosal injection is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -306,12 +306,12 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       relatedCodes: [
       { code: '10060', label: 'Incision and drainage, abscess, simple' },
       { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '11750', label: 'Surgical or procedural service' },
+      { code: '11750', label: 'Excision of nail or nail bed tissue' },
       ],
       faq: [
       {
         question: 'What does CPT 45381 mean in plain English?',
-        answer: 'It identifies surgical or procedural service on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Surgical or procedural service.',
+        answer: 'It identifies colonoscopy with submucosal injection on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Colonoscopy with submucosal injection.',
       },
       {
         question: 'How much should CPT 45381 cost?',
@@ -334,19 +334,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '47563': {
       code: '47563',
-      title: 'CPT Code 47563 — Surgical or procedural service Cost & Billing Guide',
-      metaDescription: 'CPT 47563 is surgical or procedural service. See typical Medicare costs near $684, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 47563 bills for surgical or procedural service — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $684.',
+      title: 'CPT Code 47563 — Laparoscopic gallbladder removal with cholangiography Cost & Billing Guide',
+      metaDescription: 'CPT 47563 is laparoscopic gallbladder removal with cholangiography. See typical Medicare costs near $684, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 47563 bills for laparoscopic gallbladder removal with cholangiography — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $684.',
       category: 'Surgery',
       categorySlug: 'surgery',
       whatIs: [
-      'CPT 47563 is a Current Procedural Terminology code used on US medical bills to describe surgical or procedural service. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Surgical or procedural service. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 47563 is a Current Procedural Terminology code used on US medical bills to describe laparoscopic gallbladder removal with cholangiography. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Laparoscopic gallbladder removal with cholangiography. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $684 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 47563 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Surgeon professional fees are only one line on a surgery bill — anesthesia, facility, implants, and post-acute care bill separately.',
     ],
       whenUsed: [
-      'Providers report CPT 47563 when surgical or procedural service is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 47563 when laparoscopic gallbladder removal with cholangiography is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -372,12 +372,12 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       relatedCodes: [
       { code: '10060', label: 'Incision and drainage, abscess, simple' },
       { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '11750', label: 'Surgical or procedural service' },
+      { code: '11750', label: 'Excision of nail or nail bed tissue' },
       ],
       faq: [
       {
         question: 'What does CPT 47563 mean in plain English?',
-        answer: 'It identifies surgical or procedural service on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Surgical or procedural service.',
+        answer: 'It identifies laparoscopic gallbladder removal with cholangiography on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Laparoscopic gallbladder removal with cholangiography.',
       },
       {
         question: 'How much should CPT 47563 cost?',
@@ -400,19 +400,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '51702': {
       code: '51702',
-      title: 'CPT Code 51702 — Surgical or procedural service Cost & Billing Guide',
-      metaDescription: 'CPT 51702 is surgical or procedural service. See typical Medicare costs near $65, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 51702 bills for surgical or procedural service — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $65.',
+      title: 'CPT Code 51702 — Insertion of temporary indwelling bladder catheter Cost & Billing Guide',
+      metaDescription: 'CPT 51702 is insertion of temporary indwelling bladder catheter. See typical Medicare costs near $65, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 51702 bills for insertion of temporary indwelling bladder catheter — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $65.',
       category: 'Surgery',
       categorySlug: 'surgery',
       whatIs: [
-      'CPT 51702 is a Current Procedural Terminology code used on US medical bills to describe surgical or procedural service. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Surgical or procedural service. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 51702 is a Current Procedural Terminology code used on US medical bills to describe insertion of temporary indwelling bladder catheter. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Insertion of temporary indwelling bladder catheter. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $65 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 51702 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Surgeon professional fees are only one line on a surgery bill — anesthesia, facility, implants, and post-acute care bill separately.',
     ],
       whenUsed: [
-      'Providers report CPT 51702 when surgical or procedural service is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 51702 when insertion of temporary indwelling bladder catheter is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -438,12 +438,12 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       relatedCodes: [
       { code: '10060', label: 'Incision and drainage, abscess, simple' },
       { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '11750', label: 'Surgical or procedural service' },
+      { code: '11750', label: 'Excision of nail or nail bed tissue' },
       ],
       faq: [
       {
         question: 'What does CPT 51702 mean in plain English?',
-        answer: 'It identifies surgical or procedural service on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Surgical or procedural service.',
+        answer: 'It identifies insertion of temporary indwelling bladder catheter on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Insertion of temporary indwelling bladder catheter.',
       },
       {
         question: 'How much should CPT 51702 cost?',
@@ -570,7 +570,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       relatedCodes: [
       { code: '10060', label: 'Incision and drainage, abscess, simple' },
       { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '11750', label: 'Surgical or procedural service' },
+      { code: '11750', label: 'Excision of nail or nail bed tissue' },
       ],
       faq: [
       {
@@ -598,19 +598,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '64483': {
       code: '64483',
-      title: 'CPT Code 64483 — Surgical or procedural service Cost & Billing Guide',
-      metaDescription: 'CPT 64483 is surgical or procedural service. See typical Medicare costs near $265, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 64483 bills for surgical or procedural service — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $265.',
+      title: 'CPT Code 64483 — Spinal nerve injection, lumbar or sacral, with imaging Cost & Billing Guide',
+      metaDescription: 'CPT 64483 is spinal nerve injection, lumbar or sacral, with imaging. See typical Medicare costs near $265, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 64483 bills for spinal nerve injection, lumbar or sacral, with imaging — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $265.',
       category: 'Surgery',
       categorySlug: 'surgery',
       whatIs: [
-      'CPT 64483 is a Current Procedural Terminology code used on US medical bills to describe surgical or procedural service. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Surgical or procedural service. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 64483 is a Current Procedural Terminology code used on US medical bills to describe spinal nerve injection, lumbar or sacral, with imaging. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Spinal nerve injection, lumbar or sacral, with imaging. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $265 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 64483 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Surgeon professional fees are only one line on a surgery bill — anesthesia, facility, implants, and post-acute care bill separately.',
     ],
       whenUsed: [
-      'Providers report CPT 64483 when surgical or procedural service is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 64483 when spinal nerve injection, lumbar or sacral, with imaging is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -636,12 +636,12 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       relatedCodes: [
       { code: '10060', label: 'Incision and drainage, abscess, simple' },
       { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '11750', label: 'Surgical or procedural service' },
+      { code: '11750', label: 'Excision of nail or nail bed tissue' },
       ],
       faq: [
       {
         question: 'What does CPT 64483 mean in plain English?',
-        answer: 'It identifies surgical or procedural service on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Surgical or procedural service.',
+        answer: 'It identifies spinal nerve injection, lumbar or sacral, with imaging on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Spinal nerve injection, lumbar or sacral, with imaging.',
       },
       {
         question: 'How much should CPT 64483 cost?',
@@ -664,19 +664,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '66982': {
       code: '66982',
-      title: 'CPT Code 66982 — Surgical or procedural service Cost & Billing Guide',
-      metaDescription: 'CPT 66982 is surgical or procedural service. See typical Medicare costs near $631, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 66982 bills for surgical or procedural service — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $631.',
+      title: 'CPT Code 66982 — Complex cataract surgery with intraocular lens Cost & Billing Guide',
+      metaDescription: 'CPT 66982 is complex cataract surgery with intraocular lens. See typical Medicare costs near $631, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 66982 bills for complex cataract surgery with intraocular lens — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $631.',
       category: 'Surgery',
       categorySlug: 'surgery',
       whatIs: [
-      'CPT 66982 is a Current Procedural Terminology code used on US medical bills to describe surgical or procedural service. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Surgical or procedural service. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 66982 is a Current Procedural Terminology code used on US medical bills to describe complex cataract surgery with intraocular lens. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Complex cataract surgery with intraocular lens. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $631 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 66982 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Surgeon professional fees are only one line on a surgery bill — anesthesia, facility, implants, and post-acute care bill separately.',
     ],
       whenUsed: [
-      'Providers report CPT 66982 when surgical or procedural service is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 66982 when complex cataract surgery with intraocular lens is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -702,12 +702,12 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       relatedCodes: [
       { code: '10060', label: 'Incision and drainage, abscess, simple' },
       { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '11750', label: 'Surgical or procedural service' },
+      { code: '11750', label: 'Excision of nail or nail bed tissue' },
       ],
       faq: [
       {
         question: 'What does CPT 66982 mean in plain English?',
-        answer: 'It identifies surgical or procedural service on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Surgical or procedural service.',
+        answer: 'It identifies complex cataract surgery with intraocular lens on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Complex cataract surgery with intraocular lens.',
       },
       {
         question: 'How much should CPT 66982 cost?',
@@ -768,7 +768,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       relatedCodes: [
       { code: '10060', label: 'Incision and drainage, abscess, simple' },
       { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '11750', label: 'Surgical or procedural service' },
+      { code: '11750', label: 'Excision of nail or nail bed tissue' },
       ],
       faq: [
       {
@@ -796,19 +796,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '76705': {
       code: '76705',
-      title: 'CPT Code 76705 — Diagnostic imaging or radiology Cost & Billing Guide',
-      metaDescription: 'CPT 76705 is diagnostic imaging or radiology. See typical Medicare costs near $86, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 76705 bills for diagnostic imaging or radiology — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $86.',
+      title: 'CPT Code 76705 — Limited abdominal ultrasound Cost & Billing Guide',
+      metaDescription: 'CPT 76705 is limited abdominal ultrasound. See typical Medicare costs near $86, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 76705 bills for limited abdominal ultrasound — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $86.',
       category: 'Imaging',
       categorySlug: 'imaging',
       whatIs: [
-      'CPT 76705 is a Current Procedural Terminology code used on US medical bills to describe diagnostic imaging or radiology. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Diagnostic imaging or radiology. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 76705 is a Current Procedural Terminology code used on US medical bills to describe limited abdominal ultrasound. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Limited abdominal ultrasound. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $86 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 76705 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Independent imaging centers and physician offices are often less expensive than hospital outpatient radiology for the same CPT code.',
     ],
       whenUsed: [
-      'Providers report CPT 76705 when diagnostic imaging or radiology is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 76705 when limited abdominal ultrasound is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -839,7 +839,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 76705 mean in plain English?',
-        answer: 'It identifies diagnostic imaging or radiology on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Diagnostic imaging or radiology.',
+        answer: 'It identifies limited abdominal ultrasound on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Limited abdominal ultrasound.',
       },
       {
         question: 'How much should CPT 76705 cost?',
@@ -862,19 +862,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '76770': {
       code: '76770',
-      title: 'CPT Code 76770 — Diagnostic imaging or radiology Cost & Billing Guide',
-      metaDescription: 'CPT 76770 is diagnostic imaging or radiology. See typical Medicare costs near $106, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 76770 bills for diagnostic imaging or radiology — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $106.',
+      title: 'CPT Code 76770 — Complete retroperitoneal ultrasound Cost & Billing Guide',
+      metaDescription: 'CPT 76770 is complete retroperitoneal ultrasound. See typical Medicare costs near $106, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 76770 bills for complete retroperitoneal ultrasound — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $106.',
       category: 'Imaging',
       categorySlug: 'imaging',
       whatIs: [
-      'CPT 76770 is a Current Procedural Terminology code used on US medical bills to describe diagnostic imaging or radiology. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Diagnostic imaging or radiology. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 76770 is a Current Procedural Terminology code used on US medical bills to describe complete retroperitoneal ultrasound. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Complete retroperitoneal ultrasound. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $106 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 76770 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Independent imaging centers and physician offices are often less expensive than hospital outpatient radiology for the same CPT code.',
     ],
       whenUsed: [
-      'Providers report CPT 76770 when diagnostic imaging or radiology is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 76770 when complete retroperitoneal ultrasound is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -905,7 +905,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 76770 mean in plain English?',
-        answer: 'It identifies diagnostic imaging or radiology on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Diagnostic imaging or radiology.',
+        answer: 'It identifies complete retroperitoneal ultrasound on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Complete retroperitoneal ultrasound.',
       },
       {
         question: 'How much should CPT 76770 cost?',
@@ -994,19 +994,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '90837': {
       code: '90837',
-      title: 'CPT Code 90837 — Medicine procedure or service Cost & Billing Guide',
-      metaDescription: 'CPT 90837 is medicine procedure or service. See typical Medicare costs near $167, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 90837 bills for medicine procedure or service — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $167.',
+      title: 'CPT Code 90837 — Psychotherapy, about 60 minutes Cost & Billing Guide',
+      metaDescription: 'CPT 90837 is psychotherapy, about 60 minutes. See typical Medicare costs near $167, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 90837 bills for psychotherapy, about 60 minutes — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $167.',
       category: 'Mental health',
       categorySlug: 'mental-health',
       whatIs: [
-      'CPT 90837 is a Current Procedural Terminology code used on US medical bills to describe medicine procedure or service. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Medicine procedure or service. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 90837 is a Current Procedural Terminology code used on US medical bills to describe psychotherapy, about 60 minutes. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Psychotherapy, about 60 minutes. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $167 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 90837 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Setting, network status, and whether the site bills as hospital outpatient versus office-based care often matter more than the code number alone.',
     ],
       whenUsed: [
-      'Providers report CPT 90837 when medicine procedure or service is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 90837 when psychotherapy, about 60 minutes is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -1030,14 +1030,14 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'For self-pay patients, ask about prompt-pay discounts, charity care, or cash pricing before paying chargemaster rates in full. You are seeking explanation and fair comparison, not legal advice.',
     ],
       relatedCodes: [
-      { code: '99234', label: 'Procedure code 99234' },
-      { code: '99235', label: 'Procedure code 99235' },
-      { code: '99236', label: 'Procedure code 99236' },
+      { code: '99234', label: 'Same-day observation admit/discharge, low complexity' },
+      { code: '99235', label: 'Same-day observation admit/discharge, moderate complexity' },
+      { code: '99236', label: 'Same-day observation admit/discharge, high complexity' },
       ],
       faq: [
       {
         question: 'What does CPT 90837 mean in plain English?',
-        answer: 'It identifies medicine procedure or service on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Medicine procedure or service.',
+        answer: 'It identifies psychotherapy, about 60 minutes on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Psychotherapy, about 60 minutes.',
       },
       {
         question: 'How much should CPT 90837 cost?',
@@ -1258,19 +1258,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '93307': {
       code: '93307',
-      title: 'CPT Code 93307 — Medicine procedure or service Cost & Billing Guide',
-      metaDescription: 'CPT 93307 is medicine procedure or service. See typical Medicare costs near $138, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 93307 bills for medicine procedure or service — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $138.',
+      title: 'CPT Code 93307 — Complete transthoracic echocardiogram Cost & Billing Guide',
+      metaDescription: 'CPT 93307 is complete transthoracic echocardiogram. See typical Medicare costs near $138, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 93307 bills for complete transthoracic echocardiogram — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $138.',
       category: 'Diagnostics',
       categorySlug: 'diagnostics',
       whatIs: [
-      'CPT 93307 is a Current Procedural Terminology code used on US medical bills to describe medicine procedure or service. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Medicine procedure or service. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 93307 is a Current Procedural Terminology code used on US medical bills to describe complete transthoracic echocardiogram. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Complete transthoracic echocardiogram. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $138 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 93307 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Setting, network status, and whether the site bills as hospital outpatient versus office-based care often matter more than the code number alone.',
     ],
       whenUsed: [
-      'Providers report CPT 93307 when medicine procedure or service is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 93307 when complete transthoracic echocardiogram is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -1301,7 +1301,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 93307 mean in plain English?',
-        answer: 'It identifies medicine procedure or service on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Medicine procedure or service.',
+        answer: 'It identifies complete transthoracic echocardiogram on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Complete transthoracic echocardiogram.',
       },
       {
         question: 'How much should CPT 93307 cost?',
@@ -1456,19 +1456,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '99234': {
       code: '99234',
-      title: 'CPT Code 99234 — Procedure code 99234 Cost & Billing Guide',
-      metaDescription: 'CPT 99234 is procedure code 99234. See typical Medicare costs near $88, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99234 bills for procedure code 99234 — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $88.',
+      title: 'CPT Code 99234 — Same-day observation admit/discharge, low complexity Cost & Billing Guide',
+      metaDescription: 'CPT 99234 is same-day observation admit/discharge, low complexity. See typical Medicare costs near $88, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 99234 bills for same-day observation admit/discharge, low complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $88.',
       category: 'Hospital care',
       categorySlug: 'hospital-care',
       whatIs: [
-      'CPT 99234 is a Current Procedural Terminology code used on US medical bills to describe procedure code 99234. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Procedure code 99234. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 99234 is a Current Procedural Terminology code used on US medical bills to describe same-day observation admit/discharge, low complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Same-day observation admit/discharge, low complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $88 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 99234 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Facility fees, trauma surcharges, and out-of-network providers can push patient responsibility well above the professional fee schedule line.',
     ],
       whenUsed: [
-      'Providers report CPT 99234 when procedure code 99234 is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 99234 when same-day observation admit/discharge, low complexity is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -1499,7 +1499,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 99234 mean in plain English?',
-        answer: 'It identifies procedure code 99234 on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Procedure code 99234.',
+        answer: 'It identifies same-day observation admit/discharge, low complexity on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Same-day observation admit/discharge, low complexity.',
       },
       {
         question: 'How much should CPT 99234 cost?',
@@ -1522,19 +1522,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '99235': {
       code: '99235',
-      title: 'CPT Code 99235 — Procedure code 99235 Cost & Billing Guide',
-      metaDescription: 'CPT 99235 is procedure code 99235. See typical Medicare costs near $143, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99235 bills for procedure code 99235 — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $143.',
+      title: 'CPT Code 99235 — Same-day observation admit/discharge, moderate complexity Cost & Billing Guide',
+      metaDescription: 'CPT 99235 is same-day observation admit/discharge, moderate complexity. See typical Medicare costs near $143, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 99235 bills for same-day observation admit/discharge, moderate complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $143.',
       category: 'Hospital care',
       categorySlug: 'hospital-care',
       whatIs: [
-      'CPT 99235 is a Current Procedural Terminology code used on US medical bills to describe procedure code 99235. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Procedure code 99235. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 99235 is a Current Procedural Terminology code used on US medical bills to describe same-day observation admit/discharge, moderate complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Same-day observation admit/discharge, moderate complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $143 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 99235 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Facility fees, trauma surcharges, and out-of-network providers can push patient responsibility well above the professional fee schedule line.',
     ],
       whenUsed: [
-      'Providers report CPT 99235 when procedure code 99235 is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 99235 when same-day observation admit/discharge, moderate complexity is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -1565,7 +1565,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 99235 mean in plain English?',
-        answer: 'It identifies procedure code 99235 on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Procedure code 99235.',
+        answer: 'It identifies same-day observation admit/discharge, moderate complexity on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Same-day observation admit/discharge, moderate complexity.',
       },
       {
         question: 'How much should CPT 99235 cost?',
@@ -1588,19 +1588,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '99236': {
       code: '99236',
-      title: 'CPT Code 99236 — Procedure code 99236 Cost & Billing Guide',
-      metaDescription: 'CPT 99236 is procedure code 99236. See typical Medicare costs near $190, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99236 bills for procedure code 99236 — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $190.',
+      title: 'CPT Code 99236 — Same-day observation admit/discharge, high complexity Cost & Billing Guide',
+      metaDescription: 'CPT 99236 is same-day observation admit/discharge, high complexity. See typical Medicare costs near $190, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 99236 bills for same-day observation admit/discharge, high complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $190.',
       category: 'Hospital care',
       categorySlug: 'hospital-care',
       whatIs: [
-      'CPT 99236 is a Current Procedural Terminology code used on US medical bills to describe procedure code 99236. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Procedure code 99236. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 99236 is a Current Procedural Terminology code used on US medical bills to describe same-day observation admit/discharge, high complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Same-day observation admit/discharge, high complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $190 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 99236 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Facility fees, trauma surcharges, and out-of-network providers can push patient responsibility well above the professional fee schedule line.',
     ],
       whenUsed: [
-      'Providers report CPT 99236 when procedure code 99236 is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 99236 when same-day observation admit/discharge, high complexity is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -1631,7 +1631,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 99236 mean in plain English?',
-        answer: 'It identifies procedure code 99236 on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Procedure code 99236.',
+        answer: 'It identifies same-day observation admit/discharge, high complexity on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Same-day observation admit/discharge, high complexity.',
       },
       {
         question: 'How much should CPT 99236 cost?',
@@ -1654,19 +1654,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '99304': {
       code: '99304',
-      title: 'CPT Code 99304 — Procedure code 99304 Cost & Billing Guide',
-      metaDescription: 'CPT 99304 is procedure code 99304. See typical Medicare costs near $81, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99304 bills for procedure code 99304 — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $81.',
+      title: 'CPT Code 99304 — Initial nursing facility care, low complexity Cost & Billing Guide',
+      metaDescription: 'CPT 99304 is initial nursing facility care, low complexity. See typical Medicare costs near $81, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 99304 bills for initial nursing facility care, low complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $81.',
       category: 'Nursing facility',
       categorySlug: 'hospital-care',
       whatIs: [
-      'CPT 99304 is a Current Procedural Terminology code used on US medical bills to describe procedure code 99304. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Procedure code 99304. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 99304 is a Current Procedural Terminology code used on US medical bills to describe initial nursing facility care, low complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Initial nursing facility care, low complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $81 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 99304 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Facility fees, trauma surcharges, and out-of-network providers can push patient responsibility well above the professional fee schedule line.',
     ],
       whenUsed: [
-      'Providers report CPT 99304 when procedure code 99304 is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 99304 when initial nursing facility care, low complexity is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -1697,7 +1697,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 99304 mean in plain English?',
-        answer: 'It identifies procedure code 99304 on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Procedure code 99304.',
+        answer: 'It identifies initial nursing facility care, low complexity on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Initial nursing facility care, low complexity.',
       },
       {
         question: 'How much should CPT 99304 cost?',
@@ -1720,19 +1720,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '99305': {
       code: '99305',
-      title: 'CPT Code 99305 — Procedure code 99305 Cost & Billing Guide',
-      metaDescription: 'CPT 99305 is procedure code 99305. See typical Medicare costs near $141, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99305 bills for procedure code 99305 — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $141.',
+      title: 'CPT Code 99305 — Initial nursing facility care, moderate complexity Cost & Billing Guide',
+      metaDescription: 'CPT 99305 is initial nursing facility care, moderate complexity. See typical Medicare costs near $141, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 99305 bills for initial nursing facility care, moderate complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $141.',
       category: 'Nursing facility',
       categorySlug: 'hospital-care',
       whatIs: [
-      'CPT 99305 is a Current Procedural Terminology code used on US medical bills to describe procedure code 99305. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Procedure code 99305. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 99305 is a Current Procedural Terminology code used on US medical bills to describe initial nursing facility care, moderate complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Initial nursing facility care, moderate complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $141 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 99305 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Facility fees, trauma surcharges, and out-of-network providers can push patient responsibility well above the professional fee schedule line.',
     ],
       whenUsed: [
-      'Providers report CPT 99305 when procedure code 99305 is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 99305 when initial nursing facility care, moderate complexity is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -1763,7 +1763,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 99305 mean in plain English?',
-        answer: 'It identifies procedure code 99305 on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Procedure code 99305.',
+        answer: 'It identifies initial nursing facility care, moderate complexity on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Initial nursing facility care, moderate complexity.',
       },
       {
         question: 'How much should CPT 99305 cost?',
@@ -1786,19 +1786,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '99306': {
       code: '99306',
-      title: 'CPT Code 99306 — Procedure code 99306 Cost & Billing Guide',
-      metaDescription: 'CPT 99306 is procedure code 99306. See typical Medicare costs near $193, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99306 bills for procedure code 99306 — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $193.',
+      title: 'CPT Code 99306 — Initial nursing facility care, high complexity Cost & Billing Guide',
+      metaDescription: 'CPT 99306 is initial nursing facility care, high complexity. See typical Medicare costs near $193, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 99306 bills for initial nursing facility care, high complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $193.',
       category: 'Nursing facility',
       categorySlug: 'hospital-care',
       whatIs: [
-      'CPT 99306 is a Current Procedural Terminology code used on US medical bills to describe procedure code 99306. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Procedure code 99306. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 99306 is a Current Procedural Terminology code used on US medical bills to describe initial nursing facility care, high complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Initial nursing facility care, high complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $193 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 99306 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Facility fees, trauma surcharges, and out-of-network providers can push patient responsibility well above the professional fee schedule line.',
     ],
       whenUsed: [
-      'Providers report CPT 99306 when procedure code 99306 is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 99306 when initial nursing facility care, high complexity is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -1829,7 +1829,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 99306 mean in plain English?',
-        answer: 'It identifies procedure code 99306 on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Procedure code 99306.',
+        answer: 'It identifies initial nursing facility care, high complexity on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Initial nursing facility care, high complexity.',
       },
       {
         question: 'How much should CPT 99306 cost?',
@@ -1852,19 +1852,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '99307': {
       code: '99307',
-      title: 'CPT Code 99307 — Procedure code 99307 Cost & Billing Guide',
-      metaDescription: 'CPT 99307 is procedure code 99307. See typical Medicare costs near $42, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99307 bills for procedure code 99307 — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $42.',
+      title: 'CPT Code 99307 — Subsequent nursing facility care, straightforward Cost & Billing Guide',
+      metaDescription: 'CPT 99307 is subsequent nursing facility care, straightforward. See typical Medicare costs near $42, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 99307 bills for subsequent nursing facility care, straightforward — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $42.',
       category: 'Nursing facility',
       categorySlug: 'hospital-care',
       whatIs: [
-      'CPT 99307 is a Current Procedural Terminology code used on US medical bills to describe procedure code 99307. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Procedure code 99307. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 99307 is a Current Procedural Terminology code used on US medical bills to describe subsequent nursing facility care, straightforward. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Subsequent nursing facility care, straightforward. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $42 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 99307 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Facility fees, trauma surcharges, and out-of-network providers can push patient responsibility well above the professional fee schedule line.',
     ],
       whenUsed: [
-      'Providers report CPT 99307 when procedure code 99307 is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 99307 when subsequent nursing facility care, straightforward is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -1895,7 +1895,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 99307 mean in plain English?',
-        answer: 'It identifies procedure code 99307 on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Procedure code 99307.',
+        answer: 'It identifies subsequent nursing facility care, straightforward on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Subsequent nursing facility care, straightforward.',
       },
       {
         question: 'How much should CPT 99307 cost?',
@@ -1918,19 +1918,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '99308': {
       code: '99308',
-      title: 'CPT Code 99308 — Procedure code 99308 Cost & Billing Guide',
-      metaDescription: 'CPT 99308 is procedure code 99308. See typical Medicare costs near $79, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99308 bills for procedure code 99308 — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $79.',
+      title: 'CPT Code 99308 — Subsequent nursing facility care, low complexity Cost & Billing Guide',
+      metaDescription: 'CPT 99308 is subsequent nursing facility care, low complexity. See typical Medicare costs near $79, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 99308 bills for subsequent nursing facility care, low complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $79.',
       category: 'Nursing facility',
       categorySlug: 'hospital-care',
       whatIs: [
-      'CPT 99308 is a Current Procedural Terminology code used on US medical bills to describe procedure code 99308. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Procedure code 99308. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 99308 is a Current Procedural Terminology code used on US medical bills to describe subsequent nursing facility care, low complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Subsequent nursing facility care, low complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $79 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 99308 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Facility fees, trauma surcharges, and out-of-network providers can push patient responsibility well above the professional fee schedule line.',
     ],
       whenUsed: [
-      'Providers report CPT 99308 when procedure code 99308 is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 99308 when subsequent nursing facility care, low complexity is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -1961,7 +1961,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 99308 mean in plain English?',
-        answer: 'It identifies procedure code 99308 on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Procedure code 99308.',
+        answer: 'It identifies subsequent nursing facility care, low complexity on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Subsequent nursing facility care, low complexity.',
       },
       {
         question: 'How much should CPT 99308 cost?',
@@ -1984,19 +1984,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '99309': {
       code: '99309',
-      title: 'CPT Code 99309 — Procedure code 99309 Cost & Billing Guide',
-      metaDescription: 'CPT 99309 is procedure code 99309. See typical Medicare costs near $115, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99309 bills for procedure code 99309 — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $115.',
+      title: 'CPT Code 99309 — Subsequent nursing facility care, moderate complexity Cost & Billing Guide',
+      metaDescription: 'CPT 99309 is subsequent nursing facility care, moderate complexity. See typical Medicare costs near $115, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 99309 bills for subsequent nursing facility care, moderate complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $115.',
       category: 'Nursing facility',
       categorySlug: 'hospital-care',
       whatIs: [
-      'CPT 99309 is a Current Procedural Terminology code used on US medical bills to describe procedure code 99309. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Procedure code 99309. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 99309 is a Current Procedural Terminology code used on US medical bills to describe subsequent nursing facility care, moderate complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Subsequent nursing facility care, moderate complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $115 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 99309 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Facility fees, trauma surcharges, and out-of-network providers can push patient responsibility well above the professional fee schedule line.',
     ],
       whenUsed: [
-      'Providers report CPT 99309 when procedure code 99309 is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 99309 when subsequent nursing facility care, moderate complexity is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -2027,7 +2027,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 99309 mean in plain English?',
-        answer: 'It identifies procedure code 99309 on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Procedure code 99309.',
+        answer: 'It identifies subsequent nursing facility care, moderate complexity on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Subsequent nursing facility care, moderate complexity.',
       },
       {
         question: 'How much should CPT 99309 cost?',
@@ -2050,19 +2050,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '99310': {
       code: '99310',
-      title: 'CPT Code 99310 — Procedure code 99310 Cost & Billing Guide',
-      metaDescription: 'CPT 99310 is procedure code 99310. See typical Medicare costs near $163, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99310 bills for procedure code 99310 — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $163.',
+      title: 'CPT Code 99310 — Subsequent nursing facility care, high complexity Cost & Billing Guide',
+      metaDescription: 'CPT 99310 is subsequent nursing facility care, high complexity. See typical Medicare costs near $163, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 99310 bills for subsequent nursing facility care, high complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $163.',
       category: 'Nursing facility',
       categorySlug: 'hospital-care',
       whatIs: [
-      'CPT 99310 is a Current Procedural Terminology code used on US medical bills to describe procedure code 99310. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Procedure code 99310. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 99310 is a Current Procedural Terminology code used on US medical bills to describe subsequent nursing facility care, high complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Subsequent nursing facility care, high complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $163 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 99310 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Facility fees, trauma surcharges, and out-of-network providers can push patient responsibility well above the professional fee schedule line.',
     ],
       whenUsed: [
-      'Providers report CPT 99310 when procedure code 99310 is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 99310 when subsequent nursing facility care, high complexity is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -2093,7 +2093,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 99310 mean in plain English?',
-        answer: 'It identifies procedure code 99310 on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Procedure code 99310.',
+        answer: 'It identifies subsequent nursing facility care, high complexity on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Subsequent nursing facility care, high complexity.',
       },
       {
         question: 'How much should CPT 99310 cost?',
@@ -2116,19 +2116,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '99341': {
       code: '99341',
-      title: 'CPT Code 99341 — Procedure code 99341 Cost & Billing Guide',
-      metaDescription: 'CPT 99341 is procedure code 99341. See typical Medicare costs near $49, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99341 bills for procedure code 99341 — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $49.',
+      title: 'CPT Code 99341 — Home visit, new patient, low complexity Cost & Billing Guide',
+      metaDescription: 'CPT 99341 is home visit, new patient, low complexity. See typical Medicare costs near $49, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 99341 bills for home visit, new patient, low complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $49.',
       category: 'Home visits',
       categorySlug: 'office-visits',
       whatIs: [
-      'CPT 99341 is a Current Procedural Terminology code used on US medical bills to describe procedure code 99341. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Procedure code 99341. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 99341 is a Current Procedural Terminology code used on US medical bills to describe home visit, new patient, low complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Home visit, new patient, low complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $49 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 99341 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Hospital-owned outpatient clinics may add facility fees on top of the physician visit code.',
     ],
       whenUsed: [
-      'Providers report CPT 99341 when procedure code 99341 is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 99341 when home visit, new patient, low complexity is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -2159,7 +2159,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 99341 mean in plain English?',
-        answer: 'It identifies procedure code 99341 on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Procedure code 99341.',
+        answer: 'It identifies home visit, new patient, low complexity on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Home visit, new patient, low complexity.',
       },
       {
         question: 'How much should CPT 99341 cost?',
@@ -2182,19 +2182,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '99342': {
       code: '99342',
-      title: 'CPT Code 99342 — Procedure code 99342 Cost & Billing Guide',
-      metaDescription: 'CPT 99342 is procedure code 99342. See typical Medicare costs near $79, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99342 bills for procedure code 99342 — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $79.',
+      title: 'CPT Code 99342 — Home visit, new patient, moderate complexity Cost & Billing Guide',
+      metaDescription: 'CPT 99342 is home visit, new patient, moderate complexity. See typical Medicare costs near $79, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 99342 bills for home visit, new patient, moderate complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $79.',
       category: 'Home visits',
       categorySlug: 'office-visits',
       whatIs: [
-      'CPT 99342 is a Current Procedural Terminology code used on US medical bills to describe procedure code 99342. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Procedure code 99342. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 99342 is a Current Procedural Terminology code used on US medical bills to describe home visit, new patient, moderate complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Home visit, new patient, moderate complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $79 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 99342 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Hospital-owned outpatient clinics may add facility fees on top of the physician visit code.',
     ],
       whenUsed: [
-      'Providers report CPT 99342 when procedure code 99342 is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 99342 when home visit, new patient, moderate complexity is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -2225,7 +2225,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 99342 mean in plain English?',
-        answer: 'It identifies procedure code 99342 on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Procedure code 99342.',
+        answer: 'It identifies home visit, new patient, moderate complexity on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Home visit, new patient, moderate complexity.',
       },
       {
         question: 'How much should CPT 99342 cost?',
@@ -2248,19 +2248,19 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '99350': {
       code: '99350',
-      title: 'CPT Code 99350 — Procedure code 99350 Cost & Billing Guide',
-      metaDescription: 'CPT 99350 is procedure code 99350. See typical Medicare costs near $193, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99350 bills for procedure code 99350 — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $193.',
+      title: 'CPT Code 99350 — Home visit, established patient, high complexity Cost & Billing Guide',
+      metaDescription: 'CPT 99350 is home visit, established patient, high complexity. See typical Medicare costs near $193, fair price ranges, and how to review your itemized bill.',
+      summary: 'CPT 99350 bills for home visit, established patient, high complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $193.',
       category: 'Home visits',
       categorySlug: 'office-visits',
       whatIs: [
-      'CPT 99350 is a Current Procedural Terminology code used on US medical bills to describe procedure code 99350. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Procedure code 99350. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
+      'CPT 99350 is a Current Procedural Terminology code used on US medical bills to describe home visit, established patient, high complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
+      'Our plain-English summary is original and educational: Home visit, established patient, high complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
       'National Medicare data often places the median allowed amount near $193 for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.',
       'Understanding CPT 99350 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Hospital-owned outpatient clinics may add facility fees on top of the physician visit code.',
     ],
       whenUsed: [
-      'Providers report CPT 99350 when procedure code 99350 is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
+      'Providers report CPT 99350 when home visit, established patient, high complexity is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
       'You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.',
       'Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.',
       'Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.',
@@ -2291,7 +2291,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       faq: [
       {
         question: 'What does CPT 99350 mean in plain English?',
-        answer: 'It identifies procedure code 99350 on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Procedure code 99350.',
+        answer: 'It identifies home visit, established patient, high complexity on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Home visit, established patient, high complexity.',
       },
       {
         question: 'How much should CPT 99350 cost?',

@@ -13,6 +13,7 @@ import {
   breadcrumbSchema,
   webApplicationSchema,
 } from '../../../lib/seo/schema';
+import { buildCptSeoMeta, buildCptSeoTitle } from '../../../lib/seo/cpt-page-meta';
 
 export function getStaticPaths() {
   return launchCptCodes.map((code) => ({ params: { code } }));
@@ -27,14 +28,16 @@ if (!page) {
 
 const relatedCompares = getComparesForCode(page.code);
 
-const updated = '2026-06-29';
+const updated = '2026-07-26';
 const pageUrl = `/codes/cpt/${page.code}/`;
 const canonical = new URL(pageUrl, site.url).href;
+const seoTitle = buildCptSeoTitle(page);
+const seoDescription = buildCptSeoMeta(page);
 
 const schemaGraph = [
   medicalWebPageSchema({
-    name: page.title,
-    description: page.metaDescription,
+    name: seoTitle,
+    description: seoDescription,
     url: canonical,
     dateModified: updated,
     authorName: author.name,
@@ -67,8 +70,8 @@ const schemaGraph = [
 ---
 
 <CptLayout
-  title={page.title}
-  description={page.metaDescription}
+  title={seoTitle}
+  description={seoDescription}
   code={page.code}
   crumbs={[
     { label: 'Home', href: '/' },

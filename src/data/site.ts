@@ -4,7 +4,7 @@ export const site = {
   url: 'https://patientbillguide.com',
   tagline: 'Honest healthcare numbers — before, during, and after you get the bill.',
   description:
-    'Check medical prices against Medicare benchmarks, understand hospital bills and insurance EOBs, and spot common billing concerns. Free tools, browser-only processing.',
+    'Check medical prices vs Medicare, understand bills and EOBs, and spot billing concerns. Free browser tools.',
 } as const;
 
 export const nav = {

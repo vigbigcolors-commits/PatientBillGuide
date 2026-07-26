@@ -41,7 +41,7 @@ All decisions agreed in planning sessions. Do not change without explicit discus
 | 23 | AdSense timing | Apply after **~25–35 quality pages** live |
 | 24 | Dispute letters | **Editable starting templates** — not "legally verified" |
 | 25 | Flag language | "Possible billing concern" — never "fraud" or "illegal" without evidence |
-| 26 | Traffic mix | Google SEO + Reddit/TikTok for 6-month goals (not Google-only) |
+| 26 | Traffic mix | Google SEO + Product Hunt + Quora/TikTok/Shorts — **not Reddit** (DECISIONS #47) |
 | 27 | Homepage hero layout | **Left-aligned** per Figma — `HomeHero.astro` is single source |
 
 ## Post-launch — locked 2026-07-05
@@ -68,9 +68,11 @@ All decisions agreed in planning sessions. Do not change without explicit discus
 | 40 | Doorway test | 4-question gate in GOOGLE_QUALITY.md **before every new URL type** |
 | 41 | Jul 5–6 compare + category | **Approved** — hand-written, not doorways |
 | 42 | `cpt-batch-100` pages | **Live but watch zone** — do not scale same template to 1000+ without upgrade |
-| 43 | GSC indexing | **No mass manual URL Inspection** — sitemap + quality + launch channels ([GSC_INDEXING.md](GSC_INDEXING.md)); Product Hunt / Reddit for tools |
+| 43 | GSC indexing | **No mass manual URL Inspection** — sitemap + quality + launch channels ([GSC_INDEXING.md](GSC_INDEXING.md)); Product Hunt / Quora for tools |
 | 44 | CPT utility path | Enhance **existing** `/codes/cpt/[code]/` with Fair Price widget + Dispute Letter deep-links — **never** mass-rename CPT URLs to bypass indexing lag |
 | 45 | Stack lock (post-launch) | Stay on **Astro + client-side MPFS JSON** — no Next.js rewrite, no server SQLite price API for CPT |
+| 46 | **Unique page SEO** | Every indexable URL must have a **unique** `<title>`, meta description, and H1; bare title ideally ≤58 chars before brand; no near-duplicate doorway copy — see [GOOGLE_QUALITY.md](GOOGLE_QUALITY.md). Enforce with `npm run audit:seo` after build |
+| 47 | **Reddit — out** | **Do not use Reddit** as a growth / launch channel for PatientBillGuide (or related brands). Shadowbans / “blocked by network security” after normal link posts; not worth founder time. Prefer Product Hunt, Quora, Shorts/TikTok, direct B2B. |
 
 ## Out of scope for this domain
 

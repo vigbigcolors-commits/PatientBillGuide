@@ -4,7 +4,7 @@ export const disclaimerMeta = {
   updated: '2026-06-29',
   title: 'Disclaimer — Medical, Legal & Tool Limitations',
   description:
-    'PatientBillGuide disclaimer: educational tools only — not medical, legal, or insurance advice. No savings guarantees. Billing flags are not fraud accusations. Read our full limitations before you rely on any result.',
+    'Educational tools only — not medical, legal, or insurance advice. No savings guarantees. Flags are not fraud claims.',
 };
 
 export const disclaimerPillars = [

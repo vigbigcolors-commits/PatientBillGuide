@@ -21,10 +21,9 @@ Track errors, open questions, and fixes **as we go**.
 - **Found:** 2026-07-18 GSC “Alternate page with proper canonical”
 - **Fix:** single canonical → `/tools/fair-price/`, `noindex`, sitemap filter, Cloudflare `_redirects` 301 (2026-07-24)
 
-### [NOTE] GSC: Discovered – not indexed (Jul 2026)
-- **Not a code bug / not a “YMYL filter” requiring URL migration**
-- New domain + sitemap flood → crawl queue; keep URLs, strengthen CPT utility + launch channels
-- Anti-patterns locked: DECISIONS #43–45 · [GSC_INDEXING.md](GSC_INDEXING.md)
+### [NOTE] Reddit channel — abandoned
+- **2026-07-24:** Network blocks / account loss after normal link posts (incl. other brands). **DECISIONS #47 — do not use Reddit.**
+- Launch mix: Product Hunt, Quora, Shorts/TikTok, B2B.
 
 ### [OPEN] Author display name format
 - **Severity:** low (placeholder bio OK for launch)

@@ -28,7 +28,7 @@ Manual **Request indexing** for hundreds of URLs is **not** a growth strategy.
 2. **Internal links** — homepage → tools → CPT/compare/category; every new CPT links to 3+ live pages
 3. **Real utility** — Fair Price, Bill Auditor, EOB tools (users stay, share, link)
 4. **Quality pages** — 800+ words, MPFS data, author, methodology (Gate D in GOOGLE_QUALITY)
-5. **External signals** — Product Hunt, Reddit, HN, newsletters (see launch playbook below)
+5. **External signals** — Product Hunt, Quora, HN (optional), newsletters, Shorts — **not Reddit** (DECISIONS #47)
 
 ### What we do in GSC (monthly, 15 min)
 
@@ -54,14 +54,14 @@ Manual **Request indexing** for hundreds of URLs is **not** a growth strategy.
 
 ## Launch playbook (not GSC spam)
 
-PatientBillGuide is **7 tools + CPT encyclopedia** — closer to **Product Hunt / Reddit utility launch** than a 0-tool article site.
+PatientBillGuide is **7 tools + CPT encyclopedia** — closer to **Product Hunt / Quora utility launch** than a 0-tool article site.
 
 | Channel | Asset to lead with | When |
 |---------|-------------------|------|
-| **Product Hunt** | Fair Price Calculator — "Check your bill vs Medicare before you pay" | After Day 5 (contact@ live) |
-| **Reddit** | Fair Price demo + Bill Auditor (r/personalfinance, r/HealthInsurance) | Day 7 per DAILY_PLAN |
-| **Hacker News** | Show HN — client-side billing tools, CMS data | Optional spike |
-| **Direct outreach** | Patient advocates, medical billing educators | Month 2+ |
+| **Product Hunt** | Fair Price Calculator — "Check your bill vs Medicare before you pay" | After contact@ live |
+| **Quora** | Long answers on CPT / EOB / surprise bills — link once when relevant | Ongoing |
+| **TikTok / Shorts** | Bill decode demos | Ongoing |
+| ~~Reddit~~ | — | **Out** — DECISIONS #47 |
 
 **Pitch angle:** Free browser tools, no upload, privacy — not "we have 200 SEO pages."
 
@@ -95,4 +95,4 @@ CPT pages support **long-tail organic** over months; launches drive **trust + ba
 
 - DECISIONS #29 — domain property (correct)
 - GOOGLE_QUALITY Gate D — batch pace 25–50, 10% QA
-- GROWTH_MASTER §3 — Reddit + Product Hunt, not Google-only
+- GROWTH_MASTER — Product Hunt + Quora + Shorts, not Google-only; **Reddit out** (#47)

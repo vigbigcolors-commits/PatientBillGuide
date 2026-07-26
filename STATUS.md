@@ -2,15 +2,14 @@
 
 > Update this file after every work session. Agents should read this first.
 
-**Last updated:** 2026-07-24  
-**Current phase:** Post-launch — CPT utility ready (local) · **next:** deploy + contact@ · **PH ~Tue 2026-07-31**  
-**Phase status:** 7 live tools · 84 tests · **244 build** · **200 CPT** · 5 compare · 5 category  
+**Last updated:** 2026-07-26  
+**Current phase:** Post-launch — pSEO rehab + unique SEO (#46) · generic CPT labels fixed  
+**Phase status:** 7 live tools · **89 tests** · **244 build** · **200 CPT** · 5 compare · 5 category  
 **Domain:** PatientBillGuide.com  
-**Master docs:** [NEXT_SESSION.md](docs/NEXT_SESSION.md) · [GROWTH_MASTER.md](docs/GROWTH_MASTER.md) · [DAILY_PLAN.md](docs/DAILY_PLAN.md)
+**Master docs:** [NEXT_SESSION.md](docs/NEXT_SESSION.md) · [GOOGLE_QUALITY.md](docs/GOOGLE_QUALITY.md) · [GROWTH_MASTER.md](docs/GROWTH_MASTER.md)
 
-> **Tomorrow:** [docs/NEXT_SESSION.md](docs/NEXT_SESSION.md) — deploy CPT utility, contact@, Product Hunt prep.  
-> AdSense: deferred (user). Referral/affiliate clinics: discuss after traffic — see NEXT_SESSION.  
-> Indexing: Discovered ≠ penalty; no URL migration (DECISIONS #43–45).
+> **Strict:** every indexable page = unique title + meta + H1 (`npm run audit:seo`). DECISIONS #46.  
+> **Next:** deploy this rehab · `contact@` · Product Hunt ~Tue 2026-07-31 · Quora/Shorts (no Reddit).
 
 ---
 
@@ -37,10 +36,14 @@
 - [x] **Batch 2 part 1** — +35 CPT → **165 total** (Day 3)
 - [x] **Batch 2 part 2** — +35 CPT → **200 total** (Day 4)
 - [x] **5 compare pages** + **5 category hubs**
-- [ ] AdSense application — Day 5
-- [ ] Set up `contact@patientbillguide.com` — Day 5
-- [ ] Product Hunt launch — after contact@ (Day 5+)
-- [ ] Reddit launch (Fair Price) — Day 7
+- [x] **Unique SEO titles/metas** — `buildCptSeoTitle` / `audit:seo` (DECISIONS #46)
+- [x] **Generic-label rehab** — replaced Day 3/4 placeholders (“Medicine procedure…”) in batches + seeds
+- [x] **Indexed CPT polish** — unique body for Google-seen **90838** / **11400**; `dateModified` → 2026-07-26
+- [ ] AdSense application — later (user deferred)
+- [ ] Set up `contact@patientbillguide.com` — Day 5 manual
+- [ ] Product Hunt launch — ~Tue 2026-07-31 (Fair Price utility)
+- [ ] Quora / Shorts — soft answers (no Reddit)
+- [x] ~~Reddit launch~~ — **cancelled** (DECISIONS #47)
 
 ---
 
@@ -68,8 +71,9 @@
 
 | Date | Done |
 |------|------|
-| 2026-07-24 | CPT utility coded (local) · referral idea parked in [NEXT_SESSION.md](docs/NEXT_SESSION.md) · PH target ~Tue 2026-07-31 |
-| 2026-07-13 | **Day 5 start:** contact page EEAT polish · [DAY5_MANUAL.md](docs/DAY5_MANUAL.md) · await user Email + AdSense |
+| 2026-07-26 | **pSEO rehab:** unique titles/metas + generic CPT labels fixed (~49 codes) · 90838/11400 body rewrite · `audit:seo` green · deploy next |
+| 2026-07-24 | CPT utility coded · referral idea parked · PH target ~Tue 2026-07-31 |
+| 2026-07-13 | **Day 5 start:** contact page EEAT polish · [DAY5_MANUAL.md](docs/DAY5_MANUAL.md) |
 | 2026-07-10 (pm) | **Codes hub UX:** paginated index 24/page — pushed (`9cebb09`) |
 | 2026-07-10 | **Day 4:** +35 CPT → **200 total**, 244 pages · `db22074` |
 | 2026-07-10 | **Day 3:** +35 CPT (165 total), GSC_INDEXING locked |
@@ -83,8 +87,8 @@
 - [x] `/codes/` pager live
 - [x] `/contact/` page reviewed + expanded (mailto ready)
 - [ ] **You:** Cloudflare Email Routing → `contact@` → personal inbox ([DAY5_MANUAL.md](docs/DAY5_MANUAL.md) §A)
-- [ ] **You:** Google AdSense apply for `patientbillguide.com` ([DAY5_MANUAL.md](docs/DAY5_MANUAL.md) §B)
+- [ ] AdSense — deferred by user
 - [ ] Optional: GSC Performance glance
 - [ ] Report back → close Day 5 in STATUS
 
-**Next after Day 5:** Day 6 — learn pillar Surprise Medical Bills (or Product Hunt after contact@ works).
+**Next after Day 5:** Product Hunt (~2026-07-31) + Quora/Shorts; more CPT body rehab as GSC indexes.

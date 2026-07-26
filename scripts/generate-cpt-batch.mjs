@@ -255,8 +255,8 @@ function generatePage(code, seed, cat) {
 
   return {
     code,
-    title: `CPT Code ${code} — ${label} Cost & Billing Guide`,
-    metaDescription: `CPT ${code} is ${desc.toLowerCase()}. See typical Medicare costs near ${medStr}, fair price ranges, and how to review your itemized bill.`,
+    title: `CPT ${code} — ${label}`,
+    metaDescription: `CPT ${code} (${label}): Medicare costs near ${medStr}, fair range by ZIP, and how to review your itemized bill. Free browser tool.`,
     summary: `CPT ${code} bills for ${desc.toLowerCase()} — a commonly seen line on US medical statements. Medicare national median benchmarks are often near ${medStr}.`,
     category: cat.category,
     categorySlug: cat.categorySlug,

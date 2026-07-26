@@ -79,7 +79,7 @@ It is a *strategy*. One strong CPT page **is** a long-tail page.
 | Channel | Role | Notes |
 |---------|------|-------|
 | **Google SEO** | Long-term base | CPT + learn + compare pages |
-| **Reddit** | Launch spikes | r/personalfinance, r/HealthInsurance + Fair Price demo |
+| **Reddit** | ~~Launch spikes~~ | **OUT (2026-07-24)** — DECISIONS #47; do not plan Reddit launches |
 | **TikTok / Shorts** | Awareness | Bill stories + “check before you pay” |
 | **Google Discover** | Learn articles | Pillars with fresh dates |
 | **Direct / return** | Tools | Browser-only privacy builds trust |
@@ -251,7 +251,7 @@ Traffic **lags** publishing by 6–12 weeks — do not panic if week 1 after dep
 2. **5 compare pages** — highest long-tail ROI per page  
 3. **5 category hubs** — internal linking + head terms  
 4. **Sitemap + monthly GSC review** — see [GSC_INDEXING.md](GSC_INDEXING.md); **no** mass manual URL Inspection  
-5. **Reddit launch** — Fair Price tool (one strong post, not spam)  
+5. **Product Hunt + Quora** — Fair Price utility (not Reddit — #47)  
 6. **AdSense application** — site qualifies on page count  
 7. **contact@patientbillguide.com** — trust signal for GSC / users  
 
@@ -275,7 +275,7 @@ Traffic **lags** publishing by 6–12 weeks — do not panic if week 1 after dep
 
 ## 13. One-line strategy
 
-> **Ship useful tools first, then own long-tail CPT queries with original 800-word guides — in weekly batches toward 500 codes over 6 months — while compare pages, learn pillars, and Reddit drive faster wins than raw page count.**
+> **Ship useful tools first, then own long-tail CPT queries with original 800-word guides — in weekly batches toward 500 codes over 6 months — while compare pages, learn pillars, Product Hunt, and Quora drive faster wins than raw page count. Reddit is not a channel.**
 
 ---
 
