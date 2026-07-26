@@ -3,13 +3,14 @@
 > Update this file after every work session. Agents should read this first.
 
 **Last updated:** 2026-07-26  
-**Current phase:** Post-launch — pSEO rehab + unique SEO (#46) · generic CPT labels fixed  
+**Current phase:** Post-launch — **DECISIONS #48** original unique content (strict) · body audit green  
 **Phase status:** 7 live tools · **89 tests** · **244 build** · **200 CPT** · 5 compare · 5 category  
 **Domain:** PatientBillGuide.com  
 **Master docs:** [NEXT_SESSION.md](docs/NEXT_SESSION.md) · [GOOGLE_QUALITY.md](docs/GOOGLE_QUALITY.md) · [GROWTH_MASTER.md](docs/GROWTH_MASTER.md)
 
-> **Strict:** every indexable page = unique title + meta + H1 (`npm run audit:seo`). DECISIONS #46.  
-> **Next:** deploy this rehab · `contact@` · Product Hunt ~Tue 2026-07-31 · Quora/Shorts (no Reddit).
+> **Strict:** unique title + meta + H1 **and** unique body prose (`npm run audit:seo`). DECISIONS #46 + **#48**.  
+> Never AMA/AAPC verbatim · never republish our pSEO elsewhere · no scaled identical paragraphs.  
+> **Next:** deploy · `contact@` · Product Hunt ~Tue 2026-07-31.
 
 ---
 
@@ -71,6 +72,7 @@
 
 | Date | Done |
 |------|------|
+| 2026-07-26 | **#48 locked:** original unique content · body uniqueness audit · boilerplate uniquified across 200 CPT · generators updated |
 | 2026-07-26 | **pSEO rehab:** unique titles/metas + generic CPT labels fixed (~49 codes) · 90838/11400 body rewrite · `audit:seo` green · deploy next |
 | 2026-07-24 | CPT utility coded · referral idea parked · PH target ~Tue 2026-07-31 |
 | 2026-07-13 | **Day 5 start:** contact page EEAT polish · [DAY5_MANUAL.md](docs/DAY5_MANUAL.md) |

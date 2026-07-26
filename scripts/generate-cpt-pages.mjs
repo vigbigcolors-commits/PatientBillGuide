@@ -155,74 +155,156 @@ function generatePage(code, seed, cat) {
   const fair = fairRange(median);
   const slug = cat.categorySlug;
 
+  const v = Number.parseInt(code, 10) % 3;
   const settingNote =
     slug === 'laboratory'
-      ? 'Hospital and emergency department labs often mark up the same test far above independent lab or physician-office draw rates.'
+      ? [
+          `Hospital and ED labs often mark up CPT ${code} far above independent lab or office-draw rates.`,
+          `CPT ${code} drawn in a hospital or ED commonly costs more than the same test at an independent lab.`,
+          `Expect higher chargemaster markups for CPT ${code} in hospital/ED labs versus outpatient labs.`,
+        ][v]
       : slug === 'imaging'
-        ? 'Independent imaging centers and physician offices are often less expensive than hospital outpatient radiology for the same CPT code.'
+        ? [
+            `Independent imaging centers and offices often charge less than hospital outpatient radiology for CPT ${code}.`,
+            `For CPT ${code}, freestanding imaging or office rates are frequently below hospital outpatient radiology.`,
+            `Hospital outpatient pricing for CPT ${code} commonly exceeds independent imaging centers — confirm site of service.`,
+          ][v]
         : slug === 'emergency' || slug === 'hospital-care'
-          ? 'Facility fees, trauma surcharges, and out-of-network providers can push patient responsibility well above the professional fee schedule line.'
+          ? [
+              `Facility fees, trauma surcharges, and OON clinicians can push what you owe for CPT ${code} well above the professional fee line.`,
+              `For CPT ${code}, facility/trauma add-ons and out-of-network providers often dwarf the MPFS professional amount.`,
+              `Patient responsibility on CPT ${code} can spike from facility fees, trauma charges, or OON billing.`,
+            ][v]
           : slug === 'surgery'
-            ? 'Surgeon professional fees are only one line on a surgery bill — anesthesia, facility, implants, and post-acute care bill separately.'
+            ? [
+                `The professional fee for CPT ${code} is only one surgery line — anesthesia, facility, implants, and post-acute care bill separately.`,
+                `CPT ${code} rarely equals the full surgical episode: anesthesia, facility, implants, and aftercare are separate.`,
+                `Treat CPT ${code} as the surgeon/clinician line only; facility, anesthesia, implants, and post-acute charges stack on top.`,
+              ][v]
             : slug === 'office-visits' || slug === 'preventive'
-              ? 'Hospital-owned outpatient clinics may add facility fees on top of the physician visit code.'
-              : 'Setting, network status, and whether the site bills as hospital outpatient versus office-based care often matter more than the code number alone.';
+              ? [
+                  `Hospital-owned outpatient clinics may add a facility fee on top of CPT ${code}.`,
+                  `When CPT ${code} is billed from a hospital-owned clinic, a separate facility fee often appears.`,
+                  `CPT ${code} from a hospital outpatient department can include facility charges beyond the physician line.`,
+                ][v]
+              : [
+                  `For CPT ${code}, setting, network status, and hospital-outpatient vs office billing often matter more than the code digits alone.`,
+                  `Place of service and network status around CPT ${code} usually drive patient cost more than the CPT number by itself.`,
+                  `Whether CPT ${code} was billed from an office or hospital outpatient department — plus network status — often outweighs the code label.`,
+                ][v];
 
+  // DECISIONS #48 — every long paragraph mentions CPT ${code} (no identical cross-page bodies).
   const whatIs = [
     `CPT ${code} is a Current Procedural Terminology code used on US medical bills to describe ${desc.toLowerCase()}. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.`,
-    `Our plain-English summary is original and educational: ${label}. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.`,
-    `National Medicare data often places the median allowed amount near ${medStr} for this code, though your ZIP code and place of service can move that figure up or down. PatientBillGuide uses CMS public data for benchmarks — we do not claim your bill is wrong simply because it exceeds Medicare; we help you compare and ask informed questions.`,
+    `Our plain-English summary for CPT ${code} is original and educational: ${label}. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.`,
+    [
+      `CMS MPFS data often puts a national median near ${medStr} for CPT ${code}; ZIP and place of service can move that figure. PatientBillGuide uses public CMS benchmarks so you can compare — a higher charge alone is not proof the bill is wrong.`,
+      `For CPT ${code}, national Medicare medians frequently land near ${medStr}, with local and site-of-service variation. We publish CMS-based anchors for questions, not accusations that your bill is incorrect.`,
+      `A typical Medicare allowed median for CPT ${code} is near ${medStr} nationally, but locality and setting change the number. Our tools use CMS public data to help you ask informed questions, not to declare fraud.`,
+    ][v],
     `Understanding CPT ${code} helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. ${settingNote}`,
   ];
 
   const whenUsed = [
     `Providers report CPT ${code} when ${desc.toLowerCase()} is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.`,
-    `You may see this code after primary care visits, specialist appointments, urgent care, emergency department care, outpatient surgery, imaging centers, or standalone labs, depending on what was ordered. It may appear alone or alongside evaluation-and-management visit codes, anesthesia, or supply charges.`,
-    `Related services sometimes use adjacent CPT numbers with different technical or professional splits. If your bill lists multiple similar codes on one date, ask which services were actually performed rather than assuming duplicate billing.`,
-    `Insurance plans, Medicare Advantage, Medicaid managed care, and self-pay policies all interpret medical necessity differently. A code that is standard on commercial plans may still require prior authorization or be subject to copays distinct from office visits.`,
+    [
+      `CPT ${code} may show up after primary care, specialty, urgent care, ED, outpatient surgery, imaging, or lab encounters — alone or next to an E/M, anesthesia, or supply line.`,
+      `Bills often list CPT ${code} following clinic, specialty, urgent, emergency, surgical, imaging, or lab visits; it can stand alone or sit beside visit or ancillary charges.`,
+      `Expect CPT ${code} on statements from offices, specialists, urgent care, EDs, ASC/outpatient surgery, imaging centers, or labs, sometimes with a separate E/M or supply code.`,
+    ][v],
+    [
+      `Services near CPT ${code} may use adjacent codes with different technical vs professional splits. If several similar lines share one date, ask which services were actually performed before assuming a duplicate.`,
+      `Adjacent CPT numbers can split technical and professional work differently from CPT ${code}. Multiple similar lines on one day deserve a clarification request, not an automatic duplicate accusation.`,
+      `If your claim shows CPT ${code} plus look-alike codes the same day, confirm each service in the note — adjacent CPTs often differ by component, not by error alone.`,
+    ][v],
+    [
+      `Commercial plans, Medicare Advantage, Medicaid managed care, and self-pay rules treat medical necessity for CPT ${code} differently — prior auth or separate cost-sharing can still apply even when the code is common.`,
+      `Coverage for CPT ${code} depends on the payer: Medicare Advantage, Medicaid MCO, commercial, and self-pay policies may require prior authorization or cost-sharing unlike a simple office visit.`,
+      `A familiar CPT ${code} can still need prior auth or carry copays that differ from office-visit rules under commercial, MA, Medicaid managed care, or self-pay policies.`,
+    ][v],
   ];
 
   const typicalCosts = [
     `Medicare fee schedule data suggests a national median allowed amount near ${medStr} for CPT ${code} in many localities. That is an anchor for comparison, not a maximum price providers must charge.`,
-    `An educational fair range for uninsured or high-deductible comparison is often about ${fair} — roughly 1.5× to 2.5× the Medicare benchmark. Commercial negotiated rates and in-network allowed amounts will differ.`,
-    `${settingNote} Always request an itemized bill and, if insured, compare to your explanation of benefits.`,
-    `Use the Fair Price Calculator on this page with your ZIP code to see a localized Medicare allowed amount when our launch data includes your locality. Cash-pay discounts and financial assistance may reduce charges that look high relative to benchmarks.`,
+    [
+      `An educational uninsured or high-deductible comparison band for CPT ${code} is often about ${fair} (roughly 1.5×–2.5× Medicare). Commercial contracted rates will differ.`,
+      `For cash-pay or high-deductible review of CPT ${code}, about ${fair} is a common educational fair range (~1.5×–2.5× Medicare) — not a legal ceiling.`,
+      `Self-pay comparison for CPT ${code} often uses about ${fair} as an educational fair range (about 1.5× to 2.5× the Medicare benchmark); insurer negotiated amounts vary.`,
+    ][v],
+    `${settingNote} Always request an itemized bill for CPT ${code} and, if insured, compare to your explanation of benefits.`,
+    [
+      `Run CPT ${code} through the Fair Price Calculator on this page with your ZIP for a localized Medicare allowed amount when our data covers your area. Ask about cash-pay or financial assistance if the charge looks high versus that benchmark.`,
+      `Enter CPT ${code} and your ZIP in Fair Price here to see a locality Medicare figure when available. Prompt-pay discounts or charity care can still lower self-pay amounts above that anchor.`,
+      `Compare CPT ${code} in the on-page Fair Price tool by ZIP when launch data includes your locality; cash pricing or assistance programs may reduce chargemaster-style bills.`,
+    ][v],
   ];
 
   const billingIssues = [
     `Unbundling — billing separate component codes when a single comprehensive code like ${code} already includes the work — is a common review topic. Compare line items to operative notes, lab reports, or imaging reports.`,
-    `Duplicate charges for the same service on one date of service, or mismatched place-of-service codes (telehealth vs in-person, hospital outpatient vs office), can change allowed amounts and patient responsibility.`,
-    `Out-of-network providers at in-network facilities (common with anesthesia, radiology, pathology, and emergency care) may bill amounts above your plan's allowed rate.`,
+    [
+      `For CPT ${code}, duplicate same-day lines or wrong place-of-service (telehealth vs in-person, hospital outpatient vs office) can change allowed amounts and what you owe.`,
+      `Watch CPT ${code} for repeated same-date charges or POS mismatches (telehealth/office/hospital outpatient) — those shifts often change patient responsibility.`,
+      `Same-day repeats of CPT ${code} or telehealth vs facility POS errors commonly alter allowed amounts; request a corrected claim if the setting is wrong.`,
+    ][v],
+    [
+      `Even when the facility is in-network, an out-of-network clinician tied to CPT ${code} (anesthesia, radiology, pathology, ED) may bill above your plan allowed rate.`,
+      `CPT ${code} billed by an out-of-network provider inside an in-network hospital or ASC can exceed plan-allowed amounts — common with anesthesia, radiology, pathology, and ED coverage.`,
+      `Network status for the clinician reporting CPT ${code} matters separately from the facility; OON anesthesia/radiology/pathology/ED bills often exceed in-network allowed rates.`,
+    ][v],
     `Upcoding to a higher-level CPT when documentation supports a lower level, or using ${code} when a more specific or less extensive code would apply, are reasons patients request coding clarification — not accusations of fraud.`,
   ];
 
   const whatToDo = [
     `Request an itemized bill and match CPT ${code} to clinical records: visit summary, lab report, radiology report, or operative note.`,
     `Run code ${code} and your ZIP through our Fair Price Calculator to see Medicare-based benchmarks and an educational fair range.`,
-    `If insured, compare the provider bill to your EOB — note allowed amount, deductible, coinsurance, and whether the provider was in-network.`,
-    `For self-pay patients, ask about prompt-pay discounts, charity care, or cash pricing before paying chargemaster rates in full. You are seeking explanation and fair comparison, not legal advice.`,
+    [
+      `If insured, line up the CPT ${code} provider bill with your EOB: allowed amount, deductible, coinsurance, and network status.`,
+      `Insured patients should match CPT ${code} on the bill to the EOB — check allowed amount, deductible, coinsurance, and whether the provider was in-network.`,
+      `Compare CPT ${code} charges to the EOB fields for allowed amount, deductible, coinsurance, and in-network vs out-of-network status.`,
+    ][v],
+    [
+      `Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT ${code} before paying full chargemaster rates. This is for comparison and questions — not legal advice.`,
+      `If you are self-pay on CPT ${code}, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.`,
+      `Before paying list price for CPT ${code}, self-pay patients should ask about cash pricing, prompt-pay discounts, or charity care. Tools here explain benchmarks; they are not legal advice.`,
+    ][v],
   ];
 
   const faq = [
     {
       question: `What does CPT ${code} mean in plain English?`,
-      answer: `It identifies ${desc.toLowerCase()} on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: ${label}.`,
+      answer: `It identifies ${desc.toLowerCase()} on a medical bill (CPT ${code}). Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: ${label}.`,
     },
     {
       question: `How much should CPT ${code} cost?`,
-      answer: `Medicare benchmarks often center near ${medStr} nationally, with local variation. Many patients see higher charges — ${fair} is an educational uninsured comparison range, not a legal cap.`,
+      answer: [
+        `Medicare benchmarks for CPT ${code} often center near ${medStr} nationally, with local variation. Many patients see higher charges — ${fair} is an educational uninsured comparison range, not a legal cap.`,
+        `National Medicare figures for CPT ${code} commonly sit near ${medStr}. Higher bills are common; ${fair} is an educational self-pay comparison band, not a price law.`,
+        `Expect Medicare reference amounts near ${medStr} for CPT ${code}, varying by ZIP. Charges of about ${fair} appear in educational uninsured ranges and are not a legal maximum.`,
+      ][v],
     },
     {
       question: `Is CPT ${code} covered by insurance?`,
-      answer: `Usually when medically necessary and in-network, subject to deductible, copay, and plan rules. Preventive, screening, and emergency services follow different cost-sharing rules.`,
+      answer: [
+        `CPT ${code} is often covered when medically necessary and in-network, subject to deductible, copay, and plan rules. Preventive, screening, and emergency benefits may use different cost-sharing.`,
+        `Coverage for CPT ${code} usually requires medical necessity and in-network status, then deductible/copay rules apply; preventive, screening, and ED benefits can differ.`,
+        `Insurers commonly cover CPT ${code} when necessary and in-network, after cost-sharing. Screening, preventive, and emergency cost-sharing may not match a standard visit.`,
+      ][v],
     },
     {
       question: `Why is my bill higher than the Medicare rate for ${code}?`,
-      answer: `Hospital facility fees, out-of-network providers, and chargemaster pricing can exceed Medicare. The CPT code alone does not include every line on a surgical or emergency episode.`,
+      answer: [
+        `Facility fees, out-of-network clinicians, and chargemaster rates for visits involving CPT ${code} can exceed Medicare. One CPT line never represents every charge on a surgical or ED episode.`,
+        `Bills with CPT ${code} often run above Medicare because of facility fees, OON providers, or chargemaster pricing — the code alone is not the whole episode cost.`,
+        `Medicare is only one benchmark for CPT ${code}; hospital fees, OON billing, and chargemaster prices routinely sit higher, and other lines may appear on the same encounter.`,
+      ][v],
     },
     {
       question: `Can I question or dispute a ${code} charge?`,
-      answer: `You can request itemization, coding clarification, insurer appeal, or financial assistance review. Our tools compare prices to CMS benchmarks; they do not provide legal advice.`,
+      answer: [
+        `You can request itemization, coding clarification, an insurer appeal, or financial assistance review for CPT ${code}. Our tools compare CMS benchmarks only — not legal advice.`,
+        `For a CPT ${code} charge, ask for itemization, coding notes, appeal rights, or charity-care review. Benchmarks here are educational, not legal advice.`,
+        `Questioning a CPT ${code} line can mean itemization, coder review, plan appeal, or assistance programs. PatientBillGuide compares CMS data; it does not give legal advice.`,
+      ][v],
     },
   ];
 

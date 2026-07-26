@@ -73,6 +73,7 @@ All decisions agreed in planning sessions. Do not change without explicit discus
 | 45 | Stack lock (post-launch) | Stay on **Astro + client-side MPFS JSON** — no Next.js rewrite, no server SQLite price API for CPT |
 | 46 | **Unique page SEO** | Every indexable URL must have a **unique** `<title>`, meta description, and H1; bare title ideally ≤58 chars before brand; no near-duplicate doorway copy — see [GOOGLE_QUALITY.md](GOOGLE_QUALITY.md). Enforce with `npm run audit:seo` after build |
 | 47 | **Reddit — out** | **Do not use Reddit** as a growth / launch channel for PatientBillGuide (or related brands). Shadowbans / “blocked by network security” after normal link posts; not worth founder time. Prefer Product Hunt, Quora, Shorts/TikTok, direct B2B. |
+| 48 | **Original unique content (strict)** | Every indexable page must be **unique on-site** (titles/metas/H1 **and** body prose — no scaled identical paragraphs) **and original** to PatientBillGuide: never AMA/AAPC verbatim; never scrape/republish third-party guides; never republish our CPT/pSEO copy on other domains as SEO mirrors. Enforce: `npm run audit:seo` (includes body uniqueness). |
 
 ## Out of scope for this domain
 

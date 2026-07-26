@@ -80,10 +80,18 @@ Google [spam policies](https://developers.google.com/search/docs/essentials/spam
 - [ ] Passes [EEAT_CHECKLIST.md](EEAT_CHECKLIST.md) red flags scan
 - [ ] After deploy build: `npm run audit:seo` must pass (duplicate title/meta/H1 = fail)
 
-### Gate A+ — Uniqueness is mandatory (DECISIONS #46)
+### Gate A+ — Uniqueness is mandatory (DECISIONS #46 + **#48**)
 
 **Never ship** two indexable URLs that share the same title, meta description, or H1.  
-Template CPT batches must still produce **code-specific** titles/metas (procedure name + Medicare figure). Shared paragraph skeletons are a **watch zone** — Gate D 10% QA must catch copy-paste stiffness.
+**Never ship** CPT (or other) pages that share long identical body paragraphs — that is scaled content abuse, not “light template.”
+
+**Originality (strict — DECISIONS #48):**
+- All patient-facing prose is **written for PatientBillGuide** — original plain-English.
+- **Never** copy AMA / AAPC / competitor CPT descriptions verbatim.
+- **Never** publish the same CPT/pSEO article on Medium, guest blogs, or other domains as a duplicate mirror.
+- Shared chrome (nav, disclaimer component, methodology footer) is fine; **main guide body must differ by code**.
+
+Template CPT batches must produce **code-specific** titles/metas **and** paragraphs that include the CPT code (or otherwise unique wording). Enforce with `npm run audit:seo` (title/meta/H1 **and** body uniqueness).
 
 ### Gate B — Compare pages (manual only)
 

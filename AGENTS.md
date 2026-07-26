@@ -27,9 +27,9 @@ Instructions for Cursor / AI agents continuing this project.
 ## Key constraints
 
 - **Zero-Doorway Rule** — every page answers a real question on-page; no thin SEO funnels ([GOOGLE_QUALITY.md](docs/GOOGLE_QUALITY.md))
+- **Unique original content (DECISIONS #46 + #48)** — every indexable page unique on-site (title/meta/H1 **and** body); never AMA/AAPC verbatim; never republish our pSEO elsewhere; `npm run audit:seo` must pass
 - Never auto-generate compare pages or empty category hubs
 - CPT batches: max 25–50/deploy, 10% manual QA; top 50 codes hand-edited
-- Never copy AMA/AAPC CPT descriptions verbatim — write original plain-English
 - Never claim "fraud" or "guaranteed savings"
 - Always show confidence levels on billing flags
 - "Bill looks normal" is a valid and required outcome
