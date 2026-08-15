@@ -1,7 +1,17 @@
 # Next session plan — PatientBillGuide
 
-**Saved:** 2026-07-26  
-**Continue:** after Cloudflare deploy of uniqueness rehab
+**Saved:** 2026-08-15  
+**Continue:** after deploy of hand-upgrade pass 1
+
+---
+
+## Tomorrow queue
+
+1. Confirm live deploy (5 hand-upgraded CPT bodies)
+2. `contact@` — Cloudflare Email Routing (if not done)
+3. Product Hunt — date slipped past 2026-07-31; redraft if still launching
+4. Quora: 1–2 answers **without** link (DECISIONS #49)
+5. Optional: hand-upgrade next 3–5 (99211, 99205, 43239, 12001, 99281)
 
 ---
 
@@ -20,7 +30,7 @@
 
 - **DECISIONS #48** — original unique content (on-site + not republished elsewhere)
 - `npm run audit:seo` = title/meta/H1 **and** CPT body uniqueness
-- Boilerplate across 200 CPT uniquified; generators updated
+- Hand-upgrade pass 1: **99212**, **99202**, **45380**, **74177**, **20610**
 
 ---
 
@@ -36,10 +46,10 @@
 
 ## Immediate queue
 
-1. Confirm production deploy (unique bodies live)
+1. Confirm production deploy (hand-upgraded bodies live)
 2. `contact@` — Cloudflare Email Routing
-3. Product Hunt ~Tue 2026-07-31
-4. Optional: hand-upgrade top-traffic CPT beyond template variants
+3. Product Hunt (reschedule if needed)
+4. Optional: next 3–5 templated high-volume CPT
 5. Quora + Shorts only
 
 ---

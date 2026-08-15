@@ -2,7 +2,7 @@
 
 > Update this file after every work session. Agents should read this first.
 
-**Last updated:** 2026-07-26  
+**Last updated:** 2026-08-15  
 **Current phase:** Post-launch — **DECISIONS #48** original unique content (strict) · body audit green  
 **Phase status:** 7 live tools · **89 tests** · **244 build** · **200 CPT** · 5 compare · 5 category  
 **Domain:** PatientBillGuide.com  
@@ -10,7 +10,7 @@
 
 > **Strict:** unique title + meta + H1 **and** unique body prose (`npm run audit:seo`). DECISIONS #46 + **#48**.  
 > Never AMA/AAPC verbatim · never republish our pSEO elsewhere · no scaled identical paragraphs.  
-> **Next:** deploy · `contact@` · Product Hunt ~Tue 2026-07-31.
+> **Next:** deploy 5 hand-upgraded CPT · `contact@` · Product Hunt (reschedule).
 
 ---
 
@@ -40,6 +40,7 @@
 - [x] **Unique SEO titles/metas** — `buildCptSeoTitle` / `audit:seo` (DECISIONS #46)
 - [x] **Generic-label rehab** — replaced Day 3/4 placeholders (“Medicine procedure…”) in batches + seeds
 - [x] **Indexed CPT polish** — unique body for Google-seen **90838** / **11400**; `dateModified` → 2026-07-26
+- [x] **Hand-upgrade pass 1** — unique bodies for **99212**, **99202**, **45380**, **74177**, **20610** (2026-08-15)
 - [ ] AdSense application — later (user deferred)
 - [ ] Set up `contact@patientbillguide.com` — Day 5 manual
 - [ ] Product Hunt launch — ~Tue 2026-07-31 (Fair Price utility)
@@ -72,6 +73,7 @@
 
 | Date | Done |
 |------|------|
+| 2026-08-15 | **Hand-upgrade 5 CPT:** 99212, 99202, 45380, 74177, 20610 — unique bodies, related-code fixes, `dateModified` → 2026-08-15 |
 | 2026-07-26 | **#48 locked:** original unique content · body uniqueness audit · boilerplate uniquified across 200 CPT · generators updated |
 | 2026-07-26 | **pSEO rehab:** unique titles/metas + generic CPT labels fixed (~49 codes) · 90838/11400 body rewrite · `audit:seo` green · deploy next |
 | 2026-07-24 | CPT utility coded · referral idea parked · PH target ~Tue 2026-07-31 |

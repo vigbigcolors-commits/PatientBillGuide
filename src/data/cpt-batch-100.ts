@@ -400,67 +400,73 @@ export const cptBatch100: Record<string, CptPageData> = {
 
     '20610': {
       code: '20610',
-      title: 'CPT Code 20610 — Joint injection, major joint Cost & Billing Guide',
-      metaDescription: 'CPT 20610 is joint injection, major joint. See typical Medicare costs near $68, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 20610 bills for joint injection, major joint — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $68.',
-      category: 'Procedures',
-      categorySlug: 'procedures',
+      title: 'CPT Code 20610 — Major Joint Injection Cost & Billing Guide',
+      metaDescription:
+        'CPT 20610 is an injection into a major joint (knee, hip, or shoulder) without ultrasound. See typical Medicare costs near $68, drug lines, and same-day visit billing.',
+      summary:
+        'CPT 20610 bills aspiration or injection of a major joint or bursa — typically knee, hip, or shoulder — without imaging guidance. The medication is usually a separate charge from this procedure line.',
+      category: 'Surgery',
+      categorySlug: 'surgery',
       whatIs: [
-      'CPT 20610 is a Current Procedural Terminology code used on US medical bills to describe joint injection, major joint. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Joint injection, major joint. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
-      'For CPT 20610, national Medicare medians frequently land near $68, with local and site-of-service variation. We publish CMS-based anchors for questions, not accusations that your bill is incorrect.',
-      'Understanding CPT 20610 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Place of service and network status around CPT 20610 usually drive patient cost more than the CPT number by itself.',
-    ],
+        'CPT 20610 reports arthrocentesis, aspiration, and/or injection of a major joint or bursa without ultrasound (or other) guidance. In clinic language that usually means a cortisone or hyaluronic-acid shot into a knee, hip, or shoulder, or drawing fluid from that joint. It is a procedure code, not the office-visit code and not the drug. 20611 is the same family of work when ultrasound guidance is documented. Smaller joints use different codes. Patients often see 20610 next to an E/M visit (99213/99214) and a J-code for the steroid or viscosupplement — three lines for one appointment is normal when each is documented.',
+        'Medicare Physician Fee Schedule medians for the 20610 procedure itself often land near $68 nationally. That figure is the clinician\'s injection work in many localities, not the drug, not a hospital facility fee, and not a series of weekly hyaluronic injections. Hospital outpatient departments may add facility charges that dwarf the professional line. Independent orthopedic and rheumatology offices usually bill closer to the fee-schedule neighborhood plus the medication.',
+        'PatientBillGuide compares 20610 to CMS public benchmarks. A total above Medicare is common once the drug and visit are included, and that stack is not automatically improper. Match each line to the note: which joint, whether ultrasound was used, which medication, and whether a separately identifiable evaluation was billed the same day.',
+      ],
       whenUsed: [
-      'Providers report CPT 20610 when joint injection, major joint is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
-      'Bills often list CPT 20610 following clinic, specialty, urgent, emergency, surgical, imaging, or lab visits; it can stand alone or sit beside visit or ancillary charges.',
-      'Adjacent CPT numbers can split technical and professional work differently from CPT 20610. Multiple similar lines on one day deserve a clarification request, not an automatic duplicate accusation.',
-      'Coverage for CPT 20610 depends on the payer: Medicare Advantage, Medicaid MCO, commercial, and self-pay policies may require prior authorization or cost-sharing unlike a simple office visit.',
-    ],
+        'Corticosteroid injection into a knee, hip, or shoulder for osteoarthritis, bursitis, or flare, when the note does not support ultrasound-guided 20611.',
+        'Joint aspiration for fluid analysis or relief of effusion, billed as 20610 when performed without imaging guidance.',
+        'Viscosupplementation series (hyaluronic acid) where each injection date may carry 20610 plus a product J-code — confirm how many units and dates your plan allows.',
+        'Same-day office visit plus injection when the clinician documents a separately identifiable E/M (often with modifier 25) in addition to 20610.',
+      ],
       typicalCosts: [
-      'Medicare fee schedule data suggests a national median allowed amount near $68 for CPT 20610 in many localities. That is an anchor for comparison, not a maximum price providers must charge.',
-      'For cash-pay or high-deductible review of CPT 20610, about $103–$171 is a common educational fair range (~1.5×–2.5× Medicare) — not a legal ceiling.',
-      'Place of service and network status around CPT 20610 usually drive patient cost more than the CPT number by itself. Always request an itemized bill and, if insured, compare to your explanation of benefits.',
-      'Enter CPT 20610 and your ZIP in Fair Price here to see a locality Medicare figure when available. Prompt-pay discounts or charity care can still lower self-pay amounts above that anchor.',
-    ],
+        'Medicare allowed amounts for 20610 are often near $68 for the procedure in non-facility settings. Locality and hospital outpatient status change the number.',
+        'An educational uninsured band of about $103–$171 covers the injection work (~1.5×–2.5× Medicare), not the medication. Steroid J-codes are usually modest; hyaluronic products can add hundreds per syringe.',
+        'Facility fees at hospital-owned clinics can exceed the professional 20610 several times over. Ask whether the shot can be given in the office instead of a hospital outpatient department.',
+        'Run 20610 and your ZIP in Fair Price on this page for a localized Medicare procedure anchor when our data covers your area.',
+      ],
       billingIssues: [
-      'Unbundling — billing separate component codes when a single comprehensive code like 20610 already includes the work — is a common review topic. Compare line items to operative notes, lab reports, or imaging reports.',
-      'Watch CPT 20610 for repeated same-date charges or POS mismatches (telehealth/office/hospital outpatient) — those shifts often change patient responsibility.',
-      'CPT 20610 billed by an out-of-network provider inside an in-network hospital or ASC can exceed plan-allowed amounts — common with anesthesia, radiology, pathology, and ED coverage.',
-      'Upcoding to a higher-level CPT when documentation supports a lower level, or using 20610 when a more specific or less extensive code would apply, are reasons patients request coding clarification — not accusations of fraud.',
-    ],
+        '20610 vs 20611 — ultrasound-guided injections should not be billed as 20610 if guidance was used, or as 20611 if the note has no ultrasound. Imaging guidance is the difference patients most often need clarified.',
+        'Drug missing or duplicated: the J-code should match the product in the record. A series billed for dates you did not receive injections is a documentation match, not an automatic fraud claim.',
+        'Visit plus injection: 99213/99214 with 20610 is common when a distinct evaluation occurred. A visit billed for "injection only" with no separate work is a fair clarification question.',
+        'Bilateral or two-joint billing on one date without modifiers or documentation of two sites, or hospital place-of-service when you were injected in an office.',
+      ],
       whatToDo: [
-      'Request an itemized bill and match CPT 20610 to clinical records: visit summary, lab report, radiology report, or operative note.',
-      'Run code 20610 and your ZIP through our Fair Price Calculator to see Medicare-based benchmarks and an educational fair range.',
-      'Insured patients should match CPT 20610 on the bill to the EOB — check allowed amount, deductible, coinsurance, and whether the provider was in-network.',
-      'If you are self-pay on CPT 20610, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.',
-    ],
+        'Itemize: 20610 (procedure), J-code (drug), E/M (visit), and any facility fee. Match joint, laterality, and ultrasound use to the procedure note.',
+        'Compare the 20610 line in Fair Price; treat the drug and visit as separate benchmarks.',
+        'If insured, check the EOB for each line and whether hyaluronic injections needed prior authorization.',
+        'Self-pay: ask for a cash price that includes the medication before you agree to a hospital outpatient injection. Educational comparison only — not legal advice.',
+      ],
       relatedCodes: [
-      { code: '20552', label: 'Trigger point injection, 1–2 muscles' },
-      { code: '96372', label: 'Therapeutic injection, subcutaneous or IM' },
-      { code: '99202', label: 'Office visit, new patient, straightforward' },
+        { code: '20611', label: 'Joint injection with ultrasound guidance' },
+        { code: '96372', label: 'Therapeutic injection, subcutaneous or IM' },
+        { code: '99213', label: 'Office visit — low complexity' },
       ],
       faq: [
-      {
-        question: 'What does CPT 20610 mean in plain English?',
-        answer: 'It identifies joint injection, major joint on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Joint injection, major joint.',
-      },
-      {
-        question: 'How much should CPT 20610 cost?',
-        answer: 'National Medicare figures for CPT 20610 commonly sit near $68. Higher bills are common; $103–$171 is an educational self-pay comparison band, not a price law.',
-      },
-      {
-        question: 'Is CPT 20610 covered by insurance?',
-        answer: 'Coverage for CPT 20610 usually requires medical necessity and in-network status, then deductible/copay rules apply; preventive, screening, and ED benefits can differ.',
-      },
-      {
-        question: 'Why is my bill higher than the Medicare rate for 20610?',
-        answer: 'Bills with CPT 20610 often run above Medicare because of facility fees, OON providers, or chargemaster pricing — the code alone is not the whole episode cost.',
-      },
-      {
-        question: 'Can I question or dispute a 20610 charge?',
-        answer: 'For a CPT 20610 charge, ask for itemization, coding notes, appeal rights, or charity-care review. Benchmarks here are educational, not legal advice.',
-      },
+        {
+          question: 'What does CPT 20610 mean in plain English?',
+          answer:
+            'A needle procedure to inject medication into — or draw fluid from — a major joint such as the knee, hip, or shoulder, without ultrasound guidance.',
+        },
+        {
+          question: 'Does 20610 include the cortisone or gel shot medication?',
+          answer:
+            'Usually not. The procedure is 20610; the drug is typically a separate J-code. Hyaluronic acid products can cost more than the injection fee itself.',
+        },
+        {
+          question: 'How much should CPT 20610 cost?',
+          answer:
+            'Medicare often allows near $68 for the injection work. About $103–$171 is an educational self-pay band for that line. Add the visit, drug, and any facility fee separately.',
+        },
+        {
+          question: 'Why was I billed for a doctor visit and 20610?',
+          answer:
+            'If the clinician evaluated and managed a problem beyond the injection itself, an E/M code can appear the same day. If the appointment was only the shot, ask how the visit was documented.',
+        },
+        {
+          question: 'Can I question a 20610 charge?',
+          answer:
+            'Yes — request itemization and the procedure note (joint, guidance, medication). Our tools compare CMS benchmarks; they are not legal advice.',
+        },
       ],
     },
 
@@ -862,67 +868,73 @@ export const cptBatch100: Record<string, CptPageData> = {
 
     '45380': {
       code: '45380',
-      title: 'CPT Code 45380 — Colonoscopy with biopsy Cost & Billing Guide',
-      metaDescription: 'CPT 45380 is colonoscopy with biopsy. See typical Medicare costs near $782, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 45380 bills for colonoscopy with biopsy — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $782.',
+      title: 'CPT Code 45380 — Colonoscopy with Biopsy Cost & Billing Guide',
+      metaDescription:
+        'CPT 45380 is colonoscopy with biopsy. See typical Medicare costs near $782, screening vs diagnostic cost-sharing, and how to review facility and pathology lines.',
+      summary:
+        'CPT 45380 reports a colonoscopy during which tissue was biopsied — not the base diagnostic exam (45378) and not snare polypectomy (45385). Screening visits often become this code when a sample is taken.',
       category: 'Surgery',
       categorySlug: 'surgery',
       whatIs: [
-      'CPT 45380 is a Current Procedural Terminology code used on US medical bills to describe colonoscopy with biopsy. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Colonoscopy with biopsy. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
-      'CMS MPFS data often puts a national median near $782 for CPT 45380; ZIP and place of service can move that figure. PatientBillGuide uses public CMS benchmarks so you can compare — a higher charge alone is not proof the bill is wrong.',
-      'Understanding CPT 45380 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Surgeon professional fees are only one line on a surgery bill — anesthesia, facility, implants, and post-acute care bill separately.',
-    ],
+        'CPT 45380 is the colonoscopy code used when the endoscopist examines the colon and takes one or more biopsies — tissue samples sent to pathology — without reporting a snare polypectomy as the primary therapeutic work. It is a procedure code, not a diagnosis. 45378 is the diagnostic colonoscopy when no biopsy or removal occurs. 45385 is typically used when a lesion is removed with a snare. Patients who scheduled a "free screening" colonoscopy often see 45380 after a polyp or suspicious area is sampled, and that change is one of the most common reasons a $0 screening expectation turns into deductible or coinsurance.',
+        'The gastroenterologist\'s professional fee is only one line. Facility (hospital outpatient endoscopy vs ambulatory surgery center), anesthesia or sedation, and pathology on each specimen bill separately. Pathology CPTs (often in the 88305 neighborhood for GI biopsies) can arrive weeks later from a lab that is out of network even when the endoscopy center was in network. Medicare Physician Fee Schedule medians for 45380 — often near $782 nationally for the professional work in many localities — are an anchor for that surgeon/endoscopist line, not the whole episode.',
+        'PatientBillGuide compares the 45380 professional line to CMS public data. Hospital chargemaster totals and out-of-network anesthesia routinely sit far above Medicare. That gap is a reason to itemize and ask questions, not a conclusion that anyone billed illegally. Confirm what the operative report actually says: biopsy only, snare removal, or both, before you assume the CPT is a duplicate of 45378.',
+      ],
       whenUsed: [
-      'Providers report CPT 45380 when colonoscopy with biopsy is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
-      'CPT 45380 may show up after primary care, specialty, urgent care, ED, outpatient surgery, imaging, or lab encounters — alone or next to an E/M, anesthesia, or supply line.',
-      'Services near CPT 45380 may use adjacent codes with different technical vs professional splits. If several similar lines share one date, ask which services were actually performed before assuming a duplicate.',
-      'Commercial plans, Medicare Advantage, Medicaid managed care, and self-pay rules treat medical necessity for CPT 45380 differently — prior auth or separate cost-sharing can still apply even when the code is common.',
-    ],
+        'Colonoscopy with forceps biopsy of mucosa, a polyp, or an abnormal area when snare polypectomy is not the reported therapeutic code.',
+        'Screening colonoscopy that converts to a diagnostic/therapeutic claim because tissue was sampled — plan cost-sharing rules vary; ask before prep day how your insurer treats biopsy during screening.',
+        'Surveillance after prior polyps when biopsies are taken even if no large polyp is snared.',
+        'Evaluation of bleeding, anemia, or a positive stool test when the report documents biopsy rather than diagnostic inspection alone (45378).',
+      ],
       typicalCosts: [
-      'Medicare fee schedule data suggests a national median allowed amount near $782 for CPT 45380 in many localities. That is an anchor for comparison, not a maximum price providers must charge.',
-      'An educational uninsured or high-deductible comparison band for CPT 45380 is often about $1,174–$1,956 (roughly 1.5×–2.5× Medicare). Commercial contracted rates will differ.',
-      'The professional fee for CPT 45380 is only one surgery line — anesthesia, facility, implants, and post-acute care bill separately. Request itemization and compare to your EOB if insured.',
-      'Run CPT 45380 through the Fair Price Calculator on this page with your ZIP for a localized Medicare allowed amount when our data covers your area. Ask about cash-pay or financial assistance if the charge looks high versus that benchmark.',
-    ],
+        'Medicare professional medians for 45380 often sit near $782 nationally; locality and site of service change that figure. Combined episode payments (facility + anesthesia + pathology) are a different, usually larger, total.',
+        'An educational uninsured comparison for the 45380 professional line alone is often about $1,174–$1,956 (roughly 1.5×–2.5× Medicare) — not a legal ceiling and not the hospital chargemaster.',
+        'ASC cash packages for colonoscopy-with-biopsy frequently undercut hospital outpatient endoscopy. Anesthesia and pathology are the lines that most often surprise patients after a "quoted" facility price.',
+        'Run 45380 and your ZIP in Fair Price on this page for a localized Medicare professional anchor when our data covers your area.',
+      ],
       billingIssues: [
-      'Unbundling — billing separate component codes when a single comprehensive code like 45380 already includes the work — is a common review topic. Compare line items to operative notes, lab reports, or imaging reports.',
-      'For CPT 45380, duplicate same-day lines or wrong place-of-service (telehealth vs in-person, hospital outpatient vs office) can change allowed amounts and what you owe.',
-      'Even when the facility is in-network, an out-of-network clinician tied to CPT 45380 (anesthesia, radiology, pathology, ED) may bill above your plan allowed rate.',
-      'Upcoding to a higher-level CPT when documentation supports a lower level, or using 45380 when a more specific or less extensive code would apply, are reasons patients request coding clarification — not accusations of fraud.',
-    ],
+        'Screening-to-diagnostic reclassification after biopsy — patients expected $0 preventive coverage and instead see deductible applied. Policies differ; request the plan\'s written rule and the diagnosis codes on the claim.',
+        '45380 billed together with 45378 for the same session, or 45385 plus 45380 without a clear operative distinction — match codes to the procedure note rather than assuming unbundling.',
+        'Out-of-network anesthesiologist or pathologist at an in-network endoscopy center — a frequent balance-bill pattern even when the facility and GI group are in network.',
+        'Facility vs ASC price gap for the same professional 45380. Hospital outpatient endoscopy can add thousands above an independent ASC.',
+      ],
       whatToDo: [
-      'Request an itemized bill and match CPT 45380 to clinical records: visit summary, lab report, radiology report, or operative note.',
-      'Run code 45380 and your ZIP through our Fair Price Calculator to see Medicare-based benchmarks and an educational fair range.',
-      'If insured, line up the CPT 45380 provider bill with your EOB: allowed amount, deductible, coinsurance, and network status.',
-      'Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT 45380 before paying full chargemaster rates. This is for comparison and questions — not legal advice.',
-    ],
+        'Before the procedure, confirm in-network status for the facility, gastroenterologist, anesthesia group, and pathology lab — four contracts, not one.',
+        'Request the operative report and itemized bill; match 45380 vs 45378 vs 45385 to what was actually done, then compare the professional line in Fair Price.',
+        'If insured, wait for EOBs from facility, professional, anesthesia, and lab; they may not arrive together.',
+        'Self-pay: get a written ASC or hospital estimate that lists biopsy, anesthesia, and pathology. Educational comparison only — not legal advice.',
+      ],
       relatedCodes: [
-      { code: '10060', label: 'Incision and drainage, abscess, simple' },
-      { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '12001', label: 'Simple wound repair, 2.5 cm or less' },
+        { code: '45378', label: 'Diagnostic colonoscopy (no biopsy)' },
+        { code: '45385', label: 'Colonoscopy with snare polypectomy' },
+        { code: '45381', label: 'Colonoscopy with submucosal injection' },
       ],
       faq: [
-      {
-        question: 'What does CPT 45380 mean in plain English?',
-        answer: 'It identifies colonoscopy with biopsy on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Colonoscopy with biopsy.',
-      },
-      {
-        question: 'How much should CPT 45380 cost?',
-        answer: 'Medicare benchmarks for CPT 45380 often center near $782 nationally, with local variation. Many patients see higher charges — $1,174–$1,956 is an educational uninsured comparison range, not a legal cap.',
-      },
-      {
-        question: 'Is CPT 45380 covered by insurance?',
-        answer: 'CPT 45380 is often covered when medically necessary and in-network, subject to deductible, copay, and plan rules. Preventive, screening, and emergency benefits may use different cost-sharing.',
-      },
-      {
-        question: 'Why is my bill higher than the Medicare rate for 45380?',
-        answer: 'Facility fees, out-of-network clinicians, and chargemaster rates for visits involving CPT 45380 can exceed Medicare. One CPT line never represents every charge on a surgical or ED episode.',
-      },
-      {
-        question: 'Can I question or dispute a 45380 charge?',
-        answer: 'You can request itemization, coding clarification, an insurer appeal, or financial assistance review for CPT 45380. Our tools compare CMS benchmarks only — not legal advice.',
-      },
+        {
+          question: 'What does CPT 45380 mean in plain English?',
+          answer:
+            'A colonoscopy during which the clinician took a tissue biopsy. It is not the no-biopsy diagnostic code 45378, and it is not the usual snare-polyp-removal code 45385.',
+        },
+        {
+          question: 'Why did I owe money after a screening colonoscopy billed 45380?',
+          answer:
+            'Taking a biopsy often changes how plans classify the visit from preventive screening to a service with cost-sharing. Anesthesia or pathology from another group can add patient responsibility even when the GI facility was in network.',
+        },
+        {
+          question: 'How much should CPT 45380 cost?',
+          answer:
+            'Medicare professional benchmarks often center near $782. The full episode — facility, sedation, pathology — is usually much higher, especially at hospital outpatient units. $1,174–$1,956 is an educational band for the professional line, not a legal cap.',
+        },
+        {
+          question: 'Does 45380 include the pathology lab fee?',
+          answer:
+            'No. Histopathology of the specimen is a separate claim. Ask which lab will read the biopsy before the procedure if you want to avoid an out-of-network lab bill.',
+        },
+        {
+          question: 'Can I question a 45380 charge?',
+          answer:
+            'Yes — request itemization, the operative report, and coding clarification. Our tools compare CMS benchmarks; they are not legal advice.',
+        },
       ],
     },
 
@@ -2314,67 +2326,73 @@ export const cptBatch100: Record<string, CptPageData> = {
 
     '74177': {
       code: '74177',
-      title: 'CPT Code 74177 — CT abdomen and pelvis with contrast Cost & Billing Guide',
-      metaDescription: 'CPT 74177 is ct abdomen and pelvis with contrast. See typical Medicare costs near $249, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 74177 bills for ct abdomen and pelvis with contrast — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $249.',
+      title: 'CPT Code 74177 — CT Abdomen and Pelvis with Contrast Cost & Billing Guide',
+      metaDescription:
+        'CPT 74177 is a CT of the abdomen and pelvis with contrast. See typical Medicare costs near $249, hospital vs imaging-center prices, and how to check contrast coding.',
+      summary:
+        'CPT 74177 is a combined CT scan of the abdomen and pelvis performed with intravenous contrast — one of the highest-volume (and highest-markup) imaging lines on US hospital bills.',
       category: 'Imaging',
       categorySlug: 'imaging',
       whatIs: [
-      'CPT 74177 is a Current Procedural Terminology code used on US medical bills to describe ct abdomen and pelvis with contrast. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: CT abdomen and pelvis with contrast. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
-      'CMS MPFS data often puts a national median near $249 for CPT 74177; ZIP and place of service can move that figure. PatientBillGuide uses public CMS benchmarks so you can compare — a higher charge alone is not proof the bill is wrong.',
-      'Understanding CPT 74177 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Independent imaging centers and physician offices are often less expensive than hospital outpatient radiology for the same CPT code.',
-    ],
+        'CPT 74177 reports computed tomography of both the abdomen and the pelvis in one study, acquired with IV contrast. It is an imaging procedure code, not a diagnosis. Adjacent codes matter: 74176 is the same body region without contrast; 74178 is with and without contrast. Billing 74177 when the radiology report says "without contrast" is a common mismatch worth checking. Contrast material may appear as a separate supply or HCPCS line in some settings; in others it is packaged. The scan itself is usually split — or billed globally — between a technical component (scanner, technologist, facility) and a professional component (radiologist interpretation).',
+        'Site of service drives patient cost more than the five-digit code. The same 74177 at a freestanding imaging center, a hospital outpatient department, or an emergency department can differ by thousands of dollars because of facility fees, not because the images are a different CPT. Medicare Physician Fee Schedule medians often land near $249 nationally for the combined professional/technical picture used in many localities — an educational anchor, not what a hospital chargemaster lists.',
+        'PatientBillGuide uses CMS public data so you can compare. A charge above Medicare is typical for hospital CT and is not proof of improper billing. For non-emergency scans, asking where the order can be performed is often the highest-ROI question on the whole bill.',
+      ],
       whenUsed: [
-      'Providers report CPT 74177 when ct abdomen and pelvis with contrast is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
-      'CPT 74177 may show up after primary care, specialty, urgent care, ED, outpatient surgery, imaging, or lab encounters — alone or next to an E/M, anesthesia, or supply line.',
-      'Services near CPT 74177 may use adjacent codes with different technical vs professional splits. If several similar lines share one date, ask which services were actually performed before assuming a duplicate.',
-      'Commercial plans, Medicare Advantage, Medicaid managed care, and self-pay rules treat medical necessity for CPT 74177 differently — prior auth or separate cost-sharing can still apply even when the code is common.',
-    ],
+        'Workup of abdominal or pelvic pain, suspected infection, kidney stones with contrast protocols, cancer staging, or post-operative questions when the clinician orders a contrast-enhanced abdomen/pelvis CT.',
+        'Emergency department imaging when IV contrast is given and the report documents a combined abdomen and pelvis study rather than abdomen-only or pelvis-only codes.',
+        'Outpatient oncology or GI follow-up when prior-authorization rules treat 74177 as a high-cost imaging service distinct from ultrasound (76700) or non-contrast CT (74176).',
+        'Any claim that lists both abdomen CT and pelvis CT as two complete studies on one date — combined 74177 is often the correct single code when one contrast exam covered both regions.',
+      ],
       typicalCosts: [
-      'Medicare fee schedule data suggests a national median allowed amount near $249 for CPT 74177 in many localities. That is an anchor for comparison, not a maximum price providers must charge.',
-      'An educational uninsured or high-deductible comparison band for CPT 74177 is often about $373–$622 (roughly 1.5×–2.5× Medicare). Commercial contracted rates will differ.',
-      'Independent imaging centers and offices often charge less than hospital outpatient radiology for CPT 74177. Request an itemized bill and compare to your EOB if insured.',
-      'Run CPT 74177 through the Fair Price Calculator on this page with your ZIP for a localized Medicare allowed amount when our data covers your area. Ask about cash-pay or financial assistance if the charge looks high versus that benchmark.',
-    ],
+        'Medicare combined allowed amounts for 74177 are often near $249 nationally in non-hospital fee-schedule contexts; hospital outpatient and ED allowed amounts follow different payment systems and are frequently higher.',
+        'An educational uninsured band of about $373–$622 (roughly 1.5×–2.5× the MPFS-style Medicare figure) is a comparison aid for independent-center pricing — hospital list prices commonly exceed that band by a wide margin.',
+        'Cash-pay CT at independent imaging centers is often published and negotiable; ED and hospital outpatient chargemasters are not. Always separate technical vs professional lines on the itemized bill.',
+        'Enter 74177 and your ZIP in Fair Price on this page for a locality Medicare figure when our data covers your area.',
+      ],
       billingIssues: [
-      'Unbundling — billing separate component codes when a single comprehensive code like 74177 already includes the work — is a common review topic. Compare line items to operative notes, lab reports, or imaging reports.',
-      'For CPT 74177, duplicate same-day lines or wrong place-of-service (telehealth vs in-person, hospital outpatient vs office) can change allowed amounts and what you owe.',
-      'Even when the facility is in-network, an out-of-network clinician tied to CPT 74177 (anesthesia, radiology, pathology, ED) may bill above your plan allowed rate.',
-      'Upcoding to a higher-level CPT when documentation supports a lower level, or using 74177 when a more specific or less extensive code would apply, are reasons patients request coding clarification — not accusations of fraud.',
-    ],
+        'Contrast mismatch — 74177 billed when the report is non-contrast (74176), or 74178 billed when only a with-contrast series was done.',
+        'Unbundling abdomen CT plus pelvis CT as two complete exams instead of the combined 74177 when a single contrast study covered both.',
+        'Out-of-network radiologist interpretation at an in-network hospital or ED — a frequent surprise professional bill.',
+        'Repeat same-day CT without a documented reason, or charging hospital outpatient rates for a scan performed at a contracted imaging center.',
+      ],
       whatToDo: [
-      'Request an itemized bill and match CPT 74177 to clinical records: visit summary, lab report, radiology report, or operative note.',
-      'Run code 74177 and your ZIP through our Fair Price Calculator to see Medicare-based benchmarks and an educational fair range.',
-      'If insured, line up the CPT 74177 provider bill with your EOB: allowed amount, deductible, coinsurance, and network status.',
-      'Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT 74177 before paying full chargemaster rates. This is for comparison and questions — not legal advice.',
-    ],
+        'Read the radiology report: abdomen and pelvis, with vs without contrast, and match that sentence to 74177 / 74176 / 74178.',
+        'For scheduled (non-ED) scans, ask whether an independent imaging center can fill the order and quote a cash or in-network price before you go to the hospital outpatient department.',
+        'Itemize technical vs professional; run 74177 through Fair Price for the Medicare-style anchor, then compare each claim to the EOB.',
+        'Self-pay: request a written self-pay CT price before paying chargemaster. Educational comparison only — not legal advice.',
+      ],
       relatedCodes: [
-      { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
-      { code: '70450', label: 'CT head without contrast' },
+        { code: '74176', label: 'CT abdomen and pelvis without contrast' },
+        { code: '70450', label: 'CT head without contrast' },
+        { code: '76700', label: 'Complete abdominal ultrasound' },
       ],
       faq: [
-      {
-        question: 'What does CPT 74177 mean in plain English?',
-        answer: 'It identifies ct abdomen and pelvis with contrast on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: CT abdomen and pelvis with contrast.',
-      },
-      {
-        question: 'How much should CPT 74177 cost?',
-        answer: 'Medicare benchmarks for CPT 74177 often center near $249 nationally, with local variation. Many patients see higher charges — $373–$622 is an educational uninsured comparison range, not a legal cap.',
-      },
-      {
-        question: 'Is CPT 74177 covered by insurance?',
-        answer: 'CPT 74177 is often covered when medically necessary and in-network, subject to deductible, copay, and plan rules. Preventive, screening, and emergency benefits may use different cost-sharing.',
-      },
-      {
-        question: 'Why is my bill higher than the Medicare rate for 74177?',
-        answer: 'Facility fees, out-of-network clinicians, and chargemaster rates for visits involving CPT 74177 can exceed Medicare. One CPT line never represents every charge on a surgical or ED episode.',
-      },
-      {
-        question: 'Can I question or dispute a 74177 charge?',
-        answer: 'You can request itemization, coding clarification, an insurer appeal, or financial assistance review for CPT 74177. Our tools compare CMS benchmarks only — not legal advice.',
-      },
+        {
+          question: 'What does CPT 74177 mean in plain English?',
+          answer:
+            'A CT scan that covers both the abdomen and the pelvis, done with IV contrast dye. Without-contrast combined CT is usually 74176.',
+        },
+        {
+          question: 'How much should a 74177 CT cost?',
+          answer:
+            'Medicare-style benchmarks often sit near $249. Independent centers may quote a few hundred dollars cash. Hospital and ED bills for the same code frequently reach four figures before insurance adjustments.',
+        },
+        {
+          question: 'Why is hospital CT so much higher than Medicare?',
+          answer:
+            'Facility fees, ED chargemasters, and separately billed radiologist reads stack on top of the CPT number. The code is the same; the setting is not.',
+        },
+        {
+          question: 'Is CPT 74177 covered by insurance?',
+          answer:
+            'Often when medically necessary and authorized, subject to deductible and coinsurance. Many plans require prior authorization for outpatient CT. ED scans follow emergency benefits, not the same prior-auth path.',
+        },
+        {
+          question: 'Can I question a 74177 charge?',
+          answer:
+            'Yes — match the report to the code, itemize facility vs professional, and compare to CMS benchmarks. Our tools are educational, not legal advice.',
+        },
       ],
     },
 
@@ -4888,67 +4906,73 @@ export const cptBatch100: Record<string, CptPageData> = {
 
     '99202': {
       code: '99202',
-      title: 'CPT Code 99202 — Office visit, new patient, straightforward Cost & Billing Guide',
-      metaDescription: 'CPT 99202 is office visit, new patient, straightforward. See typical Medicare costs near $69, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99202 bills for office visit, new patient, straightforward — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $69.',
+      title: 'CPT Code 99202 — New Patient Office Visit, Straightforward Cost & Billing Guide',
+      metaDescription:
+        'CPT 99202 is a straightforward new-patient office visit. See typical Medicare costs near $69, how it differs from 99203, and how to review a first-visit bill.',
+      summary:
+        'CPT 99202 bills a first office visit for a new patient when medical decision-making is straightforward — the lowest commonly used new-patient E/M level above a truly minimal encounter.',
       category: 'Office visits',
       categorySlug: 'office-visits',
       whatIs: [
-      'CPT 99202 is a Current Procedural Terminology code used on US medical bills to describe office visit, new patient, straightforward. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Office visit, new patient, straightforward. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
-      'A typical Medicare allowed median for CPT 99202 is near $69 nationally, but locality and setting change the number. Our tools use CMS public data to help you ask informed questions, not to declare fraud.',
-      'Understanding CPT 99202 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Hospital-owned outpatient clinics may add facility fees on top of the physician visit code.',
-    ],
+        'CPT 99202 is an evaluation-and-management code for a new-patient office or outpatient visit with straightforward medical decision-making. "New patient" is a coding rule, not a feeling: you have not received face-to-face professional services from that physician or same-specialty group practice in the prior three years. The code covers the clinician\'s history, exam, and plan for a limited, uncomplicated problem — not procedures done in the room.',
+        'New-patient codes 99202–99205 parallel established-patient 99212–99215 but usually pay more on the Medicare fee schedule because a first encounter typically needs more history. 99202 is the straightforward tier — below 99203 (low complexity), which is the first-visit code patients see more often. If your first appointment felt like a full workup of several problems, 99203 or 99204 may be what documentation supports; if it was a focused, simple issue, 99202 can be the correct line.',
+        'Injections, labs, EKGs, and biopsies billed the same day are separate CPTs when documented. Hospital-owned outpatient clinics may add a facility fee on top of 99202. PatientBillGuide publishes CMS public medians so you can compare the visit line. A higher charge than Medicare is common and is not automatic evidence of wrongdoing.',
+      ],
       whenUsed: [
-      'Providers report CPT 99202 when office visit, new patient, straightforward is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
-      'Expect CPT 99202 on statements from offices, specialists, urgent care, EDs, ASC/outpatient surgery, imaging centers, or labs, sometimes with a separate E/M or supply code.',
-      'If your claim shows CPT 99202 plus look-alike codes the same day, confirm each service in the note — adjacent CPTs often differ by component, not by error alone.',
-      'A familiar CPT 99202 can still need prior auth or carry copays that differ from office-visit rules under commercial, MA, Medicaid managed care, or self-pay policies.',
-    ],
+        'A first appointment for a single uncomplicated complaint — a minor skin issue, a simple musculoskeletal question, or a focused intake that did not require extensive data or high-risk management.',
+        'New specialist visits when the referral is narrow and documentation stays at straightforward complexity rather than the 99203/99204 range.',
+        'Urgent-care or retail-clinic first encounters billed as new-patient office visits when the payer accepts that place of service and the note supports 99202.',
+        'Any new-patient visit where problems, data, and risk do not meet the low-complexity threshold for 99203 — compare our 99202 vs 99203 guide if both codes appear in your research.',
+      ],
       typicalCosts: [
-      'Medicare fee schedule data suggests a national median allowed amount near $69 for CPT 99202 in many localities. That is an anchor for comparison, not a maximum price providers must charge.',
-      'Self-pay comparison for CPT 99202 often uses about $103–$171 as an educational fair range (about 1.5× to 2.5× the Medicare benchmark); insurer negotiated amounts vary.',
-      'CPT 99202 from a hospital outpatient department can include facility charges beyond the physician line — confirm on the itemized statement and EOB.',
-      'Compare CPT 99202 in the on-page Fair Price tool by ZIP when launch data includes your locality; cash pricing or assistance programs may reduce chargemaster-style bills.',
-    ],
+        'Medicare allowed amounts for 99202 often sit near $69 nationally in the non-facility setting — typically below 99203 in the same locality.',
+        'An educational self-pay comparison band is often about $103–$171 (roughly 1.5×–2.5× Medicare) for the professional visit only.',
+        'A hospital outpatient clinic can add a facility fee that makes the same first visit cost far more than an independent office charging 99202 alone.',
+        'Use the Fair Price calculator on this page with 99202 and your ZIP for a localized Medicare allowed amount when our data includes your area.',
+      ],
       billingIssues: [
-      'Unbundling — billing separate component codes when a single comprehensive code like 99202 already includes the work — is a common review topic. Compare line items to operative notes, lab reports, or imaging reports.',
-      'Same-day repeats of CPT 99202 or telehealth vs facility POS errors commonly alter allowed amounts; request a corrected claim if the setting is wrong.',
-      'Network status for the clinician reporting CPT 99202 matters separately from the facility; OON anesthesia/radiology/pathology/ED bills often exceed in-network allowed rates.',
-      'Upcoding to a higher-level CPT when documentation supports a lower level, or using 99202 when a more specific or less extensive code would apply, are reasons patients request coding clarification — not accusations of fraud.',
-    ],
+        'New-patient billing when you saw the same specialty group within three years — established codes (99212–99215) should apply instead, and the allowed amount is usually lower.',
+        '99202 vs 99203 mix-ups: a full new-patient history with several problems may support 99203; a truly limited visit may not. Ask which documentation elements were used.',
+        'Preventive "welcome" or annual wellness billed with a problem-oriented 99202 on the same day without a separately identifiable E/M and correct modifiers.',
+        'Telehealth first visits billed as in-person office, or facility place-of-service when you were seen in a private office.',
+      ],
       whatToDo: [
-      'Request an itemized bill and match CPT 99202 to clinical records: visit summary, lab report, radiology report, or operative note.',
-      'Run code 99202 and your ZIP through our Fair Price Calculator to see Medicare-based benchmarks and an educational fair range.',
-      'Compare CPT 99202 charges to the EOB fields for allowed amount, deductible, coinsurance, and in-network vs out-of-network status.',
-      'Before paying list price for CPT 99202, self-pay patients should ask about cash pricing, prompt-pay discounts, or charity care. Tools here explain benchmarks; they are not legal advice.',
-    ],
+        'Confirm the three-year new-patient rule against your own visit history with that group before you treat 99202 as automatically correct.',
+        'Separate the professional visit from any facility fee, labs, or procedures on the itemized bill.',
+        'Run 99202 and your ZIP in Fair Price; if the billed level feels high for a simple first visit, compare 99203 documentation questions next.',
+        'Self-pay: ask for a new-patient cash package or prompt-pay discount before paying chargemaster rates. Educational comparison only — not legal advice.',
+      ],
       relatedCodes: [
-      { code: '99203', label: 'Office visit, new patient, low complexity' },
-      { code: '99204', label: 'Office visit, new patient, moderate complexity' },
-      { code: '99205', label: 'Office visit, new patient, high complexity' },
+        { code: '99203', label: 'New patient — low complexity' },
+        { code: '99204', label: 'New patient — moderate complexity' },
+        { code: '99212', label: 'Established patient — straightforward' },
       ],
       faq: [
-      {
-        question: 'What does CPT 99202 mean in plain English?',
-        answer: 'It identifies office visit, new patient, straightforward on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Office visit, new patient, straightforward.',
-      },
-      {
-        question: 'How much should CPT 99202 cost?',
-        answer: 'Expect Medicare reference amounts near $69 for CPT 99202, varying by ZIP. Charges of about $103–$171 appear in educational uninsured ranges and are not a legal maximum.',
-      },
-      {
-        question: 'Is CPT 99202 covered by insurance?',
-        answer: 'Insurers commonly cover CPT 99202 when necessary and in-network, after cost-sharing. Screening, preventive, and emergency cost-sharing may not match a standard visit.',
-      },
-      {
-        question: 'Why is my bill higher than the Medicare rate for 99202?',
-        answer: 'Medicare is only one benchmark for CPT 99202; hospital fees, OON billing, and chargemaster prices routinely sit higher, and other lines may appear on the same encounter.',
-      },
-      {
-        question: 'Can I question or dispute a 99202 charge?',
-        answer: 'Questioning a CPT 99202 line can mean itemization, coder review, plan appeal, or assistance programs. PatientBillGuide compares CMS data; it does not give legal advice.',
-      },
+        {
+          question: 'What does CPT 99202 mean in plain English?',
+          answer:
+            'A first visit with a clinician or specialty group you have not seen in three years, when the medical issues were straightforward and limited rather than a full 99203-level workup.',
+        },
+        {
+          question: 'How much should a 99202 new-patient visit cost?',
+          answer:
+            'Medicare often allows near $69 depending on ZIP. An educational uninsured band is about $103–$171 for the visit line. Hospital clinic facility fees are extra.',
+        },
+        {
+          question: 'What is the difference between 99202 and 99203?',
+          answer:
+            '99203 reflects low-complexity decision-making and usually pays more. 99202 is the straightforward new-patient level. Documented problems, data, and risk — not wait time — drive the choice.',
+        },
+        {
+          question: 'Can they bill me as a new patient if I was here two years ago?',
+          answer:
+            'If you received professional services from that physician or same-specialty group within three years, established-patient codes generally apply instead of 99202.',
+        },
+        {
+          question: 'Can I question a 99202 charge?',
+          answer:
+            'Yes. Request itemization and coding clarification. PatientBillGuide compares CMS data; it does not give legal advice.',
+        },
       ],
     },
 
@@ -5086,67 +5110,73 @@ export const cptBatch100: Record<string, CptPageData> = {
 
     '99212': {
       code: '99212',
-      title: 'CPT Code 99212 — Office visit, established, straightforward Cost & Billing Guide',
-      metaDescription: 'CPT 99212 is office visit, established, straightforward. See typical Medicare costs near $58, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99212 bills for office visit, established, straightforward — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $58.',
+      title: 'CPT Code 99212 — Established Office Visit, Straightforward Cost & Billing Guide',
+      metaDescription:
+        'CPT 99212 is an established-patient office visit with straightforward decision-making. See typical Medicare costs near $58, fair ranges, and how to review the visit line.',
+      summary:
+        'CPT 99212 is a brief follow-up office visit for a patient the clinician already knows, when medical decision-making stays straightforward — a step below the more common 99213.',
       category: 'Office visits',
       categorySlug: 'office-visits',
       whatIs: [
-      'CPT 99212 is a Current Procedural Terminology code used on US medical bills to describe office visit, established, straightforward. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Office visit, established, straightforward. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
-      'CMS MPFS data often puts a national median near $58 for CPT 99212; ZIP and place of service can move that figure. PatientBillGuide uses public CMS benchmarks so you can compare — a higher charge alone is not proof the bill is wrong.',
-      'Understanding CPT 99212 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Hospital-owned outpatient clinics may add facility fees on top of the physician visit code.',
-    ],
+        'CPT 99212 describes an office or outpatient evaluation-and-management visit for an established patient with straightforward medical decision-making. Established means you have seen that clinician or same-specialty group within three years. The visit itself is the service — not a procedure. Typical documentation supports a focused problem: a simple refill with limited assessment, a quick check of a stable minor issue, or a problem-oriented encounter that does not reach the low-complexity threshold used for 99213.',
+        'On the established-patient office scale, 99212 sits above a nurse-level 99211 and below 99213. Patients often notice 99212 when a visit felt short, or when they expected 99213 because that is the code friends mention. Length of time in the room does not by itself pick the level. Current E/M rules look at problems addressed, data reviewed, and risk. A short visit can still support 99213 if those elements are documented; a longer visit can still be 99212 if the work stayed straightforward.',
+        '99212 does not include labs, injections, EKGs, or procedures done the same day — those bill on separate lines when documented. Hospital-owned clinics may add a facility fee on top of the professional visit. PatientBillGuide uses CMS Medicare Physician Fee Schedule figures as a public comparison anchor. A charge above Medicare is common and is not, by itself, proof that the bill is wrong.',
+      ],
       whenUsed: [
-      'Providers report CPT 99212 when office visit, established, straightforward is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
-      'CPT 99212 may show up after primary care, specialty, urgent care, ED, outpatient surgery, imaging, or lab encounters — alone or next to an E/M, anesthesia, or supply line.',
-      'Services near CPT 99212 may use adjacent codes with different technical vs professional splits. If several similar lines share one date, ask which services were actually performed before assuming a duplicate.',
-      'Commercial plans, Medicare Advantage, Medicaid managed care, and self-pay rules treat medical necessity for CPT 99212 differently — prior auth or separate cost-sharing can still apply even when the code is common.',
-    ],
+        'Follow-up for a single, uncomplicated issue that did not require new data review or a change in a higher-risk plan — for example, a simple rash check or a limited medication refill.',
+        'Problem-oriented visits that are more than a nurse blood-pressure check (99211) but do not meet the low-complexity bar of 99213.',
+        'Some telehealth or portal-adjacent encounters billed as an office visit when payer policy and documentation support a straightforward E/M, with the correct place-of-service or modifier.',
+        'Same-day pairing with a separately identifiable procedure (injection, biopsy, EKG) when the visit work is documented apart from the procedure — modifier rules apply.',
+      ],
       typicalCosts: [
-      'Medicare fee schedule data suggests a national median allowed amount near $58 for CPT 99212 in many localities. That is an anchor for comparison, not a maximum price providers must charge.',
-      'An educational uninsured or high-deductible comparison band for CPT 99212 is often about $88–$146 (roughly 1.5×–2.5× Medicare). Commercial contracted rates will differ.',
-      'Hospital-owned outpatient clinics may add a facility fee on top of CPT 99212. Request an itemized bill and compare to your EOB if insured.',
-      'Run CPT 99212 through the Fair Price Calculator on this page with your ZIP for a localized Medicare allowed amount when our data covers your area. Ask about cash-pay or financial assistance if the charge looks high versus that benchmark.',
-    ],
+        'Medicare allowed amounts for 99212 are often near $58 nationally in the non-facility setting — lower than 99213 in the same ZIP. Locality and facility vs office billing move that figure.',
+        'An educational uninsured or high-deductible comparison band is often about $88–$146 (roughly 1.5×–2.5× Medicare) for the professional visit line alone — not a legal cap.',
+        'Hospital outpatient departments can add a facility fee that dwarfs the 99212 professional amount. Independent offices usually show a single visit line closer to the fee-schedule neighborhood.',
+        'Enter 99212 and your ZIP in the Fair Price tool on this page for a locality Medicare allowed amount when our launch data covers your area.',
+      ],
       billingIssues: [
-      'Unbundling — billing separate component codes when a single comprehensive code like 99212 already includes the work — is a common review topic. Compare line items to operative notes, lab reports, or imaging reports.',
-      'For CPT 99212, duplicate same-day lines or wrong place-of-service (telehealth vs in-person, hospital outpatient vs office) can change allowed amounts and what you owe.',
-      'Even when the facility is in-network, an out-of-network clinician tied to CPT 99212 (anesthesia, radiology, pathology, ED) may bill above your plan allowed rate.',
-      'Upcoding to a higher-level CPT when documentation supports a lower level, or using 99212 when a more specific or less extensive code would apply, are reasons patients request coding clarification — not accusations of fraud.',
-    ],
+        'Confusion with 99213 — if your after-visit note lists several problems, medication changes, or lab review, asking which elements supported 99212 vs 99213 is a fair clarification request, not an accusation.',
+        'Billing 99212 when the encounter was only a nurse protocol visit that may fit 99211, or the reverse: 99212 when a physician visit was never documented.',
+        'Duplicate E/M on the same date, or a preventive wellness code plus 99212 without a clearly separate problem-oriented service and modifier.',
+        'Telehealth billed as in-person office, or hospital clinic place-of-service when you sat in an independent office — both can change allowed amounts.',
+      ],
       whatToDo: [
-      'Request an itemized bill and match CPT 99212 to clinical records: visit summary, lab report, radiology report, or operative note.',
-      'Run code 99212 and your ZIP through our Fair Price Calculator to see Medicare-based benchmarks and an educational fair range.',
-      'If insured, line up the CPT 99212 provider bill with your EOB: allowed amount, deductible, coinsurance, and network status.',
-      'Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT 99212 before paying full chargemaster rates. This is for comparison and questions — not legal advice.',
-    ],
+        'Match 99212 to your after-visit summary: how many issues were addressed, and whether a clinician (not only a nurse protocol) documented the encounter.',
+        'Run 99212 and your ZIP through Fair Price to see the Medicare-based range for the visit line before you treat the chargemaster total as the benchmark.',
+        'If insured, line up the visit charge with the EOB allowed amount, deductible, copay, and network status. Facility and professional claims may arrive separately.',
+        'Self-pay: ask for cash or prompt-pay pricing on the visit before paying list rates. Comparison here is educational, not legal advice.',
+      ],
       relatedCodes: [
-      { code: '99202', label: 'Office visit, new patient, straightforward' },
-      { code: '99203', label: 'Office visit, new patient, low complexity' },
-      { code: '99204', label: 'Office visit, new patient, moderate complexity' },
+        { code: '99213', label: 'Office visit — low complexity' },
+        { code: '99214', label: 'Office visit — moderate complexity' },
+        { code: '99211', label: 'Office visit — nurse or minimal' },
       ],
       faq: [
-      {
-        question: 'What does CPT 99212 mean in plain English?',
-        answer: 'It identifies office visit, established, straightforward on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Office visit, established, straightforward.',
-      },
-      {
-        question: 'How much should CPT 99212 cost?',
-        answer: 'Medicare benchmarks for CPT 99212 often center near $58 nationally, with local variation. Many patients see higher charges — $88–$146 is an educational uninsured comparison range, not a legal cap.',
-      },
-      {
-        question: 'Is CPT 99212 covered by insurance?',
-        answer: 'CPT 99212 is often covered when medically necessary and in-network, subject to deductible, copay, and plan rules. Preventive, screening, and emergency benefits may use different cost-sharing.',
-      },
-      {
-        question: 'Why is my bill higher than the Medicare rate for 99212?',
-        answer: 'Facility fees, out-of-network clinicians, and chargemaster rates for visits involving CPT 99212 can exceed Medicare. One CPT line never represents every charge on a surgical or ED episode.',
-      },
-      {
-        question: 'Can I question or dispute a 99212 charge?',
-        answer: 'You can request itemization, coding clarification, an insurer appeal, or financial assistance review for CPT 99212. Our tools compare CMS benchmarks only — not legal advice.',
-      },
+        {
+          question: 'What does CPT 99212 mean in plain English?',
+          answer:
+            'A follow-up doctor visit for a patient the practice already knows, when the medical decision-making stayed straightforward — typically a focused, limited problem rather than a 99213-level visit.',
+        },
+        {
+          question: 'How much should a 99212 office visit cost?',
+          answer:
+            'Medicare often allows near $58 for the professional visit depending on locality. Uninsured comparison around $88–$146 is educational. Hospital clinic facility fees can push the total much higher.',
+        },
+        {
+          question: 'Is 99212 the same as 99213?',
+          answer:
+            'No. 99213 reflects low-complexity decision-making and usually pays more. 99212 is the straightforward established-patient level. The correct code depends on documented work, not how long you waited.',
+        },
+        {
+          question: 'Is CPT 99212 covered by insurance?',
+          answer:
+            'Usually when the visit is medically necessary and in-network, subject to deductible, copay, and plan rules. Preventive visits use different codes and often different cost-sharing.',
+        },
+        {
+          question: 'Can I question a 99212 charge?',
+          answer:
+            'Yes — request the itemized bill and coding clarification. Our tools compare CMS benchmarks; they do not provide legal advice.',
+        },
       ],
     },
 
