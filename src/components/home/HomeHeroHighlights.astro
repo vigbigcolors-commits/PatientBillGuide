@@ -2,14 +2,15 @@
 import { heroHighlights } from '../../data/hero-highlights';
 ---
 
-<div class="hero-highlights" role="list" aria-label="Why PatientBillGuide">
+<ul class="hero-highlights" aria-label="Why PatientBillGuide">
   {
     heroHighlights.map((item) => {
       const Tag = item.href ? 'a' : 'article';
       const tagProps = item.href ? { href: item.href, class: 'hero-highlight hero-highlight--link' } : { class: 'hero-highlight' };
 
       return (
-        <Tag {...tagProps} role="listitem">
+        <li>
+        <Tag {...tagProps}>
           <span class={`hero-highlight__icon hero-highlight__icon--${item.icon}`} aria-hidden="true">
             {item.icon === 'shield' && (
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -103,19 +104,26 @@ import { heroHighlights } from '../../data/hero-highlights';
             </span>
           )}
         </Tag>
+        </li>
       );
     })
   }
-</div>
+</ul>
 
 <style>
   .hero-highlights {
     display: flex;
     flex-direction: column;
     gap: 0.625rem;
-    margin-top: 1.25rem;
-    padding-top: 0;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
     border-top: none;
+  }
+
+  .hero-highlights > li {
+    margin: 0;
+    padding: 0;
   }
 
   .hero-highlight {
