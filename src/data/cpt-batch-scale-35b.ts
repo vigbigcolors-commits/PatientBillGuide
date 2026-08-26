@@ -436,9 +436,8 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       'Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT 51700 before paying full chargemaster rates. This is for comparison and questions — not legal advice.',
     ],
       relatedCodes: [
-      { code: '10060', label: 'Incision and drainage, abscess, simple' },
-      { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '11102', label: 'Tangential biopsy of skin' },
+        { code: '51701', label: 'Temporary bladder catheter insertion' },
+        { code: '51702', label: 'Indwelling bladder catheter insertion' },
       ],
       faq: [
       {
@@ -502,9 +501,8 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       'Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT 51701 before paying full chargemaster rates. This is for comparison and questions — not legal advice.',
     ],
       relatedCodes: [
-      { code: '10060', label: 'Incision and drainage, abscess, simple' },
-      { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '11102', label: 'Tangential biopsy of skin' },
+        { code: '51702', label: 'Indwelling bladder catheter insertion' },
+        { code: '51700', label: 'Bladder irrigation or medication instillation' },
       ],
       faq: [
       {

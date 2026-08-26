@@ -34,9 +34,11 @@ const updated = page.dateModified ?? '2026-08-15';
 const pageUrl = `/codes/cpt/${page.code}/`;
 const canonical = new URL(pageUrl, site.url).href;
 const seoTitle = buildCptSeoTitle(page);
-/** Hand-curated metas (e.g. 94729 experiment) bypass the category formula. */
-const seoDescription =
-  page.code === '94729' ? page.metaDescription : buildCptSeoMeta(page);
+/** Hand-curated metas bypass the category formula (controlled CPT upgrades). */
+const curatedMetaCodes = new Set(['94729', '51702']);
+const seoDescription = curatedMetaCodes.has(page.code)
+  ? page.metaDescription
+  : buildCptSeoMeta(page);
 
 const schemaGraph = [
   medicalWebPageSchema({

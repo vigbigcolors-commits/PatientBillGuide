@@ -400,67 +400,73 @@ export const cptBatchScale35: Record<string, CptPageData> = {
 
     '51702': {
       code: '51702',
-      title: 'CPT Code 51702 — Insertion of temporary indwelling bladder catheter Cost & Billing Guide',
-      metaDescription: 'CPT 51702 is insertion of temporary indwelling bladder catheter. See typical Medicare costs near $65, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 51702 bills for insertion of temporary indwelling bladder catheter — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $65.',
+      title: 'CPT Code 51702 — Indwelling Bladder Catheter Insertion Cost & Billing Guide',
+      metaDescription:
+        'CPT 51702 is the billing code for indwelling bladder catheter insertion. Learn what it means on your bill, vs 51701, and Medicare cost context.',
+      summary:
+        'CPT 51702 is the line patients usually see when a provider bills for inserting a temporary indwelling bladder catheter — a tube left in place to drain urine rather than removed right away. This page explains the billing code and how to review the charge on a bill or EOB. It does not give catheter-care instructions, diagnose a condition, or decide whether the service was medically necessary for you.',
       category: 'Surgery',
       categorySlug: 'surgery',
+      dateModified: '2026-08-27',
       whatIs: [
-      'CPT 51702 is a Current Procedural Terminology code used on US medical bills to describe insertion of temporary indwelling bladder catheter. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Insertion of temporary indwelling bladder catheter. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
-      'For CPT 51702, national Medicare medians frequently land near $65, with local and site-of-service variation. We publish CMS-based anchors for questions, not accusations that your bill is incorrect.',
-      'Understanding CPT 51702 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. Surgeon professional fees are only one line on a surgery bill — anesthesia, facility, implants, and post-acute care bill separately.',
-    ],
+        'CPT 51702 is a Current Procedural Terminology (CPT®) procedure code used on U.S. medical bills and insurance claims to report insertion of a temporary indwelling bladder catheter. It is not a diagnosis code. It only identifies which service the provider reported for payment.',
+        '“Indwelling” means the catheter remains in the bladder for a period of time (often called a Foley-style catheter in everyday conversation) instead of being placed briefly and removed in the same encounter. That plain-language distinction helps you read the bill — it is not a clinical protocol and not advice about your own care.',
+        'Keep two layers separate: (1) the billing-code layer — what 51702 means on an itemized statement or EOB; and (2) the clinical layer — why your clinician placed a catheter and how it should be managed. PatientBillGuide covers the billing layer only.',
+        'Paperwork may show “51702,” “indwelling catheter,” “Foley,” or a short hospital description next to the same line. The five-digit CPT is what insurers and Medicare fee schedules typically use for payment comparisons.',
+      ],
       whenUsed: [
-      'Providers report CPT 51702 when insertion of temporary indwelling bladder catheter is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
-      'Bills often list CPT 51702 following clinic, specialty, urgent, emergency, surgical, imaging, or lab visits; it can stand alone or sit beside visit or ancillary charges.',
-      'Adjacent CPT numbers can split technical and professional work differently from CPT 51702. Multiple similar lines on one day deserve a clarification request, not an automatic duplicate accusation.',
-      'Coverage for CPT 51702 depends on the payer: Medicare Advantage, Medicaid MCO, commercial, and self-pay policies may require prior authorization or cost-sharing unlike a simple office visit.',
-    ],
+        'Urology clinics, hospitals, emergency departments, perioperative settings, and some primary-care or specialty visits may report catheter insertion when documentation supports an indwelling catheter placement. Exact settings vary; the code alone does not prove where you were treated.',
+        '51702 can appear as a stand-alone line or next to other services from the same date — for example an evaluation-and-management (office/hospital visit) code, facility fees in hospital outpatient or inpatient settings, or other urology procedure codes when more than one service was documented.',
+        'Seeing 51702 does not, by itself, prove the claim was covered, denied, bundled correctly, or billed in error. Coverage and cost-sharing depend on your plan and the claim details.',
+      ],
       typicalCosts: [
-      'Medicare fee schedule data suggests a national median allowed amount near $65 for CPT 51702 in many localities. That is an anchor for comparison, not a maximum price providers must charge.',
-      'For cash-pay or high-deductible review of CPT 51702, about $98–$164 is a common educational fair range (~1.5×–2.5× Medicare) — not a legal ceiling.',
-      'CPT 51702 rarely equals the full surgical episode: anesthesia, facility, implants, and aftercare are separate. Get an itemized bill and match it to the EOB when you have insurance.',
-      'Enter CPT 51702 and your ZIP in Fair Price here to see a locality Medicare figure when available. Prompt-pay discounts or charity care can still lower self-pay amounts above that anchor.',
-    ],
+        'Public CMS Medicare Physician Fee Schedule data in our tools often show a national median allowed amount near $65 for CPT 51702, with locality and place-of-service variation. That figure is a Medicare payment benchmark for comparison — not your deductible, coinsurance, or self-pay balance.',
+        'Separate the dollars you see: (1) the provider’s charged amount, (2) the insurer’s allowed/negotiated amount when you are insured, (3) the Medicare MPFS benchmark we show for education, and (4) your patient responsibility after plan rules. Those four numbers are frequently different.',
+        'An educational self-pay or high-deductible comparison band of about $98–$164 (~1.5×–2.5× the Medicare benchmark) is a PatientBillGuide teaching range, not a legal price ceiling and not a promise of what any insurer will allow.',
+        'Use the Fair Price tool on this page with CPT 51702 and your ZIP for a locality Medicare figure when our launch data covers your area. Compare that benchmark to the EOB allowed amount — not only to the raw charge. See Methodology for data sources and limitations.',
+      ],
       billingIssues: [
-      'Unbundling — billing separate component codes when a single comprehensive code like 51702 already includes the work — is a common review topic. Compare line items to operative notes, lab reports, or imaging reports.',
-      'Watch CPT 51702 for repeated same-date charges or POS mismatches (telehealth/office/hospital outpatient) — those shifts often change patient responsibility.',
-      'CPT 51702 billed by an out-of-network provider inside an in-network hospital or ASC can exceed plan-allowed amounts — common with anesthesia, radiology, pathology, and ED coverage.',
-      'Upcoding to a higher-level CPT when documentation supports a lower level, or using 51702 when a more specific or less extensive code would apply, are reasons patients request coding clarification — not accusations of fraud.',
-    ],
+        'Nearby bladder-catheter and irrigation codes help explain mixed bills: 51701 is commonly associated with temporary bladder catheter insertion that is not described as indwelling on the claim label; 51700 is commonly associated with bladder irrigation or medication instillation; 51702 is the indwelling-insertion line discussed on this page. Exact code selection depends on what was performed and documented — match lines to the clinical note, not to assumptions. We do not reproduce AMA proprietary long descriptors.',
+        'Additional charges on the same visit are common and are not automatically duplicates. You may see a visit (E/M) code, a facility fee, or other procedure lines when more than one service is documented. Ask billing which note entry supports each CPT if the statement is unclear.',
+        'Duplicate same-date 51702 lines, or a 51702 charge when no indwelling catheter insertion appears in the record, are fair clarification questions — still without accusing anyone of fraud.',
+        'We do not state universal bundling or supply-billing rules here. If a catheter supply or kit appears as a separate line, request an itemized explanation from billing rather than assuming it is always correct or always incorrect.',
+      ],
       whatToDo: [
-      'Request an itemized bill and match CPT 51702 to clinical records: visit summary, lab report, radiology report, or operative note.',
-      'Run code 51702 and your ZIP through our Fair Price Calculator to see Medicare-based benchmarks and an educational fair range.',
-      'Insured patients should match CPT 51702 on the bill to the EOB — check allowed amount, deductible, coinsurance, and whether the provider was in-network.',
-      'If you are self-pay on CPT 51702, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.',
-    ],
+        'Request an itemized bill and, if available, the visit or procedure note; confirm that an indwelling bladder catheter insertion is documented for the same date as CPT 51702.',
+        'List nearby bladder codes on that date (51700, 51701, 51702) and ask billing which service each line represents if more than one appears.',
+        'If insured, compare the 51702 charge to your EOB: allowed amount, deductible, coinsurance, and network status. The Medicare benchmark is not what you personally owe.',
+        'Run 51702 and your ZIP in Fair Price for an educational CMS-based comparison. Ask about cash-pay, prompt-pay, or financial assistance only when comparing self-pay options. Educational use only — not legal advice.',
+      ],
       relatedCodes: [
-      { code: '10060', label: 'Incision and drainage, abscess, simple' },
-      { code: '10120', label: 'Incision and removal of foreign body' },
-      { code: '11750', label: 'Excision of nail or nail bed tissue' },
+        { code: '51701', label: 'Temporary bladder catheter insertion (not labeled indwelling)' },
+        { code: '51700', label: 'Bladder irrigation or medication instillation' },
       ],
       faq: [
-      {
-        question: 'What does CPT 51702 mean in plain English?',
-        answer: 'It identifies insertion of temporary indwelling bladder catheter on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Insertion of temporary indwelling bladder catheter.',
-      },
-      {
-        question: 'How much should CPT 51702 cost?',
-        answer: 'National Medicare figures for CPT 51702 commonly sit near $65. Higher bills are common; $98–$164 is an educational self-pay comparison band, not a price law.',
-      },
-      {
-        question: 'Is CPT 51702 covered by insurance?',
-        answer: 'Coverage for CPT 51702 usually requires medical necessity and in-network status, then deductible/copay rules apply; preventive, screening, and ED benefits can differ.',
-      },
-      {
-        question: 'Why is my bill higher than the Medicare rate for 51702?',
-        answer: 'Bills with CPT 51702 often run above Medicare because of facility fees, OON providers, or chargemaster pricing — the code alone is not the whole episode cost.',
-      },
-      {
-        question: 'Can I question or dispute a 51702 charge?',
-        answer: 'For a CPT 51702 charge, ask for itemization, coding notes, appeal rights, or charity-care review. Benchmarks here are educational, not legal advice.',
-      },
+        {
+          question: 'What does CPT 51702 mean?',
+          answer:
+            'CPT 51702 is a billing code commonly used when a provider reports insertion of a temporary indwelling bladder catheter. It identifies the reported service on a claim or itemized bill — not a diagnosis and not instructions for your care.',
+        },
+        {
+          question: 'What does “indwelling” mean?',
+          answer:
+            'In everyday billing language, “indwelling” means the catheter is left in place to drain the bladder for a period of time, rather than being removed immediately after a brief placement. That helps you read the code; it is not medical advice about your catheter.',
+        },
+        {
+          question: 'How is 51702 different from 51701?',
+          answer:
+            'On PatientBillGuide’s plain-language labels, 51702 is tied to temporary indwelling catheter insertion, while 51701 is tied to temporary bladder catheter insertion without the “indwelling” label. The correct code depends on documented services. Match both to your note if both appear — do not assume either line is automatically wrong.',
+        },
+        {
+          question: 'Why can several charges appear for the same visit?',
+          answer:
+            'A single encounter can include a visit code, catheter insertion, facility fees, or other procedures when each is documented. Multiple lines can be expected. Ask billing to map each CPT to the record if the statement is unclear.',
+        },
+        {
+          question: 'Does the Medicare benchmark equal what I owe?',
+          answer:
+            'No. The Medicare MPFS figure (often near $65 nationally for 51702 in our data, varying by ZIP) is a public payment benchmark. Your balance depends on charges, insurer allowed amounts, deductibles, coinsurance, and network rules — or self-pay policies if you are uninsured.',
+        },
       ],
     },
 
