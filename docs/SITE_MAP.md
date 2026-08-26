@@ -159,13 +159,10 @@ Each tool page: methodology footer + limitations + disclaimer.
 
 | Path | Purpose |
 |------|---------|
-| `/robots.txt` | Crawl rules |
-| `/sitemap.xml` | Sitemap index |
-| `/sitemap-pages.xml` | Trust + audience |
-| `/sitemap-tools.xml` | Tools |
-| `/sitemap-learn.xml` | Learn |
-| `/sitemap-codes-*.xml` | CPT (split at scale) |
-| `/sitemap-medicare.xml` | Medicare section |
+| `/robots.txt` | Crawl rules (declares `/sitemap-index.xml`) |
+| `/sitemap-index.xml` | Canonical generated sitemap index (`@astrojs/sitemap`) |
+| `/sitemap-0.xml` | Generated URL list (child of index) |
+| `/sitemap.xml` | 301 → `/sitemap-index.xml` (conventional alias) |
 | `404.html` | Recovery links |
 
 ---

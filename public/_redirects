@@ -1,3 +1,7 @@
 # Medicare lookup consolidated into Fair Price (Part B tab)
 /tools/medicare-lookup /tools/fair-price/?tab=medicare 301
 /tools/medicare-lookup/ /tools/fair-price/?tab=medicare 301
+
+# Conventional sitemap path → Astro @astrojs/sitemap index
+/sitemap.xml /sitemap-index.xml 301
+/sitemap.xml/ /sitemap-index.xml 301
