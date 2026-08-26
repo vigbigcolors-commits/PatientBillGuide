@@ -17,6 +17,8 @@ export interface CptPageData {
   whatToDo: string[];
   relatedCodes: { code: string; label: string }[];
   faq: CptFaq[];
+  /** Optional ISO date (YYYY-MM-DD) for schema/byline; falls back to CPT template default. */
+  dateModified?: string;
 }
 
 import { extraCptPages } from './cpt-extra';

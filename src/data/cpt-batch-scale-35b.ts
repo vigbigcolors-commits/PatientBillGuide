@@ -1638,9 +1638,9 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       'Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT 94726 before paying full chargemaster rates. This is for comparison and questions — not legal advice.',
     ],
       relatedCodes: [
-      { code: '92004', label: 'Ophthalmological exam, new patient, comprehensive' },
-      { code: '92012', label: 'Ophthalmological exam, established patient' },
-      { code: '92014', label: 'Ophthalmological exam, established, comprehensive' },
+        { code: '94010', label: 'Spirometry (basic breathing/airflow test)' },
+        { code: '94060', label: 'Spirometry with bronchodilator testing' },
+        { code: '94729', label: 'DLCO (lung diffusing capacity) test' },
       ],
       faq: [
       {
@@ -1668,67 +1668,75 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
 
     '94729': {
       code: '94729',
-      title: 'CPT Code 94729 — Lung diffusing capacity (DLCO) test Cost & Billing Guide',
-      metaDescription: 'CPT 94729 is lung diffusing capacity (dlco) test. See typical Medicare costs near $63, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 94729 bills for lung diffusing capacity (dlco) test — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $63.',
+      title: 'CPT Code 94729 — DLCO (Lung Diffusing Capacity) Cost & Billing Guide',
+      metaDescription:
+        'CPT 94729 is the billing code for DLCO lung diffusing-capacity testing. Learn what it means on your bill, related PFT codes, and Medicare cost context.',
+      summary:
+        'CPT 94729 is the line patients usually see when a clinic or hospital bills for a DLCO test — short for lung diffusing capacity. In plain language, DLCO checks how effectively gases move from the air spaces in the lungs into the blood. This page explains the billing code and how to review the charge; it does not interpret your personal test result or give medical advice.',
       category: 'Diagnostics',
       categorySlug: 'diagnostics',
+      dateModified: '2026-08-27',
       whatIs: [
-      'CPT 94729 is a Current Procedural Terminology code used on US medical bills to describe lung diffusing capacity (dlco) test. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
-      'Our plain-English summary is original and educational: Lung diffusing capacity (DLCO) test. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
-      'CMS MPFS data often puts a national median near $63 for CPT 94729; ZIP and place of service can move that figure. PatientBillGuide uses public CMS benchmarks so you can compare — a higher charge alone is not proof the bill is wrong.',
-      'Understanding CPT 94729 helps you separate the professional component (physician or qualified clinician work) from facility fees, anesthesia, devices, and other lines that frequently appear on the same encounter. For CPT 94729, setting, network status, and hospital-outpatient vs office billing often matter more than the code digits alone.',
-    ],
+        'CPT 94729 is a Current Procedural Terminology (CPT®) procedure code used on U.S. medical bills and insurance claims to report a lung diffusing-capacity (DLCO) test. It is not a diagnosis code and it is not a “grade” of how healthy your lungs are — it only identifies which service the provider reported for payment.',
+        'DLCO stands for diffusing capacity of the lung for carbon monoxide (or, more generally, lung diffusing capacity). During the test, you typically inhale a very small, carefully measured amount of a tracer gas mixture and then exhale so the lab can estimate how well gas crosses from the lungs into the bloodstream. That is a billing-and-education description of what the test measures — not a reading of your numbers, and not advice about whether the test was medically necessary for you.',
+        'Keep two layers separate: (1) the billing-code layer — what 94729 means on an itemized bill or EOB; and (2) the clinical layer — what your clinician concludes from the report. PatientBillGuide covers the billing layer. Only your care team should interpret DLCO results or decide next steps.',
+        'On paperwork you may see “94729,” “DLCO,” “diffusing capacity,” or a short hospital description next to the same line. Those labels usually point to the same reported service family; the five-digit CPT is what insurers and Medicare fee schedules key off for payment comparisons.',
+      ],
       whenUsed: [
-      'Providers report CPT 94729 when lung diffusing capacity (dlco) test is performed and documented according to payer and coding guidelines. The clinical scenario must support the service — for example, medical necessity, appropriate site of service, and complete documentation.',
-      'CPT 94729 may show up after primary care, specialty, urgent care, ED, outpatient surgery, imaging, or lab encounters — alone or next to an E/M, anesthesia, or supply line.',
-      'Services near CPT 94729 may use adjacent codes with different technical vs professional splits. If several similar lines share one date, ask which services were actually performed before assuming a duplicate.',
-      'Commercial plans, Medicare Advantage, Medicaid managed care, and self-pay rules treat medical necessity for CPT 94729 differently — prior auth or separate cost-sharing can still apply even when the code is common.',
-    ],
+        'Pulmonology, allergy/asthma, interstitial-lung-disease, pulmonary-hypertension, and pre-operative or specialty clinics often order pulmonary function testing (PFT) panels that include a DLCO measurement when the clinician wants information about gas transfer — not only airflow.',
+        '94729 commonly appears on the same date of service as other PFT lines (for example spirometry or lung-volume testing) plus, sometimes, a separate office-visit (E/M) code if a distinct evaluation was also documented.',
+        'Hospital outpatient pulmonary labs and freestanding PFT labs may bill facility and professional components differently than a physician office. The same CPT can sit next to a facility fee or appear split by modifier depending on how the claim was structured — ask for an itemized bill if the statement is unclear.',
+        'Coverage and prior-authorization rules vary by payer. Seeing 94729 on a bill does not, by itself, prove the service was covered, denied, or billed in error.',
+      ],
       typicalCosts: [
-      'Medicare fee schedule data suggests a national median allowed amount near $63 for CPT 94729 in many localities. That is an anchor for comparison, not a maximum price providers must charge.',
-      'An educational uninsured or high-deductible comparison band for CPT 94729 is often about $95–$159 (roughly 1.5×–2.5× Medicare). Commercial contracted rates will differ.',
-      'For CPT 94729, setting, network status, and hospital-outpatient vs office billing often matter more than the code digits alone. Always request an itemized bill and, if insured, compare to your explanation of benefits.',
-      'Run CPT 94729 through the Fair Price Calculator on this page with your ZIP for a localized Medicare allowed amount when our data covers your area. Ask about cash-pay or financial assistance if the charge looks high versus that benchmark.',
-    ],
+        'Public CMS Medicare Physician Fee Schedule data in our tools often show a national median allowed amount near $63 for CPT 94729, with locality and place-of-service variation. That figure is a Medicare payment benchmark for comparison — not your deductible, coinsurance, or self-pay balance.',
+        'Separate the dollars you see: (1) the provider’s charged amount (chargemaster or list price), (2) the insurer’s allowed/negotiated amount when insured, (3) the Medicare MPFS benchmark we show for education, and (4) your patient responsibility after deductible, coinsurance, and plan rules. Those four numbers are frequently different.',
+        'An educational self-pay or high-deductible comparison band of about $95–$159 (~1.5×–2.5× the Medicare benchmark) is a PatientBillGuide teaching range, not a legal price ceiling and not a promise of what any insurer will allow.',
+        'Use the Fair Price tool on this page with CPT 94729 and your ZIP to see a locality Medicare figure when our launch data covers your area. Compare that benchmark to the EOB allowed amount — not only to the raw charge. Methodology and limitations are documented under Methodology.',
+      ],
       billingIssues: [
-      'Unbundling — billing separate component codes when a single comprehensive code like 94729 already includes the work — is a common review topic. Compare line items to operative notes, lab reports, or imaging reports.',
-      'For CPT 94729, duplicate same-day lines or wrong place-of-service (telehealth vs in-person, hospital outpatient vs office) can change allowed amounts and what you owe.',
-      'Even when the facility is in-network, an out-of-network clinician tied to CPT 94729 (anesthesia, radiology, pathology, ED) may bill above your plan allowed rate.',
-      'Upcoding to a higher-level CPT when documentation supports a lower level, or using 94729 when a more specific or less extensive code would apply, are reasons patients request coding clarification — not accusations of fraud.',
-    ],
+        'Multiple PFT codes on one bill are common and are not automatically duplicates. A simple patient-oriented map: 94010 is often associated with basic spirometry (breathing/airflow measures); 94060 with spirometry that includes bronchodilator testing; 94726 with lung-volume measurement (how much air the lungs hold); and 94729 with DLCO / gas-transfer measurement. Exact code selection depends on what was performed and documented — match lines to the PFT report, not to assumptions.',
+        'What may be billed separately from the 94729 line: other PFT codes from the same session, an E/M visit code when a distinct clinician evaluation occurred, and facility or technical fees in hospital outpatient settings. Those are separate claim lines to identify, not automatic errors.',
+        'Duplicate same-date 94729 lines, or a charge that does not match any DLCO on the pulmonary report, are fair clarification questions for billing — still without accusing anyone of fraud.',
+        'If the professional and facility statements disagree about whether DLCO was performed, request the itemized bill and the PFT report together before escalating.',
+      ],
       whatToDo: [
-      'Request an itemized bill and match CPT 94729 to clinical records: visit summary, lab report, radiology report, or operative note.',
-      'Run code 94729 and your ZIP through our Fair Price Calculator to see Medicare-based benchmarks and an educational fair range.',
-      'If insured, line up the CPT 94729 provider bill with your EOB: allowed amount, deductible, coinsurance, and network status.',
-      'Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT 94729 before paying full chargemaster rates. This is for comparison and questions — not legal advice.',
-    ],
+        'Request an itemized bill (and the pulmonary function report if available) and confirm that a DLCO / diffusing-capacity test is documented for the same date as CPT 94729.',
+        'List every PFT-related CPT on that date (for example 94010, 94060, 94726, 94729) and ask billing which test each line corresponds to — especially if you expected a single “breathing test” charge.',
+        'If insured, compare the 94729 charge to your EOB: allowed amount, deductible, coinsurance, and network status. The Medicare benchmark is not what you personally owe.',
+        'Run 94729 and your ZIP in Fair Price for an educational CMS-based comparison, then ask about cash-pay, prompt-pay, or financial assistance only if you are comparing self-pay options. This is educational — not legal advice.',
+      ],
       relatedCodes: [
-      { code: '92004', label: 'Ophthalmological exam, new patient, comprehensive' },
-      { code: '92012', label: 'Ophthalmological exam, established patient' },
-      { code: '92014', label: 'Ophthalmological exam, established, comprehensive' },
+        { code: '94010', label: 'Spirometry (basic breathing/airflow test)' },
+        { code: '94060', label: 'Spirometry with bronchodilator testing' },
+        { code: '94726', label: 'Lung volume measurement (plethysmography)' },
       ],
       faq: [
-      {
-        question: 'What does CPT 94729 mean in plain English?',
-        answer: 'It identifies lung diffusing capacity (dlco) test on a medical bill. Insurers use it with diagnosis codes and modifiers to decide payment. Our summary: Lung diffusing capacity (DLCO) test.',
-      },
-      {
-        question: 'How much should CPT 94729 cost?',
-        answer: 'Medicare benchmarks for CPT 94729 often center near $63 nationally, with local variation. Many patients see higher charges — $95–$159 is an educational uninsured comparison range, not a legal cap.',
-      },
-      {
-        question: 'Is CPT 94729 covered by insurance?',
-        answer: 'CPT 94729 is often covered when medically necessary and in-network, subject to deductible, copay, and plan rules. Preventive, screening, and emergency benefits may use different cost-sharing.',
-      },
-      {
-        question: 'Why is my bill higher than the Medicare rate for 94729?',
-        answer: 'Facility fees, out-of-network clinicians, and chargemaster rates for visits involving CPT 94729 can exceed Medicare. One CPT line never represents every charge on a surgical or ED episode.',
-      },
-      {
-        question: 'Can I question or dispute a 94729 charge?',
-        answer: 'You can request itemization, coding clarification, an insurer appeal, or financial assistance review for CPT 94729. Our tools compare CMS benchmarks only — not legal advice.',
-      },
+        {
+          question: 'What does DLCO mean?',
+          answer:
+            'DLCO is short for lung diffusing capacity (often described as the diffusing capacity of the lung for carbon monoxide). It refers to a pulmonary test that estimates how well gases move from the lungs into the blood. CPT 94729 is the billing code commonly used when that service is reported — not a diagnosis and not an interpretation of your result.',
+        },
+        {
+          question: 'Is CPT 94729 the same as spirometry?',
+          answer:
+            'No. Spirometry focuses on airflow and breathing volumes you can blow out; DLCO focuses on gas transfer into the blood. Clinics often order both in one PFT visit, which is why 94010 or 94060 may appear beside 94729 on the same bill.',
+        },
+        {
+          question: 'Why can several pulmonary-function CPT codes appear on one bill?',
+          answer:
+            'A “full” PFT session can include different measurements — airflow, lung volumes, and DLCO — each reported with its own CPT when performed and documented. Multiple lines can be expected. Ask billing to map each code to the report if the statement is unclear.',
+        },
+        {
+          question: 'Does the Medicare benchmark mean that is what I personally owe?',
+          answer:
+            'No. The Medicare MPFS figure (often near $63 nationally for 94729 in our data, varying by ZIP) is a public payment benchmark for comparison. Your balance depends on charges, insurer allowed amounts, deductibles, coinsurance, and network rules — or self-pay policies if you are uninsured.',
+        },
+        {
+          question: 'What should I check if the 94729 charge looks unexpectedly high?',
+          answer:
+            'Confirm DLCO was performed that day, compare the charge to the EOB allowed amount (not only the list price), look for duplicate 94729 lines, and identify facility versus professional fees. Use Fair Price for an educational Medicare comparison, then request itemization or coding clarification if something still does not match the report.',
+        },
       ],
     },
 

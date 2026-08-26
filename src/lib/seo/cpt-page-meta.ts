@@ -22,10 +22,16 @@ function titleCasePhrase(raw: string): string {
       if (/^e\/m$/i.test(w)) return 'E/M';
       if (/^\d+(\.\d+)?$/i.test(w)) return w; // keep "0.5" as-is
       if (/^cm$/i.test(w)) return 'cm';
-      const lower = w.toLowerCase();
-      if (i > 0 && small.has(lower)) return lower;
-      if (/^\d/.test(w) || /^[A-Z0-9-]{2,}$/.test(w)) return w;
-      return lower.charAt(0).toUpperCase() + lower.slice(1);
+      const lead = w.match(/^\(+/)?.[0] ?? '';
+      const trail = w.match(/\)+$/)?.[0] ?? '';
+      const bare = trail ? w.slice(lead.length, -trail.length) : w.slice(lead.length);
+      if (!bare) return w;
+      if (/^dlco$/i.test(bare)) return `${lead}DLCO${trail}`;
+      if (/^e\/m$/i.test(bare)) return `${lead}E/M${trail}`;
+      const lower = bare.toLowerCase();
+      if (i > 0 && small.has(lower)) return `${lead}${lower}${trail}`;
+      if (/^\d/.test(bare) || /^[A-Z0-9-]{2,}$/.test(bare)) return `${lead}${bare}${trail}`;
+      return `${lead}${lower.charAt(0).toUpperCase()}${lower.slice(1)}${trail}`;
     })
     .join(' ');
 }
@@ -94,7 +100,9 @@ export function buildCptSeoMeta(
     bySlug[page.categorySlug] ??
     `Medicare benchmark (~${med}), fair price range by ZIP, and how to review your itemized bill.`;
 
-  let meta = `CPT ${page.code} (${name}): ${tail}`;
+  let meta = /\(/.test(name)
+    ? `CPT ${page.code} — ${name}: ${tail}`
+    : `CPT ${page.code} (${name}): ${tail}`;
   if (meta.length > CPT_SEO_META_MAX) {
     meta = truncateAtWord(meta, CPT_SEO_META_MAX).replace(/…$/, '.');
   }

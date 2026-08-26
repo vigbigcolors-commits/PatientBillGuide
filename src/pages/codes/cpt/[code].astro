@@ -30,11 +30,13 @@ if (!page) {
 const relatedCompares = getComparesForCode(page.code);
 const liveCategory = getLiveCategoryPage(page.categorySlug);
 
-const updated = '2026-08-15';
+const updated = page.dateModified ?? '2026-08-15';
 const pageUrl = `/codes/cpt/${page.code}/`;
 const canonical = new URL(pageUrl, site.url).href;
 const seoTitle = buildCptSeoTitle(page);
-const seoDescription = buildCptSeoMeta(page);
+/** Hand-curated metas (e.g. 94729 experiment) bypass the category formula. */
+const seoDescription =
+  page.code === '94729' ? page.metaDescription : buildCptSeoMeta(page);
 
 const schemaGraph = [
   medicalWebPageSchema({

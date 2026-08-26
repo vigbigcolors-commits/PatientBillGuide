@@ -65,4 +65,21 @@ describe('cpt-page-meta', () => {
     expect(buildCptSeoMeta(page)).toContain('~$137)');
     expect(buildCptSeoMeta(page)).not.toContain('$137,');
   });
+
+  it('preserves DLCO acronym and parenthetical title casing', () => {
+    const page = {
+      code: '94729',
+      title: 'CPT Code 94729 — DLCO (Lung Diffusing Capacity) Cost & Billing Guide',
+      metaDescription:
+        'CPT 94729 is the billing code for a DLCO (lung diffusing capacity) test. See what it means on a bill, Medicare (~$63) context, and what to check.',
+      summary: 'CPT 94729 is the DLCO billing line.',
+      category: 'Diagnostics',
+      categorySlug: 'diagnostics',
+      typicalCosts: ['Medicare often near $63 nationally.'],
+    };
+    const title = buildCptSeoTitle(page);
+    expect(title).toContain('DLCO');
+    expect(title).not.toMatch(/dlco/);
+    expect(title).toContain('(Lung');
+  });
 });
