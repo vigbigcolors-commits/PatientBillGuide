@@ -4,6 +4,7 @@ import type { BillAuditFlag, BillAuditResult, FlagCategory } from '../lib/billin
 import type { BillLineItem } from '../lib/billing/types';
 import { bootOnReady } from '../lib/dom/boot';
 import { bindToolExamples } from './tool-examples';
+import { currentSourcePage, trackGa4Event } from '../lib/analytics/ga4';
 
 const CATEGORY_ORDER: FlagCategory[] = [
   'pricing',
@@ -257,6 +258,10 @@ export async function initBillAuditor(root: ParentNode = document) {
       }
 
       if (results) showLoading(results, 'pricing');
+      trackGa4Event('bill_auditor_start', {
+        tool_name: 'bill_auditor',
+        source_page: currentSourcePage(),
+      });
       const billCodes = [...new Set(items.map((i) => i.code))];
       const { mpfs, zipMap } = await loadPricingData('/data', { codes: billCodes });
       if (results) showLoading(results, 'ncci');

@@ -1,0 +1,33 @@
+---
+import { GA4_MEASUREMENT_ID, ANALYTICS_CONSENT_KEY } from '../../lib/analytics/ga4';
+---
+
+<script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`}></script>
+<script is:inline define:vars={{ GA4_MEASUREMENT_ID, ANALYTICS_CONSENT_KEY }}>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  window.gtag = gtag;
+  gtag('js', new Date());
+
+  /* Fail-closed: deny analytics until saved consent or confirmed non-consent region. */
+  gtag('consent', 'default', {
+    analytics_storage: 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    functionality_storage: 'granted',
+    security_storage: 'granted',
+    wait_for_update: 1500,
+  });
+
+  try {
+    var savedConsent = localStorage.getItem(ANALYTICS_CONSENT_KEY);
+    if (savedConsent === 'granted' || savedConsent === 'denied') {
+      gtag('consent', 'update', { analytics_storage: savedConsent });
+    }
+  } catch (e) {}
+
+  gtag('config', GA4_MEASUREMENT_ID);
+</script>

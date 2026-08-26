@@ -13,6 +13,7 @@ import { bootOnReady } from '../lib/dom/boot';
 import type { PartBAnalysis } from '../lib/pricing/medicare-part-b';
 import { bindToolExamples } from './tool-examples';
 import { bindCptTypeahead } from './cpt-typeahead';
+import { currentSourcePage, trackGa4Event } from '../lib/analytics/ga4';
 
 export type PriceCheckMode = 'fair' | 'medicare';
 
@@ -460,6 +461,11 @@ export async function initFairPriceForm(root: ParentNode = document) {
         } else {
           renderFairResults(results, outcome);
         }
+        trackGa4Event('fair_price_use', {
+          tool_name: mode === 'medicare' ? 'medicare_part_b' : 'fair_price',
+          cpt_code: outcome.code,
+          source_page: currentSourcePage(),
+        });
         results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         const heading = results.querySelector<HTMLElement>('h2, h3, .part-b-estimate__headline');
         heading?.focus({ preventScroll: true });

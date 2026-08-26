@@ -1,0 +1,118 @@
+---
+/** Lightweight analytics consent banner for EEA/UK/CH visitors. */
+---
+
+<div id="analytics-consent" class="analytics-consent" hidden role="dialog" aria-labelledby="analytics-consent-title" aria-describedby="analytics-consent-desc">
+  <div class="analytics-consent__panel">
+    <p id="analytics-consent-title" class="analytics-consent__title">Analytics cookies</p>
+    <p id="analytics-consent-desc" class="analytics-consent__text">
+      We use Google Analytics 4 to understand page visits and tool usage. We do not send your bill text,
+      diagnoses, or personal identifiers through analytics. See our
+      <a href="/privacy/#analytics">Privacy Policy</a>.
+    </p>
+    <div class="analytics-consent__actions">
+      <button type="button" class="btn btn--primary btn--sm" id="analytics-consent-accept">Allow analytics</button>
+      <button type="button" class="btn btn--secondary btn--sm" id="analytics-consent-decline">Decline</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .analytics-consent {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 200;
+    padding: var(--space-md);
+    pointer-events: none;
+  }
+
+  .analytics-consent:not([hidden]) {
+    pointer-events: auto;
+  }
+
+  .analytics-consent__panel {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: var(--space-lg);
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 12px 40px rgb(15 23 42 / 0.18);
+  }
+
+  .analytics-consent__title {
+    margin: 0 0 var(--space-xs);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .analytics-consent__text {
+    margin: 0 0 var(--space-md);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .analytics-consent__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+</style>
+
+<script>
+  import {
+    canAutoGrantAnalytics,
+    detectCountryCode,
+    getStoredAnalyticsConsent,
+    setAnalyticsConsent,
+  } from '../../lib/analytics/ga4';
+  import { bootOnReady } from '../../lib/dom/boot';
+
+  function hideBanner(banner: HTMLElement) {
+    banner.hidden = true;
+  }
+
+  function bindChoices(banner: HTMLElement, accept: HTMLElement, decline: HTMLElement) {
+    accept.addEventListener('click', () => {
+      setAnalyticsConsent('granted');
+      hideBanner(banner);
+    });
+    decline.addEventListener('click', () => {
+      setAnalyticsConsent('denied');
+      hideBanner(banner);
+    });
+  }
+
+  function initAnalyticsConsent() {
+    const banner = document.getElementById('analytics-consent');
+    const accept = document.getElementById('analytics-consent-accept');
+    const decline = document.getElementById('analytics-consent-decline');
+    if (!banner || !accept || !decline) return;
+
+    if (getStoredAnalyticsConsent()) {
+      hideBanner(banner);
+      return;
+    }
+
+    void detectCountryCode()
+      .then((country) => {
+        /* Confirmed outside EEA/UK/CH → grant; unknown/EEA stay denied. */
+        if (canAutoGrantAnalytics(country)) {
+          setAnalyticsConsent('granted');
+          hideBanner(banner);
+          return;
+        }
+        banner.hidden = false;
+        bindChoices(banner, accept, decline);
+      })
+      .catch(() => {
+        banner.hidden = false;
+        bindChoices(banner, accept, decline);
+      });
+  }
+
+  bootOnReady(initAnalyticsConsent);
+</script>

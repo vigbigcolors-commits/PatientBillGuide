@@ -4,7 +4,7 @@ import LegalLayout from '../../layouts/LegalLayout.astro';
 
 <LegalLayout
   title="Privacy Policy"
-  description="PatientBillGuide privacy policy — client-side processing, no PHI upload."
+  description="PatientBillGuide privacy policy — client-side tools, Google Analytics 4, and consent controls."
   pageClass="page-privacy"
   hideTitle
   crumbs={[{ label: 'Privacy Policy' }]}
@@ -39,7 +39,7 @@ import LegalLayout from '../../layouts/LegalLayout.astro';
         PatientBillGuide tools run in your browser. We do not ask you to upload medical bills to our servers
         or create an account to use calculators and checkers.
       </p>
-      <p class="privacy-hero-date"><em>Last updated June 2026</em></p>
+      <p class="privacy-hero-date"><em>Last updated August 2026</em></p>
     </div>
   </section>
 
@@ -65,6 +65,11 @@ import LegalLayout from '../../layouts/LegalLayout.astro';
       <span>This policy explains what we do and do not do — no legal maze.</span>
     </div>
   </div>
+
+  <p class="privacy-update-note">
+    <strong>August 2026 update:</strong> We enabled Google Analytics 4 with Consent Mode for visitors in the
+    EEA, UK, and Switzerland. Analytics cookies are not used in those regions until you choose to allow them.
+  </p>
 
   <h2>Summary</h2>
   <p>
@@ -92,15 +97,57 @@ import LegalLayout from '../../layouts/LegalLayout.astro';
   <h2>What we may collect</h2>
   <h3>Server logs</h3>
   <p>
-    Like most websites, our hosting provider (Cloudflare Pages) may log standard technical data when you
+    Like most websites, our hosting provider (Cloudflare) may log standard technical data when you
     load pages: IP address, browser type, pages requested, timestamps. These logs support security,
     abuse prevention, and performance — not medical analysis.
   </p>
-  <h3>Analytics</h3>
+  <h3 id="analytics">Analytics (Google Analytics 4)</h3>
   <p>
-    We may add privacy-conscious analytics after launch to understand which pages help users most. If we
-    enable analytics, we will prefer tools that minimize personal data and honor Do Not Track where
-    applicable. This page will be updated before any analytics go live.
+    PatientBillGuide uses <strong>Google Analytics 4</strong> (GA4), a web analytics service provided by
+    Google LLC, to measure:
+  </p>
+  <ul>
+    <li>page visits and general site usage</li>
+    <li>interactions with our tools (for example, when someone runs a price check or starts a bill review workflow)</li>
+  </ul>
+  <p>
+    GA4 may collect information such as pages viewed, approximate geography, device/browser type, and
+    referral source. When analytics storage is allowed, Google may also use cookies or similar technologies
+    to recognize returning visits. We do <strong>not</strong> use Google Analytics for advertising,
+    remarketing, or Google Ads conversion tracking on this site.
+  </p>
+  <p>
+    Our custom GA4 events are intentionally designed <strong>not</strong> to include:
+  </p>
+  <ul>
+    <li>medical bill text or EOB content</li>
+    <li>diagnoses or clinical details</li>
+    <li>patient names</li>
+    <li>email addresses or phone numbers</li>
+    <li>insurance or member IDs</li>
+    <li>claim or account numbers</li>
+    <li>uploaded document contents</li>
+    <li>free-text medical information you enter into our tools</li>
+  </ul>
+  <p>
+    Tool events may include non-sensitive context such as a page path, a tool identifier, or a CPT code
+    used in a calculator — not the rest of your bill or personal identifiers. We aim to minimize what is
+    sent, but we cannot guarantee that Google receives zero technical data (such as IP address) when
+    analytics runs. Google's processing is described in
+    <a href="https://policies.google.com/privacy" rel="noopener noreferrer">Google's Privacy Policy</a>.
+  </p>
+  <h3>Consent for analytics (EEA, UK, Switzerland)</h3>
+  <p>
+    If you visit from the European Economic Area, the United Kingdom, or Switzerland, we use Google
+    Consent Mode to keep <code>analytics_storage</code> denied until you choose <strong>Allow analytics</strong>
+    on our cookie notice. If you decline, GA4 should not store analytics cookies for that choice; limited,
+    cookieless measurement may still occur as described by Google. You can change your mind later by clearing
+    site data in your browser, which resets the saved preference.
+  </p>
+  <p>
+    Visitors outside those regions may have analytics storage enabled after our host confirms their region,
+    while advertising storage remains off. If region cannot be determined, analytics stays denied until you
+    choose. We do not run personalized ads on PatientBillGuide at this time.
   </p>
   <h3>Advertising</h3>
   <p>
@@ -119,8 +166,11 @@ import LegalLayout from '../../layouts/LegalLayout.astro';
 
   <h2>Cookies &amp; local storage</h2>
   <p>
-    Core tools work without cookies. Third-party services (ads, embedded widgets if added later) may set
-    their own cookies. You can clear site data through your browser settings at any time.
+    Core tools work without cookies. If you allow analytics, Google Analytics 4 may set cookies or use
+    similar storage for measurement. We also store your analytics consent choice locally
+    (<code>pbg_analytics_consent</code>) so the banner does not reappear every visit. Third-party ad
+    services (if added later) may set their own cookies under their policies. You can clear site data
+    through your browser settings at any time.
   </p>
 
   <h2>Children's privacy</h2>
@@ -181,6 +231,16 @@ import LegalLayout from '../../layouts/LegalLayout.astro';
     margin: var(--space-md) 0 0;
     font-size: 0.875rem;
     color: rgb(255 255 255 / 0.65);
+  }
+
+  .privacy-update-note {
+    margin: 0 0 var(--space-xl);
+    padding: var(--space-md) var(--space-lg);
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    font-size: 0.9375rem;
+    line-height: 1.55;
   }
 
   .privacy-pillars {

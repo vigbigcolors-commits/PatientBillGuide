@@ -5,6 +5,7 @@ import {
   type DisputeTemplateId,
 } from '../lib/dispute/letters';
 import { bootOnReady } from '../lib/dom/boot';
+import { currentSourcePage, trackGa4Event } from '../lib/analytics/ga4';
 
 function readForm(form: HTMLFormElement) {
   const fd = new FormData(form);
@@ -83,6 +84,10 @@ export function initDisputeLetter(root: ParentNode = document) {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const letter = buildDisputeLetter(readForm(form));
+    trackGa4Event('dispute_letter_start', {
+      tool_name: 'dispute_letter',
+      source_page: currentSourcePage(),
+    });
 
     if (results) {
       results.innerHTML = `
