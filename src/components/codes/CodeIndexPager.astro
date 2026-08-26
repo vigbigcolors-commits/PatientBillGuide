@@ -1,4 +1,6 @@
 ---
+import { sortCodesForHub } from '../../data/cpt-hub-priority';
+
 export interface CodeIndexItem {
   code: string;
   label: string;
@@ -12,7 +14,7 @@ interface Props {
 }
 
 const { codes, categories, pageSize = 24 } = Astro.props;
-const sorted = [...codes].sort((a, b) => a.code.localeCompare(b.code, undefined, { numeric: true }));
+const sorted = sortCodesForHub(codes);
 ---
 
 <section class="codes-hub__all" aria-labelledby="codes-all-title">
@@ -37,8 +39,8 @@ const sorted = [...codes].sort((a, b) => a.code.localeCompare(b.code, undefined,
   <div id="code-index-pager" class="code-index-pager" data-page-size={pageSize}>
     <ul class="code-grid">
       {
-        sorted.map((item, index) => (
-          <li data-code-item data-category={item.category} hidden={index >= pageSize}>
+        sorted.map((item) => (
+          <li data-code-item data-category={item.category}>
             <a href={`/codes/cpt/${item.code}/`} class="code-card">
               <span class="code-card__code">{item.code}</span>
               <span class="code-card__label">{item.label}</span>
@@ -54,32 +56,15 @@ const sorted = [...codes].sort((a, b) => a.code.localeCompare(b.code, undefined,
         <span aria-hidden="true">←</span>
         <span class="code-pager__btn-label">Previous</span>
       </button>
-      <p class="code-pager__status" data-pager-status>Loading…</p>
+      <p class="code-pager__status" data-pager-status>
+        {sorted.length} guides listed — pagination enhances browsing
+      </p>
       <button type="button" class="code-pager__btn" data-pager-next aria-label="Next codes">
         <span class="code-pager__btn-label">Next</span>
         <span aria-hidden="true">→</span>
       </button>
     </nav>
   </div>
-
-  <noscript>
-    <p class="codes-hub__noscript">
-      JavaScript is required for paginated browsing. <a href="/tools/fair-price/">Fair Price</a> supports
-      all Medicare fee schedule codes, or open any category hub above.
-    </p>
-    <ul class="code-grid">
-      {
-        sorted.slice(0, 48).map((item) => (
-          <li>
-            <a href={`/codes/cpt/${item.code}/`} class="code-card">
-              <span class="code-card__code">{item.code}</span>
-              <span class="code-card__label">{item.label}</span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </noscript>
 </section>
 
 <script>
@@ -187,12 +172,6 @@ const sorted = [...codes].sort((a, b) => a.code.localeCompare(b.code, undefined,
     .code-pager__btn-label {
       display: inline;
     }
-  }
-
-  .codes-hub__noscript {
-    color: var(--color-muted);
-    font-size: 0.9375rem;
-    margin-bottom: var(--space-md);
   }
 
   .visually-hidden {

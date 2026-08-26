@@ -4,6 +4,7 @@ import AuthorByline from '../../../components/AuthorByline.astro';
 import MethodologyFooter from '../../../components/MethodologyFooter.astro';
 import Disclaimer from '../../../components/Disclaimer.astro';
 import { launchCptCodes, allCptPages } from '../../../data/cpt-codes';
+import { getLiveCategoryPage } from '../../../data/cpt-categories';
 import { getComparesForCode } from '../../../data/cpt-compare';
 import { site } from '../../../data/site';
 import { author, getAuthorUrl } from '../../../data/author';
@@ -27,6 +28,7 @@ if (!page) {
 }
 
 const relatedCompares = getComparesForCode(page.code);
+const liveCategory = getLiveCategoryPage(page.categorySlug);
 
 const updated = '2026-08-15';
 const pageUrl = `/codes/cpt/${page.code}/`;
@@ -163,11 +165,15 @@ const schemaGraph = [
         </p>
       )
     }
-    <p>
-      <a href={`/codes/category/${page.categorySlug === 'emergency' ? 'emergency-room' : page.categorySlug === 'preventive' ? 'office-visits' : page.categorySlug}/`}>
-        Browse all {page.category} guides →
-      </a>
-    </p>
+    {
+      liveCategory && (
+        <p>
+          <a href={`/codes/category/${liveCategory.slug}/`}>
+            Browse {liveCategory.eyebrow} guides →
+          </a>
+        </p>
+      )
+    }
   </section>
 
   <section>

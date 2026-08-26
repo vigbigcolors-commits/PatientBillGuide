@@ -5,6 +5,7 @@ import MethodologyFooter from '../../../components/MethodologyFooter.astro';
 import Disclaimer from '../../../components/Disclaimer.astro';
 import { cptComparePages, cptCompareSlugs } from '../../../data/cpt-compare';
 import { launchCptCodes, allCptPages } from '../../../data/cpt-codes';
+import { getLiveCategoryPage } from '../../../data/cpt-categories';
 import { site } from '../../../data/site';
 import { author, getAuthorUrl } from '../../../data/author';
 import { faqPageSchema, medicalWebPageSchema, breadcrumbSchema } from '../../../lib/seo/schema';
@@ -24,6 +25,7 @@ const hasGuideB = published.has(page.codeB as (typeof launchCptCodes)[number]);
 const updated = '2026-07-05';
 const pageUrl = `/codes/compare/${page.slug}/`;
 const canonical = new URL(pageUrl, site.url).href;
+const liveCategory = getLiveCategoryPage(page.categorySlug);
 
 const schemaGraph = [
   medicalWebPageSchema({
@@ -204,9 +206,15 @@ const schemaGraph = [
     <div class="widget-card card">
       <h2>Category</h2>
       <p>
-        <a href={`/codes/category/${page.categorySlug}/`}>
-          Browse {page.categorySlug.replace(/-/g, ' ')} codes
-        </a>
+        {
+          liveCategory ? (
+            <a href={`/codes/category/${liveCategory.slug}/`}>
+              Browse {liveCategory.eyebrow} codes
+            </a>
+          ) : (
+            <a href="/codes/">All CPT guides</a>
+          )
+        }
       </p>
     </div>
     <div class="sidebar-links card">

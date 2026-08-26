@@ -302,6 +302,32 @@ export const cptCategoryPages: Record<string, CptCategoryPage> = {
 
 export const cptCategorySlugs = Object.keys(cptCategoryPages);
 
+/**
+ * Only these hubs exist as routes. Map CPT data slugs onto a live hub when
+ * the assignment is already how the hub indexes codes; otherwise omit the link.
+ * Do not invent thin category pages to soak leftover slugs.
+ */
+const CATEGORY_SLUG_TO_LIVE: Record<string, string> = {
+  'office-visits': 'office-visits',
+  preventive: 'office-visits',
+  emergency: 'emergency-room',
+  'emergency-room': 'emergency-room',
+  imaging: 'imaging',
+  laboratory: 'laboratory',
+  surgery: 'surgery',
+};
+
+export function resolveLiveCategorySlug(slug: string): string | null {
+  const live = CATEGORY_SLUG_TO_LIVE[slug];
+  if (!live || !(live in cptCategoryPages)) return null;
+  return live;
+}
+
+export function getLiveCategoryPage(slug: string): CptCategoryPage | undefined {
+  const live = resolveLiveCategorySlug(slug);
+  return live ? cptCategoryPages[live] : undefined;
+}
+
 export function getCategoryCodes(slug: string): CategoryCodeRef[] {
   const cat = cptCategoryPages[slug];
   if (!cat) return [];
