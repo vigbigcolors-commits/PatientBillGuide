@@ -31,6 +31,7 @@ function getCategory(code, descShort) {
   if (n >= 99221 && n <= 99239) return { category: 'Hospital care', categorySlug: 'hospital-care' };
   if (n >= 99291 && n <= 99292) return { category: 'Critical care', categorySlug: 'emergency' };
   if (n >= 99304 && n <= 99310) return { category: 'Nursing facility', categorySlug: 'nursing-facility' };
+  if (n >= 99341 && n <= 99350) return { category: 'Home visits', categorySlug: 'home-visits' };
 
   if (
     d.includes('mammog') ||

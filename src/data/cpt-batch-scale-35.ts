@@ -2123,7 +2123,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       metaDescription: 'CPT 99341 is home visit, new patient, low complexity. See typical Medicare costs near $49, fair price ranges, and how to review your itemized bill.',
       summary: 'CPT 99341 bills for home visit, new patient, low complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $49.',
       category: 'Home visits',
-      categorySlug: 'office-visits',
+      categorySlug: 'home-visits',
       whatIs: [
       'CPT 99341 is a Current Procedural Terminology code used on US medical bills to describe home visit, new patient, low complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
       'Our plain-English summary is original and educational: Home visit, new patient, low complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
@@ -2155,9 +2155,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'If you are self-pay on CPT 99341, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.',
     ],
       relatedCodes: [
-      { code: '99202', label: 'Office visit, new patient, straightforward' },
-      { code: '99203', label: 'Office visit, new patient, low complexity' },
-      { code: '99204', label: 'Office visit, new patient, moderate complexity' },
+      { code: '99342', label: 'Home visit, new patient, moderate complexity' },
       ],
       faq: [
       {
@@ -2189,7 +2187,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       metaDescription: 'CPT 99342 is home visit, new patient, moderate complexity. See typical Medicare costs near $79, fair price ranges, and how to review your itemized bill.',
       summary: 'CPT 99342 bills for home visit, new patient, moderate complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $79.',
       category: 'Home visits',
-      categorySlug: 'office-visits',
+      categorySlug: 'home-visits',
       whatIs: [
       'CPT 99342 is a Current Procedural Terminology code used on US medical bills to describe home visit, new patient, moderate complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
       'Our plain-English summary is original and educational: Home visit, new patient, moderate complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
@@ -2221,9 +2219,8 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'Before paying list price for CPT 99342, self-pay patients should ask about cash pricing, prompt-pay discounts, or charity care. Tools here explain benchmarks; they are not legal advice.',
     ],
       relatedCodes: [
-      { code: '99202', label: 'Office visit, new patient, straightforward' },
-      { code: '99203', label: 'Office visit, new patient, low complexity' },
-      { code: '99204', label: 'Office visit, new patient, moderate complexity' },
+      { code: '99341', label: 'Home visit, new patient, low complexity' },
+      { code: '99350', label: 'Home visit, established patient, high complexity' },
       ],
       faq: [
       {
@@ -2255,7 +2252,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       metaDescription: 'CPT 99350 is home visit, established patient, high complexity. See typical Medicare costs near $193, fair price ranges, and how to review your itemized bill.',
       summary: 'CPT 99350 bills for home visit, established patient, high complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $193.',
       category: 'Home visits',
-      categorySlug: 'office-visits',
+      categorySlug: 'home-visits',
       whatIs: [
       'CPT 99350 is a Current Procedural Terminology code used on US medical bills to describe home visit, established patient, high complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
       'Our plain-English summary is original and educational: Home visit, established patient, high complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
@@ -2287,9 +2284,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'If you are self-pay on CPT 99350, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.',
     ],
       relatedCodes: [
-      { code: '99202', label: 'Office visit, new patient, straightforward' },
-      { code: '99203', label: 'Office visit, new patient, low complexity' },
-      { code: '99204', label: 'Office visit, new patient, moderate complexity' },
+      { code: '99342', label: 'Home visit, new patient, moderate complexity' },
       ],
       faq: [
       {
