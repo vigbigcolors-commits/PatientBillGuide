@@ -453,15 +453,6 @@ function main() {
   for (const code of selected) {
     const page = pages[code];
     page.relatedCodes = pickRelatedCodes(code, page.categorySlug, pages, existingByCategory);
-    while (page.relatedCodes.length < 3) {
-      const filler = selected.find((c) => c !== code && !page.relatedCodes.some((r) => r.code === c));
-      if (!filler) break;
-      const seed = ALL_SEEDS[filler];
-      page.relatedCodes.push({
-        code: filler,
-        label: toTitleLabel(seed.description_short).slice(0, 55),
-      });
-    }
   }
 
   const shortPages = selected.filter((c) => wordCount(pages[c]) < 800);
