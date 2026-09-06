@@ -6176,7 +6176,7 @@ export const cptBatch100: Record<string, CptPageData> = {
       metaDescription: 'CPT 99291 is critical care, first 30–74 minutes. See typical Medicare costs near $285, fair price ranges, and how to review your itemized bill.',
       summary: 'CPT 99291 bills for critical care, first 30–74 minutes — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $285.',
       category: 'Critical care',
-      categorySlug: 'emergency',
+      categorySlug: 'critical-care',
       whatIs: [
       'CPT 99291 is a Current Procedural Terminology code used on US medical bills to describe critical care, first 30–74 minutes. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
       'Our plain-English summary is original and educational: Critical care, first 30–74 minutes. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
@@ -6208,9 +6208,7 @@ export const cptBatch100: Record<string, CptPageData> = {
       'Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT 99291 before paying full chargemaster rates. This is for comparison and questions — not legal advice.',
     ],
       relatedCodes: [
-      { code: '99281', label: 'Emergency department visit, self-limited' },
-      { code: '99282', label: 'Emergency department visit, low severity' },
-      { code: '99283', label: 'Emergency department visit, moderate severity' },
+      { code: '99292', label: 'Critical care, each additional 30 minutes' },
       ],
       faq: [
       {
@@ -6242,7 +6240,7 @@ export const cptBatch100: Record<string, CptPageData> = {
       metaDescription: 'CPT 99292 is critical care, each additional 30 minutes. See typical Medicare costs near $143, fair price ranges, and how to review your itemized bill.',
       summary: 'CPT 99292 bills for critical care, each additional 30 minutes — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $143.',
       category: 'Critical care',
-      categorySlug: 'emergency',
+      categorySlug: 'critical-care',
       whatIs: [
       'CPT 99292 is a Current Procedural Terminology code used on US medical bills to describe critical care, each additional 30 minutes. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
       'Our plain-English summary is original and educational: Critical care, each additional 30 minutes. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
@@ -6274,9 +6272,7 @@ export const cptBatch100: Record<string, CptPageData> = {
       'If you are self-pay on CPT 99292, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.',
     ],
       relatedCodes: [
-      { code: '99281', label: 'Emergency department visit, self-limited' },
-      { code: '99282', label: 'Emergency department visit, low severity' },
-      { code: '99283', label: 'Emergency department visit, moderate severity' },
+      { code: '99291', label: 'Critical care, first 30–74 minutes' },
       ],
       faq: [
       {

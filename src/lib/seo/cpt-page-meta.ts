@@ -96,6 +96,7 @@ export function buildCptSeoMeta(
     preventive: `Preventive visit vs Medicare (~${med}), fair range, and how coverage can differ from problem visits.`,
     'nursing-facility': `Nursing facility care, CMS Medicare benchmark (~${med}), and bill or EOB review tips.`,
     'home-visits': `Home/residence service, CMS Medicare benchmark (~${med}), and bill or EOB review tips.`,
+    'critical-care': `Critical care service, CMS Medicare benchmark (~${med}), and bill or EOB review tips.`,
     'hospital-care': `Hospital E/M vs Medicare (~${med}), fair range, and inpatient billing notes.`,
   };
   const tail =
