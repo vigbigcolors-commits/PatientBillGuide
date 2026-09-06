@@ -40,6 +40,49 @@ const seoDescription = curatedMetaCodes.has(page.code)
   ? page.metaDescription
   : buildCptSeoMeta(page);
 
+type CptTextSection = 'whatIs' | 'whenUsed' | 'faq';
+
+const existingCptTextLinks: Record<string, { section: CptTextSection; text: string; code: string }[]> = {
+  '11400': [{ section: 'whatIs', text: '17000-series destruction codes', code: '17000' }],
+  '36415': [{ section: 'whatIs', text: '84443 (TSH)', code: '84443' }],
+  '96372': [{ section: 'whatIs', text: '90472', code: '90472' }],
+  '90838': [{ section: 'whatIs', text: '90834', code: '90834' }],
+  '90832': [
+    { section: 'whenUsed', text: 'group therapy (90853)', code: '90853' },
+    { section: 'whenUsed', text: 'family therapy (90847)', code: '90847' },
+  ],
+  '93306': [{ section: 'whatIs', text: '93350', code: '93350' }],
+  '97110': [{ section: 'whatIs', text: '97530 (therapeutic activities)', code: '97530' }],
+  '99285': [{ section: 'faq', text: '99292', code: '99292' }],
+};
+
+function escapeHtml(value: string) {
+  const entities: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  };
+  return value.replace(/[&<>"']/g, (character) => entities[character]!);
+}
+
+function linkExistingCptMentions(text: string, sourceCode: string, section: CptTextSection) {
+  const links = existingCptTextLinks[sourceCode]?.filter((link) => link.section === section);
+  if (!links) return undefined;
+
+  let html = escapeHtml(text);
+  let linked = false;
+  for (const { text: anchor, code: targetCode } of links) {
+    const escapedAnchor = escapeHtml(anchor);
+    if (html.includes(escapedAnchor)) {
+      html = html.replace(escapedAnchor, `<a href="/codes/cpt/${targetCode}/">${escapedAnchor}</a>`);
+      linked = true;
+    }
+  }
+  return linked ? html : undefined;
+}
+
 const schemaGraph = [
   medicalWebPageSchema({
     name: seoTitle,
@@ -92,13 +135,23 @@ const schemaGraph = [
 
   <section>
     <h2>What is CPT {page.code}?</h2>
-    {page.whatIs.map((p) => <p>{p}</p>)}
+    {
+      page.whatIs.map((p) => {
+        const linked = linkExistingCptMentions(p, page.code, 'whatIs');
+        return linked ? <p set:html={linked} /> : <p>{p}</p>;
+      })
+    }
   </section>
 
   <section>
     <h2>When is this code used?</h2>
     <ul>
-      {page.whenUsed.map((item) => <li>{item}</li>)}
+      {
+        page.whenUsed.map((item) => {
+          const linked = linkExistingCptMentions(item, page.code, 'whenUsed');
+          return linked ? <li set:html={linked} /> : <li>{item}</li>;
+        })
+      }
     </ul>
   </section>
 
@@ -184,12 +237,15 @@ const schemaGraph = [
     <h2>FAQ</h2>
     <dl class="faq">
       {
-        page.faq.map((item) => (
-          <>
-            <dt>{item.question}</dt>
-            <dd>{item.answer}</dd>
-          </>
-        ))
+        page.faq.map((item) => {
+          const linked = linkExistingCptMentions(item.answer, page.code, 'faq');
+          return (
+            <>
+              <dt>{item.question}</dt>
+              {linked ? <dd set:html={linked} /> : <dd>{item.answer}</dd>}
+            </>
+          );
+        })
       }
     </dl>
   </section>

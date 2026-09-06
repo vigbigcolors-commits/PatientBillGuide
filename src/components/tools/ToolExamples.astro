@@ -22,6 +22,14 @@ interface Props {
 }
 
 const { title = 'Quick examples', hint = 'Click to load — then we run the check automatically.', examples, variant } = Astro.props;
+
+function linkedSubtitle(ex: Props['examples'][number]) {
+  const subtitleLink = 'subtitleLink' in ex ? ex.subtitleLink : undefined;
+  if (!ex.subtitle || !subtitleLink) return undefined;
+
+  const [before, after] = ex.subtitle.split(subtitleLink.text);
+  return { before, after, ...subtitleLink };
+}
 ---
 
 <div class="tool-examples card" data-tool-examples={variant}>
@@ -29,21 +37,33 @@ const { title = 'Quick examples', hint = 'Click to load — then we run the chec
   <p class="tool-examples__hint">{hint}</p>
   <ul class="tool-examples__list">
     {
-      examples.map((ex) => (
-        <li>
-          <button
-            type="button"
-            class="example-btn"
-            data-example-id={ex.id}
-            aria-label={`Load example: ${ex.label}`}>
-            <span class="example-btn__main">
-              <span class="example-btn__label">{ex.label}</span>
-              {ex.subtitle && <span class="example-btn__subtitle">{ex.subtitle}</span>}
-            </span>
-            <span class="example-btn__arrow" aria-hidden="true">›</span>
-          </button>
-        </li>
-      ))
+      examples.map((ex) => {
+        const subtitle = linkedSubtitle(ex);
+        return (
+          <li>
+            <button
+              type="button"
+              class="example-btn"
+              data-example-id={ex.id}
+              aria-label={`Load example: ${ex.label}`}>
+              <span class="example-btn__main">
+                <span class="example-btn__label">{ex.label}</span>
+                {!subtitle && ex.subtitle && <span class="example-btn__subtitle">{ex.subtitle}</span>}
+              </span>
+              <span class="example-btn__arrow" aria-hidden="true">›</span>
+            </button>
+            {
+              subtitle && (
+                <p class="example-btn__linked-subtitle">
+                  {subtitle.before}
+                  <a href={subtitle.href}>{subtitle.text}</a>
+                  {subtitle.after}
+                </p>
+              )
+            }
+          </li>
+        );
+      })
     }
   </ul>
 </div>
@@ -108,6 +128,13 @@ const { title = 'Quick examples', hint = 'Click to load — then we run the chec
   }
 
   .example-btn__subtitle {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+    line-height: 1.4;
+  }
+
+  .example-btn__linked-subtitle {
+    margin: var(--space-xs) var(--space-md) 0;
     font-size: 0.8125rem;
     color: var(--color-muted);
     line-height: 1.4;

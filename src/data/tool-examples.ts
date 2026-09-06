@@ -23,6 +23,7 @@ export interface BillAuditorExample {
   id: string;
   label: string;
   subtitle?: string;
+  subtitleLink?: { text: string; href: string };
   text: string;
   zip?: string;
 }
@@ -158,6 +159,7 @@ export const billAuditorExamples: BillAuditorExample[] = [
     id: 'ncci-panel-unbundling',
     label: 'NCCI: panel + component test',
     subtitle: '80053 + 84460 same day — CMS PTP edit',
+    subtitleLink: { text: '84460', href: '/codes/cpt/84460/' },
     zip: '10001',
     text: `01/15/2026 80053 Comprehensive metabolic panel $45.00
 01/15/2026 84460 ALT liver enzyme $18.00
