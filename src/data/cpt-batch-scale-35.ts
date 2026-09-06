@@ -508,9 +508,6 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'Before paying list price for CPT 52000, self-pay patients should ask about cash pricing, prompt-pay discounts, or charity care. Tools here explain benchmarks; they are not legal advice.',
     ],
       relatedCodes: [
-      { code: '20552', label: 'Trigger point injection, 1–2 muscles' },
-      { code: '20610', label: 'Joint injection, major joint' },
-      { code: '90471', label: 'Immunization administration, first injection' },
       ],
       faq: [
       {
@@ -968,9 +965,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'If you are self-pay on CPT 90471, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.',
     ],
       relatedCodes: [
-      { code: '20552', label: 'Trigger point injection, 1–2 muscles' },
-      { code: '20610', label: 'Joint injection, major joint' },
-      { code: '52000', label: 'Cystourethroscopy' },
+      { code: '90472', label: 'Immunization administration, each additional' },
       ],
       faq: [
       {

@@ -903,9 +903,7 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       'Before paying list price for CPT 90472, self-pay patients should ask about cash pricing, prompt-pay discounts, or charity care. Tools here explain benchmarks; they are not legal advice.',
     ],
       relatedCodes: [
-      { code: '20552', label: 'Trigger point injection, 1–2 muscles' },
-      { code: '20610', label: 'Joint injection, major joint' },
-      { code: '52000', label: 'Cystourethroscopy' },
+      { code: '90471', label: 'Immunization administration, first injection' },
       ],
       faq: [
       {
@@ -1437,9 +1435,6 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       'Before paying list price for CPT 92567, self-pay patients should ask about cash pricing, prompt-pay discounts, or charity care. Tools here explain benchmarks; they are not legal advice.',
     ],
       relatedCodes: [
-      { code: '20552', label: 'Trigger point injection, 1–2 muscles' },
-      { code: '20610', label: 'Joint injection, major joint' },
-      { code: '52000', label: 'Cystourethroscopy' },
       ],
       faq: [
       {
@@ -1771,9 +1766,8 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       'Before paying list price for CPT 96365, self-pay patients should ask about cash pricing, prompt-pay discounts, or charity care. Tools here explain benchmarks; they are not legal advice.',
     ],
       relatedCodes: [
-      { code: '20552', label: 'Trigger point injection, 1–2 muscles' },
-      { code: '20610', label: 'Joint injection, major joint' },
-      { code: '52000', label: 'Cystourethroscopy' },
+      { code: '96369', label: 'Subcutaneous infusion for therapy, initial' },
+      { code: '96374', label: 'IV push, single or initial substance' },
       ],
       faq: [
       {
@@ -1837,9 +1831,7 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       'Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT 96369 before paying full chargemaster rates. This is for comparison and questions — not legal advice.',
     ],
       relatedCodes: [
-      { code: '20552', label: 'Trigger point injection, 1–2 muscles' },
-      { code: '20610', label: 'Joint injection, major joint' },
-      { code: '52000', label: 'Cystourethroscopy' },
+      { code: '96365', label: 'IV infusion for therapy, initial hour' },
       ],
       faq: [
       {
@@ -1903,9 +1895,7 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       'Before paying list price for CPT 96374, self-pay patients should ask about cash pricing, prompt-pay discounts, or charity care. Tools here explain benchmarks; they are not legal advice.',
     ],
       relatedCodes: [
-      { code: '20552', label: 'Trigger point injection, 1–2 muscles' },
-      { code: '20610', label: 'Joint injection, major joint' },
-      { code: '52000', label: 'Cystourethroscopy' },
+      { code: '96365', label: 'IV infusion for therapy, initial hour' },
       ],
       faq: [
       {
@@ -2174,9 +2164,7 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       'Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT 99406 before paying full chargemaster rates. This is for comparison and questions — not legal advice.',
     ],
       relatedCodes: [
-      { code: '20552', label: 'Trigger point injection, 1–2 muscles' },
-      { code: '20610', label: 'Joint injection, major joint' },
-      { code: '52000', label: 'Cystourethroscopy' },
+      { code: '99407', label: 'Tobacco cessation counseling, over 10 minutes' },
       ],
       faq: [
       {
@@ -2240,9 +2228,7 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       'If you are self-pay on CPT 99407, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.',
     ],
       relatedCodes: [
-      { code: '20552', label: 'Trigger point injection, 1–2 muscles' },
-      { code: '20610', label: 'Joint injection, major joint' },
-      { code: '52000', label: 'Cystourethroscopy' },
+      { code: '99406', label: 'Tobacco cessation counseling, 3–10 minutes' },
       ],
       faq: [
       {
@@ -2306,9 +2292,6 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       'Before paying list price for CPT 99490, self-pay patients should ask about cash pricing, prompt-pay discounts, or charity care. Tools here explain benchmarks; they are not legal advice.',
     ],
       relatedCodes: [
-      { code: '20552', label: 'Trigger point injection, 1–2 muscles' },
-      { code: '20610', label: 'Joint injection, major joint' },
-      { code: '52000', label: 'Cystourethroscopy' },
       ],
       faq: [
       {

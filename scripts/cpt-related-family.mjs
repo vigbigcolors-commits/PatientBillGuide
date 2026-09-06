@@ -3,10 +3,19 @@
  * drives page semantics, while diagnostics contains several clinical families.
  */
 export function getCptRelatedFamily(code, categorySlug, description = '') {
-  if (categorySlug !== 'diagnostics') return categorySlug;
-
   const n = Number.parseInt(code, 10);
   const d = description.toLowerCase();
+
+  if (categorySlug === 'procedures') {
+    if (n === 52000) return 'urology';
+    if (n === 90471 || n === 90472) return 'immunization-administration';
+    if (n === 92567) return 'audiology-diagnostics';
+    if (n === 96365 || n === 96369 || n === 96374) return 'infusion-administration';
+    if (n === 99406 || n === 99407) return 'tobacco-cessation';
+    if (n === 99490) return 'chronic-care-management';
+  }
+
+  if (categorySlug !== 'diagnostics') return categorySlug;
 
   if ((n >= 92000 && n <= 92499) || d.includes('ophthalmological')) return 'ophthalmology';
   if (n >= 92500 && n <= 92799) return 'audiology';
