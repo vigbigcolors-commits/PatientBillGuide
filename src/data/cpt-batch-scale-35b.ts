@@ -1670,7 +1670,7 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       metaDescription:
         'CPT 94729 is the billing code for DLCO lung diffusing-capacity testing. Learn what it means on your bill, related PFT codes, and Medicare cost context.',
       summary:
-        'CPT 94729 is the line patients usually see when a clinic or hospital bills for a DLCO test — short for lung diffusing capacity. In plain language, DLCO checks how effectively gases move from the air spaces in the lungs into the blood. This page explains the billing code and how to review the charge; it does not interpret your personal test result or give medical advice.',
+        'CPT 94729 is the line patients usually see when a clinic or hospital bills for a DLCO test — short for lung diffusing capacity. It is a specific measurement of how effectively gas moves from the air spaces in the lungs into the blood, not a general “lung test.” This page explains the billing code and how to review the charge; it does not interpret your personal test result or give medical advice.',
       category: 'Diagnostics',
       categorySlug: 'diagnostics',
       dateModified: '2026-08-27',
