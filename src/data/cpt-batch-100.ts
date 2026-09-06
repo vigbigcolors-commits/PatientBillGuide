@@ -508,7 +508,6 @@ export const cptBatch100: Record<string, CptPageData> = {
       'Before paying list price for CPT 20611, self-pay patients should ask about cash pricing, prompt-pay discounts, or charity care. Tools here explain benchmarks; they are not legal advice.',
     ],
       relatedCodes: [
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       { code: '70486', label: 'CT maxillofacial without contrast' },
       ],
@@ -1439,7 +1438,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -1505,7 +1503,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -1571,7 +1568,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -1637,7 +1633,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -1703,7 +1698,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -1769,7 +1763,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -1835,7 +1828,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -1901,7 +1893,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -1967,7 +1958,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -2033,7 +2023,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -2099,7 +2088,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -2165,7 +2153,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -2231,7 +2218,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -2297,7 +2283,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -2435,7 +2420,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -2501,7 +2485,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -2567,7 +2550,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -2633,7 +2615,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -2699,7 +2680,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -2765,7 +2745,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -2831,7 +2810,6 @@ export const cptBatch100: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [

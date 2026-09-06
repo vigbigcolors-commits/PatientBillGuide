@@ -839,7 +839,6 @@ export const cptBatchScale35: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
@@ -905,7 +904,6 @@ export const cptBatchScale35: Record<string, CptPageData> = {
     ],
       relatedCodes: [
       { code: '20611', label: 'Joint injection with ultrasound guidance' },
-      { code: '66984', label: 'Cataract surgery with intraocular lens' },
       { code: '70450', label: 'CT head without contrast' },
       ],
       faq: [
