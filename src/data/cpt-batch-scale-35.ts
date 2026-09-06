@@ -2057,8 +2057,8 @@ export const cptBatchScale35: Record<string, CptPageData> = {
     '99310': {
       code: '99310',
       title: 'CPT Code 99310 — Subsequent nursing facility care, high complexity Cost & Billing Guide',
-      metaDescription: 'CPT 99310 is subsequent nursing facility care, high complexity. See typical Medicare costs near $163, fair price ranges, and how to review your itemized bill.',
-      summary: 'CPT 99310 bills for subsequent nursing facility care, high complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $163.',
+      metaDescription: 'CPT 99310 is for subsequent nursing facility care, high complexity. See the CMS Medicare payment benchmark and review your bill or EOB.',
+      summary: 'CPT 99310 is the line patients usually see for subsequent nursing facility care when the reported service is high complexity. It is not a hospital inpatient code. This page explains what the code means on a bill or EOB and how to use the CMS Medicare payment benchmark for comparison; it does not determine medical necessity, coverage, or what you owe.',
       category: 'Nursing facility',
       categorySlug: 'hospital-care',
       whatIs: [
@@ -2092,9 +2092,9 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'If you are self-pay on CPT 99310, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.',
     ],
       relatedCodes: [
-      { code: '99221', label: 'Initial hospital care, low complexity' },
-      { code: '99222', label: 'Initial hospital care, moderate complexity' },
-      { code: '99223', label: 'Initial hospital care, high complexity' },
+      { code: '99307', label: 'Subsequent nursing facility care, straightforward' },
+      { code: '99308', label: 'Subsequent nursing facility care, low complexity' },
+      { code: '99309', label: 'Subsequent nursing facility care, moderate complexity' },
       ],
       faq: [
       {
