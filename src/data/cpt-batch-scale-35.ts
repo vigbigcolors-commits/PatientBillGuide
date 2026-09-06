@@ -1664,7 +1664,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       metaDescription: 'CPT 99304 is initial nursing facility care, low complexity. See typical Medicare costs near $81, fair price ranges, and how to review your itemized bill.',
       summary: 'CPT 99304 bills for initial nursing facility care, low complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $81.',
       category: 'Nursing facility',
-      categorySlug: 'hospital-care',
+      categorySlug: 'nursing-facility',
       whatIs: [
       'CPT 99304 is a Current Procedural Terminology code used on US medical bills to describe initial nursing facility care, low complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
       'Our plain-English summary is original and educational: Initial nursing facility care, low complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
@@ -1696,9 +1696,8 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'If you are self-pay on CPT 99304, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.',
     ],
       relatedCodes: [
-      { code: '99221', label: 'Initial hospital care, low complexity' },
-      { code: '99222', label: 'Initial hospital care, moderate complexity' },
-      { code: '99223', label: 'Initial hospital care, high complexity' },
+      { code: '99305', label: 'Initial nursing facility care, moderate complexity' },
+      { code: '99306', label: 'Initial nursing facility care, high complexity' },
       ],
       faq: [
       {
@@ -1730,7 +1729,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       metaDescription: 'CPT 99305 is initial nursing facility care, moderate complexity. See typical Medicare costs near $141, fair price ranges, and how to review your itemized bill.',
       summary: 'CPT 99305 bills for initial nursing facility care, moderate complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $141.',
       category: 'Nursing facility',
-      categorySlug: 'hospital-care',
+      categorySlug: 'nursing-facility',
       whatIs: [
       'CPT 99305 is a Current Procedural Terminology code used on US medical bills to describe initial nursing facility care, moderate complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
       'Our plain-English summary is original and educational: Initial nursing facility care, moderate complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
@@ -1762,9 +1761,8 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'Before paying list price for CPT 99305, self-pay patients should ask about cash pricing, prompt-pay discounts, or charity care. Tools here explain benchmarks; they are not legal advice.',
     ],
       relatedCodes: [
-      { code: '99221', label: 'Initial hospital care, low complexity' },
-      { code: '99222', label: 'Initial hospital care, moderate complexity' },
-      { code: '99223', label: 'Initial hospital care, high complexity' },
+      { code: '99304', label: 'Initial nursing facility care, low complexity' },
+      { code: '99306', label: 'Initial nursing facility care, high complexity' },
       ],
       faq: [
       {
@@ -1796,7 +1794,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       metaDescription: 'CPT 99306 is initial nursing facility care, high complexity. See typical Medicare costs near $193, fair price ranges, and how to review your itemized bill.',
       summary: 'CPT 99306 bills for initial nursing facility care, high complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $193.',
       category: 'Nursing facility',
-      categorySlug: 'hospital-care',
+      categorySlug: 'nursing-facility',
       whatIs: [
       'CPT 99306 is a Current Procedural Terminology code used on US medical bills to describe initial nursing facility care, high complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
       'Our plain-English summary is original and educational: Initial nursing facility care, high complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
@@ -1828,9 +1826,8 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT 99306 before paying full chargemaster rates. This is for comparison and questions — not legal advice.',
     ],
       relatedCodes: [
-      { code: '99221', label: 'Initial hospital care, low complexity' },
-      { code: '99222', label: 'Initial hospital care, moderate complexity' },
-      { code: '99223', label: 'Initial hospital care, high complexity' },
+      { code: '99304', label: 'Initial nursing facility care, low complexity' },
+      { code: '99305', label: 'Initial nursing facility care, moderate complexity' },
       ],
       faq: [
       {
@@ -1862,7 +1859,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       metaDescription: 'CPT 99307 is subsequent nursing facility care, straightforward. See typical Medicare costs near $42, fair price ranges, and how to review your itemized bill.',
       summary: 'CPT 99307 bills for subsequent nursing facility care, straightforward — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $42.',
       category: 'Nursing facility',
-      categorySlug: 'hospital-care',
+      categorySlug: 'nursing-facility',
       whatIs: [
       'CPT 99307 is a Current Procedural Terminology code used on US medical bills to describe subsequent nursing facility care, straightforward. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
       'Our plain-English summary is original and educational: Subsequent nursing facility care, straightforward. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
@@ -1894,9 +1891,9 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'If you are self-pay on CPT 99307, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.',
     ],
       relatedCodes: [
-      { code: '99221', label: 'Initial hospital care, low complexity' },
-      { code: '99222', label: 'Initial hospital care, moderate complexity' },
-      { code: '99223', label: 'Initial hospital care, high complexity' },
+      { code: '99308', label: 'Subsequent nursing facility care, low complexity' },
+      { code: '99309', label: 'Subsequent nursing facility care, moderate complexity' },
+      { code: '99310', label: 'Subsequent nursing facility care, high complexity' },
       ],
       faq: [
       {
@@ -1928,7 +1925,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       metaDescription: 'CPT 99308 is subsequent nursing facility care, low complexity. See typical Medicare costs near $79, fair price ranges, and how to review your itemized bill.',
       summary: 'CPT 99308 bills for subsequent nursing facility care, low complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $79.',
       category: 'Nursing facility',
-      categorySlug: 'hospital-care',
+      categorySlug: 'nursing-facility',
       whatIs: [
       'CPT 99308 is a Current Procedural Terminology code used on US medical bills to describe subsequent nursing facility care, low complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
       'Our plain-English summary is original and educational: Subsequent nursing facility care, low complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
@@ -1960,9 +1957,9 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'Before paying list price for CPT 99308, self-pay patients should ask about cash pricing, prompt-pay discounts, or charity care. Tools here explain benchmarks; they are not legal advice.',
     ],
       relatedCodes: [
-      { code: '99221', label: 'Initial hospital care, low complexity' },
-      { code: '99222', label: 'Initial hospital care, moderate complexity' },
-      { code: '99223', label: 'Initial hospital care, high complexity' },
+      { code: '99307', label: 'Subsequent nursing facility care, straightforward' },
+      { code: '99309', label: 'Subsequent nursing facility care, moderate complexity' },
+      { code: '99310', label: 'Subsequent nursing facility care, high complexity' },
       ],
       faq: [
       {
@@ -1994,7 +1991,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       metaDescription: 'CPT 99309 is subsequent nursing facility care, moderate complexity. See typical Medicare costs near $115, fair price ranges, and how to review your itemized bill.',
       summary: 'CPT 99309 bills for subsequent nursing facility care, moderate complexity — a commonly seen line on US medical statements. Medicare national median benchmarks are often near $115.',
       category: 'Nursing facility',
-      categorySlug: 'hospital-care',
+      categorySlug: 'nursing-facility',
       whatIs: [
       'CPT 99309 is a Current Procedural Terminology code used on US medical bills to describe subsequent nursing facility care, moderate complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
       'Our plain-English summary is original and educational: Subsequent nursing facility care, moderate complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',
@@ -2026,9 +2023,9 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT 99309 before paying full chargemaster rates. This is for comparison and questions — not legal advice.',
     ],
       relatedCodes: [
-      { code: '99221', label: 'Initial hospital care, low complexity' },
-      { code: '99222', label: 'Initial hospital care, moderate complexity' },
-      { code: '99223', label: 'Initial hospital care, high complexity' },
+      { code: '99307', label: 'Subsequent nursing facility care, straightforward' },
+      { code: '99308', label: 'Subsequent nursing facility care, low complexity' },
+      { code: '99310', label: 'Subsequent nursing facility care, high complexity' },
       ],
       faq: [
       {
@@ -2060,7 +2057,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       metaDescription: 'CPT 99310 is for subsequent nursing facility care, high complexity. See the CMS Medicare payment benchmark and review your bill or EOB.',
       summary: 'CPT 99310 is the line patients usually see for subsequent nursing facility care when the reported service is high complexity. It is not a hospital inpatient code. This page explains what the code means on a bill or EOB and how to use the CMS Medicare payment benchmark for comparison; it does not determine medical necessity, coverage, or what you owe.',
       category: 'Nursing facility',
-      categorySlug: 'hospital-care',
+      categorySlug: 'nursing-facility',
       whatIs: [
       'CPT 99310 is a Current Procedural Terminology code used on US medical bills to describe subsequent nursing facility care, high complexity. On an itemized statement or explanation of benefits, this number tells payers and patients which service was reported. It is not a diagnosis code — it represents the procedure, test, or visit type the provider documented.',
       'Our plain-English summary is original and educational: Subsequent nursing facility care, high complexity. Medicare and most commercial insurers use this code (or a closely related variant) when the clinical documentation matches the service definition. The allowed amount depends on the Medicare Physician Fee Schedule or clinical lab fee schedule in your locality, not on the hospital chargemaster alone.',

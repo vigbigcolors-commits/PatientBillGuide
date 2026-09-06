@@ -35,7 +35,7 @@ const pageUrl = `/codes/cpt/${page.code}/`;
 const canonical = new URL(pageUrl, site.url).href;
 const seoTitle = buildCptSeoTitle(page);
 /** Hand-curated metas bypass the category formula (controlled CPT upgrades). */
-const curatedMetaCodes = new Set(['94729', '51702', '99310']);
+const curatedMetaCodes = new Set(['94729', '51702']);
 const seoDescription = curatedMetaCodes.has(page.code)
   ? page.metaDescription
   : buildCptSeoMeta(page);
