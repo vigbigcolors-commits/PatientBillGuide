@@ -1100,9 +1100,8 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'Before paying list price for CPT 92012, self-pay patients should ask about cash pricing, prompt-pay discounts, or charity care. Tools here explain benchmarks; they are not legal advice.',
     ],
       relatedCodes: [
-      { code: '92014', label: 'Ophthalmological exam, established, comprehensive' },
-      { code: '93000', label: 'Electrocardiogram' },
-      { code: '93005', label: 'Electrocardiogram, tracing only' },
+        { code: '92014', label: 'Established-patient comprehensive eye exam' },
+        { code: '92004', label: 'New-patient comprehensive eye exam' },
       ],
       faq: [
       {
@@ -1166,9 +1165,8 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'If you are self-pay on CPT 92014, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.',
     ],
       relatedCodes: [
-      { code: '92012', label: 'Ophthalmological exam, established patient' },
-      { code: '93000', label: 'Electrocardiogram' },
-      { code: '93005', label: 'Electrocardiogram, tracing only' },
+        { code: '92012', label: 'Established-patient eye exam' },
+        { code: '92004', label: 'New-patient comprehensive eye exam' },
       ],
       faq: [
       {
