@@ -1298,9 +1298,7 @@ export const cptBatchScale35: Record<string, CptPageData> = {
       'Self-pay: ask for prompt-pay, charity care, or cash pricing on CPT 93307 before paying full chargemaster rates. This is for comparison and questions — not legal advice.',
     ],
       relatedCodes: [
-      { code: '92012', label: 'Ophthalmological exam, established patient' },
-      { code: '92014', label: 'Ophthalmological exam, established, comprehensive' },
-      { code: '93000', label: 'Electrocardiogram' },
+      { code: '93308', label: 'Limited or follow-up echocardiogram' },
       ],
       faq: [
       {

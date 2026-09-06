@@ -7,6 +7,7 @@ import { writeFileSync, readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { CPT_CODES_150 } from './build-data/cpt-seed-150.mjs';
+import { getCptRelatedFamily } from './cpt-related-family.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'src/data/cpt-batch-100.ts');
@@ -317,6 +318,7 @@ function generatePage(code, seed, cat) {
     summary: `CPT ${code} bills for ${desc.toLowerCase()} — a commonly seen line on US medical statements. Medicare national median benchmarks are often near ${medStr}.`,
     category: cat.category,
     categorySlug: cat.categorySlug,
+    relatedFamily: getCptRelatedFamily(code, cat.categorySlug, desc),
     whatIs,
     whenUsed,
     typicalCosts,
@@ -327,12 +329,12 @@ function generatePage(code, seed, cat) {
 }
 
 /** @param {Record<string, ReturnType<typeof generatePage>>} pages */
-function pickRelatedCodes(code, categorySlug, pages, existingByCategory) {
+function pickRelatedCodes(code, relatedFamily, pages, existingByRelatedFamily) {
   const pool = [
-    ...(existingByCategory.get(categorySlug) ?? []),
+    ...(existingByRelatedFamily.get(relatedFamily) ?? []),
     ...Object.keys(pages).filter((c) => {
       const p = pages[c];
-      return p.categorySlug === categorySlug && c !== code;
+      return p.relatedFamily === relatedFamily && c !== code;
     }),
   ];
   const unique = [...new Set(pool)].filter((c) => c !== code).sort();
@@ -416,18 +418,19 @@ function main() {
     pages[code] = generatePage(code, seed, cat);
   }
 
-  const existingByCategory = new Map();
+  const existingByRelatedFamily = new Map();
   for (const code of existing) {
     const seed = CPT_CODES_150[code];
     if (!seed) continue;
     const cat = getCategory(code, seed.description_short);
-    if (!existingByCategory.has(cat.categorySlug)) existingByCategory.set(cat.categorySlug, []);
-    existingByCategory.get(cat.categorySlug).push(code);
+    const relatedFamily = getCptRelatedFamily(code, cat.categorySlug, seed.description_short);
+    if (!existingByRelatedFamily.has(relatedFamily)) existingByRelatedFamily.set(relatedFamily, []);
+    existingByRelatedFamily.get(relatedFamily).push(code);
   }
 
   for (const code of selected) {
     const page = pages[code];
-    page.relatedCodes = pickRelatedCodes(code, page.categorySlug, pages, existingByCategory);
+    page.relatedCodes = pickRelatedCodes(code, page.relatedFamily, pages, existingByRelatedFamily);
   }
 
   const shortPages = selected.filter((c) => wordCount(pages[c]) < 800);

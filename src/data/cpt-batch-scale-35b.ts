@@ -1504,9 +1504,7 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       'If you are self-pay on CPT 93017, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.',
     ],
       relatedCodes: [
-      { code: '92004', label: 'Ophthalmological exam, new patient, comprehensive' },
-      { code: '92012', label: 'Ophthalmological exam, established patient' },
-      { code: '92014', label: 'Ophthalmological exam, established, comprehensive' },
+      { code: '93015', label: 'Cardiovascular stress test' },
       ],
       faq: [
       {
@@ -1570,9 +1568,7 @@ export const cptBatchScale35b: Record<string, CptPageData> = {
       'If you are self-pay on CPT 93308, request cash or prompt-pay discounts (or financial assistance) before settling chargemaster totals. Educational comparison only — not legal advice.',
     ],
       relatedCodes: [
-      { code: '92004', label: 'Ophthalmological exam, new patient, comprehensive' },
-      { code: '92012', label: 'Ophthalmological exam, established patient' },
-      { code: '92014', label: 'Ophthalmological exam, established, comprehensive' },
+      { code: '93307', label: 'Complete transthoracic echocardiogram' },
       ],
       faq: [
       {
