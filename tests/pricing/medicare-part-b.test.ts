@@ -6,6 +6,10 @@ import {
 } from '../../src/lib/pricing/medicare-part-b';
 
 describe('estimatePartBCost', () => {
+  it('uses the published 2026 Part B deductible', () => {
+    expect(PART_B_DEDUCTIBLE_2026).toBe(283);
+  });
+
   it('computes 80/20 split when deductible is fully met', () => {
     const est = estimatePartBCost({ medicareAllowed: 100, deductibleMet: PART_B_DEDUCTIBLE_2026 });
     expect(est.medicarePays).toBe(80);
@@ -26,19 +30,19 @@ describe('estimatePartBCost', () => {
 
   it('applies partial deductible then 20% coinsurance on the balance', () => {
     const est = estimatePartBCost({ medicareAllowed: 500, deductibleMet: 0 });
-    expect(est.deductibleApplied).toBe(257);
-    expect(est.coinsuranceAmount).toBe(48.6);
-    expect(est.patientShare).toBe(305.6);
-    expect(est.medicarePays).toBe(194.4);
+    expect(est.deductibleApplied).toBe(283);
+    expect(est.coinsuranceAmount).toBe(43.4);
+    expect(est.patientShare).toBe(326.4);
+    expect(est.medicarePays).toBe(173.6);
   });
 
   it('handles partial deductible already met this year', () => {
     const est = estimatePartBCost({ medicareAllowed: 200, deductibleMet: 200 });
-    expect(est.deductibleRemaining).toBe(57);
-    expect(est.deductibleApplied).toBe(57);
-    expect(est.coinsuranceAmount).toBe(28.6);
-    expect(est.patientShare).toBe(85.6);
-    expect(est.medicarePays).toBe(114.4);
+    expect(est.deductibleRemaining).toBe(83);
+    expect(est.deductibleApplied).toBe(83);
+    expect(est.coinsuranceAmount).toBe(23.4);
+    expect(est.patientShare).toBe(106.4);
+    expect(est.medicarePays).toBe(93.6);
   });
 
   it('shows remaining deductible context when none met', () => {
@@ -54,8 +58,8 @@ describe('analyzePartBCost', () => {
     expect(analysis.checksRun.length).toBeGreaterThanOrEqual(4);
     expect(analysis.nextSteps.length).toBeGreaterThanOrEqual(4);
     expect(analysis.deductiblePct + analysis.coinsurancePct + analysis.medicarePct).toBe(100);
-    expect(analysis.deductibleApplied).toBe(257);
-    expect(analysis.patientShare).toBe(305.6);
+    expect(analysis.deductibleApplied).toBe(283);
+    expect(analysis.patientShare).toBe(326.4);
   });
 
   it('shows coinsurance-only split when deductible met', () => {

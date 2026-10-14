@@ -49,7 +49,7 @@ function buildDisputeLetterHref(result: PriceLookupResult): string {
       : 'national median';
   params.set(
     'benchmark',
-    `Medicare allowed ~${formatUsd(result.medicareAllowed)} (${locality}); fair range ${formatUsd(result.fairRangeLow)}–${formatUsd(result.fairRangeHigh)}`,
+    `CMS non-QP MPFS reference ~${formatUsd(result.medicareAllowed)} (${locality}); educational range ${formatUsd(result.fairRangeLow)}–${formatUsd(result.fairRangeHigh)}`,
   );
   return `/tools/dispute-letter/?${params.toString()}`;
 }
@@ -73,8 +73,8 @@ function renderFairResults(container: HTMLElement, result: PriceLookupResult) {
     const statusClass = `result-comparison--${c.status}`;
     const markupLine =
       c.pctAboveFairHigh > 0
-        ? `<p class="result-comparison__markup"><strong>${c.vsMedicareMultiple}×</strong> Medicare allowed (${c.vsMedicarePct}% of Medicare) · <strong>${c.pctAboveFairHigh}%</strong> above the 2.5× fair-range high</p>`
-        : `<p class="result-comparison__markup"><strong>${c.vsMedicareMultiple}×</strong> Medicare allowed (${c.vsMedicarePct}% of Medicare)</p>`;
+        ? `<p class="result-comparison__markup"><strong>${c.vsMedicareMultiple}×</strong> the MPFS reference (${c.vsMedicarePct}% of reference) · <strong>${c.pctAboveFairHigh}%</strong> above the 2.5× comparison-range high</p>`
+        : `<p class="result-comparison__markup"><strong>${c.vsMedicareMultiple}×</strong> the MPFS reference (${c.vsMedicarePct}% of reference)</p>`;
     comparisonHtml = `
       <div class="result-comparison ${statusClass}">
         <h3>${c.headline}</h3>
@@ -132,11 +132,11 @@ function renderFairResults(container: HTMLElement, result: PriceLookupResult) {
       </header>
       <dl class="price-results__grid">
         <div>
-          <dt>Medicare allowed</dt>
+          <dt>2026 MPFS reference</dt>
           <dd>${formatUsd(result.medicareAllowed)}</dd>
         </div>
         <div>
-          <dt>Fair range (1.5×–2.5×)</dt>
+          <dt>Educational comparison range (1.5×–2.5×)</dt>
           <dd>${formatUsd(result.fairRangeLow)} – ${formatUsd(result.fairRangeHigh)}</dd>
         </div>
         <div>
@@ -151,7 +151,7 @@ function renderFairResults(container: HTMLElement, result: PriceLookupResult) {
       ${facilityHtml}
       ${comparisonHtml}
       <p class="price-results__note">
-        Based on CMS Physician Fee Schedule (${result.dataVersion}).
+        Based on the CMS ${result.dataVersion} non-QP Physician Fee Schedule reference; not a quote, coverage decision, or your exact Medicare payment.
         <a href="/methodology/price-benchmarks/">How we calculate fair range</a>
       </p>
       ${nextStepHtml}
@@ -238,7 +238,7 @@ function renderMedicareResults(container: HTMLElement, result: PriceLookupResult
 
       <dl class="price-results__grid">
         <div>
-          <dt>Medicare allowed (2026 MPFS)</dt>
+          <dt>2026 non-QP MPFS reference</dt>
           <dd class="medicare-amount">${formatUsd(result.medicareAllowed)}</dd>
         </div>
         <div>
@@ -283,7 +283,7 @@ function renderMedicareResults(container: HTMLElement, result: PriceLookupResult
       <div class="part-b-tools">${toolLinks}</div>
 
       <p class="price-results__note">
-        Estimate only — not your EOB or MSN. Medigap, Medicare Advantage, Medicaid, and employer retiree plans change what you owe.
+        Estimate only — not your EOB or MSN. It assumes a Medicare-covered Part B service and a provider who accepts assignment; Medigap, Medicare Advantage, Medicaid, and retiree plans change what you owe.
         <a href="/methodology/price-benchmarks/">Methodology</a>
       </p>
     </div>`;
