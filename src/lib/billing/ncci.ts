@@ -1,4 +1,4 @@
-import type { BillLineItem, BillAuditFlag } from './types';
+import type { BillLineItem, BillAuditFlag, NcciCheckStatus } from './types';
 import type { NcciColumn2Edit, NcciCompactEdit, NcciColumn2Edit as Edit, NcciDataset } from './ncci-types';
 
 export type { NcciDataset, NcciPtpEdit, NcciColumn2Edit } from './ncci-types';
@@ -47,6 +47,13 @@ function appliesToServiceDate(serviceDate: string | undefined, version: string):
   if (!window) return true;
   const date = normalizeServiceDate(serviceDate);
   return Boolean(date && date >= window.start && date <= window.end);
+}
+
+export function getNcciCheckStatus(items: BillLineItem[], dataset: NcciDataset): NcciCheckStatus {
+  if (!getNcciEffectiveWindow(dataset.version)) return 'evaluated';
+  const covered = items.filter((item) => appliesToServiceDate(item.serviceDate, dataset.version)).length;
+  if (covered === 0) return 'not_evaluated';
+  return covered === items.length ? 'evaluated' : 'partially_evaluated';
 }
 
 function genericNcciRationale(modifier: 0 | 1): string {

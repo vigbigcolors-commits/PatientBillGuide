@@ -1,6 +1,6 @@
-import type { BillLineItem, BillAuditFlag, BillAuditResult } from './types';
+import type { BillLineItem, BillAuditFlag, BillAuditResult, NcciCheckStatus } from './types';
 import type { NcciDataset } from './ncci-types';
-import { findNcciUnbundlingFlags, getNcciEffectiveWindow } from './ncci';
+import { findNcciUnbundlingFlags, getNcciCheckStatus, getNcciEffectiveWindow } from './ncci';
 import { WELL_ABOVE_MULTIPLIER } from '../pricing/types';
 import type { MpfsDataset, ZipLocalityMap } from '../pricing/types';
 import { lookupPrice, formatUsd } from '../pricing/lookup';
@@ -75,6 +75,7 @@ export function auditBill(
   let flagIndex = 0;
   let skippedUnknownCodes = 0;
   const unknownReported = new Set<string>();
+  const ncciStatus: NcciCheckStatus = ncci ? getNcciCheckStatus(items, ncci) : 'not_loaded';
 
   for (const item of items) {
     if (item.charged <= 0) {
@@ -228,10 +229,32 @@ export function auditBill(
     flags.push(makeFlag(partial, flagIndex++));
   }
 
+  if (ncciStatus !== 'evaluated') {
+    const window = ncci ? getNcciEffectiveWindow(ncci.version) : null;
+    const detail =
+      ncciStatus === 'not_loaded'
+        ? 'The NCCI edit file was not available for this review. Other pricing and duplicate checks still ran.'
+        : ncciStatus === 'partially_evaluated'
+          ? `NCCI ${ncci?.version} only covered some service dates${window ? ` (${window.start} through ${window.end})` : ''}. Other lines were not evaluated for unbundling.`
+          : `NCCI ${ncci?.version} did not cover the parsed service dates${window ? ` (${window.start} through ${window.end})` : ''}. No NCCI unbundling conclusion was made.`;
+    flags.push(
+      makeFlag(
+        {
+          severity: 'low',
+          confidence: 'high',
+          category: 'data',
+          headline: 'NCCI unbundling check not fully evaluated',
+          detail,
+        },
+        flagIndex++,
+      ),
+    );
+  }
+
   const concernFlags = flags.filter(
     (f) => f.category === 'pricing' || f.category === 'duplicate' || f.category === 'unbundling',
   );
-  const looksNormal = concernFlags.length === 0;
+  const looksNormal = concernFlags.length === 0 && ncciStatus === 'evaluated';
 
   const byCategory: BillAuditResult['stats']['byCategory'] = {
     duplicate: 0,
@@ -255,8 +278,18 @@ export function auditBill(
     ncci
       ? (() => {
           const window = getNcciEffectiveWindow(ncci.version);
+          if (ncciStatus === 'not_evaluated') {
+            return window
+              ? `Did not evaluate NCCI pairs: parsed service dates were missing, invalid, or outside ${window.start} through ${window.end}`
+              : 'Did not evaluate NCCI pairs for the parsed service dates';
+          }
+          if (ncciStatus === 'partially_evaluated') {
+            return window
+              ? `Partially evaluated NCCI pairs: only service dates ${window.start} through ${window.end} were covered`
+              : 'Partially evaluated NCCI pairs for covered service dates';
+          }
           return window
-            ? `Checked same-day code pairs against CMS NCCI practitioner PTP edits only for service dates ${window.start} through ${window.end}`
+            ? `Checked same-day code pairs against CMS NCCI practitioner PTP edits for service dates ${window.start} through ${window.end}`
             : 'Checked same-day code pairs against CMS NCCI practitioner PTP edits';
         })()
       : 'NCCI unbundling check skipped (data not loaded)',
@@ -286,14 +319,20 @@ export function auditBill(
   if (flags.some((f) => f.category === 'coverage')) {
     nextSteps.push('For unrecognized CPT codes, ask billing for a plain-English description of each service.');
   }
+  if (ncciStatus !== 'evaluated') {
+    nextSteps.push('Add or verify dates of service before relying on an NCCI unbundling review.');
+  }
   nextSteps.push('Keep copies of the bill, EOB, and any call reference numbers before paying in full.');
 
   return {
     lineCount: items.length,
     flags,
     skippedUnknownCodes,
+    ncciStatus,
     summary:
-      flags.length === 0
+      ncciStatus !== 'evaluated' && concernFlags.length === 0
+        ? 'No pricing or duplicate concerns were found, but the NCCI unbundling check was not fully evaluated for these service dates.'
+        : flags.length === 0
         ? 'Based on public Medicare benchmarks, this bill looks normal — no obvious concerns found.'
         : looksNormal
           ? `Found ${flags.length} informational note${flags.length === 1 ? '' : 's'} — no major pricing or duplicate concerns.`

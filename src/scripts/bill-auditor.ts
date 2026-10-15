@@ -109,7 +109,6 @@ function renderResults(
   container: HTMLElement,
   result: BillAuditResult,
   items: BillLineItem[],
-  ncciChecked: boolean,
 ) {
   const summaryClass = result.looksNormal ? 'audit-summary--normal' : 'audit-summary--flags';
   const unbundlingCount = result.stats.byCategory.unbundling;
@@ -151,7 +150,7 @@ function renderResults(
         <div><dt>Total charged</dt><dd>${formatUsd(result.stats.totalCharged)}</dd></div>
         <div><dt>Concerns</dt><dd>${result.stats.concernCount}</dd></div>
         <div><dt>High severity</dt><dd>${result.stats.bySeverity.high}</dd></div>
-        <div><dt>NCCI checked</dt><dd>${ncciChecked ? 'Yes' : 'No'}</dd></div>
+        <div><dt>NCCI checked</dt><dd>${result.ncciStatus === 'evaluated' ? 'Yes' : result.ncciStatus === 'partially_evaluated' ? 'Partial' : 'No'}</dd></div>
       </dl>
 
       ${renderParsedLines(items)}
@@ -268,7 +267,7 @@ export async function initBillAuditor(root: ParentNode = document) {
       const ncci = await loadNcciForCodes(billCodes);
 
       const result = auditBill(items, mpfs, zipMap, zipVal ? normalizeZip(zipVal)! : undefined, ncci);
-      if (results) renderResults(results, result, items, Boolean(ncci));
+      if (results) renderResults(results, result, items);
     } catch (err) {
       if (error) {
         const detail = err instanceof Error ? err.message : 'Unknown error';

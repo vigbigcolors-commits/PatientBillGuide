@@ -15,6 +15,7 @@ import type { PartBAnalysis } from '../lib/pricing/medicare-part-b';
 import { bindToolExamples } from './tool-examples';
 import { bindCptTypeahead } from './cpt-typeahead';
 import { currentSourcePage, trackGa4Event } from '../lib/analytics/ga4';
+import { storeDisputePrefill } from '../lib/dispute/prefill';
 
 export type PriceCheckMode = 'fair' | 'medicare';
 
@@ -38,21 +39,17 @@ function getFormElements(root: ParentNode = document) {
 }
 
 function buildDisputeLetterHref(result: PriceLookupResult): string {
-  const params = new URLSearchParams();
-  params.set('template', 'overcharge');
-  params.set('code', result.code);
-  if (result.userComparison) {
-    params.set('amount', String(Math.round(result.userComparison.charged * 100) / 100));
-  }
   const locality =
     result.localitySource === 'zip' && result.localityLabel
       ? result.localityLabel
       : 'national median';
-  params.set(
-    'benchmark',
-    `CMS non-QP MPFS reference ~${formatUsd(result.medicareAllowed)} (${locality}); educational range ${formatUsd(result.fairRangeLow)}–${formatUsd(result.fairRangeHigh)}`,
-  );
-  return `/tools/dispute-letter/?${params.toString()}`;
+  storeDisputePrefill({
+    template: 'overcharge',
+    code: result.code,
+    amount: result.userComparison ? String(Math.round(result.userComparison.charged * 100) / 100) : undefined,
+    benchmark: `CMS non-QP MPFS reference ~${formatUsd(result.medicareAllowed)} (${locality}); educational range ${formatUsd(result.fairRangeLow)}–${formatUsd(result.fairRangeHigh)}`,
+  });
+  return '/tools/dispute-letter/';
 }
 
 function isCptGuidePage(): boolean {
@@ -364,6 +361,13 @@ export async function initFairPriceForm(root: ParentNode = document) {
   const presetCode = params.get('code');
   if (presetCode && cpt) cpt.value = presetCode;
 
+  /* Legacy links may contain a CPT code. Consume it locally, then remove it from history. */
+  if (params.size > 0) {
+    const safeUrl = new URL(window.location.href);
+    safeUrl.search = mode === 'medicare' ? '?tab=medicare' : '';
+    history.replaceState(null, '', safeUrl);
+  }
+
   const scenario = params.get('scenario');
   if (scenario) {
     const variant = mode === 'medicare' ? 'medicare-lookup' : 'fair-price';
@@ -378,9 +382,8 @@ export async function initFairPriceForm(root: ParentNode = document) {
   const applyMode = (next: PriceCheckMode, focusTab = false) => {
     mode = next;
     activateTab(root, mode, focusTab);
-    const url = new URL(window.location.href);
-    if (mode === 'medicare') url.searchParams.set('tab', 'medicare');
-    else url.searchParams.delete('tab');
+    const url = new URL(window.location.origin + window.location.pathname);
+    if (mode === 'medicare') url.search = '?tab=medicare';
     history.replaceState(null, '', url);
     if (results) {
       results.innerHTML = '';

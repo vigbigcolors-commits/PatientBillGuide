@@ -46,16 +46,30 @@ describe('parseBillText', () => {
 
 describe('auditBill', () => {
 
-  it('reports normal bill when charges are reasonable', () => {
+  it('does not report a normal bill when NCCI data was unavailable', () => {
 
     const items = parseBillText('99213 Office visit $150.00');
 
     const result = auditBill(items, mpfs, zipMap, '10001');
 
-    expect(result.looksNormal).toBe(true);
+    expect(result.looksNormal).toBe(false);
+    expect(result.ncciStatus).toBe('not_loaded');
+    expect(result.flags.some((f) => f.headline.includes('NCCI unbundling check'))).toBe(true);
 
     expect(result.flags.filter((f) => f.category === 'pricing' || f.category === 'duplicate')).toHaveLength(0);
 
+  });
+
+  it('reports normal only when the NCCI period covers the service date', () => {
+    const ncci = { version: '2026Q3', source: 'test', pairs: [] };
+    const september = auditBill(parseBillText('09/30/2026 99213 Office visit $150.00'), mpfs, zipMap, '10001', ncci);
+    const october = auditBill(parseBillText('10/01/2026 99213 Office visit $150.00'), mpfs, zipMap, '10001', ncci);
+
+    expect(september.looksNormal).toBe(true);
+    expect(september.ncciStatus).toBe('evaluated');
+    expect(october.looksNormal).toBe(false);
+    expect(october.ncciStatus).toBe('not_evaluated');
+    expect(october.summary).toContain('NCCI unbundling check was not fully evaluated');
   });
 
 

@@ -29,5 +29,29 @@ import { GA4_MEASUREMENT_ID, ANALYTICS_CONSENT_KEY } from '../../lib/analytics/g
     }
   } catch (e) {}
 
-  gtag('config', GA4_MEASUREMENT_ID);
+  /*
+   * Never let GA build a page URL itself: its automatic page_view can include
+   * search parameters. Only non-tool pages render this component, and this
+   * explicit event carries a path-only location and a path-only referrer.
+   */
+  function analyticsPath(value) {
+    try {
+      var url = new URL(value, window.location.origin);
+      return url.pathname;
+    } catch (e) {
+      return '';
+    }
+  }
+
+  gtag('config', GA4_MEASUREMENT_ID, {
+    send_page_view: false,
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false,
+  });
+
+  gtag('event', 'page_view', {
+    page_location: window.location.origin + analyticsPath(window.location.href),
+    page_path: analyticsPath(window.location.href),
+    page_referrer: analyticsPath(document.referrer),
+  });
 </script>

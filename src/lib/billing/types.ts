@@ -10,6 +10,7 @@ export interface BillLineItem {
 export type FlagSeverity = 'low' | 'medium' | 'high';
 export type FlagConfidence = 'low' | 'medium' | 'high';
 export type FlagCategory = 'duplicate' | 'pricing' | 'quantity' | 'data' | 'coverage' | 'unbundling';
+export type NcciCheckStatus = 'evaluated' | 'partially_evaluated' | 'not_evaluated' | 'not_loaded';
 
 export interface BillAuditFlag {
   id: string;
@@ -28,6 +29,8 @@ export interface BillAuditResult {
   summary: string;
   looksNormal: boolean;
   skippedUnknownCodes: number;
+  /** Whether the loaded NCCI release actually covered the bill's service dates. */
+  ncciStatus: NcciCheckStatus;
   stats: BillAuditStats;
   /** Plain-English list of checks performed */
   checksRun: string[];
