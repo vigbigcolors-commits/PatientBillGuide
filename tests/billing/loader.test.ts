@@ -52,7 +52,13 @@ describe('loadNcciForCodes coverage provenance', () => {
   it('marks missing chunks with a seed fallback as partial coverage', async () => {
     mockNcciFetch(
       { '8': json({ version: '2026Q3', prefix: '8', index: { '80053': [['84460', 0]] } }) },
-      json({ version: 'seed-v1', index: { '99213': [['36415', 0]] } }),
+      json({
+        version: 'seed-v1',
+        index: {
+          '80053': [['99999', 0]],
+          '99213': [['36415', 0]],
+        },
+      }),
     );
 
     const dataset = await loadNcciForCodes(['80053', '99213']);
@@ -64,8 +70,10 @@ describe('loadNcciForCodes coverage provenance', () => {
       failedPrefixes: ['9'],
       seedFallbackUsed: true,
     });
-    expect(dataset.index).toHaveProperty('80053');
-    expect(dataset.index).toHaveProperty('99213');
+    expect(dataset.index).toMatchObject({
+      '80053': [['84460', 0]],
+      '99213': [['36415', 0]],
+    });
   });
 
   it('marks a seed-only fallback when every requested chunk is missing', async () => {
@@ -86,5 +94,34 @@ describe('loadNcciForCodes coverage provenance', () => {
     mockNcciFetch({}, json({}, 404));
 
     await expect(loadNcciForCodes(['99213'])).rejects.toThrow('NCCI data unavailable');
+  });
+
+  it('treats a version-mismatched chunk as failed instead of complete', async () => {
+    mockNcciFetch(
+      { '9': json({ version: '2026Q2', prefix: '9', index: { '99213': [['36415', 0]] } }) },
+      json({ version: 'seed-v1', index: { '99213': [['36415', 0]] } }),
+    );
+
+    const dataset = await loadNcciForCodes(['99213']);
+
+    expect(dataset.provenance).toEqual({
+      coverage: 'seed_only',
+      requestedPrefixes: ['9'],
+      loadedPrefixes: [],
+      failedPrefixes: ['9'],
+      seedFallbackUsed: true,
+    });
+  });
+
+  it('treats a prefix-mismatched chunk as failed instead of complete', async () => {
+    mockNcciFetch(
+      { '9': json({ version: '2026Q3', prefix: '8', index: { '99213': [['36415', 0]] } }) },
+      json({ version: 'seed-v1', index: { '99213': [['36415', 0]] } }),
+    );
+
+    const dataset = await loadNcciForCodes(['99213']);
+
+    expect(dataset.provenance?.coverage).toBe('seed_only');
+    expect(dataset.provenance?.failedPrefixes).toEqual(['9']);
   });
 });
