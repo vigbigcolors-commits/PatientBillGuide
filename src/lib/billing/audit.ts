@@ -1,6 +1,6 @@
 import type { BillLineItem, BillAuditFlag, BillAuditResult } from './types';
 import type { NcciDataset } from './ncci-types';
-import { findNcciUnbundlingFlags } from './ncci';
+import { findNcciUnbundlingFlags, getNcciEffectiveWindow } from './ncci';
 import { WELL_ABOVE_MULTIPLIER } from '../pricing/types';
 import type { MpfsDataset, ZipLocalityMap } from '../pricing/types';
 import { lookupPrice, formatUsd } from '../pricing/lookup';
@@ -253,7 +253,12 @@ export function auditBill(
       ? `Compared charges to Medicare benchmarks localized to ZIP ${zip}`
       : 'Compared charges to national Medicare median benchmarks (no ZIP provided)',
     ncci
-      ? 'Checked same-day code pairs against CMS NCCI practitioner PTP edits'
+      ? (() => {
+          const window = getNcciEffectiveWindow(ncci.version);
+          return window
+            ? `Checked same-day code pairs against CMS NCCI practitioner PTP edits only for service dates ${window.start} through ${window.end}`
+            : 'Checked same-day code pairs against CMS NCCI practitioner PTP edits';
+        })()
       : 'NCCI unbundling check skipped (data not loaded)',
     'Scanned for duplicate CPT + amount on the same service date',
     'Flagged same CPT with different amounts on one date',

@@ -59,6 +59,10 @@ import LegalLayout from '../../../layouts/LegalLayout.astro';
         quarterly for some files). It does not provide a patient-specific covered amount or insurer-negotiated rate.
       </p>
       <p>
+        The current bundle is CMS RVU26B (April 2026) with CY2026 GPCI data. It is an educational non-QP
+        physician-fee reference, not a substitute for later CMS releases, a provider claim, or a coverage decision.
+      </p>
+      <p>
         Used by: <a href="/tools/fair-price/">Fair Price Calculator</a>,
         <a href="/tools/bill-auditor/">Bill Auditor</a>,
         <a href="/tools/hospital-compare/">Hospital Price Compare</a>,
@@ -74,6 +78,11 @@ import LegalLayout from '../../../layouts/LegalLayout.astro';
         Medicare typically does not pay separately when billed together. We use these as <em>possible</em>
         unbundling signals — not proof of error. See
         <a href="/methodology/billing-flags/">billing flags methodology</a>.
+      </p>
+      <p>
+        The current bundle is CMS 2026 Q3 practitioner PTP edits. The Bill Auditor applies those edits only to
+        parsed dates of service from July 1 through September 30, 2026; it does not reuse Q3 edits for later or
+        undated services while a newer quarterly bundle is pending review.
       </p>
       <p>Used by: <a href="/tools/bill-auditor/">Bill Auditor</a>.</p>
     </article>

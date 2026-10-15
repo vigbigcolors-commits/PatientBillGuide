@@ -34,7 +34,7 @@ export function normalizeZip(raw: string): string | null {
 export function parseCurrency(raw: string): number | null {
   const cleaned = raw.replace(/[$,\s]/g, '');
   if (!cleaned) return null;
-  const value = Number.parseFloat(cleaned);
+  const value = Number(cleaned);
   if (!Number.isFinite(value) || value < 0) return null;
   return Math.round(value * 100) / 100;
 }

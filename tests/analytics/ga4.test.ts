@@ -7,17 +7,17 @@ import {
 } from '../../src/lib/analytics/ga4';
 
 describe('ga4 sanitizeGa4EventParams', () => {
-  it('allows safe tool event params', () => {
+  it('allows only aggregate tool event params', () => {
     expect(
       sanitizeGa4EventParams({
         source_page: '/tools/fair-price/',
         tool_name: 'fair_price',
+        // @ts-expect-error patient-entered clinical context is never sent to GA4
         cpt_code: '99213',
       }),
     ).toEqual({
       source_page: '/tools/fair-price/',
       tool_name: 'fair_price',
-      cpt_code: '99213',
     });
   });
 
@@ -37,11 +37,12 @@ describe('ga4 sanitizeGa4EventParams', () => {
     });
   });
 
-  it('rejects invalid cpt_code and query strings in source_page', () => {
+  it('strips medical input and query strings from analytics params', () => {
     expect(
       sanitizeGa4EventParams({
         source_page: '/tools/fair-price/?zip=90210',
         tool_name: 'fair_price',
+        // @ts-expect-error patient-entered medical input is never allowed
         cpt_code: '9921X',
       }),
     ).toEqual({

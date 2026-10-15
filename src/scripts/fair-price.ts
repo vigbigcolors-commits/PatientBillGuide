@@ -6,6 +6,7 @@ import {
   normalizeCptCode,
   parseCurrency,
   analyzePartBCost,
+  PART_B_DEDUCTIBLE_2026,
   prefetchPricingData,
   type PriceLookupResult,
 } from '../lib/pricing';
@@ -144,7 +145,7 @@ function renderFairResults(container: HTMLElement, result: PriceLookupResult) {
           <dd>${locality}</dd>
         </div>
         <div>
-          <dt>Data confidence</dt>
+          <dt>ZIP/locality match</dt>
           <dd><span class="confidence confidence--${result.confidence}">${confidenceLabel}</span></dd>
         </div>
       </dl>
@@ -258,7 +259,7 @@ function renderMedicareResults(container: HTMLElement, result: PriceLookupResult
           <dd>${locality}</dd>
         </div>
         <div>
-          <dt>Data confidence</dt>
+          <dt>ZIP/locality match</dt>
           <dd><span class="confidence confidence--${result.confidence}">${confidenceLabel}</span></dd>
         </div>
       </dl>
@@ -456,14 +457,25 @@ export async function initFairPriceForm(root: ParentNode = document) {
 
       if (results) {
         if (mode === 'medicare') {
-          const met = parseCurrency(deductibleMet?.value?.trim() ?? '') ?? 0;
+          const deductibleRaw = deductibleMet?.value?.trim() ?? '';
+          const parsedDeductible = deductibleRaw ? parseCurrency(deductibleRaw) : 0;
+          if (
+            parsedDeductible == null ||
+            parsedDeductible > PART_B_DEDUCTIBLE_2026
+          ) {
+            showError(
+              error,
+              `Enter a deductible amount from $0 to $${PART_B_DEDUCTIBLE_2026}, or leave it blank if none has been met.`,
+            );
+            return;
+          }
+          const met = parsedDeductible;
           renderMedicareResults(results, outcome, met);
         } else {
           renderFairResults(results, outcome);
         }
         trackGa4Event('fair_price_use', {
           tool_name: mode === 'medicare' ? 'medicare_part_b' : 'fair_price',
-          cpt_code: outcome.code,
           source_page: currentSourcePage(),
         });
         results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

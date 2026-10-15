@@ -133,7 +133,7 @@ describe('auditBill', () => {
   it('flags NCCI unbundling pairs on same date', () => {
     const ncci = loadNcciForTestCodes(['80053', '84460']);
     const items = parseBillText(
-      '01/15/2026 80053 Comprehensive metabolic panel $45.00\n01/15/2026 84460 ALT liver enzyme $18.00',
+      '08/15/2026 80053 Comprehensive metabolic panel $45.00\n08/15/2026 84460 ALT liver enzyme $18.00',
     );
     const result = auditBill(items, mpfs, zipMap, '10001', ncci);
     expect(result.flags.some((f) => f.category === 'unbundling')).toBe(true);

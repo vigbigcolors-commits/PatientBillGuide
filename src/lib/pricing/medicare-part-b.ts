@@ -88,11 +88,27 @@ function roundUsd(n: number): number {
   return Math.round(n * 100) / 100;
 }
 
+function assertValidEstimateInput({ medicareAllowed, deductibleMet = 0 }: PartBEstimateInput): void {
+  if (!Number.isFinite(medicareAllowed) || medicareAllowed < 0) {
+    throw new RangeError('Medicare allowed amount must be a finite, non-negative number.');
+  }
+  if (
+    !Number.isFinite(deductibleMet) ||
+    deductibleMet < 0 ||
+    deductibleMet > PART_B_DEDUCTIBLE_2026
+  ) {
+    throw new RangeError(
+      `Part B deductible met must be between $0 and $${PART_B_DEDUCTIBLE_2026}.`,
+    );
+  }
+}
+
 /**
  * Traditional Medicare Part B cost-sharing for a single physician-fee service:
  * deductible first (up to remaining annual amount), then 80/20 on the balance.
  */
 export function estimatePartBCost(input: PartBEstimateInput): PartBEstimate {
+  assertValidEstimateInput(input);
   const { medicareAllowed, deductibleMet = 0 } = input;
   const deductibleRemaining = Math.max(0, PART_B_DEDUCTIBLE_2026 - deductibleMet);
   const deductibleFullyMet = deductibleRemaining <= 0;

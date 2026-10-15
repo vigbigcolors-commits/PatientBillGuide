@@ -45,6 +45,31 @@ describe('estimatePartBCost', () => {
     expect(est.medicarePays).toBe(93.6);
   });
 
+  it('handles the deductible boundary immediately before it is met', () => {
+    const est = estimatePartBCost({ medicareAllowed: 100, deductibleMet: 282 });
+    expect(est.deductibleApplied).toBe(1);
+    expect(est.coinsuranceAmount).toBe(19.8);
+    expect(est.patientShare).toBe(20.8);
+    expect(est.medicarePays).toBe(79.2);
+  });
+
+  it('handles a larger service before any deductible is met', () => {
+    const est = estimatePartBCost({ medicareAllowed: 400, deductibleMet: 0 });
+    expect(est.deductibleApplied).toBe(283);
+    expect(est.coinsuranceAmount).toBe(23.4);
+    expect(est.patientShare).toBe(306.4);
+    expect(est.medicarePays).toBe(93.6);
+  });
+
+  it('rejects invalid allowed amounts and deductible values', () => {
+    expect(() => estimatePartBCost({ medicareAllowed: -1 })).toThrow(RangeError);
+    expect(() => estimatePartBCost({ medicareAllowed: Number.NaN })).toThrow(RangeError);
+    expect(() => estimatePartBCost({ medicareAllowed: Number.POSITIVE_INFINITY })).toThrow(RangeError);
+    expect(() => estimatePartBCost({ medicareAllowed: 100, deductibleMet: -1 })).toThrow(RangeError);
+    expect(() => estimatePartBCost({ medicareAllowed: 100, deductibleMet: 284 })).toThrow(RangeError);
+    expect(() => estimatePartBCost({ medicareAllowed: 100, deductibleMet: Number.NaN })).toThrow(RangeError);
+  });
+
   it('shows remaining deductible context when none met', () => {
     const est = estimatePartBCost({ medicareAllowed: 50, deductibleMet: 0 });
     expect(est.detail).toMatch(/deductible/i);
