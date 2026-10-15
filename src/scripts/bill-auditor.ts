@@ -150,7 +150,7 @@ function renderResults(
         <div><dt>Total charged</dt><dd>${formatUsd(result.stats.totalCharged)}</dd></div>
         <div><dt>Concerns</dt><dd>${result.stats.concernCount}</dd></div>
         <div><dt>High severity</dt><dd>${result.stats.bySeverity.high}</dd></div>
-        <div><dt>NCCI checked</dt><dd>${result.ncciStatus === 'evaluated' ? 'Yes' : result.ncciStatus === 'partially_evaluated' ? 'Partial' : 'No'}</dd></div>
+        <div><dt>NCCI checked</dt><dd>${result.ncciStatus === 'evaluated' ? 'Yes' : result.ncciStatus === 'partially_evaluated' || result.ncciStatus === 'partial_data' ? 'Partial' : result.ncciStatus === 'seed_only' ? 'Seed only' : 'No'}</dd></div>
       </dl>
 
       ${renderParsedLines(items)}

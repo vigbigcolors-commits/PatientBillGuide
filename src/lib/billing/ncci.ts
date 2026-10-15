@@ -50,6 +50,8 @@ function appliesToServiceDate(serviceDate: string | undefined, version: string):
 }
 
 export function getNcciCheckStatus(items: BillLineItem[], dataset: NcciDataset): NcciCheckStatus {
+  if (dataset.provenance?.coverage === 'seed_only') return 'seed_only';
+  if (dataset.provenance?.coverage === 'partial') return 'partial_data';
   if (!getNcciEffectiveWindow(dataset.version)) return 'evaluated';
   const covered = items.filter((item) => appliesToServiceDate(item.serviceDate, dataset.version)).length;
   if (covered === 0) return 'not_evaluated';

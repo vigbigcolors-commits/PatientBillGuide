@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { findNcciUnbundlingFlags, getNcciEffectiveWindow } from '../../src/lib/billing/ncci';
+import { findNcciUnbundlingFlags, getNcciCheckStatus, getNcciEffectiveWindow } from '../../src/lib/billing/ncci';
 import type { BillLineItem } from '../../src/lib/billing/types';
 import { loadNcciForTestCodes } from './ncci-data';
 
@@ -7,6 +7,23 @@ describe('findNcciUnbundlingFlags', () => {
   it('exposes the effective window for a quarterly CMS version', () => {
     expect(getNcciEffectiveWindow('2026Q3')).toEqual({ start: '2026-07-01', end: '2026-09-30' });
     expect(getNcciEffectiveWindow('test')).toBeNull();
+  });
+
+  it('does not mark partial or seed-only quarterly data as fully evaluated', () => {
+    const items: BillLineItem[] = [
+      { code: '99213', description: 'Visit', charged: 185, lineRaw: '', serviceDate: '08/01/2026' },
+    ];
+    const provenance = (coverage: 'full' | 'partial' | 'seed_only') => ({
+      coverage,
+      requestedPrefixes: ['9'],
+      loadedPrefixes: coverage === 'seed_only' ? [] : ['9'],
+      failedPrefixes: coverage === 'full' ? [] : ['9'],
+      seedFallbackUsed: coverage !== 'full',
+    });
+
+    expect(getNcciCheckStatus(items, { version: '2026Q3', source: 'test', provenance: provenance('full') })).toBe('evaluated');
+    expect(getNcciCheckStatus(items, { version: '2026Q3', source: 'test', provenance: provenance('partial') })).toBe('partial_data');
+    expect(getNcciCheckStatus(items, { version: '2026Q3', source: 'test', provenance: provenance('seed_only') })).toBe('seed_only');
   });
 
   it('flags known seed-style pair on same date', () => {

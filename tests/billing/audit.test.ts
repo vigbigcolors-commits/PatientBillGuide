@@ -61,7 +61,18 @@ describe('auditBill', () => {
   });
 
   it('reports normal only when the NCCI period covers the service date', () => {
-    const ncci = { version: '2026Q3', source: 'test', pairs: [] };
+    const ncci = {
+      version: '2026Q3',
+      source: 'test',
+      pairs: [],
+      provenance: {
+        coverage: 'full' as const,
+        requestedPrefixes: ['9'],
+        loadedPrefixes: ['9'],
+        failedPrefixes: [],
+        seedFallbackUsed: false,
+      },
+    };
     const september = auditBill(parseBillText('09/30/2026 99213 Office visit $150.00'), mpfs, zipMap, '10001', ncci);
     const october = auditBill(parseBillText('10/01/2026 99213 Office visit $150.00'), mpfs, zipMap, '10001', ncci);
 
@@ -70,6 +81,44 @@ describe('auditBill', () => {
     expect(october.looksNormal).toBe(false);
     expect(october.ncciStatus).toBe('not_evaluated');
     expect(october.summary).toContain('NCCI unbundling check was not fully evaluated');
+  });
+
+  it('preserves loaded NCCI flags but never reports normal for partial data or seed fallback', () => {
+    const items = parseBillText(
+      '08/01/2026 99213 Office visit $150.00\n08/01/2026 36415 Venipuncture $5.00',
+    );
+    const partial = auditBill(items, mpfs, zipMap, '10001', {
+      version: '2026Q3',
+      source: 'partial chunks',
+      pairs: [{ column1: '99213', column2: '36415', modifier: 0, rationale: 'test pair' }],
+      provenance: {
+        coverage: 'partial',
+        requestedPrefixes: ['9'],
+        loadedPrefixes: ['9'],
+        failedPrefixes: ['8'],
+        seedFallbackUsed: true,
+      },
+    });
+    const seedOnly = auditBill(items, mpfs, zipMap, '10001', {
+      version: '2026Q3',
+      source: 'seed fallback',
+      pairs: [],
+      provenance: {
+        coverage: 'seed_only',
+        requestedPrefixes: ['9'],
+        loadedPrefixes: [],
+        failedPrefixes: ['9'],
+        seedFallbackUsed: true,
+      },
+    });
+
+    expect(partial.ncciStatus).toBe('partial_data');
+    expect(partial.looksNormal).toBe(false);
+    expect(partial.flags.some((flag) => flag.category === 'unbundling')).toBe(true);
+    expect(partial.flags.some((flag) => flag.detail.includes('Some NCCI 2026Q3 chunks were unavailable'))).toBe(true);
+    expect(seedOnly.ncciStatus).toBe('seed_only');
+    expect(seedOnly.looksNormal).toBe(false);
+    expect(seedOnly.flags.some((flag) => flag.detail.includes('limited NCCI seed fallback'))).toBe(true);
   });
 
 

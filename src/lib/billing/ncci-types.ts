@@ -15,6 +15,20 @@ export interface NcciPtpEdit {
   rationale: string;
 }
 
+/**
+ * The NCCI data actually available to this review.  A seed is intentionally a
+ * small launch subset, never a substitute for the requested quarterly chunks.
+ */
+export type NcciDatasetCoverage = 'full' | 'partial' | 'seed_only';
+
+export interface NcciDatasetProvenance {
+  coverage: NcciDatasetCoverage;
+  requestedPrefixes: string[];
+  loadedPrefixes: string[];
+  failedPrefixes: string[];
+  seedFallbackUsed: boolean;
+}
+
 export interface NcciDataset {
   version: string;
   source: string;
@@ -23,4 +37,6 @@ export interface NcciDataset {
   index?: Record<string, NcciColumn2Edit[] | NcciCompactEdit[]>;
   /** Flat list — legacy launch subset only. */
   pairs?: NcciPtpEdit[];
+  /** Present for browser-loaded data; omitted legacy datasets are treated as full for compatibility. */
+  provenance?: NcciDatasetProvenance;
 }

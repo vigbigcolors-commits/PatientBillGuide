@@ -234,6 +234,10 @@ export function auditBill(
     const detail =
       ncciStatus === 'not_loaded'
         ? 'The NCCI edit file was not available for this review. Other pricing and duplicate checks still ran.'
+        : ncciStatus === 'seed_only'
+          ? 'Only the limited NCCI seed fallback was available. Any matching edits were checked, but this is not a complete CMS PTP review and no all-clear conclusion was made.'
+          : ncciStatus === 'partial_data'
+            ? `Some NCCI ${ncci?.version} chunks were unavailable. We checked the edits that loaded, but this is not a complete CMS PTP review and no all-clear conclusion was made.`
         : ncciStatus === 'partially_evaluated'
           ? `NCCI ${ncci?.version} only covered some service dates${window ? ` (${window.start} through ${window.end})` : ''}. Other lines were not evaluated for unbundling.`
           : `NCCI ${ncci?.version} did not cover the parsed service dates${window ? ` (${window.start} through ${window.end})` : ''}. No NCCI unbundling conclusion was made.`;
@@ -288,6 +292,12 @@ export function auditBill(
               ? `Partially evaluated NCCI pairs: only service dates ${window.start} through ${window.end} were covered`
               : 'Partially evaluated NCCI pairs for covered service dates';
           }
+          if (ncciStatus === 'partial_data') {
+            return 'Checked available NCCI edits only: one or more requested CMS data chunks did not load';
+          }
+          if (ncciStatus === 'seed_only') {
+            return 'Checked the limited NCCI seed fallback only; the requested CMS data chunks did not load';
+          }
           return window
             ? `Checked same-day code pairs against CMS NCCI practitioner PTP edits for service dates ${window.start} through ${window.end}`
             : 'Checked same-day code pairs against CMS NCCI practitioner PTP edits';
@@ -320,7 +330,11 @@ export function auditBill(
     nextSteps.push('For unrecognized CPT codes, ask billing for a plain-English description of each service.');
   }
   if (ncciStatus !== 'evaluated') {
-    nextSteps.push('Add or verify dates of service before relying on an NCCI unbundling review.');
+    nextSteps.push(
+      ncciStatus === 'partial_data' || ncciStatus === 'seed_only'
+        ? 'Retry the review when the complete CMS NCCI data is available before relying on an all-clear unbundling result.'
+        : 'Add or verify dates of service before relying on an NCCI unbundling review.',
+    );
   }
   nextSteps.push('Keep copies of the bill, EOB, and any call reference numbers before paying in full.');
 
@@ -331,7 +345,7 @@ export function auditBill(
     ncciStatus,
     summary:
       ncciStatus !== 'evaluated' && concernFlags.length === 0
-        ? 'No pricing or duplicate concerns were found, but the NCCI unbundling check was not fully evaluated for these service dates.'
+        ? 'No pricing or duplicate concerns were found, but the NCCI unbundling check was not fully evaluated, so this is not an all-clear result.'
         : flags.length === 0
         ? 'Based on public Medicare benchmarks, this bill looks normal — no obvious concerns found.'
         : looksNormal
