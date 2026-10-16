@@ -19,7 +19,7 @@ const faqs = [
   {
     question: 'What is a fair price range?',
     answer:
-      'We use 1.5× to 2.5× the Medicare allowed amount as an educational benchmark for typical commercial or self-pay charges — documented in our methodology, not a legal maximum.',
+      'We use 1.5× to 2.5× the CMS non-QP MPFS reference as an educational comparison range. It is documented in our methodology, not a market rate, legal maximum, or insurer-negotiated price.',
   },
   {
     question: 'Does Medicare rate include hospital facility fees?',
@@ -33,7 +33,7 @@ const faqs = [
   },
   {
     question: 'Is my search private?',
-    answer: 'Yes. All calculations run in your browser. We do not receive your codes, ZIP, or prices.',
+    answer: 'Bill analysis runs in your browser. We do not upload your ZIP, billed amount, or bill text for analysis, and this interactive tool does not load Google Analytics.',
   },
   {
     question: 'What CPT codes are supported?',
@@ -48,7 +48,7 @@ const faqs = [
   {
     question: 'What is the Medicare Part B tab?',
     answer:
-      'Same CMS allowed amount as Fair Price, plus an estimated patient share that applies the Part B deductible first, then typical 80/20 coinsurance. It is an educational estimate — not your MSN or legal advice.',
+      'Same CMS non-QP MPFS reference as Fair Price, plus an estimated patient share that applies the Part B deductible first, then 80/20 coinsurance for most covered services with assignment. It is an educational estimate — not your MSN or legal advice.',
   },
   {
     question: 'Does Medigap change my Part B estimate?',
@@ -102,16 +102,16 @@ const schemaGraph = [
   <Fragment slot="intro">
     <p>
       Enter a CPT procedure code and optionally your ZIP and the price you were charged. Compare against
-      Medicare benchmarks and a typical fair range — or switch to the <strong>Medicare Part B</strong> tab for
+      a CMS Medicare reference and our documented educational comparison range — or switch to the <strong>Medicare Part B</strong> tab for
       coinsurance estimates.
     </p>
     <div class="facility-inline-notice" data-tab-content="fair" role="note">
-      <strong>Physician fee only.</strong> Medicare allowed amounts here do not include hospital outpatient,
+      <strong>Physician fee reference only.</strong> The non-QP MPFS reference here does not include hospital outpatient,
       ER, or imaging <em>facility fees</em> — often billed on separate lines.
       <a href="/learn/how-to-read-medical-bill/#facility-professional">Facility vs professional →</a>
     </div>
     <div class="medicare-inline-notice" data-tab-content="medicare" hidden role="note">
-      <strong>Traditional Medicare Part B.</strong> Estimate applies the {PART_B_DEDUCTIBLE_2026} annual
+      <strong>Traditional Medicare Part B.</strong> For most covered services with assignment, this estimate applies the {PART_B_DEDUCTIBLE_2026} annual
       deductible, then 80/20 coinsurance. Medigap, Medicare Advantage, and Medicaid work differently —
       compare to your <a href="/for/seniors-medicare/">MSN or plan EOB</a>.
     </div>
@@ -226,7 +226,7 @@ const schemaGraph = [
         placeholder="$0.00"
         autocomplete="off"
       />
-      <p class="input-hint">Optional — compare your bill to the fair range. Facility fees may be on other lines.</p>
+      <p class="input-hint">Optional — compare your bill to our educational range. Facility fees may be on other lines.</p>
     </div>
 
     <div class="field" data-field="deductible" hidden>
@@ -251,7 +251,7 @@ const schemaGraph = [
       <span id="fair-price-submit-label">Check price</span>
     </button>
     <p class="calculator__note" role="status">
-      Uses CMS Medicare Physician Fee Schedule data. All calculations run in your browser.
+      Uses the April 2026 CMS RVU26B non-QP Physician Fee Schedule reference. Later CMS releases are not included in this bundle. All bill analysis calculations run in your browser.
     </p>
   </form>
   </div>
@@ -296,12 +296,11 @@ const schemaGraph = [
       <h2>What this means</h2>
       <ul class="means-list">
         <li>
-          <strong>Medicare allowed amount</strong> — CMS-approved physician fee for this code,
-          localized to your Medicare area when you enter a ZIP; otherwise the national rate.
+          <strong>2026 MPFS reference</strong> — calculated from the CMS non-QP physician fee schedule for this code,
+          localized to your Medicare area when you enter a ZIP; otherwise the national median. It is not a quote or coverage decision.
         </li>
         <li>
-          <strong>Fair range (1.5×–2.5×)</strong> — typical self-pay or commercial charges above
-          Medicare, per our methodology.
+          <strong>Educational range (1.5×–2.5×)</strong> — our documented comparison heuristic, not a typical rate, insurer rate, or legal cap.
         </li>
         <li>
           <strong>Your price comparison</strong> — where your charge falls relative to that range.
@@ -317,7 +316,7 @@ const schemaGraph = [
       <h2>Part B estimate</h2>
       <ul class="means-list means-list--medicare">
         <li>
-          <strong>Allowed amount</strong> — CMS physician fee for this CPT in your Medicare locality.
+          <strong>MPFS reference</strong> — calculated non-QP CMS physician-fee reference for this CPT and locality; actual payment can differ.
         </li>
         <li>
           <strong>Deductible ({PART_B_DEDUCTIBLE_2026}/yr)</strong> — you pay 100% of approved amounts until met.
@@ -348,8 +347,8 @@ const schemaGraph = [
       <div>
         <strong>Your privacy is protected</strong>
         <p>
-          All calculations happen in your browser. We never see your CPT codes, ZIP, or bill amount.
-          Nothing is stored or transmitted.
+          Bill analysis happens in your browser. We do not upload your CPT codes, ZIP, or bill amount to our servers for analysis.
+          This interactive tool does not load Google Analytics.
         </p>
       </div>
     </div>

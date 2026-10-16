@@ -2,21 +2,21 @@
 
 export const homeFacts = [
   {
-    stat: '80%',
-    label: 'of medical bills contain errors',
-    detail: 'Industry studies often cite high error rates on hospital bills. Many are coding or duplicate-line issues — worth a quick check before paying in full.',
+    stat: '1 line',
+    label: 'can change what you owe',
+    detail: 'A duplicate line, mismatched date, or insurance-processing issue can be worth clarifying. An itemized bill and EOB help you ask a specific question before paying.',
     tone: 'amber',
   },
   {
-    stat: '3×',
-    label: 'typical self-pay markup',
-    detail: 'Uninsured patients are often charged several times Medicare’s allowed amount. Our fair range uses 1.5×–2.5× as an educational benchmark — not a legal cap.',
+    stat: '1.5×–2.5×',
+    label: 'our educational comparison range',
+    detail: 'We compare a charge with a documented range based on a CMS physician-fee reference. It is not a universal fair-market price, insurer rate, or legal cap.',
     tone: 'teal',
   },
   {
-    stat: '$0',
-    label: 'data sent to our servers',
-    detail: 'Every tool runs in your browser. Your CPT codes, ZIP, and bill text never leave your device — a core privacy promise for sensitive health billing.',
+    stat: '0 bill uploads',
+    label: 'for tool analysis',
+    detail: 'Tools process pasted bill text in your browser. We do not upload bill text, CPT codes, or ZIP codes to our servers for analysis.',
     tone: 'green',
   },
   {
@@ -38,7 +38,7 @@ export const homeSteps = [
   {
     step: '2',
     title: 'Compare to Medicare data',
-    text: 'Enter the code and your ZIP. We show CMS’s published allowed amount and a documented fair range for your area.',
+    text: 'Enter the code and your ZIP. We show a CMS non-QP physician-fee reference and our documented educational comparison range for your area.',
     href: '/tools/fair-price/',
     link: 'Open Fair Price Calculator',
   },
@@ -71,8 +71,8 @@ export const homeInsights = [
     icon: 'shield',
   },
   {
-    title: 'Screening mammograms should be $0 in-network',
-    text: 'ACA preventive rules cover screening mammography (CPT 77067) at no cost when in-network. A large bill may mean diagnostic coding, out-of-network radiology, or a facility fee.',
+    title: 'Why a screening mammogram can still generate a bill',
+    text: 'Many in-network screening mammograms have no patient cost-sharing. A large bill may mean diagnostic coding, out-of-network radiology, or a facility fee.',
     tag: 'Preventive care',
     tone: 'pink',
     href: '/codes/cpt/77067/',
@@ -80,8 +80,8 @@ export const homeInsights = [
     icon: 'heart',
   },
   {
-    title: 'You can ask for an itemized bill — always',
-    text: 'Federal rules require hospitals to give machine-readable itemized bills on request. Never pay a lump sum without line-item CPT codes and dates of service.',
+    title: 'Ask for an itemized bill before you pay',
+    text: 'Hospital machine-readable price files are public price data, not your personal statement. Ask billing for line-item codes and dates of service before you decide what to pay.',
     tag: 'Your rights',
     tone: 'teal',
     href: '/learn/how-to-read-medical-bill/',

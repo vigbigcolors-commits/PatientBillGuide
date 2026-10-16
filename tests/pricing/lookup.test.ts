@@ -24,6 +24,12 @@ describe('parseCurrency', () => {
     expect(parseCurrency('$250.00')).toBe(250);
     expect(parseCurrency('1,287.44')).toBe(1287.44);
   });
+
+  it('rejects partial and non-finite numeric values', () => {
+    expect(parseCurrency('100oops')).toBeNull();
+    expect(parseCurrency('Infinity')).toBeNull();
+    expect(parseCurrency('-1')).toBeNull();
+  });
 });
 
 describe('lookupPrice', () => {

@@ -6,6 +6,7 @@ import {
   normalizeCptCode,
   parseCurrency,
   analyzePartBCost,
+  PART_B_DEDUCTIBLE_2026,
   prefetchPricingData,
   type PriceLookupResult,
 } from '../lib/pricing';
@@ -14,6 +15,7 @@ import type { PartBAnalysis } from '../lib/pricing/medicare-part-b';
 import { bindToolExamples } from './tool-examples';
 import { bindCptTypeahead } from './cpt-typeahead';
 import { currentSourcePage, trackGa4Event } from '../lib/analytics/ga4';
+import { storeDisputePrefill } from '../lib/dispute/prefill';
 
 export type PriceCheckMode = 'fair' | 'medicare';
 
@@ -37,21 +39,17 @@ function getFormElements(root: ParentNode = document) {
 }
 
 function buildDisputeLetterHref(result: PriceLookupResult): string {
-  const params = new URLSearchParams();
-  params.set('template', 'overcharge');
-  params.set('code', result.code);
-  if (result.userComparison) {
-    params.set('amount', String(Math.round(result.userComparison.charged * 100) / 100));
-  }
   const locality =
     result.localitySource === 'zip' && result.localityLabel
       ? result.localityLabel
       : 'national median';
-  params.set(
-    'benchmark',
-    `Medicare allowed ~${formatUsd(result.medicareAllowed)} (${locality}); fair range ${formatUsd(result.fairRangeLow)}–${formatUsd(result.fairRangeHigh)}`,
-  );
-  return `/tools/dispute-letter/?${params.toString()}`;
+  storeDisputePrefill({
+    template: 'overcharge',
+    code: result.code,
+    amount: result.userComparison ? String(Math.round(result.userComparison.charged * 100) / 100) : undefined,
+    benchmark: `CMS non-QP MPFS reference ~${formatUsd(result.medicareAllowed)} (${locality}); educational range ${formatUsd(result.fairRangeLow)}–${formatUsd(result.fairRangeHigh)}`,
+  });
+  return '/tools/dispute-letter/';
 }
 
 function isCptGuidePage(): boolean {
@@ -73,8 +71,8 @@ function renderFairResults(container: HTMLElement, result: PriceLookupResult) {
     const statusClass = `result-comparison--${c.status}`;
     const markupLine =
       c.pctAboveFairHigh > 0
-        ? `<p class="result-comparison__markup"><strong>${c.vsMedicareMultiple}×</strong> Medicare allowed (${c.vsMedicarePct}% of Medicare) · <strong>${c.pctAboveFairHigh}%</strong> above the 2.5× fair-range high</p>`
-        : `<p class="result-comparison__markup"><strong>${c.vsMedicareMultiple}×</strong> Medicare allowed (${c.vsMedicarePct}% of Medicare)</p>`;
+        ? `<p class="result-comparison__markup"><strong>${c.vsMedicareMultiple}×</strong> the MPFS reference (${c.vsMedicarePct}% of reference) · <strong>${c.pctAboveFairHigh}%</strong> above the 2.5× comparison-range high</p>`
+        : `<p class="result-comparison__markup"><strong>${c.vsMedicareMultiple}×</strong> the MPFS reference (${c.vsMedicarePct}% of reference)</p>`;
     comparisonHtml = `
       <div class="result-comparison ${statusClass}">
         <h3>${c.headline}</h3>
@@ -132,11 +130,11 @@ function renderFairResults(container: HTMLElement, result: PriceLookupResult) {
       </header>
       <dl class="price-results__grid">
         <div>
-          <dt>Medicare allowed</dt>
+          <dt>2026 MPFS reference</dt>
           <dd>${formatUsd(result.medicareAllowed)}</dd>
         </div>
         <div>
-          <dt>Fair range (1.5×–2.5×)</dt>
+          <dt>Educational comparison range (1.5×–2.5×)</dt>
           <dd>${formatUsd(result.fairRangeLow)} – ${formatUsd(result.fairRangeHigh)}</dd>
         </div>
         <div>
@@ -144,14 +142,14 @@ function renderFairResults(container: HTMLElement, result: PriceLookupResult) {
           <dd>${locality}</dd>
         </div>
         <div>
-          <dt>Data confidence</dt>
+          <dt>ZIP/locality match</dt>
           <dd><span class="confidence confidence--${result.confidence}">${confidenceLabel}</span></dd>
         </div>
       </dl>
       ${facilityHtml}
       ${comparisonHtml}
       <p class="price-results__note">
-        Based on CMS Physician Fee Schedule (${result.dataVersion}).
+        Based on the CMS ${result.dataVersion} non-QP Physician Fee Schedule reference; not a quote, coverage decision, or your exact Medicare payment.
         <a href="/methodology/price-benchmarks/">How we calculate fair range</a>
       </p>
       ${nextStepHtml}
@@ -238,7 +236,7 @@ function renderMedicareResults(container: HTMLElement, result: PriceLookupResult
 
       <dl class="price-results__grid">
         <div>
-          <dt>Medicare allowed (2026 MPFS)</dt>
+          <dt>2026 non-QP MPFS reference</dt>
           <dd class="medicare-amount">${formatUsd(result.medicareAllowed)}</dd>
         </div>
         <div>
@@ -258,7 +256,7 @@ function renderMedicareResults(container: HTMLElement, result: PriceLookupResult
           <dd>${locality}</dd>
         </div>
         <div>
-          <dt>Data confidence</dt>
+          <dt>ZIP/locality match</dt>
           <dd><span class="confidence confidence--${result.confidence}">${confidenceLabel}</span></dd>
         </div>
       </dl>
@@ -283,7 +281,7 @@ function renderMedicareResults(container: HTMLElement, result: PriceLookupResult
       <div class="part-b-tools">${toolLinks}</div>
 
       <p class="price-results__note">
-        Estimate only — not your EOB or MSN. Medigap, Medicare Advantage, Medicaid, and employer retiree plans change what you owe.
+        Estimate only — not your EOB or MSN. It assumes a Medicare-covered Part B service and a provider who accepts assignment; Medigap, Medicare Advantage, Medicaid, and retiree plans change what you owe.
         <a href="/methodology/price-benchmarks/">Methodology</a>
       </p>
     </div>`;
@@ -363,6 +361,13 @@ export async function initFairPriceForm(root: ParentNode = document) {
   const presetCode = params.get('code');
   if (presetCode && cpt) cpt.value = presetCode;
 
+  /* Legacy links may contain a CPT code. Consume it locally, then remove it from history. */
+  if (params.size > 0) {
+    const safeUrl = new URL(window.location.href);
+    safeUrl.search = mode === 'medicare' ? '?tab=medicare' : '';
+    history.replaceState(null, '', safeUrl);
+  }
+
   const scenario = params.get('scenario');
   if (scenario) {
     const variant = mode === 'medicare' ? 'medicare-lookup' : 'fair-price';
@@ -377,9 +382,8 @@ export async function initFairPriceForm(root: ParentNode = document) {
   const applyMode = (next: PriceCheckMode, focusTab = false) => {
     mode = next;
     activateTab(root, mode, focusTab);
-    const url = new URL(window.location.href);
-    if (mode === 'medicare') url.searchParams.set('tab', 'medicare');
-    else url.searchParams.delete('tab');
+    const url = new URL(window.location.origin + window.location.pathname);
+    if (mode === 'medicare') url.search = '?tab=medicare';
     history.replaceState(null, '', url);
     if (results) {
       results.innerHTML = '';
@@ -456,14 +460,25 @@ export async function initFairPriceForm(root: ParentNode = document) {
 
       if (results) {
         if (mode === 'medicare') {
-          const met = parseCurrency(deductibleMet?.value?.trim() ?? '') ?? 0;
+          const deductibleRaw = deductibleMet?.value?.trim() ?? '';
+          const parsedDeductible = deductibleRaw ? parseCurrency(deductibleRaw) : 0;
+          if (
+            parsedDeductible == null ||
+            parsedDeductible > PART_B_DEDUCTIBLE_2026
+          ) {
+            showError(
+              error,
+              `Enter a deductible amount from $0 to $${PART_B_DEDUCTIBLE_2026}, or leave it blank if none has been met.`,
+            );
+            return;
+          }
+          const met = parsedDeductible;
           renderMedicareResults(results, outcome, met);
         } else {
           renderFairResults(results, outcome);
         }
         trackGa4Event('fair_price_use', {
           tool_name: mode === 'medicare' ? 'medicare_part_b' : 'fair_price',
-          cpt_code: outcome.code,
           source_page: currentSourcePage(),
         });
         results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

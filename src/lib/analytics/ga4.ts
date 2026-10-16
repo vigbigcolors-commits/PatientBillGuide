@@ -46,11 +46,9 @@ export type AnalyticsConsent = 'granted' | 'denied';
 export type Ga4EventParams = {
   source_page?: string;
   tool_name?: string;
-  cpt_code?: string;
 };
 
-const ALLOWED_PARAM_KEYS = new Set<keyof Ga4EventParams>(['source_page', 'tool_name', 'cpt_code']);
-const CPT_CODE_RE = /^\d{5}$/;
+const ALLOWED_PARAM_KEYS = new Set<keyof Ga4EventParams>(['source_page', 'tool_name']);
 const TOOL_NAME_RE = /^[a-z0-9_]{1,48}$/;
 
 declare global {
@@ -134,10 +132,6 @@ export function sanitizeGa4EventParams(params?: Ga4EventParams): Ga4EventParams 
       continue;
     }
 
-    if (key === 'cpt_code') {
-      const code = raw.replace(/\D/g, '').slice(0, 5);
-      if (CPT_CODE_RE.test(code)) clean.cpt_code = code;
-    }
   }
 
   return Object.keys(clean).length ? clean : undefined;

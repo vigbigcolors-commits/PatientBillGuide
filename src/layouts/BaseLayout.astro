@@ -19,6 +19,8 @@ interface Props {
   canonicalUrl?: string;
   /** When true, emit noindex,follow (redirect/stub pages) */
   noindex?: boolean;
+  /** Tool routes do not load third-party analytics because users may enter billing data. */
+  analyticsEnabled?: boolean;
 }
 
 const {
@@ -28,6 +30,7 @@ const {
   showTrustStrip = false,
   canonicalUrl,
   noindex = false,
+  analyticsEnabled = true,
 } = Astro.props;
 
 const pageTitle = title === site.name ? title : `${title} | ${site.name}`;
@@ -58,7 +61,7 @@ const ogImage = new URL('/og-image.svg', site.url).href;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <Ga4 />
+    {analyticsEnabled && <Ga4 />}
     <slot name="head" />
   </head>
   <body>
@@ -68,6 +71,6 @@ const ogImage = new URL('/og-image.svg', site.url).href;
       <slot />
     </main>
     <Footer />
-    <ConsentBanner />
+    {analyticsEnabled && <ConsentBanner />}
   </body>
 </html>

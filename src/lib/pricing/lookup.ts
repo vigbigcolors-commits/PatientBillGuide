@@ -34,7 +34,7 @@ export function normalizeZip(raw: string): string | null {
 export function parseCurrency(raw: string): number | null {
   const cleaned = raw.replace(/[$,\s]/g, '');
   if (!cleaned) return null;
-  const value = Number.parseFloat(cleaned);
+  const value = Number(cleaned);
   if (!Number.isFinite(value) || value < 0) return null;
   return Math.round(value * 100) / 100;
 }
@@ -127,21 +127,21 @@ function compareCharged(
   }
 
   const headlines: Record<PriceComparisonStatus, string> = {
-    below_medicare: 'Below Medicare benchmark',
-    within_fair_range: 'Within typical fair range',
-    above_fair_range: 'Above typical fair range',
-    well_above_fair_range: 'Well above typical fair range',
+    below_medicare: 'Below 2026 MPFS reference',
+    within_fair_range: 'Within our educational comparison range',
+    above_fair_range: 'Above our educational comparison range',
+    well_above_fair_range: 'Well above our educational comparison range',
   };
 
   const details: Record<PriceComparisonStatus, string> = {
     below_medicare:
-      'Your charge is below the Medicare allowed amount for this code. That can happen with discounts or bundled pricing — not necessarily a problem.',
+      'Your charge is below the 2026 CMS non-QP MPFS reference for this code. That can happen with discounts or bundled pricing — not necessarily a problem.',
     within_fair_range:
-      'Your charge falls within the 1.5×–2.5× Medicare range we use as a typical self-pay or commercial benchmark. This does not guarantee the bill is correct — only that the price is not an extreme outlier.',
+      'Your charge falls within our documented 1.5×–2.5× Medicare comparison range. This is not a market rate, negotiated rate, or a finding that the bill is correct.',
     above_fair_range:
-      'Your charge is above the typical 2.5× Medicare range. You may want to ask for an itemized bill or discuss a self-pay discount.',
+      'Your charge is above our 2.5× Medicare comparison range. You may want to ask for an itemized bill or discuss a self-pay discount.',
     well_above_fair_range:
-      'Your charge is significantly above the typical range. Consider requesting an itemized bill, comparing hospital vs. office rates, and asking about financial assistance.',
+      'Your charge is significantly above our comparison range. Consider requesting an itemized bill, comparing hospital vs. office rates, and asking about financial assistance.',
   };
 
   const vsMedicareMultiple =

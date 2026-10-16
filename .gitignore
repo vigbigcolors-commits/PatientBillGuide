@@ -29,6 +29,8 @@ public/data/ncci-ptp.json
 src/data/mpfs/
 src/data/ncci/
 coverage/
+test-results/
+playwright-report/
 Thumbs.db
 *.local
 

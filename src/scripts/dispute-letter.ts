@@ -6,6 +6,7 @@ import {
 } from '../lib/dispute/letters';
 import { bootOnReady } from '../lib/dom/boot';
 import { currentSourcePage, trackGa4Event } from '../lib/analytics/ga4';
+import { consumeDisputePrefill } from '../lib/dispute/prefill';
 
 function readForm(form: HTMLFormElement) {
   const fd = new FormData(form);
@@ -47,15 +48,16 @@ export function initDisputeLetter(root: ParentNode = document) {
   updateDesc();
 
   const params = new URLSearchParams(window.location.search);
-  const preset = params.get('template');
+  const storedPrefill = consumeDisputePrefill();
+  const preset = storedPrefill?.template ?? params.get('template');
   if (preset && templateSelect && preset in TEMPLATE_LABELS) {
     templateSelect.value = preset;
     updateDesc();
   }
 
-  const code = params.get('code')?.trim();
-  const amount = params.get('amount')?.trim();
-  const benchmark = params.get('benchmark')?.trim();
+  const code = storedPrefill?.code ?? params.get('code')?.trim();
+  const amount = storedPrefill?.amount ?? params.get('amount')?.trim();
+  const benchmark = storedPrefill?.benchmark ?? params.get('benchmark')?.trim();
   const lineItems = form.querySelector<HTMLTextAreaElement>('#line-items');
   const amountInput = form.querySelector<HTMLInputElement>('#amount-disputed');
   const benchmarkInput = form.querySelector<HTMLInputElement>('#benchmark-note');
@@ -79,6 +81,11 @@ export function initDisputeLetter(root: ParentNode = document) {
       templateSelect.value = 'overcharge';
       updateDesc();
     }
+  }
+
+  /* Support old links once, but never leave their billing fields in browser history. */
+  if (params.size > 0) {
+    history.replaceState(null, '', window.location.pathname);
   }
 
   form.addEventListener('submit', (e) => {

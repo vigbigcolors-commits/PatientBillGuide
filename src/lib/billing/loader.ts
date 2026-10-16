@@ -60,19 +60,32 @@ async function loadNcciChunk(
   base: string,
   manifest: DataManifest | null,
   prefix: string,
+  expectedVersion: string,
 ): Promise<Record<string, NcciCompactEdit[]>> {
-  const cached = chunkCache.get(prefix);
+  const url = chunkUrl(base, manifest, prefix);
+  const cacheKey = `${expectedVersion}:${url}`;
+  const cached = chunkCache.get(cacheKey);
   if (cached) return cached;
 
-  const url = chunkUrl(base, manifest, prefix);
   const res = await fetch(url);
   if (!res.ok) {
     throw new Error(`Failed to load NCCI chunk ${prefix} (${url}): ${res.status}`);
   }
 
   const chunk = (await readResponseJson(res)) as NcciChunkFile;
+  if (chunk.version !== expectedVersion) {
+    throw new Error(
+      `NCCI chunk ${prefix} version mismatch: expected ${expectedVersion}, got ${chunk.version || 'missing'}`,
+    );
+  }
+  if (chunk.prefix !== prefix) {
+    throw new Error(`NCCI chunk prefix mismatch: expected ${prefix}, got ${chunk.prefix || 'missing'}`);
+  }
+  if (!chunk.index || typeof chunk.index !== 'object' || Array.isArray(chunk.index)) {
+    throw new Error(`NCCI chunk ${prefix} has no valid index`);
+  }
   const index = chunk.index ?? {};
-  chunkCache.set(prefix, index);
+  chunkCache.set(cacheKey, index);
   return index;
 }
 
@@ -93,6 +106,18 @@ function mergeIndex(
   }
 }
 
+function mergeSeedFallback(
+  target: Record<string, NcciCompactEdit[]>,
+  seedIndex: Record<string, NcciCompactEdit[]>,
+  failedPrefixes: readonly string[],
+): void {
+  const failed = new Set(failedPrefixes);
+  for (const [code, edits] of Object.entries(seedIndex)) {
+    if (!failed.has(code[0]?.toUpperCase()) || code in target) continue;
+    target[code] = edits;
+  }
+}
+
 /**
  * Load NCCI index slices for CPT prefixes on the bill (~50–150 KB gzip).
  * Falls back to bundled seed pairs if chunks are missing (dev without data:generate).
@@ -100,27 +125,44 @@ function mergeIndex(
 export async function loadNcciForCodes(codes: string[], base = '/data'): Promise<NcciDataset> {
   const prefixes = ncciPrefixes(codes);
   if (prefixes.length === 0) {
-    return { version: 'none', source: 'No CPT codes for NCCI lookup' };
+    return {
+      version: 'none',
+      source: 'No CPT codes for NCCI lookup',
+      provenance: {
+        coverage: 'partial',
+        requestedPrefixes: [],
+        loadedPrefixes: [],
+        failedPrefixes: [],
+        seedFallbackUsed: false,
+      },
+    };
   }
 
   const manifest = await getManifest(base);
+  const expectedVersion = manifest?.ncci?.version ?? '2026Q3';
   const merged: Record<string, NcciCompactEdit[]> = {};
   const failed: string[] = [];
+  const loaded: string[] = [];
 
   await Promise.all(
     prefixes.map(async (prefix) => {
       try {
-        mergeIndex(merged, await loadNcciChunk(base, manifest, prefix));
+        mergeIndex(merged, await loadNcciChunk(base, manifest, prefix, expectedVersion));
+        loaded.push(prefix);
       } catch {
         failed.push(prefix);
       }
     }),
   );
 
-  if (failed.length > 0 || Object.keys(merged).length === 0) {
+  let seedFallbackUsed = false;
+  if (failed.length > 0) {
     try {
       const seed = await loadNcciSeed(base);
-      if (seed.index) mergeIndex(merged, seed.index);
+      if (seed.index) {
+        mergeSeedFallback(merged, seed.index as Record<string, NcciCompactEdit[]>, failed);
+      }
+      seedFallbackUsed = true;
     } catch (seedErr) {
       if (Object.keys(merged).length === 0) {
         throw new Error(
@@ -131,15 +173,31 @@ export async function loadNcciForCodes(codes: string[], base = '/data'): Promise
     }
   }
 
+  const loadedPrefixes = loaded.sort();
+  const failedPrefixes = failed.sort();
+  const coverage =
+    failedPrefixes.length === 0 ? 'full' : loadedPrefixes.length === 0 ? 'seed_only' : 'partial';
+
   return {
-    version: manifest?.ncci?.version ?? '2026Q3',
+    version: expectedVersion,
     source:
-      failed.length > 0
-        ? 'CMS NCCI (partial chunks + seed fallback)'
+      coverage === 'seed_only'
+        ? 'NCCI seed fallback (limited coverage)'
+        : coverage === 'partial'
+          ? seedFallbackUsed
+            ? 'CMS NCCI (partial chunks + seed fallback)'
+            : 'CMS NCCI (partial chunks)'
         : 'CMS Practitioner PTP Edits (chunked, compact-v1)',
     pairCount: manifest?.ncci?.pairCount,
     format: 'compact-v1',
     index: merged,
+    provenance: {
+      coverage,
+      requestedPrefixes: prefixes,
+      loadedPrefixes,
+      failedPrefixes,
+      seedFallbackUsed,
+    },
   };
 }
 

@@ -15,6 +15,7 @@ import {
   webApplicationSchema,
 } from '../../../lib/seo/schema';
 import { buildCptSeoMeta, buildCptSeoTitle } from '../../../lib/seo/cpt-page-meta';
+import { cptEditorialUpdates, type CptEditorialUpdateCode } from '../../../data/cpt-editorial-updates';
 
 export function getStaticPaths() {
   return launchCptCodes.map((code) => ({ params: { code } }));
@@ -30,7 +31,8 @@ if (!page) {
 const relatedCompares = getComparesForCode(page.code);
 const liveCategory = getLiveCategoryPage(page.categorySlug);
 
-const updated = page.dateModified ?? '2026-08-15';
+const editorialUpdate = cptEditorialUpdates[page.code as CptEditorialUpdateCode];
+const updated = editorialUpdate?.dateModified ?? page.dateModified ?? '2026-08-15';
 const pageUrl = `/codes/cpt/${page.code}/`;
 const canonical = new URL(pageUrl, site.url).href;
 const seoTitle = buildCptSeoTitle(page);
@@ -142,6 +144,15 @@ const schemaGraph = [
       })
     }
   </section>
+
+  {
+    editorialUpdate && (
+      <section>
+        <h2>{editorialUpdate.heading}</h2>
+        {editorialUpdate.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </section>
+    )
+  }
 
   <section>
     <h2>When is this code used?</h2>

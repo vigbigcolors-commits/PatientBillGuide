@@ -96,7 +96,7 @@ function renderResults(container: HTMLElement, result: HospitalCompareResult) {
       </section>
 
       <div class="hospital-tools">
-        <a class="hospital-tool-link hospital-tool-link--primary" href="/tools/fair-price/?code=${result.code}">Fair Price Calculator</a>
+        <a class="hospital-tool-link hospital-tool-link--primary" href="/tools/fair-price/">Fair Price Calculator</a>
         <a class="hospital-tool-link" href="/tools/bill-auditor/">Bill Auditor</a>
         <a class="hospital-tool-link" href="/tools/surprise-bill-check/">Surprise Bill Checker</a>
         <a class="hospital-tool-link" href="/for/uninsured/">Self-pay guide</a>
@@ -203,6 +203,9 @@ export function initHospitalCompare(root: ParentNode = document) {
   const scenario = params.get('scenario');
   if (scenario) {
     root.querySelector<HTMLButtonElement>(`[data-example-id="${scenario}"]`)?.click();
+  }
+  if (params.size > 0) {
+    history.replaceState(null, '', window.location.pathname);
   }
 }
 

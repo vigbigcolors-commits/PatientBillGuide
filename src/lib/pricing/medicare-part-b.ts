@@ -1,7 +1,7 @@
 import { formatUsd } from './lookup';
 
 /** CMS Part B annual deductible — update when CMS publishes annual figures. */
-export const PART_B_DEDUCTIBLE_2026 = 257;
+export const PART_B_DEDUCTIBLE_2026 = 283;
 
 export const PART_B_COINSURANCE_RATE = 0.2;
 export const PART_B_MEDICARE_SHARE = 0.8;
@@ -19,7 +19,7 @@ export const PART_B_PIPELINE_LANES = [
   },
   {
     title: '80/20 coinsurance',
-    detail: 'After deductible, Medicare pays 80% and you pay 20% of the approved amount.',
+    detail: 'For most Medicare-covered services after the deductible, you pay 20% when the provider accepts assignment.',
     level: 'strong' as const,
   },
   {
@@ -40,7 +40,7 @@ export const PART_B_GLOSSARY = [
   },
   {
     term: 'Coinsurance',
-    meaning: 'Your 20% share after the deductible is met on each approved service.',
+    meaning: 'Your typical 20% share after the deductible for most covered services when the provider accepts assignment.',
   },
   {
     term: 'MSN / EOB',
@@ -88,11 +88,27 @@ function roundUsd(n: number): number {
   return Math.round(n * 100) / 100;
 }
 
+function assertValidEstimateInput({ medicareAllowed, deductibleMet = 0 }: PartBEstimateInput): void {
+  if (!Number.isFinite(medicareAllowed) || medicareAllowed < 0) {
+    throw new RangeError('Medicare allowed amount must be a finite, non-negative number.');
+  }
+  if (
+    !Number.isFinite(deductibleMet) ||
+    deductibleMet < 0 ||
+    deductibleMet > PART_B_DEDUCTIBLE_2026
+  ) {
+    throw new RangeError(
+      `Part B deductible met must be between $0 and $${PART_B_DEDUCTIBLE_2026}.`,
+    );
+  }
+}
+
 /**
  * Traditional Medicare Part B cost-sharing for a single physician-fee service:
  * deductible first (up to remaining annual amount), then 80/20 on the balance.
  */
 export function estimatePartBCost(input: PartBEstimateInput): PartBEstimate {
+  assertValidEstimateInput(input);
   const { medicareAllowed, deductibleMet = 0 } = input;
   const deductibleRemaining = Math.max(0, PART_B_DEDUCTIBLE_2026 - deductibleMet);
   const deductibleFullyMet = deductibleRemaining <= 0;
@@ -109,12 +125,12 @@ export function estimatePartBCost(input: PartBEstimateInput): PartBEstimate {
   if (deductibleFullyMet) {
     headline = `Typical Part B coinsurance: about ${formatUsd(patientShare)} (20%)`;
     detail =
-      `Traditional Medicare Part B usually pays 80% of the approved amount (${formatUsd(medicarePays)}) after the annual deductible is met. ` +
+      `For most Medicare-covered services, Traditional Medicare Part B pays 80% of the approved amount (${formatUsd(medicarePays)}) after the annual deductible when the provider accepts assignment. ` +
       `Your Medigap, retiree plan, or Medicaid may cover some or all of the ${formatUsd(coinsuranceAmount)} coinsurance — this is an estimate only.`;
   } else if (deductibleApplied >= medicareAllowed) {
     headline = `Toward Part B deductible: about ${formatUsd(patientShare)}`;
     detail =
-      `Until you meet the ${formatUsd(PART_B_DEDUCTIBLE_2026)} annual Part B deductible, Medicare typically pays $0 on physician services. ` +
+      `Until you meet the ${formatUsd(PART_B_DEDUCTIBLE_2026)} annual Part B deductible, this estimate assumes you pay the approved amount for this covered physician service. ` +
       `This ${formatUsd(medicareAllowed)} allowed amount would count toward your remaining ${formatUsd(deductibleRemaining)} deductible. ` +
       `Medigap and Medicare Advantage plans work differently — this is an estimate only.`;
   } else {
@@ -176,14 +192,18 @@ export function analyzePartBCost(input: PartBEstimateInput): PartBAnalysis {
   nextSteps.push('Switch to the Fair Price tab to see how provider charges compare to Medicare allowed amounts.');
   nextSteps.push('Paste itemized bills into Bill Auditor for duplicate charges and price outlier flags.');
 
+  const deductiblePct = Math.round((estimate.deductibleApplied / allowed) * 100);
+  const coinsurancePct = Math.round((estimate.coinsuranceAmount / allowed) * 100);
+
   return {
     ...estimate,
     deductibleMetInput,
     annualDeductible: PART_B_DEDUCTIBLE_2026,
     checksRun,
     nextSteps,
-    deductiblePct: Math.round((estimate.deductibleApplied / allowed) * 100),
-    coinsurancePct: Math.round((estimate.coinsuranceAmount / allowed) * 100),
-    medicarePct: Math.round((estimate.medicarePays / allowed) * 100),
+    deductiblePct,
+    coinsurancePct,
+    // Preserve a 100% visual split despite cents-to-percent rounding.
+    medicarePct: Math.max(0, 100 - deductiblePct - coinsurancePct),
   };
 }

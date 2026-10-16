@@ -39,6 +39,29 @@ const links = [
         ))
       }
     </nav>
+    <details class="site-header__mobile-nav">
+      <summary aria-label="Open main navigation">
+        <span>Menu</span>
+        <span aria-hidden="true">☰</span>
+      </summary>
+      <nav aria-label="Mobile main navigation">
+        {
+          links.map((link) => (
+            <a
+              href={link.href}
+              class:list={{
+                active:
+                  currentPath.startsWith(link.match) ||
+                  (link.match === '/medicare' && currentPath.startsWith('/for/seniors-medicare')),
+              }}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+        <a href="/tools/fair-price/" class="site-header__mobile-cta">Check fair price</a>
+      </nav>
+    </details>
     <a href="/tools/fair-price/" class="btn btn--primary btn--sm site-header__cta">Check fair price</a>
   </div>
 </header>
@@ -88,6 +111,10 @@ const links = [
     margin-left: auto;
   }
 
+  .site-header__mobile-nav {
+    display: none;
+  }
+
   .nav-link {
     text-decoration: none;
     color: var(--color-muted);
@@ -115,9 +142,74 @@ const links = [
       font-size: 0.9rem;
     }
 
+    .site-header__mobile-nav {
+      display: block;
+      position: relative;
+      margin-left: auto;
+    }
+
+    .site-header__mobile-nav summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      min-height: 2.75rem;
+      padding: 0.625rem 0.75rem;
+      color: var(--color-primary);
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      list-style: none;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+    }
+
+    .site-header__mobile-nav summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .site-header__mobile-nav nav {
+      position: absolute;
+      top: calc(100% + 0.5rem);
+      right: 0;
+      z-index: 1;
+      display: grid;
+      min-width: 14rem;
+      padding: var(--space-sm);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+    }
+
+    .site-header__mobile-nav nav a {
+      padding: 0.75rem;
+      color: var(--color-primary);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+    }
+
+    .site-header__mobile-nav nav a:hover,
+    .site-header__mobile-nav nav a.active {
+      background: var(--color-accent-bg);
+      color: var(--color-accent-hover);
+    }
+
+    .site-header__mobile-nav nav .site-header__mobile-cta {
+      margin-top: var(--space-xs);
+      color: #fff;
+      text-align: center;
+      background: var(--color-accent);
+    }
+
+    .site-header__mobile-nav nav .site-header__mobile-cta:hover {
+      color: #fff;
+      background: var(--color-accent-hover);
+    }
+
     .site-header__cta {
-      font-size: 0.85rem;
-      padding: 0.625rem 0.875rem;
+      display: none;
     }
   }
 </style>
